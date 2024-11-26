@@ -58,10 +58,10 @@
       <Filter>01.Obj\00.Player</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>01.Obj\01.Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>01.Obj\02.Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -81,10 +81,10 @@
       <Filter>01.Obj\00.Player</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>01.Obj\01.Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>01.Obj\02.Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
