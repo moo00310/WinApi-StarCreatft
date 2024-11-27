@@ -25,5 +25,6 @@ private:
 
 private:
     list<Obj*>* m_pBullet;
+    DWORD m_dwTime;
 };
 

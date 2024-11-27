@@ -24,6 +24,11 @@ public:
 
 public:
 	void Update_Rect();
+	bool Collision(Obj* other)
+	{
+		RECT rc;
+		return IntersectRect(&rc, this->GetRect(), other->GetRect()) == TRUE;
+	}
 
 protected:
 	INFO m_tInfo;

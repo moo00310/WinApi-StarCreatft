@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "MainGame.h"
 
-MainGame::MainGame() : m_hDC(nullptr), m_pPlayer(nullptr), m_pMonster(nullptr)
+MainGame::MainGame() : m_hDC(nullptr), m_pPlayer(nullptr), m_pMonster(nullptr),
+m_dwTime(GetTickCount64()), m_iFPS(0)
 {
+	ZeroMemory(m_szFPS, sizeof(TCHAR));
 }
 
 MainGame::~MainGame()
@@ -30,15 +32,23 @@ void MainGame::Initialize()
 
 void MainGame::Update()
 {
-	
 	m_pPlayer->Update();
-	if (m_pMonster) { m_pMonster->Update(); }
+	if (m_pMonster) 
+	{ 
+		m_pMonster->Update(); 
+	}
+
+
+	for (auto& pBullet : m_BulletList)
+	{
+		pBullet->Update();
+	}
+
 
 	m_BulletList.remove_if([](Obj* bullet) {
-		if (bullet->GetInfo().fX <= 100 || bullet->GetInfo().fY <= 100
-			|| bullet->GetInfo().fX > WINCX - 100 || bullet->GetInfo().fY > WINCY - 100)
+		if (dynamic_cast<Bullet*>(bullet)->isOut())
 		{
-			delete bullet;
+			Safe_Delete<Obj*>(bullet);
 			return true;
 		}
 		else
@@ -47,31 +57,37 @@ void MainGame::Update()
 
 	for (auto& pBullet : m_BulletList)
 	{
-		pBullet->Update();
-	}
-
-	
-	for (auto& pBullet : m_BulletList)
-	{
-		RECT rc;
 		if (m_pMonster == nullptr) return;
-		if (IntersectRect(&rc, pBullet->GetRect(), m_pMonster->GetRect()) == TRUE)
+		if (pBullet->Collision(m_pMonster))
 		{
 			Safe_Delete<Obj*>(m_pMonster);
 		}
 	}
-	
 }
 
 void MainGame::Render()
 {
-	// 먼저 그려서 배경을 만듦 (잔상가리기 용)
+	m_iFPS++;
 
+	if (m_dwTime + 1000 < GetTickCount64())
+	{
+		swprintf_s(m_szFPS, L"FPS : %d", m_iFPS);
+
+		SetWindowText(g_hWnd, m_szFPS);
+
+		m_iFPS = 0;
+		m_dwTime = GetTickCount64();
+	}
+
+	// 먼저 그려서 배경을 만듦 (잔상가리기 용)
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
 	Rectangle(m_hDC, 100, 100, WINCX - 100, WINCY - 100);
 
 	m_pPlayer->Render(m_hDC);
-	if(m_pMonster){ m_pMonster->Render(m_hDC); }
+	if(m_pMonster)
+	{
+		m_pMonster->Render(m_hDC); 
+	}
 
 	for (auto& pBullet : m_BulletList)
 		pBullet->Render(m_hDC);

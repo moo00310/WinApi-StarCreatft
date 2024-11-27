@@ -22,5 +22,9 @@ private:
 	list<Obj*> m_BulletList;
 	Obj* m_pMonster;
 
+	// FPS 보여주기 위한 변수들
+	DWORD m_dwTime;
+	int m_iFPS;
+	TCHAR m_szFPS[16];
 };
 

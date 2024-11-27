@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Player.h"
 
-Player::Player() : m_pBullet(nullptr)
+Player::Player() : m_pBullet(nullptr), m_dwTime(GetTickCount64())
 {
 }
 
@@ -60,21 +60,24 @@ void Player::Key_Input()
 		m_tInfo.fY += m_fSpeed;
 	}
 
-	if (GetAsyncKeyState('W'))
+	if (m_dwTime + 150 < GetTickCount64())
 	{
-		m_pBullet->push_back(Create_Bullet(Bullet::W));
-	}
-	if (GetAsyncKeyState('A'))
-	{
-		m_pBullet->push_back(Create_Bullet(Bullet::A));
-	}
-	if (GetAsyncKeyState('S'))
-	{
-		m_pBullet->push_back(Create_Bullet(Bullet::S));
-	}
-	if (GetAsyncKeyState('D'))
-	{
-		m_pBullet->push_back(Create_Bullet(Bullet::D));
+		if (GetAsyncKeyState('W'))
+		{
+			m_pBullet->push_back(Create_Bullet(Bullet::W));
+		}
+		if (GetAsyncKeyState('A'))
+		{
+			m_pBullet->push_back(Create_Bullet(Bullet::A));
+		}
+		if (GetAsyncKeyState('S'))
+		{
+			m_pBullet->push_back(Create_Bullet(Bullet::S));
+		}
+		if (GetAsyncKeyState('D'))
+		{
+			m_pBullet->push_back(Create_Bullet(Bullet::D));
+		}
 	}
 }
 
@@ -84,6 +87,8 @@ Obj* Player::Create_Bullet(Bullet::WASD _wasd)
 
 	pBullet->Initialize();
 	pBullet->Set_Pos(m_tInfo.fX, m_tInfo.fY);
+
+	m_dwTime = GetTickCount64();
 
 	return pBullet;
 }

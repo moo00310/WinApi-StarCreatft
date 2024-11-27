@@ -73,7 +73,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,         // 현재 프로그램�
         }
         else
         {
-            if (dwTime + 10 < GetTickCount64())
+            if (dwTime + 20 < GetTickCount64())
             {
                 MainGame.Update();
                 MainGame.Render();
