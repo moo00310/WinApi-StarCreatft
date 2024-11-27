@@ -18,19 +18,19 @@ void CollisionMgr::Collision_Rect(list<Obj*> _Dst, list<Obj*> _Src)
 	}
 }
 
-void CollisionMgr::Collision_Circle(list<Obj*> _Circle, list<Obj*> _Src)
+void CollisionMgr::Collision_Circle(list<Obj*> _Temp, list<Obj*> _Src)
 {
-	for (auto& Circle : _Circle)
+	for (auto& Temp : _Temp)
 	{
-		float radius = Circle->GetInfo().fCX * 0.5f;
+		float radius1 = Temp->GetInfo().fCX * 0.5f;
 		for (auto& Src : _Src)
 		{
-			float distance(0);
-			distance = sqrt(pow(Src->GetInfo().fX - Circle->GetInfo().fX, 2) 
-				+ pow(Src->GetInfo().fY - Circle->GetInfo().fY, 2)); 
-			if (distance <= radius)
+			float radius2 = Src->GetInfo().fCX * 0.5f;
+			float distance = sqrt(pow(Src->GetInfo().fX - Temp->GetInfo().fX, 2)
+				+ pow(Src->GetInfo().fY - Temp->GetInfo().fY, 2));
+			if (distance <= radius1 + radius2)
 			{
-				Circle->SetDead();
+				Temp->SetDead();
 				Src->SetDead();
 			}
 
