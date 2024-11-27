@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Obj.h"
 
-Obj::Obj() : m_fSpeed(0.f)
+Obj::Obj() : m_fSpeed(0.f), m_bDead(false), m_eDir(DIR_END)
 {
 	ZeroMemory(&m_tInfo, sizeof(INFO));
 	ZeroMemory(&m_tRect, sizeof(RECT));

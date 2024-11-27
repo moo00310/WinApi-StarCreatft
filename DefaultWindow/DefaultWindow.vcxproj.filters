@@ -28,6 +28,15 @@
     <Filter Include="01.Obj\02.Monster">
       <UniqueIdentifier>{d56ea719-b549-49d7-ada3-30d1707e9574}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Design">
+      <UniqueIdentifier>{c5dcbf8a-b1a4-4fbb-beb0-8a3f1ed4ac83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Design\AbstractFactory">
+      <UniqueIdentifier>{4e4b2c2a-488f-4079-8f10-19c262c862ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Design\CollisionMgr">
+      <UniqueIdentifier>{1c6a2f43-97ff-4564-9b19-8c4f5338b1fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -63,6 +72,12 @@
     <ClInclude Include="Monster.h">
       <Filter>01.Obj\02.Monster</Filter>
     </ClInclude>
+    <ClInclude Include="AbstractFactory.h">
+      <Filter>02.Design\AbstractFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionMgr.h">
+      <Filter>02.Design\CollisionMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -85,6 +100,9 @@
     </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>01.Obj\02.Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMgr.cpp">
+      <Filter>02.Design\CollisionMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

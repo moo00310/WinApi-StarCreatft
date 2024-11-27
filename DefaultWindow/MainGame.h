@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Obj.h"
 #include "Player.h"
 #include "Monster.h"
@@ -12,19 +12,17 @@ public:
 public:
 	void Initialize();
 	void Update();
+	void Late_Update();
 	void Render();
 	void Release();
 
 private:
-	HDC m_hDC; // ±×¸²À» ±×¸®´Âµ¥ ÇÊ¿äÇÑ º¯¼ö
+	HDC m_hDC;
 
-	Obj* m_pPlayer;
-	list<Obj*> m_BulletList;
-	Obj* m_pMonster;
+	// ë¦¬ìŠ¤íŠ¸ ë°°ì—´
+	list<Obj*> m_ObjList[OBJ_END];
 
-	// FPS º¸¿©ÁÖ±â À§ÇÑ º¯¼öµé
-	DWORD m_dwTime;
+	ULONGLONG m_dwTime;
 	int m_iFPS;
 	TCHAR m_szFPS[16];
 };
-

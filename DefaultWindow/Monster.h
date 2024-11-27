@@ -9,11 +9,10 @@ public:
 
 public:
     void Initialize() override;
-    void Update() override;
+    int Update() override;
+    void Late_Update() override;
     void Render(HDC hDC) override;
     void Release() override;
 
-private:
-    bool m_bRight;
 };
 

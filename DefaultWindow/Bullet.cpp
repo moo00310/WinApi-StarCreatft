@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Bullet.h"
 
-Bullet::Bullet(WASD _wasd) : m_wasd(_wasd)
+Bullet::Bullet()
 {
 
 }
@@ -19,20 +19,23 @@ void Bullet::Initialize()
 	m_fSpeed = 5.f;
 }
 
-void Bullet::Update()
+int Bullet::Update()
 {
-	switch (m_wasd)
+	if (m_bDead)
+		return OBJ_DEAD;
+
+	switch (m_eDir)
 	{
-	case Bullet::W:
+	case DIR_UP:
 		m_tInfo.fY -= m_fSpeed;
 		break;
-	case Bullet::A:
+	case DIR_LEFT:
 		m_tInfo.fX -= m_fSpeed;
 		break;
-	case Bullet::S:
+	case DIR_DOWN:
 		m_tInfo.fY += m_fSpeed;
 		break;
-	case Bullet::D:
+	case DIR_RIGHT:
 		m_tInfo.fX += m_fSpeed;
 		break;
 	default:
@@ -40,6 +43,19 @@ void Bullet::Update()
 	}
 	
 	__super::Update_Rect();
+
+	return OBJ_NOEVENT;
+}
+
+void Bullet::Late_Update()
+{
+	if (100 >= m_tRect.left ||
+		WINCX - 100 <= m_tRect.right ||
+		100 >= m_tRect.top ||
+		WINCY - 100 <= m_tRect.bottom)
+	{
+		m_bDead = true;
+	}
 }
 
 void Bullet::Render(HDC hDC)

@@ -6,7 +6,13 @@
 #define PI 3.141592f
 #define PURE = 0
 
+#define OBJ_NOEVENT		0
+#define OBJ_DEAD		1
+
 extern HWND g_hWnd;
+
+enum OBJID { OBJ_PLAYER, OBJ_BULLET, OBJ_MONSTER, OBJ_MOUSE, OBJ_BUTTON, OBJ_END };
+enum DIRECTION {DIR_LEFT, DIR_UP, DIR_RIGHT, DIR_DOWN, DIR_END };
 
 typedef struct Info
 {

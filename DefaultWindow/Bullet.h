@@ -4,21 +4,15 @@
 class Bullet : public Obj
 {
 public:
-	enum WASD
-	{
-		W =1,
-		A,
-		S,
-		D,
-		END
-	};
+
 public:
-	Bullet(WASD _wasd);
+	Bullet();
 	virtual ~Bullet();
 
 public:
 	void Initialize() override;
-	void Update() override;
+	int	 Update() override;
+	void Late_Update() override;
 	void Render(HDC hDC) override;
 	void Release() override;
 
@@ -30,6 +24,5 @@ public:
 	}
 
 private:
-	WASD m_wasd = END;
 };
 

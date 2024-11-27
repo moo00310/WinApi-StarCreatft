@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Monster.h"
 
-Monster::Monster() : m_bRight(true)
+Monster::Monster()
 {
 }
 
@@ -12,33 +12,33 @@ Monster::~Monster()
 
 void Monster::Initialize()
 {
-	m_tInfo = { 130, 130, 50, 50 };
-	m_fSpeed = 5;
+	m_tInfo.fCX = 50.f;
+	m_tInfo.fCY = 50.f;
+	m_fSpeed = 3.f;
 }
 
-void Monster::Update()
+int Monster::Update()
 {
-	if (m_bRight)
-		m_tInfo.fX += m_fSpeed;
-	else
-		m_tInfo.fX -= m_fSpeed;
+	if (m_bDead)
+		return OBJ_DEAD;
 
+	m_tInfo.fX += m_fSpeed;
 
-	if (m_tInfo.fX >= WINCX - 100)
-	{
-		m_bRight = false;
-	}
-	else if (m_tInfo.fX <= 100)
-	{
-		m_bRight = true;
-	}
-		
 	__super::Update_Rect();
+	return OBJ_NOEVENT;
+}
+
+void Monster::Late_Update()
+{
+	if (m_tRect.left <= 100 || m_tRect.right >= WINCX - 100)
+	{
+		m_fSpeed *= -1.f;
+	}
 }
 
 void Monster::Render(HDC hDC)
 {
-	Rectangle(hDC,
+	Ellipse(hDC,
 		m_tRect.left,
 		m_tRect.top,
 		m_tRect.right,

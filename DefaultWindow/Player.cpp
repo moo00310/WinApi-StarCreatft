@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Player.h"
-
+#include "AbstractFactory.h"
 Player::Player() : m_pBullet(nullptr), m_dwTime(GetTickCount64())
 {
 }
@@ -16,13 +16,19 @@ void Player::Initialize()
 	m_fSpeed = 10.f;
 }
 
-void Player::Update()
+int Player::Update()
 {
 	// 키 입력 값 받는 곳
 	Key_Input();
 
 	// Player 위치 조정
 	__super::Update_Rect();
+
+	return OBJ_NOEVENT;
+}
+
+void Player::Late_Update()
+{
 }
 
 void Player::Render(HDC hDC)
@@ -62,33 +68,21 @@ void Player::Key_Input()
 
 	if (m_dwTime + 150 < GetTickCount64())
 	{
-		if (GetAsyncKeyState('W'))
-		{
-			m_pBullet->push_back(Create_Bullet(Bullet::W));
-		}
-		if (GetAsyncKeyState('A'))
-		{
-			m_pBullet->push_back(Create_Bullet(Bullet::A));
-		}
-		if (GetAsyncKeyState('S'))
-		{
-			m_pBullet->push_back(Create_Bullet(Bullet::S));
-		}
+		if (GetAsyncKeyState('W')) m_pBullet->push_back(Create_Bullet(DIR_UP));
+		if (GetAsyncKeyState('A')) m_pBullet->push_back(Create_Bullet(DIR_LEFT));
+		if (GetAsyncKeyState('S')) m_pBullet->push_back(Create_Bullet(DIR_DOWN));
 		if (GetAsyncKeyState('D'))
 		{
-			m_pBullet->push_back(Create_Bullet(Bullet::D));
+			m_pBullet->push_back(AbstractFactory<Bullet>::Create(m_tInfo.fX, m_tInfo.fY, DIR_RIGHT));
 		}
 	}
 }
 
-Obj* Player::Create_Bullet(Bullet::WASD _wasd)
+Obj* Player::Create_Bullet(DIRECTION eDir)
 {
-	Obj* pBullet = new Bullet(_wasd);
-
-	pBullet->Initialize();
+	Obj* pBullet = AbstractFactory<Bullet>::Create();
 	pBullet->Set_Pos(m_tInfo.fX, m_tInfo.fY);
-
-	m_dwTime = GetTickCount64();
+	pBullet->SetDir(eDir);
 
 	return pBullet;
 }

@@ -77,6 +77,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,         // 현재 프로그램�
             {
                 MainGame.Update();
                 MainGame.Render();
+                MainGame.Late_Update();
 
                 dwTime = GetTickCount64();
             }

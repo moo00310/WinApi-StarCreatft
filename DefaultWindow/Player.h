@@ -16,15 +16,17 @@ public:
 
 public:
     void Initialize() override;
-    void Update() override;
+    int Update() override;
+    void Late_Update() override;
     void Render(HDC hDC) override;
     void Release() override;
 private:
     void Key_Input();
-    Obj* Create_Bullet(Bullet::WASD _wasd);
+    Obj* Create_Bullet(DIRECTION eDir);
 
 private:
     list<Obj*>* m_pBullet;
-    DWORD m_dwTime;
+    ULONGLONG m_dwTime;
+
 };
 

@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "MainGame.h"
+#include "AbstractFactory.h"
+#include "CollisionMgr.h"
 
-MainGame::MainGame() : m_hDC(nullptr), m_pPlayer(nullptr), m_pMonster(nullptr),
-m_dwTime(GetTickCount64()), m_iFPS(0)
+MainGame::MainGame() : m_dwTime(GetTickCount64()), m_iFPS(0), m_hDC(nullptr)
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR));
 }
@@ -15,58 +16,57 @@ MainGame::~MainGame()
 void MainGame::Initialize()
 {
 	m_hDC = GetDC(g_hWnd);
-	if (!m_pPlayer)
-	{
-		m_pPlayer = new Player();
-		m_pPlayer->Initialize();
-	}
-	if(!m_pMonster)
-	{
-		m_pMonster = new Monster();
-		m_pMonster->Initialize();
-	}
 
-	// 멤버 리스트 주소를 플레이어에 전달
-	dynamic_cast<Player*>(m_pPlayer)->SetBulletList(&m_BulletList);
+	m_ObjList[OBJ_PLAYER].push_back(AbstractFactory<Player>::Create());
+	// 플레이어의 리스트의 주소를 불렛에 전달
+	dynamic_cast<Player*>(m_ObjList[OBJ_PLAYER].front())->SetBulletList(&m_ObjList[OBJ_BULLET]);
+
+	for (int i = 0; i < 3; ++i)
+	{
+		m_ObjList[OBJ_MONSTER].push_back(AbstractFactory<Monster>::Create(200.f, (i + 1) * 150.f, DIR_END));
+	}
 }
 
 void MainGame::Update()
 {
-	m_pPlayer->Update();
-	if (m_pMonster) 
-	{ 
-		m_pMonster->Update(); 
-	}
-
-
-	for (auto& pBullet : m_BulletList)
+	for (int i = 0; i < OBJ_END; ++i)
 	{
-		pBullet->Update();
-	}
-
-
-	m_BulletList.remove_if([](Obj* bullet) {
-		if (dynamic_cast<Bullet*>(bullet)->isOut())
+		for (auto iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
 		{
-			Safe_Delete<Obj*>(bullet);
-			return true;
-		}
-		else
-			return false;
-		 });
+			int iResult = (*iter)->Update();
 
-	for (auto& pBullet : m_BulletList)
-	{
-		if (m_pMonster == nullptr) return;
-		if (pBullet->Collision(m_pMonster))
-		{
-			Safe_Delete<Obj*>(m_pMonster);
+			if (OBJ_DEAD == iResult)
+			{
+				Safe_Delete<Obj*>(*iter);
+				iter = m_ObjList[i].erase(iter);
+			}
+			else
+				++iter;
 		}
 	}
+	
 }
+
+void MainGame::Late_Update()
+{
+	for (int i = 0; i < OBJ_END; ++i)
+	{
+		for (auto& pObj : m_ObjList[i])
+		{
+			pObj->Late_Update();
+		}
+	}
+
+	// 충돌 처리
+	//CollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
+	CollisionMgr::Collision_Circle(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
+}
+
 
 void MainGame::Render()
 {
+#pragma region FPS 출력
+
 	m_iFPS++;
 
 	if (m_dwTime + 1000 < GetTickCount64())
@@ -79,31 +79,27 @@ void MainGame::Render()
 		m_dwTime = GetTickCount64();
 	}
 
+#pragma endregion
+
 	// 먼저 그려서 배경을 만듦 (잔상가리기 용)
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
 	Rectangle(m_hDC, 100, 100, WINCX - 100, WINCY - 100);
 
-	m_pPlayer->Render(m_hDC);
-	if(m_pMonster)
+	for (int i = 0; i < OBJ_END; ++i)
 	{
-		m_pMonster->Render(m_hDC); 
+		for (auto& pObj : m_ObjList[i])
+			pObj->Render(m_hDC);
 	}
-
-	for (auto& pBullet : m_BulletList)
-		pBullet->Render(m_hDC);
-	
 }
 
 void MainGame::Release()
 {
-
-	Safe_Delete<Obj*>(m_pPlayer);
-	Safe_Delete<Obj*>(m_pMonster);
-
-	for_each(m_BulletList.begin(), m_BulletList.end(), Safe_Delete<Obj*>);
-	m_BulletList.clear();
+	for (int i = 0; i < OBJ_END; ++i)
+	{
+		for_each(m_ObjList[i].begin(), m_ObjList[i].end(), Safe_Delete<Obj*>);
+		m_ObjList[i].clear();
+	}
 
 	// RefCount를 이용한 메모리 반환
 	ReleaseDC(g_hWnd, m_hDC);
-	
 }
