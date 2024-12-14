@@ -12,7 +12,8 @@
 
 #include <list>
 #include <algorithm>
-#include "Define.h"
+#include <map>
+#include <vector>
 
 #ifdef _DEBUG
 

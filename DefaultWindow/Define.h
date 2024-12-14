@@ -1,32 +1,112 @@
 #pragma once
 
-#define WINCX  800
-#define WINCY  600
+#define WINCX		800
+#define WINCY		600
 
-#define PI 3.141592f
-#define PURE = 0
+#define	PURE		= 0
+#define PI			3.141592f
 
-#define OBJ_NOEVENT		0
-#define OBJ_DEAD		1
+#define OBJ_NOEVENT			0
+#define OBJ_DEAD			1	
 
-extern HWND g_hWnd;
+#define VK_MAX				0xff
 
-enum OBJID { OBJ_PLAYER, OBJ_BULLET, OBJ_MONSTER, OBJ_MOUSE, OBJ_BUTTON, OBJ_END };
-enum DIRECTION {DIR_LEFT, DIR_UP, DIR_RIGHT, DIR_DOWN, DIR_END };
+#define	TILECX				32  // 타일 사이즈
+#define	TILECY				32
 
-typedef struct Info
+#define TILEX				75  //타일 개수
+#define TILEY				75
+
+
+extern HWND		g_hWnd;
+
+enum DIRECTION { DIR_LEFT, DIR_RIGHT, DIR_UP, DIR_DOWN, DIR_LU, DIR_RU, DIR_END };
+
+enum OBJID { OBJ_PLAYER, OBJ_BULLET, OBJ_MONSTER, OBJ_MOUSE, OBJ_SHIELD, OBJ_BUTTON, OBJ_END };
+
+enum RENDERID { RENDER_BACKGROUND, RENDER_GAMEOBJECT, RENDER_UI, RENDER_EFFECT, RENDER_END };
+
+enum SCENEID { SC_LOGO, SC_MENU, SC_EDIT, SC_STAGE, SC_END };
+
+enum EditType { ET_TILE = 0, ET_OBJECT, ET_END };
+
+
+typedef struct tagInfo
 {
 	float		fX, fY;
 	float		fCX, fCY;	// 가로, 세로 길이
 
 }INFO;
 
-template <typename T>
-void Safe_Delete(T& p)
+typedef struct tagLinePoint
 {
-	if (p)
+	float		fX, fY;
+
+	tagLinePoint()	{ZeroMemory(this, sizeof(tagLinePoint));}
+		tagLinePoint(float _fX, float _fY)
+		: fX(_fX), fY(_fY)
+	{	}
+
+}LINEPOINT;
+
+typedef struct tagLine
+{
+	LINEPOINT	tLPoint;
+	LINEPOINT	tRPoint;
+
+	tagLine() { 	ZeroMemory(this, sizeof(tagLine));	}
+	tagLine(LINEPOINT& _tLPoint, LINEPOINT& _tRPoint)
+		: tLPoint(_tLPoint), tRPoint(_tRPoint) {	}
+
+}LINE;
+
+typedef struct tagFrame
+{
+	int		iFrameStart;
+	int		iFrameEnd;
+	int		iMotion;
+	DWORD	dwSpeed;
+	DWORD	dwTime;
+
+}FRAME;
+
+
+template<typename T>
+void Safe_Delete(T& Temp)
+{
+	if (Temp)
 	{
-		delete p;
-		p = nullptr;
+		delete Temp;
+		Temp = nullptr;
 	}
 }
+
+struct tagFinder
+{
+public:
+	tagFinder(const TCHAR* pString) : m_pString(pString) {}
+
+public:
+	template<typename T>
+	bool	operator()(T& rObj)
+	{
+		return !lstrcmp(m_pString, rObj.first);
+	}
+
+private:
+	const TCHAR* m_pString;
+};
+
+struct DeleteMap
+{
+public:
+	template<typename T>
+	void	operator()(T& Pair)
+	{
+		if (Pair.second)
+		{
+			delete Pair.second;
+			Pair.second = nullptr;
+		}
+	}
+};
