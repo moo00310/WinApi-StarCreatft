@@ -16,7 +16,7 @@ void CGuideBullet::Initialize()
 	m_tInfo.fCX = 20.f;
 	m_tInfo.fCY = 20.f;
 
-	m_fSpeed = 5.f;
+	m_tStat.m_fSpeed = 5.f;
 }
 
 int CGuideBullet::Update()
@@ -43,8 +43,8 @@ int CGuideBullet::Update()
 		  m_fAngle = fRadian * (180.f / PI);
 	}
 	
-	m_tInfo.fX += m_fSpeed * cosf(m_fAngle * (PI / 180.f));
-	m_tInfo.fY -= m_fSpeed * sinf(m_fAngle * (PI / 180.f));
+	m_tInfo.fX += m_tStat.m_fSpeed * cosf(m_fAngle * (PI / 180.f));
+	m_tInfo.fY -= m_tStat.m_fSpeed * sinf(m_fAngle * (PI / 180.f));
 
 	__super::Update_Rect();
 

@@ -5,7 +5,6 @@
 
 #include "CCollisionMgr.h"
 
-#include "CLineMgr.h"
 #include "CKeyMgr.h"
 #include "CScrollMgr.h"
 #include "CBmpMgr.h"
@@ -13,7 +12,7 @@
 #include "CTileMgr.h"
 
 CMainGame::CMainGame()
-	: m_dwTime(GetTickCount()), m_iFPS(0)
+	: m_dwTime(GetTickCount64()), m_iFPS(0), m_hDC(nullptr)
 {
 	ZeroMemory(m_szFPS, sizeof(m_szFPS));
 }
@@ -30,7 +29,6 @@ void CMainGame::Initialize()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Back.bmp", L"Back");
 
 	CSceneMgr::Get_Instance()->Set_Scene(SC_LOGO);
-
 }
 
 void CMainGame::Update()
@@ -52,14 +50,14 @@ void CMainGame::Render()
 #pragma region  FPS Ãâ·Â
 	++m_iFPS;
 
-	if (m_dwTime + 1000 < GetTickCount())
+	if (m_dwTime + 1000 < GetTickCount64())
 	{
 		swprintf_s(m_szFPS, L"FPS : %d", m_iFPS);
 
 		SetWindowText(g_hWnd, m_szFPS);
 
 		m_iFPS = 0;
-		m_dwTime = GetTickCount();
+		m_dwTime = GetTickCount64();
 	}
 #pragma endregion
 	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"Back");
@@ -81,7 +79,6 @@ void CMainGame::Release()
 	CBmpMgr::Destroy_Instance();
 	CScrollMgr::Destroy_Instance();
 	CKeyMgr::Destroy_Instance();
-	CLineMgr::Destroy_Instance();
 	CSceneMgr::Destroy_Instance();
 	CObjMgr::DestroyInstance();
 	ReleaseDC(g_hWnd, m_hDC);

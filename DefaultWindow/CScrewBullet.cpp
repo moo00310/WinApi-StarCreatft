@@ -17,7 +17,7 @@ void CScrewBullet::Initialize()
 	m_tInfo.fCX = 20.f;
 	m_tInfo.fCY = 20.f;
 
-	m_fSpeed = 5.f;
+	m_tStat.m_fSpeed = 5.f;
 
 	m_fRotAngle = 0.f;
 	m_fRotSpeed = 30.f;
@@ -35,8 +35,8 @@ int CScrewBullet::Update()
 		m_bStart = false;
 	}
 
-	m_tCenter.x += long(m_fSpeed * cosf(m_fAngle * (PI / 180.f)));
-	m_tCenter.y -= long(m_fSpeed * sinf(m_fAngle * (PI / 180.f)));
+	m_tCenter.x += long(m_tStat.m_fSpeed * cosf(m_fAngle * (PI / 180.f)));
+	m_tCenter.y -= long(m_tStat.m_fSpeed * sinf(m_fAngle * (PI / 180.f)));
 
 	m_fRotAngle += m_fRotSpeed;
 

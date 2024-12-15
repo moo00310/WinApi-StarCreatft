@@ -44,12 +44,15 @@ public:
 	void		Update_Rect();
 	void		Move_Frame();
 
+	// 공통 기능
+
+
+
 protected:
 	INFO		m_tInfo;
 	RECT		m_tRect;
 	FRAME		m_tFrame;
 
-	float		m_fSpeed;
 	float		m_fAngle;
 	float		m_fDistance;
 
@@ -58,7 +61,10 @@ protected:
 	RENDERID	m_eRender;
 
 	CObj*		m_pTarget;
-
 	const TCHAR*		m_pImgKey;
+
+protected:
+	STAT	m_tStat;
+
 };
 

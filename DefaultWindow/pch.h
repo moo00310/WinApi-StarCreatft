@@ -21,6 +21,14 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 
+
+// GDI+
+#include "ole2.h"
+
+#include "gdiplus.h"
+#pragma comment(lib,"gdiplus")
+using namespace Gdiplus;
+
 #ifndef DBG_NEW 
 
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ ) 

@@ -16,7 +16,7 @@ void CMonster::Initialize()
 {
     m_tInfo.fCX = 300.f;
     m_tInfo.fCY = 300.f;
-    m_fSpeed = 3.f;
+    m_tStat.m_fSpeed = 5.f;
 
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Monster/Monster.bmp", L"Monster");
 

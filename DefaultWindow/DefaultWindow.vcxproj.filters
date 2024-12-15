@@ -19,26 +19,8 @@
     <Filter Include="01. Obj">
       <UniqueIdentifier>{e2af40d7-7336-426a-b430-c284427d1e40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\00. Player">
-      <UniqueIdentifier>{0d160408-139b-4b41-a75d-ed72a58c3568}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\01. Bullet">
-      <UniqueIdentifier>{e788f02c-0521-4a42-9119-079a06b76f75}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\02. Monster">
-      <UniqueIdentifier>{28dd5fd8-800c-41f8-8d4f-b441f0804b18}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Obj\03. Mouse">
       <UniqueIdentifier>{d6dccbdc-b8ff-4078-9255-600f278d61ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\04. Shield">
-      <UniqueIdentifier>{5b2963b1-e43d-46e2-b309-87a87b104392}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\01. Bullet\ScrewBullet">
-      <UniqueIdentifier>{e96831a9-1ff2-488f-b9f8-0f45774d7173}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\01. Bullet\GuideBullet">
-      <UniqueIdentifier>{d0bc3b22-3ccb-4481-a360-7cd2d912e8b6}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. Design">
       <UniqueIdentifier>{fc3aca44-edbd-446a-8d69-20db269dcfd8}</UniqueIdentifier>
@@ -51,12 +33,6 @@
     </Filter>
     <Filter Include="03. Design\ObjMgr">
       <UniqueIdentifier>{f3eeee71-f450-4ceb-ad88-f37da494e3af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. Design\LineMgr">
-      <UniqueIdentifier>{3f637332-18dd-4a28-ad78-9e2077461dc9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. Design\LineMgr\Line">
-      <UniqueIdentifier>{328d590e-a613-4617-8155-0ed506d73f79}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. Design\KeyMgr">
       <UniqueIdentifier>{35d39457-7602-4ce2-86e7-f6c882bdb56b}</UniqueIdentifier>
@@ -88,14 +64,50 @@
     <Filter Include="02. Scene\03. Stage">
       <UniqueIdentifier>{4fc6b5da-8ebb-4f01-abb9-a1d8a2f9348c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\05. Button">
-      <UniqueIdentifier>{b8f9215b-fd37-4dd4-b322-a07d7ccf0bd1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Design\TileMgr">
       <UniqueIdentifier>{e0562699-c98e-43bc-b5d6-81802d081253}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. Design\TileMgr\Tile">
       <UniqueIdentifier>{b2c00f52-fc2f-4967-937f-14aa3b936e02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\Old">
+      <UniqueIdentifier>{ff2baa36-8337-454a-8306-77c450f78dee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\Old\00. Player">
+      <UniqueIdentifier>{0d160408-139b-4b41-a75d-ed72a58c3568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\Old\01. Bullet">
+      <UniqueIdentifier>{e788f02c-0521-4a42-9119-079a06b76f75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\Old\01. Bullet\ScrewBullet">
+      <UniqueIdentifier>{e96831a9-1ff2-488f-b9f8-0f45774d7173}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\Old\01. Bullet\GuideBullet">
+      <UniqueIdentifier>{d0bc3b22-3ccb-4481-a360-7cd2d912e8b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\Old\02. Monster">
+      <UniqueIdentifier>{28dd5fd8-800c-41f8-8d4f-b441f0804b18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\Old\05. Button">
+      <UniqueIdentifier>{b8f9215b-fd37-4dd4-b322-a07d7ccf0bd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Unit">
+      <UniqueIdentifier>{b8320515-8355-441e-9494-2cf1d0362a0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Unit\00.SCV">
+      <UniqueIdentifier>{01d22c51-99ba-47d5-843e-00769614f24d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Unit\01.Marine">
+      <UniqueIdentifier>{5cf99645-8ec3-404e-a657-3871b7d92b9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Unit\02.Medic">
+      <UniqueIdentifier>{900f4e15-3d22-4b2b-b007-b0ce3c29b23c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build">
+      <UniqueIdentifier>{71d122fe-ec02-4477-b5f1-ea8ca07118e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04.Effect">
+      <UniqueIdentifier>{e204bdfd-f4a5-4277-9028-407472d44990}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -124,13 +136,13 @@
       <Filter>01. Obj</Filter>
     </ClInclude>
     <ClInclude Include="CPlayer.h">
-      <Filter>01. Obj\00. Player</Filter>
+      <Filter>01. Obj\Old\00. Player</Filter>
     </ClInclude>
     <ClInclude Include="CBullet.h">
-      <Filter>01. Obj\01. Bullet</Filter>
+      <Filter>01. Obj\Old\01. Bullet</Filter>
     </ClInclude>
     <ClInclude Include="CMonster.h">
-      <Filter>01. Obj\02. Monster</Filter>
+      <Filter>01. Obj\Old\02. Monster</Filter>
     </ClInclude>
     <ClInclude Include="CAbstractFactory.h">
       <Filter>03. Design\AbstractFactory</Filter>
@@ -141,23 +153,14 @@
     <ClInclude Include="CMouse.h">
       <Filter>01. Obj\03. Mouse</Filter>
     </ClInclude>
-    <ClInclude Include="CShield.h">
-      <Filter>01. Obj\04. Shield</Filter>
-    </ClInclude>
     <ClInclude Include="CScrewBullet.h">
-      <Filter>01. Obj\01. Bullet\ScrewBullet</Filter>
+      <Filter>01. Obj\Old\01. Bullet\ScrewBullet</Filter>
     </ClInclude>
     <ClInclude Include="CObjMgr.h">
       <Filter>03. Design\ObjMgr</Filter>
     </ClInclude>
     <ClInclude Include="CGuideBullet.h">
-      <Filter>01. Obj\01. Bullet\GuideBullet</Filter>
-    </ClInclude>
-    <ClInclude Include="CLine.h">
-      <Filter>03. Design\LineMgr\Line</Filter>
-    </ClInclude>
-    <ClInclude Include="CLineMgr.h">
-      <Filter>03. Design\LineMgr</Filter>
+      <Filter>01. Obj\Old\01. Bullet\GuideBullet</Filter>
     </ClInclude>
     <ClInclude Include="CKeyMgr.h">
       <Filter>03. Design\KeyMgr</Filter>
@@ -184,7 +187,7 @@
       <Filter>02. Scene\01. Menu</Filter>
     </ClInclude>
     <ClInclude Include="CMyButton.h">
-      <Filter>01. Obj\05. Button</Filter>
+      <Filter>01. Obj\Old\05. Button</Filter>
     </ClInclude>
     <ClInclude Include="CStage.h">
       <Filter>02. Scene\03. Stage</Filter>
@@ -197,6 +200,21 @@
     </ClInclude>
     <ClInclude Include="CTileMgr.h">
       <Filter>03. Design\TileMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CUnit.h">
+      <Filter>01. Obj\01.Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="CBuild.h">
+      <Filter>01. Obj\02.Build</Filter>
+    </ClInclude>
+    <ClInclude Include="CMarine.h">
+      <Filter>01. Obj\01.Unit\01.Marine</Filter>
+    </ClInclude>
+    <ClInclude Include="CEffect.h">
+      <Filter>01. Obj\04.Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CBloodEffect.h">
+      <Filter>01. Obj\04.Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -213,13 +231,13 @@
       <Filter>01. Obj</Filter>
     </ClCompile>
     <ClCompile Include="CPlayer.cpp">
-      <Filter>01. Obj\00. Player</Filter>
+      <Filter>01. Obj\Old\00. Player</Filter>
     </ClCompile>
     <ClCompile Include="CBullet.cpp">
-      <Filter>01. Obj\01. Bullet</Filter>
+      <Filter>01. Obj\Old\01. Bullet</Filter>
     </ClCompile>
     <ClCompile Include="CMonster.cpp">
-      <Filter>01. Obj\02. Monster</Filter>
+      <Filter>01. Obj\Old\02. Monster</Filter>
     </ClCompile>
     <ClCompile Include="CCollisionMgr.cpp">
       <Filter>03. Design\CollisionMgr</Filter>
@@ -227,23 +245,14 @@
     <ClCompile Include="CMouse.cpp">
       <Filter>01. Obj\03. Mouse</Filter>
     </ClCompile>
-    <ClCompile Include="CShield.cpp">
-      <Filter>01. Obj\04. Shield</Filter>
-    </ClCompile>
     <ClCompile Include="CScrewBullet.cpp">
-      <Filter>01. Obj\01. Bullet\ScrewBullet</Filter>
+      <Filter>01. Obj\Old\01. Bullet\ScrewBullet</Filter>
     </ClCompile>
     <ClCompile Include="CObjMgr.cpp">
       <Filter>03. Design\ObjMgr</Filter>
     </ClCompile>
     <ClCompile Include="CGuideBullet.cpp">
-      <Filter>01. Obj\01. Bullet\GuideBullet</Filter>
-    </ClCompile>
-    <ClCompile Include="CLine.cpp">
-      <Filter>03. Design\LineMgr\Line</Filter>
-    </ClCompile>
-    <ClCompile Include="CLineMgr.cpp">
-      <Filter>03. Design\LineMgr</Filter>
+      <Filter>01. Obj\Old\01. Bullet\GuideBullet</Filter>
     </ClCompile>
     <ClCompile Include="CKeyMgr.cpp">
       <Filter>03. Design\KeyMgr</Filter>
@@ -270,7 +279,7 @@
       <Filter>02. Scene\01. Menu</Filter>
     </ClCompile>
     <ClCompile Include="CMyButton.cpp">
-      <Filter>01. Obj\05. Button</Filter>
+      <Filter>01. Obj\Old\05. Button</Filter>
     </ClCompile>
     <ClCompile Include="CStage.cpp">
       <Filter>02. Scene\03. Stage</Filter>
@@ -283,6 +292,21 @@
     </ClCompile>
     <ClCompile Include="CTileMgr.cpp">
       <Filter>03. Design\TileMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CUnit.cpp">
+      <Filter>01. Obj\01.Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="CBuild.cpp">
+      <Filter>01. Obj\02.Build</Filter>
+    </ClCompile>
+    <ClCompile Include="CMarine.cpp">
+      <Filter>01. Obj\01.Unit\01.Marine</Filter>
+    </ClCompile>
+    <ClCompile Include="CEffect.cpp">
+      <Filter>01. Obj\04.Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CBloodEffect.cpp">
+      <Filter>01. Obj\04.Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

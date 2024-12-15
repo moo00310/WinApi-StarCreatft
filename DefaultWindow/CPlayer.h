@@ -1,6 +1,5 @@
 #pragma once
 #include "CObj.h"
-#include "CShield.h"
 #include "CScrewBullet.h"
 #include "CGuideBullet.h"
 
@@ -22,10 +21,8 @@ public:
 
 private:
     void        Key_Input();
-    void        Jumping();
     void        Offset();
 
-    CObj*       Create_Shield();
     void        Change_Motion();
 
 private:

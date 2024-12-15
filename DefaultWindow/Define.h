@@ -20,9 +20,28 @@
 
 extern HWND		g_hWnd;
 
-enum DIRECTION { DIR_LEFT, DIR_RIGHT, DIR_UP, DIR_DOWN, DIR_LU, DIR_RU, DIR_END };
+enum DIRECTION {
+ // 오른쪽에서 반시계 방향으로 회전
+	DIR_RIGHT,		// 오른쪽			//-----------------0도----------------------
+	DIR_RIGHT_UP,	
+	DIR_RU,			// 오른쪽 대각선		//-----------------45도----------------------
+	DIR_UP_RIGHT,	
+	DIR_UP,			// 위				//-----------------90도----------------------
+	DIR_UP_LEFT,	
+	DIR_LU,			// 왼쪽 대각선		//-----------------135도----------------------
+	DIR_LEFT_UP,    
+	DIR_LEFT,		// 왼쪽				//-----------------180도----------------------
+	DIR_LEFT_DOWN,	
+	DIR_LD,			// 왼쪽 아래			//-----------------225도----------------------
+	DIR_DOWN_LEFT,	
+	DIR_DOWN,		// 아래				//-----------------270도----------------------
+	DIR_DOWN_RIGHT,
+	DIR_RD ,		// 오른쪽 아래대각선	//-----------------315도----------------------
+	DIR_RIGHT_DOWN,
+	DIR_END, // 방향 없음
+};
 
-enum OBJID { OBJ_PLAYER, OBJ_BULLET, OBJ_MONSTER, OBJ_MOUSE, OBJ_SHIELD, OBJ_BUTTON, OBJ_END };
+enum OBJID { OBJ_EFFECT, OBJ_PLAYER, OBJ_BULLET, OBJ_MONSTER, OBJ_MOUSE, OBJ_SHIELD, OBJ_BUTTON, OBJ_END };
 
 enum RENDERID { RENDER_BACKGROUND, RENDER_GAMEOBJECT, RENDER_UI, RENDER_EFFECT, RENDER_END };
 
@@ -30,6 +49,13 @@ enum SCENEID { SC_LOGO, SC_MENU, SC_EDIT, SC_STAGE, SC_END };
 
 enum EditType { ET_TILE = 0, ET_OBJECT, ET_END };
 
+enum DEFENCEID { DF_END, DF_SAMLL, DF_MEDIUM, DF_LAGE };
+enum ATTACKID { AT_END, AT_NORMAL, AT_CONCUSSIVE, AT_EXPLOSIVE};
+enum UNITID{ UNIT_SCV, UNIT_MARINE,UNIT_END };
+enum BUILDID { BUILD_COMMEND, BUILD_BARRCK, BUILD_END };
+
+
+enum ATIMESTATE { STATE_IDLE ,STATE_MOVE, STATE_ATTACK, STATE_DEAD, STATE_END};
 
 typedef struct tagInfo
 {
@@ -64,11 +90,26 @@ typedef struct tagFrame
 {
 	int		iFrameStart;
 	int		iFrameEnd;
-	int		iMotion;
+	int		iCurCount;
 	DWORD	dwSpeed;
-	DWORD	dwTime;
+	ULONGLONG	dwTime;
 
 }FRAME;
+
+
+typedef struct tagStat
+{
+	int m_iHp;			// 체력
+	int m_iAttack;		// 공격력
+	int m_iDefence;     // 방어력
+	int m_iRange;		// 사거리
+	float m_fSpeed;		// 이동 속도
+	int Colldown;		// 공격속도
+
+	DEFENCEID m_eDfenceID;
+	ATTACKID m_eAttackID;
+
+}STAT;
 
 
 template<typename T>

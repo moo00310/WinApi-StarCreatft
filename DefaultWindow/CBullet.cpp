@@ -15,7 +15,7 @@ void CBullet::Initialize()
 	m_tInfo.fCX = 30.f;
 	m_tInfo.fCY = 30.f;
 
-	m_fSpeed = 5.f;
+	m_tStat.m_fSpeed = 5.f;
 }
 
 int CBullet::Update()
@@ -23,8 +23,8 @@ int CBullet::Update()
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	m_tInfo.fX += m_fSpeed * cosf(m_fAngle * (PI / 180.f));
-	m_tInfo.fY -= m_fSpeed * sinf(m_fAngle * (PI / 180.f));
+	m_tInfo.fX += m_tStat.m_fSpeed * cosf(m_fAngle * (PI / 180.f));
+	m_tInfo.fY -= m_tStat.m_fSpeed * sinf(m_fAngle * (PI / 180.f));
 
 	__super::Update_Rect();
 
