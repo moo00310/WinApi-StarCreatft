@@ -27,7 +27,7 @@ void CMarineDead::Initialize()
 int CMarineDead::Update()
 {
 	m_iCount++;
-
+	//Å×½ºÆ®
 	if (m_iCount < 5)
 	{
 		m_iDeadImg = 0;
