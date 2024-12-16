@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CTile.h"
+#include "CObj.h"
 
 class CTileMgr
 {
@@ -9,7 +10,7 @@ private:
 	~CTileMgr();
 
 public:
-	void Initialize() ;
+	void Initialize();
 	int Update() ;
 	void Late_Update() ;
 	void Render(HDC hDC) ;
@@ -20,6 +21,8 @@ public:
 
 	void		Save_Tile();
 	void		Load_Tile();
+
+	const vector<CObj*>& Get_VecTile() { return m_vecTile; }
 
 public:
 	static CTileMgr* Get_Instance()

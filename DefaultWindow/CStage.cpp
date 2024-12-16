@@ -6,6 +6,7 @@
 #include "CScrollMgr.h"
 #include "CTileMgr.h"
 #include "CMarine.h"
+#include "CMapMgr.h"
 
 CStage::CStage()
 {
@@ -21,17 +22,12 @@ void CStage::Initialize()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Ground.bmp", L"Ground");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/Texture/MyTile/Tile.bmp", L"Tile");
 
-	//CLineMgr::Get_Instance()->Initialize();
-
 	CTileMgr::Get_Instance()->Load_Tile();
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
-
+	
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create());
 
-	/*for (int i = 0; i < 3; ++i)
-	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMonster>::Create(float(rand() % WINCX), float(rand() % WINCY), 0.f));		
-	}*/
+
+	// 타일 옵션 정보 불러오기 해야함
 }
 
 int CStage::Update()

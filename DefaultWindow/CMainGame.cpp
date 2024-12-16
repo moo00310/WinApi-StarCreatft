@@ -10,6 +10,7 @@
 #include "CBmpMgr.h"
 #include "CSceneMgr.h"
 #include "CTileMgr.h"
+#include "CMapMgr.h"
 
 CMainGame::CMainGame()
 	: m_dwTime(GetTickCount64()), m_iFPS(0), m_hDC(nullptr)
@@ -27,7 +28,6 @@ void CMainGame::Initialize()
 	m_hDC = GetDC(g_hWnd);
 	
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Back.bmp", L"Back");
-
 	CSceneMgr::Get_Instance()->Set_Scene(SC_LOGO);
 }
 
@@ -81,5 +81,6 @@ void CMainGame::Release()
 	CKeyMgr::Destroy_Instance();
 	CSceneMgr::Destroy_Instance();
 	CObjMgr::DestroyInstance();
+	CMapMgr::Destroy_Instance();
 	ReleaseDC(g_hWnd, m_hDC);
 }

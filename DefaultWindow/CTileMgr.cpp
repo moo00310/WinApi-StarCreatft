@@ -117,6 +117,7 @@ void CTileMgr::Save_Tile()
 	int		iDrawID(0), iOption(0);
 	DWORD	dwByte(0);
 
+
 	for (auto& pTile : m_vecTile)
 	{
 		iDrawID = dynamic_cast<CTile*>(pTile)->Get_DrawID();

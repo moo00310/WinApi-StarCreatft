@@ -109,6 +109,9 @@
     <Filter Include="01. Obj\04.Effect">
       <UniqueIdentifier>{e204bdfd-f4a5-4277-9028-407472d44990}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Design\MapMgr">
+      <UniqueIdentifier>{b337e5a3-5856-49a1-9a85-41b558bdb7d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -216,6 +219,9 @@
     <ClInclude Include="CBloodEffect.h">
       <Filter>01. Obj\04.Effect</Filter>
     </ClInclude>
+    <ClInclude Include="CMapMgr.h">
+      <Filter>03. Design\MapMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -307,6 +313,9 @@
     </ClCompile>
     <ClCompile Include="CBloodEffect.cpp">
       <Filter>01. Obj\04.Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CMapMgr.cpp">
+      <Filter>03. Design\MapMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
