@@ -73,6 +73,7 @@ void EditMouse::Render(HDC hDC)
         SRCCOPY);
 
    // Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+
 }
 
 void EditMouse::Release()

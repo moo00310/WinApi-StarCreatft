@@ -39,7 +39,7 @@ int CMarine::Update()
 {
 	if (m_bDead)
 	{
-		// Á×À½ ¾Ö´Ï¸ÞÀÌ¼Ç
+		// Á×À½ ÀÌÆåÆ®¤À
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT,CAbstractFactory<CMarineDead>::Create(m_tInfo.fX, m_tInfo.fY));
 		return OBJ_DEAD;
 	}
@@ -104,18 +104,10 @@ void CMarine::Change_Motion()
 			break;
 
 		case STATE_ATTACK:
-			m_tFrame.iFrameStart = 11;
+			m_tFrame.iFrameStart = 13;
 			m_tFrame.iFrameEnd = 14;
 			m_tFrame.iCurCount = 11;
-			m_tFrame.dwSpeed = 200;
-			m_tFrame.dwTime = GetTickCount64();
-			break;
-
-		case STATE_DEAD:
-			m_tFrame.iFrameStart = 0;
-			m_tFrame.iFrameEnd = 1;
-			m_tFrame.iCurCount = 0;
-			m_tFrame.dwSpeed = 200;
+			m_tFrame.dwSpeed = 150;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 		}

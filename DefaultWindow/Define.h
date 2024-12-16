@@ -17,6 +17,7 @@
 #define TILEX				75  //타일 개수
 #define TILEY				75
 
+#define TILEINDEX		14
 
 extern HWND		g_hWnd;
 
@@ -56,6 +57,8 @@ enum BUILDID { BUILD_COMMEND, BUILD_BARRCK, BUILD_END };
 
 
 enum ATIMESTATE { STATE_IDLE ,STATE_MOVE, STATE_ATTACK, STATE_DEAD, STATE_END};
+
+enum TILE_GROUP { TG_GROUND, TG_HILL, TG_GROUND_GRASS, TG_HILL_GRASS, TG_WALL1, TG_WALL2 };
 
 typedef struct tagInfo
 {
@@ -150,4 +153,21 @@ public:
 			Pair.second = nullptr;
 		}
 	}
+};
+
+struct TileGroup
+{
+	const char* name;      // 그룹 이름 (디버깅이나 출력용)
+	std::vector<std::pair<int, int>> ranges; // 타일 ID 범위 (여러 범위 가능)
+};
+
+const std::vector<TileGroup> TILE_GROUPS = 
+{
+	{"GROUND", {{0, 13}}},                     // 땅 타일
+	{"HILL", {{14, 27}}},                     // 언덕 타일
+	{"GRASS", {{28, 37}, {42, 51}, {56, 65}, {70, 79}, {84, 93}, {98, 107}}}, // 잔디 타일
+	{"HILL_GRASS",{{112, 122},{126, 136},{140, 150},{154, 164},{168, 178},{182, 192}}}, // 언덕 잔디
+	{"WALL1",{{196, 203}, {210, 217},{224, 231}, {238, 245}, {252, 259}}}, // 벽1
+	//{"WALL2",{{112, 122},{126, 136},{140, 150},{154, 164},{168, 178},{182, 192}}}, // 벽2
+
 };
