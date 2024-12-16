@@ -22,7 +22,7 @@ void CMyEdit::Initialize()
 	m_pMouse = new EditMouse();
 	m_pMouse->Initialize();
 
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/Texture/MyTile/Tile.bmp", L"Tile");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/Texture/MyTile/Tile_2.bmp", L"Tile");
 }
 
 int CMyEdit::Update()
@@ -195,7 +195,7 @@ void CMyEdit::ChangeTileID(TILE_GROUP eGroup)
 		// 현재 범위에 속하는 경우
 		if (m_TileID >= minID && m_TileID < maxID)
 		{
-			//m_TileID++; // 다음 타일로 이동
+			m_TileID++; // 다음 타일로 이동
 			return;
 		}
 
