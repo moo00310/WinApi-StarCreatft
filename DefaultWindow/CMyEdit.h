@@ -18,11 +18,15 @@ public:
 
 private:
 	void	Key_Input();
+	void	TileChange();
 	void	ChangeTileID(TILE_GROUP eGroup);
 
 private:
 	int		m_TileID;
 	int		m_TileOption;
+
+	int		m_ObjectTile_iCX;
+	int		m_ObjectTile_iCY;
 
 	CObj* m_pMouse;
 	EditType m_eEditType;

@@ -90,6 +90,23 @@ void CTileMgr::Picking_Tile(POINT pt, int iDrawID, int iOption)
 
 }
 
+void CTileMgr::Object_Tile(POINT pt, int iStartID, int CX, int CY, int iOption)
+{
+	int		x = pt.x / TILECX;
+	int		y = pt.y / TILECY;
+
+	int	iIndex = y * TILEX + x;
+
+	for (int i = 0; i < CY; ++i)
+	{
+		for (int j = 0; j < CX; ++j)
+		{
+			dynamic_cast<CTile*>(m_vecTile[(iIndex + j) + 75 * i])->Set_DrawID((14 * i) + (j + iStartID));
+			dynamic_cast<CTile*>(m_vecTile[(iIndex + j) + 75 * i])->Set_Option(iOption);
+		}
+	}
+}
+
 void CTileMgr::Save_Tile()
 {
 	HANDLE hFile = CreateFile(L"../Data/Tile.dat", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
