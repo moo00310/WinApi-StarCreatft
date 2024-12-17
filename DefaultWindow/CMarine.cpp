@@ -282,10 +282,6 @@ void CMarine::Astar(Pos _tTarget_Index)
 		pos = parent[pos];
 	}
 	std::reverse(_path.begin(), _path.end());
-	
-
-	//TODO
-	// 방향 설정 해당 좌표로 x y가 이동하는 거
 }
 
 bool CMarine::CanGo(Pos pos)
@@ -304,7 +300,7 @@ void CMarine::MoveTo()
 		Pos _pos = _path[m_iPathIndex];
 
 		if(_now == _pos)
-			m_iPathIndex++;
+			++m_iPathIndex;
 		else
 		{
 			// 방향 설정
@@ -314,20 +310,25 @@ void CMarine::MoveTo()
 				if (dir == MoveFront[i])
 				{
 					m_eDir = (DIRECTION)i;
+					break;
 				}
 			}
-
-			m_eCurState = STATE_MOVE;
+			
+			// 단위 벡터로 수정?
+			float x(0.f), y(0.f);
+			float length = sqrtf(dir.x * dir.x + dir.y * dir.y);
+			if (length != 0)
+			{
+				 x = dir.x / length;
+				 y = dir.y / length;
+			}
 
 			// 이동
-			m_tInfo.fX += m_tStat.m_fSpeed * dir.x;
-			m_tInfo.fY += m_tStat.m_fSpeed * dir.y;
-
-			// 단위 벡터로 수정?
-
+			m_eCurState = STATE_MOVE;
+			m_tInfo.fX += m_tStat.m_fSpeed * x;
+			m_tInfo.fY += m_tStat.m_fSpeed * y;
 		}
 	}
 	else if(m_iPathIndex == _path.size())
 		m_eCurState = STATE_IDLE;
 }
-
