@@ -46,20 +46,6 @@ int EditMouse::Update()
     ShowCursor(FALSE);
 
 
-#ifdef  _DEBUG   
-
-    if (m_dwTime + 1000 < GetTickCount64())
-    {
-        int		x = ptMouse.x / TILECX;
-        int		y = ptMouse.y / TILECY;
-        int	iIndex = y * TILEHIGHT + x;
-
-        cout << "마우스 인덱스 : " << iIndex << flush;
-        m_dwTime = GetTickCount64();
-    }
-#endif //  _DEBUG
-
-
     return OBJ_NOEVENT;
 }
 

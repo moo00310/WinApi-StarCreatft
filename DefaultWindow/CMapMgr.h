@@ -1,4 +1,6 @@
 #pragma once
+#include "Define.h"
+
 class CMapMgr
 {
 private:
@@ -7,6 +9,14 @@ private:
 
 public:
 	void Initialize_Map();
+
+	//TODO
+	// 인덱스를 사용해서 이동 가능 불가능 변경(건물, 광물)
+
+	// 맵의 정보를 Unit에게 전달
+	vector<vector<int>>* GetMap() { return &m_Map; }
+
+	int GetTileType(Pos pos) { return m_Map[pos.y][pos.x]; }
 
 public:
 	static CMapMgr* Get_Instance()
@@ -30,7 +40,6 @@ public:
 
 private:
 	static CMapMgr* m_pInstance;
-	int map[75][75] = {};
-	ULONGLONG m_dwTime;
+	vector<vector<int>> m_Map = vector<vector<int>>(75, vector<int>(75, 0));
 };
 

@@ -162,3 +162,95 @@ public:
 	}
 };
 
+/*--------------------------
+	A-Star
+--------------------------*/
+struct Pos
+{
+	bool operator==(Pos& other)
+	{
+		return y == other.y && x == other.x;
+	}
+
+	bool operator!=(Pos& other)
+	{
+		return !(*this == other);
+	}
+
+	bool operator<(const Pos& other) const
+	{
+		if (y != other.y)
+			return y < other.y;
+		return x < other.x;
+	}
+
+	Pos operator+(const Pos& other)
+	{
+		Pos ret;
+		ret.y = y + other.y;
+		ret.x = x + other.x;
+		return ret;
+	}
+
+	Pos& operator+=(const Pos& other)
+	{
+		y += other.y;
+		x += other.x;
+		return *this;
+	}
+
+	int y = 0;
+	int x = 0;
+};
+
+struct PQNode
+{
+	bool operator<(const PQNode& other) const { return f < other.f; }
+	bool operator>(const PQNode& other) const { return f > other.f; }
+
+	int	f; // f = g + h
+	int	g;
+	Pos		pos;
+	DIRECTION dir;
+};
+
+const int MoveCost[16] =
+{
+	10,			// 오른쪽			
+	24,
+	14,			// 오른쪽 위 대각선	
+	24,
+	10,			// 위				
+	24,
+	14,			// 왼쪽 위 대각선		
+	24,
+	10,			// 왼쪽				
+	24,
+	14,			// 왼쪽 아래 대각선		
+	24,
+	10,			// 아래				
+	24,
+	14,			// 오른쪽 아래 대각선
+	24			
+};
+
+const Pos MoveFront[] =
+{
+	// y , x
+	Pos {0,1},	// 오른쪽			
+	Pos {-1,2},
+	Pos {-1,1},	// 오른쪽 위 대각선	
+	Pos {-2,1},
+	Pos {-1,0},	// 위				
+	Pos {-2,-1},
+	Pos {-1,-1},	// 왼쪽 위 대각선		
+	Pos {-1,-2},
+	Pos {0,-1},	// 왼쪽				
+	Pos {1,-2},
+	Pos {1,-1},	// 왼쪽 아래 대각선		
+	Pos {2,-1},
+	Pos {1,0},	// 아래				
+	Pos {2,1},
+	Pos {1,1},	// 오른쪽 아래 대각선
+	Pos {1,2} 
+};

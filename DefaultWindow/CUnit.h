@@ -1,5 +1,6 @@
 #pragma once
 #include "CObj.h"
+
 class CUnit : public CObj
 {
 public:
@@ -11,6 +12,13 @@ public:
 	virtual void Late_Update() PURE;
 	virtual void Render(HDC hDC) PURE;
 	virtual void Release() PURE;
+
+public:
+	// Move
+	// Stop
+	// Attack
+	// Partrol
+
 
 protected:
 	UNITID m_eUnitID;

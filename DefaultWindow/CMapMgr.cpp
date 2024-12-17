@@ -4,10 +4,9 @@
 #include "CTile.h"
 #include "CObj.h"
 
-
 CMapMgr* CMapMgr::m_pInstance = nullptr;
 
-CMapMgr::CMapMgr() :m_dwTime(0)
+CMapMgr::CMapMgr()
 {
 }
 
@@ -30,7 +29,9 @@ void CMapMgr::Initialize_Map()
                  CTile* pTile = dynamic_cast<CTile*>(vecTile[index]);
                  if (pTile)
                  {
-                    map[i][j] = pTile->Get_Option(); 
+
+                     // y, x
+                     m_Map[i][j] = pTile->Get_Option();
                  }
 
                 cout<< endl;

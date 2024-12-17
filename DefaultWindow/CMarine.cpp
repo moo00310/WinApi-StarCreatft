@@ -6,9 +6,10 @@
 #include "CObjMgr.h"
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
+#include "CMapMgr.h"
 
 CMarine::CMarine() : CUnit(UNIT_MARINE), m_iImgId(0), m_eCurState(STATE_END), m_ePreState(STATE_END)
-, m_dwTime(GetTickCount64())
+, m_dwTime(GetTickCount64()), m_Map(nullptr), m_iPathIndex(0)
 {
     ZeroMemory(&m_tFrame, sizeof(FRAME));
 }
@@ -20,6 +21,9 @@ CMarine::~CMarine()
 
 void CMarine::Initialize()
 {
+	// 맵의 주소를 받아옴
+	m_Map = CMapMgr::Get_Instance()->GetMap();
+
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Marine/Marine.bmp", L"Marine");
 
     m_pImgKey = L"Marine";
@@ -40,13 +44,15 @@ int CMarine::Update()
 {
 	if (m_bDead)
 	{
-		// 죽음 이펙트ㅐ
+		// 죽음 이펙트
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT,CAbstractFactory<CMarineDead>::Create(m_tInfo.fX, m_tInfo.fY));
 		return OBJ_DEAD;
 	}
-		
+	
+	MoveTo();
 	Test_Key_Input();
 	Change_Motion();
+
 	__super::Update_Rect();
 
     return OBJ_NOEVENT;
@@ -130,30 +136,177 @@ void CMarine::Change_Motion()
 
 void CMarine::Test_Key_Input()
 {
-	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LEFT))
+	if (CKeyMgr::Get_Instance()->Key_Pressing('Q'))
 	{
-		m_tInfo.fX -= m_tStat.m_fSpeed;
 		m_eCurState = STATE_MOVE;
 	}
 
-	else if (CKeyMgr::Get_Instance()->Key_Pressing(VK_RIGHT))
+	else if (CKeyMgr::Get_Instance()->Key_Pressing('W'))
 	{
 		m_eCurState = STATE_ATTACK;
 	}
-	else
-		m_eCurState = STATE_IDLE;
-
-
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_UP))
+	else if (CKeyMgr::Get_Instance()->Key_Pressing('E'))
 	{
 		if (m_iImgId > 15)
 			m_iImgId = 0;
 		else
 			m_eDir = (DIRECTION)m_iImgId++;
 	}
-
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_DOWN))
+	else if (CKeyMgr::Get_Instance()->Key_Down('R'))
 	{
 		m_bDead = true;
+	}
+	else
+		m_eCurState = STATE_IDLE;
+
+
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_UP))
+	{
+		m_tInfo.fY -= m_tStat.m_fSpeed;
+		
+	}
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_DOWN))
+	{
+		m_tInfo.fY += m_tStat.m_fSpeed;
+
+	}
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LEFT))
+	{
+		m_tInfo.fX -= m_tStat.m_fSpeed;
+
+	}
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_RIGHT))
+	{
+		m_tInfo.fX += m_tStat.m_fSpeed;
+
+	}
+
+	
+
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
+	{
+		Pos temp = { 500 / TILECY , 500 / TILECY };
+		Astar(temp);
+	}
+}
+
+//A-ster
+void CMarine::Astar(Pos _tTarget_Index)
+{
+	// y,x
+	Pos start = { m_tInfo.fY / TILECY , m_tInfo.fX / TILECY };
+
+	// OpenList
+	priority_queue<PQNode, vector<PQNode>, greater<PQNode>> pq;
+
+	// close[y][x] -> (y, x)에 방문을 했는지 여부
+	vector<vector<bool>> closed(75, vector<bool>(75, false));
+
+	// best[y][x] -> 지금까지 (y, x)에 대한 가장 좋은 비용 (작을 수록 좋음)
+	vector<vector<int>> best(75, vector<int>(75, INT_MAX));
+
+	// 부모 추적 용도
+	map<Pos, Pos> parent;
+
+	// 초기값
+	{
+		int g = 0;
+		int h = 10 * (abs(_tTarget_Index.y - _tTarget_Index.y) + abs(_tTarget_Index.x - _tTarget_Index.x));
+		pq.push(PQNode{ g + h, g, start });
+		best[start.y][start.x] = g + h;
+		parent[start] = start;
+	}
+
+	while (pq.empty() == false)
+	{
+		// 제일 좋은 후보를 찾는다
+		PQNode node = pq.top();
+		pq.pop();
+
+		// 동일한 좌표를 여러 경로로 찾아서\
+		// 더 빠른 경로로 인해서 이미 방문(closed)된 경우 스킵
+		// [선택]
+		if (closed[node.pos.y][node.pos.x])
+			continue;
+		if (best[node.pos.y][node.pos.x] < node.f)
+			continue;
+
+		// 방문
+		closed[node.pos.y][node.pos.x] = true;
+
+		// 목적지에 도착했으면 바로 종료
+		if (node.pos == _tTarget_Index)
+			break;
+
+		for (int dir = 0; dir < DIR_END; dir++)
+		{
+			Pos nextPos = node.pos + MoveFront[dir];
+
+			if (nextPos.x < 0 || nextPos.y < 0)
+				continue;
+
+			// 갈 수 있는 지역은 맞는지 확인
+			if (CanGo(nextPos) == false)
+				continue;
+			// [선택] 이미 방문한 곳이면 스킵
+			if (closed[nextPos.y][nextPos.x])
+				continue;
+
+			// 비용 계산
+			int g = node.g + MoveCost[dir];
+			int h = 10 * (abs(_tTarget_Index.y - nextPos.y) + abs(_tTarget_Index.x - nextPos.x));
+			// 다른 경로에서 더 빠른 길을 찾았으면 스킵
+			if (best[nextPos.y][nextPos.x] <= g + h)
+				continue;
+
+			// 예약 진행
+			best[nextPos.y][nextPos.x] = g + h;
+			pq.push(PQNode{ g + h, g, nextPos });
+			parent[nextPos] = node.pos;
+		}
+	}
+
+	// 거꾸로 거슬러 올라간다
+	Pos pos = _tTarget_Index;
+
+	_path.clear();
+	m_iPathIndex = 0;
+
+
+	while (true)
+	{
+		_path.push_back(pos);
+
+		// 시작점은 자신이 곧 부모이다
+		if (pos == parent[pos])
+			break;
+
+		pos = parent[pos];
+	}
+	std::reverse(_path.begin(), _path.end());
+	
+
+	//TODO
+	// 방향 설정 해당 좌표로 x y가 이동하는 거
+}
+
+bool CMarine::CanGo(Pos pos)
+{
+	if (CMapMgr::Get_Instance()->GetTileType(pos) <= 1)
+		return true;
+	else
+		return false;
+}
+
+void CMarine::MoveTo()
+{
+	if (m_iPathIndex < _path.size())
+	{
+		Pos _pos = _path[m_iPathIndex];
+
+		m_tInfo.fX = _pos.x * 32;
+		m_tInfo.fY = _pos.y * 32;
+
+		m_iPathIndex++;
 	}
 }
