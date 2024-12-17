@@ -20,5 +20,7 @@ private:
 	int m_iImgId;
 	ATIMESTATE m_ePreState;
 	ATIMESTATE m_eCurState;
+
+	ULONGLONG m_dwTime;
 };
 

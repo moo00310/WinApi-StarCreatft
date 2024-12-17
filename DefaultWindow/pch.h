@@ -15,19 +15,19 @@
 #include <map>
 #include <vector>
 
-#ifdef _DEBUG
-
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-
+#include <iostream>
 
 // GDI+
 #include "ole2.h"
-
 #include "gdiplus.h"
 #pragma comment(lib,"gdiplus")
 using namespace Gdiplus;
+
+
+#ifdef _DEBUG
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 
 #ifndef DBG_NEW 
 

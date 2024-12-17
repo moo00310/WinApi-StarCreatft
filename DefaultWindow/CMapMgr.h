@@ -6,7 +6,7 @@ private:
 	~CMapMgr();
 
 public:
-	void Initialize();
+	void Initialize_Map();
 
 public:
 	static CMapMgr* Get_Instance()
@@ -31,5 +31,6 @@ public:
 private:
 	static CMapMgr* m_pInstance;
 	int map[75][75] = {};
+	ULONGLONG m_dwTime;
 };
 

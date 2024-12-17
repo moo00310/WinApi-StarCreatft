@@ -7,7 +7,7 @@ CTileMgr* CTileMgr::m_pInstance = nullptr;
 
 CTileMgr::CTileMgr()
 {
-	m_vecTile.reserve(TILEX * TILEY);
+	m_vecTile.reserve(TILEWIDTH * TILEHIGHT);
 }
 
 CTileMgr::~CTileMgr()
@@ -17,9 +17,9 @@ CTileMgr::~CTileMgr()
 
 void CTileMgr::Initialize()
 {
-	for (int i = 0; i < TILEY; ++i)
+	for (int i = 0; i < TILEHIGHT; ++i)
 	{
-		for (int j = 0; j < TILEX; ++j)
+		for (int j = 0; j < TILEWIDTH; ++j)
 		{
 			float fX = (float)(j * TILECX) + (TILECX >> 1);
 			float fY = (float)(i * TILECY) + (TILECY >> 1);
@@ -58,7 +58,7 @@ void CTileMgr::Render(HDC hDC)
 	{
 		for (int j = iScrollX; j < iMaxX; ++j)
 		{
-			int		iIndex = i * TILEX + j;
+			int		iIndex = i * TILEWIDTH + j;
 
 			if (0 > iIndex || m_vecTile.size() <= (size_t)iIndex)
 				continue;
@@ -80,7 +80,7 @@ void CTileMgr::Picking_Tile(POINT pt, int iDrawID, int iOption)
 	int		x = pt.x / TILECX;
 	int		y = pt.y / TILECY;
 
-	int	iIndex = y * TILEX + x;
+	int	iIndex = y * TILEHIGHT + x;
 
 	if (0 > iIndex || (size_t)iIndex >= m_vecTile.size())
 		return;
@@ -95,14 +95,16 @@ void CTileMgr::Object_Tile(POINT pt, int iStartID, int CX, int CY, int iOption)
 	int		x = pt.x / TILECX;
 	int		y = pt.y / TILECY;
 
-	int	iIndex = y * TILEX + x;
+	int	iIndex = y * TILEHIGHT + x;
 
 	for (int i = 0; i < CY; ++i)
 	{
 		for (int j = 0; j < CX; ++j)
 		{
-			dynamic_cast<CTile*>(m_vecTile[(iIndex + j) + 75 * i])->Set_DrawID((14 * i) + (j + iStartID));
-			dynamic_cast<CTile*>(m_vecTile[(iIndex + j) + 75 * i])->Set_Option(iOption);
+			int ID = (iIndex + j) + 75 * i;
+			if (ID >= 5625) break;
+			dynamic_cast<CTile*>(m_vecTile[ID])->Set_DrawID((14 * i) + (j + iStartID));
+			dynamic_cast<CTile*>(m_vecTile[ID])->Set_Option(iOption);
 		}
 	}
 }

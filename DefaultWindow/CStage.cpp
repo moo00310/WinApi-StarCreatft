@@ -7,6 +7,7 @@
 #include "CTileMgr.h"
 #include "CMarine.h"
 #include "CMapMgr.h"
+#include "CObj.h"
 
 CStage::CStage()
 {
@@ -27,7 +28,8 @@ void CStage::Initialize()
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create());
 
 
-	// 타일 옵션 정보 불러오기 해야함
+	// 타일 옵션 정보 불러오기 
+	CMapMgr::Get_Instance()->Initialize_Map();
 }
 
 int CStage::Update()

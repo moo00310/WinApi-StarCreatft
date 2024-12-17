@@ -13,7 +13,7 @@ void CMouse::SetScroll()
     EditMouse
 --------------------*/
 
-EditMouse::EditMouse() : m_iDrawID(0)
+EditMouse::EditMouse() : m_iDrawID(0) , m_dwTime(GetTickCount64())
 {
 }
 
@@ -41,10 +41,24 @@ int EditMouse::Update()
     m_tInfo.fX = (float)ptMouse.x - m_iScrollX;
     m_tInfo.fY = (float)ptMouse.y - m_iScrollY;
 
-
     __super::Update_Rect();
 
     ShowCursor(FALSE);
+
+
+#ifdef  _DEBUG   
+
+    if (m_dwTime + 1000 < GetTickCount64())
+    {
+        int		x = ptMouse.x / TILECX;
+        int		y = ptMouse.y / TILECY;
+        int	iIndex = y * TILEHIGHT + x;
+
+        cout << "마우스 인덱스 : " << iIndex << flush;
+        m_dwTime = GetTickCount64();
+    }
+#endif //  _DEBUG
+
 
     return OBJ_NOEVENT;
 }
@@ -72,8 +86,8 @@ void EditMouse::Render(HDC hDC)
         TILECY * iY,
         SRCCOPY);
 
-   // Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-
+   //Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+    
 }
 
 void EditMouse::Release()

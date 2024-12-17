@@ -49,6 +49,7 @@ public:
 private:
 	EditType m_eEditType;
 	int m_iDrawID;
+	ULONGLONG m_dwTime;
 };
 
 

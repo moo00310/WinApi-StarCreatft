@@ -8,6 +8,7 @@
 #include "CBloodEffect.h"
 
 CMarine::CMarine() : CUnit(UNIT_MARINE), m_iImgId(0), m_eCurState(STATE_END), m_ePreState(STATE_END)
+, m_dwTime(GetTickCount64())
 {
     ZeroMemory(&m_tFrame, sizeof(FRAME));
 }
@@ -54,6 +55,16 @@ int CMarine::Update()
 void CMarine::Late_Update()
 {
 	__super::Move_Frame();
+
+#ifdef  _DEBUG
+
+	if (m_dwTime + 1000 < GetTickCount64())
+	{
+		cout << "마린 회전 상태 : " << m_eDir << endl;
+		m_dwTime = GetTickCount64();
+	}
+
+#endif //  _DEBUG
 }
 
 void CMarine::Render(HDC hDC)

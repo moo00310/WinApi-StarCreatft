@@ -22,7 +22,7 @@ public:
 	void		Save_Tile();
 	void		Load_Tile();
 
-	const vector<CObj*>& Get_VecTile() { return m_vecTile; }
+	const vector<CObj*>* Get_VecTile() { return &m_vecTile; }
 
 public:
 	static CTileMgr* Get_Instance()

@@ -14,10 +14,9 @@
 #define	TILECX				32  // 타일 사이즈
 #define	TILECY				32
 
-#define TILEX				75  //타일 개수
-#define TILEY				75
+#define TILEWIDTH			75  //타일 개수
+#define TILEHIGHT			75
 
-#define TILEINDEX		14
 
 extern HWND		g_hWnd;
 
@@ -55,14 +54,18 @@ enum ATTACKID { AT_END, AT_NORMAL, AT_CONCUSSIVE, AT_EXPLOSIVE};
 enum UNITID{ UNIT_SCV, UNIT_MARINE,UNIT_END };
 enum BUILDID { BUILD_COMMEND, BUILD_BARRCK, BUILD_END };
 
-
 enum ATIMESTATE { STATE_IDLE ,STATE_MOVE, STATE_ATTACK, STATE_DEAD, STATE_END};
 
-enum TILE_GROUP { TG_GROUND, TG_HILL, 
-	TG_GROUND_GRASS, 
-	TG_HILL_GRASS, 
-	TG_WALL1, 
-	TG_WALL2 = 267};
+enum TILE_GROUP { 
+	TG_GROUND, 
+	TG_HILL, 
+ };
+
+const int TILE_ID_RANGES[][2] = {
+	{0, 13},    // GROUND
+	{14, 27},   // HILL
+};
+
 
 typedef struct tagInfo
 {
@@ -159,7 +162,3 @@ public:
 	}
 };
 
-const int TILE_ID_RANGES[][2] = {
-	{0, 13},    // GROUND
-	{14, 27},   // HILL
-};
