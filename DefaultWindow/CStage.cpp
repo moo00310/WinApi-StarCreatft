@@ -8,6 +8,7 @@
 #include "CMarine.h"
 #include "CMapMgr.h"
 #include "CObj.h"
+#include "CMouse.h"
 
 CStage::CStage()
 {
@@ -23,13 +24,16 @@ void CStage::Initialize()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Ground.bmp", L"Ground");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/Texture/MyTile/Tile.bmp", L"Tile");
 
+	// 로드 타일
 	CTileMgr::Get_Instance()->Load_Tile();
-	
-	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create());
-
-
 	// 타일 옵션 정보 불러오기 
 	CMapMgr::Get_Instance()->Initialize_Map();
+	
+	// 마우스 생산
+	CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<GameMouse>::Create());
+
+	// 마린 생산
+	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create());
 }
 
 int CStage::Update()

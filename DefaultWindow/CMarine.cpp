@@ -152,8 +152,6 @@ void CMarine::Test_Key_Input()
 	{
 		m_bDead = true;
 	}
-	else
-		//m_eCurState = STATE_IDLE;
 
 
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_UP))
@@ -179,9 +177,13 @@ void CMarine::Test_Key_Input()
 
 	
 
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
 	{
-		Pos temp = { 600 / TILECY , 600 / TILECY };
+		POINT       ptMouse{};
+		GetCursorPos(&ptMouse);
+		ScreenToClient(g_hWnd, &ptMouse);
+
+		Pos temp = { ptMouse.y / TILECY , ptMouse.x / TILECY };
 		Astar(temp);
 	}
 }

@@ -150,9 +150,9 @@ void CTileMgr::Load_Tile()
 
 	while (true)
 	{
-		ReadFile(hFile, &tTile, sizeof(INFO), &dwByte, NULL);
-		ReadFile(hFile, &iDrawID, sizeof(int), &dwByte, NULL);
-		ReadFile(hFile, &iOption, sizeof(int), &dwByte, NULL);
+		bool a =ReadFile(hFile, &tTile, sizeof(INFO), &dwByte, NULL);
+		a = ReadFile(hFile, &iDrawID, sizeof(int), &dwByte, NULL);
+		a = ReadFile(hFile, &iOption, sizeof(int), &dwByte, NULL);
 
 		if (0 == dwByte)
 			break;

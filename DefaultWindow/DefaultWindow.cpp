@@ -5,6 +5,7 @@
 #include "framework.h"
 #include "DefaultWindow.h"
 #include "CMainGame.h"
+#include "CScrollMgr.h"
 
 #define MAX_LOADSTRING 100
 
@@ -162,7 +163,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    // CreateWindowW : 등록해 놓은 정보들을 토대로 윈도우를 생성
 
-   RECT rc{ 0, 0, WINCX, WINCY };
+   RECT rc{ 
+       0 , 
+       0 ,
+       WINCX ,
+       WINCY
+   };
+   //ClipCursor(&rc);
 
    // rc = rc + 기본 창 스타일을 고려한 크기 + 메뉴 바 크기 고려 여부
    AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
@@ -255,6 +262,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
+
+    break;
 
     case WM_KEYDOWN:
 

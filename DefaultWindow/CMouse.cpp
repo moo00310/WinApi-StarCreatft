@@ -2,6 +2,7 @@
 #include "CMouse.h"
 #include "CScrollMgr.h"
 #include "CBmpMgr.h"
+#include "CKeyMgr.h"
 
 void CMouse::SetScroll()
 {
@@ -9,11 +10,15 @@ void CMouse::SetScroll()
     m_iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 }
 
+void CMouse::LockMouse()
+{
+}
+
 /*---------------
     EditMouse
 --------------------*/
 
-EditMouse::EditMouse() : m_iDrawID(0) , m_dwTime(GetTickCount64())
+EditMouse::EditMouse() : m_iDrawID(0) , m_dwTime(GetTickCount64()), m_eEditType(ET_END)
 {
 }
 
@@ -37,10 +42,13 @@ int EditMouse::Update()
     GetCursorPos(&ptMouse);
     ScreenToClient(g_hWnd, &ptMouse);
     SetScroll();
-
+  
     m_tInfo.fX = (float)ptMouse.x - m_iScrollX;
     m_tInfo.fY = (float)ptMouse.y - m_iScrollY;
 
+    LockMouse();
+
+    
     __super::Update_Rect();
 
     ShowCursor(FALSE);
@@ -71,9 +79,6 @@ void EditMouse::Render(HDC hDC)
         TILECX * iX,
         TILECY * iY,
         SRCCOPY);
-
-   //Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-    
 }
 
 void EditMouse::Release()
@@ -98,11 +103,31 @@ GameMouse::~GameMouse()
 
 void GameMouse::Initialize()
 {
+    m_tInfo.fCX = 32.f;
+    m_tInfo.fCY = 32.f;
+
+    m_eRender = RENDER_UI;
 }
 
 int GameMouse::Update()
 {
-    return 0;
+    POINT       ptMouse{};
+
+    GetCursorPos(&ptMouse);
+    ScreenToClient(g_hWnd, &ptMouse);
+    SetScroll();
+    ScrollMove(ptMouse);
+
+    m_tInfo.fX = (float)ptMouse.x - m_iScrollX;
+    m_tInfo.fY = (float)ptMouse.y - m_iScrollY;
+
+    LockMouse();
+
+    __super::Update_Rect();
+
+    ShowCursor(FALSE);
+
+    return OBJ_NOEVENT;
 }
 
 void GameMouse::Late_Update()
@@ -111,9 +136,30 @@ void GameMouse::Late_Update()
 
 void GameMouse::Render(HDC hDC)
 {
+    //HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
+    Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 }
 
 void GameMouse::Release()
 {
+}
+
+void GameMouse::MouseInput()
+{
+
+    
+}
+
+void GameMouse::ScrollMove(POINT mouse)
+{
+    if(mouse.x >= CScrollMgr::Get_Instance()->Get_ScrollX() + WINCX - 20)
+        CScrollMgr::Get_Instance()->Set_ScrollX(-5.f);
+    if (mouse.x <= CScrollMgr::Get_Instance()->Get_ScrollX() + 20)
+        CScrollMgr::Get_Instance()->Set_ScrollX(5.f);
+
+    if (mouse.y >= CScrollMgr::Get_Instance()->Get_ScrollY() + WINCY - 20)
+        CScrollMgr::Get_Instance()->Set_ScrollY(-5.f);
+    if (mouse.y <= CScrollMgr::Get_Instance()->Get_ScrollY() + 20)
+        CScrollMgr::Get_Instance()->Set_ScrollY(5.f);
 }
 

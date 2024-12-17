@@ -7,7 +7,7 @@
 class CMouse : public CObj
 {
 public:
-	CMouse() {}
+	CMouse(): m_iScrollX(0), m_iScrollY(0) {}
 	virtual ~CMouse() {}
 
 public:
@@ -18,6 +18,7 @@ public:
 	virtual void Release() PURE;
 
 	void SetScroll();
+	void LockMouse();
 
 protected:
 	int m_iScrollX;
@@ -67,4 +68,8 @@ public:
 	void Late_Update() override;
 	void Render(HDC hDC) override;
 	void Release() override;
+
+private:
+	void MouseInput();
+	void ScrollMove(POINT mouse);
 };
