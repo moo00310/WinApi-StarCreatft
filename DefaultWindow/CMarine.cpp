@@ -136,12 +136,8 @@ void CMarine::Change_Motion()
 
 void CMarine::Test_Key_Input()
 {
-	if (CKeyMgr::Get_Instance()->Key_Pressing('Q'))
-	{
-		m_eCurState = STATE_MOVE;
-	}
 
-	else if (CKeyMgr::Get_Instance()->Key_Pressing('W'))
+	if (CKeyMgr::Get_Instance()->Key_Pressing('W'))
 	{
 		m_eCurState = STATE_ATTACK;
 	}
@@ -157,7 +153,7 @@ void CMarine::Test_Key_Input()
 		m_bDead = true;
 	}
 	else
-		m_eCurState = STATE_IDLE;
+		//m_eCurState = STATE_IDLE;
 
 
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_UP))
@@ -185,7 +181,7 @@ void CMarine::Test_Key_Input()
 
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
 	{
-		Pos temp = { 500 / TILECY , 500 / TILECY };
+		Pos temp = { 600 / TILECY , 600 / TILECY };
 		Astar(temp);
 	}
 }
@@ -243,6 +239,8 @@ void CMarine::Astar(Pos _tTarget_Index)
 			Pos nextPos = node.pos + MoveFront[dir];
 
 			if (nextPos.x < 0 || nextPos.y < 0)
+				continue;
+			if (nextPos.x > 74 || nextPos.y > 74)
 				continue;
 
 			// 갈 수 있는 지역은 맞는지 확인
@@ -302,11 +300,34 @@ void CMarine::MoveTo()
 {
 	if (m_iPathIndex < _path.size())
 	{
+		Pos _now = { m_tInfo.fY / TILECY , m_tInfo.fX / TILECY };
 		Pos _pos = _path[m_iPathIndex];
 
-		m_tInfo.fX = _pos.x * 32;
-		m_tInfo.fY = _pos.y * 32;
+		if(_now == _pos)
+			m_iPathIndex++;
+		else
+		{
+			// 방향 설정
+			Pos dir = (_pos - _now);
+			for (int i = 0; i < DIR_END; i++)
+			{
+				if (dir == MoveFront[i])
+				{
+					m_eDir = (DIRECTION)i;
+				}
+			}
 
-		m_iPathIndex++;
+			m_eCurState = STATE_MOVE;
+
+			// 이동
+			m_tInfo.fX += m_tStat.m_fSpeed * dir.x;
+			m_tInfo.fY += m_tStat.m_fSpeed * dir.y;
+
+			// 단위 벡터로 수정?
+
+		}
 	}
+	else if(m_iPathIndex == _path.size())
+		m_eCurState = STATE_IDLE;
 }
+

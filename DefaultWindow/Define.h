@@ -171,6 +171,10 @@ struct Pos
 	{
 		return y == other.y && x == other.x;
 	}
+	bool operator==(const Pos& other)
+	{
+		return y == other.y && x == other.x;
+	}
 
 	bool operator!=(Pos& other)
 	{
@@ -192,10 +196,26 @@ struct Pos
 		return ret;
 	}
 
+	Pos operator-(const Pos& other)
+	{
+		Pos ret;
+		ret.y = y - other.y;
+		ret.x = x - other.x;
+		return ret;
+	}
+
 	Pos& operator+=(const Pos& other)
 	{
 		y += other.y;
 		x += other.x;
+		return *this;
+	}
+
+
+	Pos& operator-=(const Pos& other)
+	{
+		y -= other.y;
+		x -= other.x;
 		return *this;
 	}
 
@@ -217,21 +237,21 @@ struct PQNode
 const int MoveCost[16] =
 {
 	10,			// 오른쪽			
-	24,
+	18,
 	14,			// 오른쪽 위 대각선	
-	24,
+	18,
 	10,			// 위				
-	24,
+	18,
 	14,			// 왼쪽 위 대각선		
-	24,
+	18,
 	10,			// 왼쪽				
-	24,
+	18,
 	14,			// 왼쪽 아래 대각선		
-	24,
+	18,
 	10,			// 아래				
-	24,
+	18,
 	14,			// 오른쪽 아래 대각선
-	24			
+	18			
 };
 
 const Pos MoveFront[] =
