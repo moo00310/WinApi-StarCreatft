@@ -36,8 +36,8 @@ int CGameMouse::Update()
     POINT       ptMouse{};
     GetCursorPos(&ptMouse);
     ScreenToClient(g_hWnd, &ptMouse);
-    ScrollMove(ptMouse);
 
+    ScrollMove(ptMouse);
     MouseInput(ptMouse);
 
     m_tInfo.fX = (float)ptMouse.x;
@@ -46,10 +46,8 @@ int CGameMouse::Update()
     __super::Update_Rect();
 
     // ¸¶¿ì½º Àá±À
-    //LockMouse();
-    
-  
-
+    LockMouse();
+   
     return OBJ_NOEVENT;
 }
 
@@ -108,53 +106,62 @@ void CGameMouse::MouseInput(POINT ptMouse)
         m_eCurState = MS_IDLE;
     }
 
-   
     if (CKeyMgr::Get_Instance()->Key_Down('A'))
     {
         m_eCurState = MS_ATTACK;
+    }
+
+    if (CKeyMgr::Get_Instance()->Key_Down('S'))
+    {
+        dynamic_cast<CMarine*>(CObjMgr::Get_Instance()->Get_Player())->SetInput(IP_STOP);
+    }
+
+    if (CKeyMgr::Get_Instance()->Key_Down('H'))
+    {
+        dynamic_cast<CMarine*>(CObjMgr::Get_Instance()->Get_Player())->SetInput(IP_HOLD);
     }
 }
 
 void CGameMouse::ScrollMove(POINT mouse)
 {
-    if (mouse.x >= CScrollMgr::Get_Instance()->Get_ScrollX() + WINCX - 2)
+    if (mouse.x >=  WINCX - 20)
     {
         CScrollMgr::Get_Instance()->Set_ScrollX(-3.f);
-       // m_eCurState = MS_SCROLL_L;
-    } 
-    else
-    {
-       // m_eCurState = MS_IDLE;
+        m_eCurState = MS_SCROLL_R;
     }
-    if (mouse.x <= CScrollMgr::Get_Instance()->Get_ScrollX() * -1 + 2)
+    else if (m_eCurState == MS_SCROLL_R)
     {
-        CScrollMgr::Get_Instance()->Set_ScrollX(3.f);
-       // m_eCurState = MS_SCROLL_R;
-    }
-    else
-    {
-        //m_eCurState = MS_IDLE;
+        m_eCurState = MS_IDLE;
     }
 
-    if (mouse.y >= CScrollMgr::Get_Instance()->Get_ScrollY() + WINCY - 2)
+    if (mouse.x <= 20)
+    {
+        CScrollMgr::Get_Instance()->Set_ScrollX(3.f);
+        m_eCurState = MS_SCROLL_L;
+    }
+    else if (m_eCurState == MS_SCROLL_L)
+    {
+        m_eCurState = MS_IDLE;
+    }
+
+    if (mouse.y >= WINCY -20)
     {
         CScrollMgr::Get_Instance()->Set_ScrollY(-3.f);
-       // m_eCurState = MS_SCROLL_D;
+       m_eCurState = MS_SCROLL_D;
     }
-    else
+    else if (m_eCurState == MS_SCROLL_D)
     {
-       // m_eCurState = MS_IDLE;
+        m_eCurState = MS_IDLE;
     }
-    if (mouse.y <= CScrollMgr::Get_Instance()->Get_ScrollY() * -1 + 2)
+    if (mouse.y <= 20)
     {
         CScrollMgr::Get_Instance()->Set_ScrollY(3.f);
-        //m_eCurState = MS_SCROLL_U;
+        m_eCurState = MS_SCROLL_U;
     }
-    else
+    else if (m_eCurState == MS_SCROLL_U)
     {
-        //m_eCurState = MS_IDLE;
+        m_eCurState = MS_IDLE;
     }
-       
 }
 
 void CGameMouse::Change_Cursor()

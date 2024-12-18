@@ -34,15 +34,9 @@ void CMarine::Initialize()
 	m_tInfo.fCX = 50.f;
 	m_tInfo.fCY = 50.f;
 
-
-
-
 	//////////////////////////
 	m_tInfo.fX = 400.f;
 	m_tInfo.fY = 400.f;
-
-	m_ePreState = STATE_IDLE;
-	m_eCurState = STATE_IDLE;
 }
 
 int CMarine::Update()
@@ -130,19 +124,7 @@ void CMarine::Change_Motion()
 
 void CMarine::Test_Key_Input()
 {
-
-	if (CKeyMgr::Get_Instance()->Key_Pressing('W'))
-	{
-		m_eCurState = STATE_ATTACK;
-	}
-	else if (CKeyMgr::Get_Instance()->Key_Pressing('E'))
-	{
-		if (m_iImgId > 15)
-			m_iImgId = 0;
-		else
-			m_eDir = (DIRECTION)m_iImgId++;
-	}
-	else if (CKeyMgr::Get_Instance()->Key_Down('R'))
+	if (CKeyMgr::Get_Instance()->Key_Down('R'))
 	{
 		m_bDead = true;
 	}

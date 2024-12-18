@@ -5,7 +5,7 @@ class CUnit : public CObj
 {
 public:
 	CUnit(UNITID _id) : m_eUnitID(_id), m_Map(nullptr), m_iPathIndex(0),
-	m_pMonsterList(nullptr), m_eCurState(STATE_END), m_ePreState(STATE_END), m_eInput(IP_END) { }
+	m_pMonsterList(nullptr), m_eCurState(STATE_IDLE), m_ePreState(STATE_IDLE), m_eInput(IP_END) { }
 	~CUnit() {}
 
 	virtual void Initialize() PURE;
@@ -34,10 +34,6 @@ public:
 
 	// Hold
 	void Hold();
-
-	// Partrol
-	void Partrol();
-
 
 protected:
 	UNITID m_eUnitID;

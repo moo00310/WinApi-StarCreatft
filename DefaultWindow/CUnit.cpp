@@ -19,9 +19,6 @@ void CUnit::Update_State()
 	case IP_STOP:
 		Stop();
 		break;
-	case IP_PATROL:
-		Partrol();
-		break;
 	case IP_END:
 		break;
 	default:
@@ -211,6 +208,8 @@ void CUnit::Move()
 
 void CUnit::Stop()
 {
+	m_eCurState = STATE_IDLE;
+	return;
 }
 
 void CUnit::Attack()
@@ -269,10 +268,17 @@ void CUnit::Attack()
 
 void CUnit::Hold()
 {
-}
+	CObj* Enemy = nullptr;
+	if ((Enemy = CCollisionMgr::Collision_RangeChack(this, *m_pMonsterList, m_tStat.m_iRange)) == nullptr)
+	{
+		m_eCurState = STATE_IDLE;
+	}
+	else
+	{
+		m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
+		m_eCurState = STATE_ATTACK;
+	}
 
-void CUnit::Partrol()
-{
 }
 
 
