@@ -110,3 +110,19 @@ bool CCollisionMgr::Check_Rect(CObj* _Dst, CObj* _Src, float* pX, float* pY)
 
 	return false;
 }
+
+/// /////////////////////////////////////////////////////////////////////////////////
+
+float CCollisionMgr::Collision_RangeChack(CObj* _pPlayer, list<CObj*> _pMonster)
+{
+	for (auto monster : _pMonster)
+	{
+		float fWidth = fabsf(monster->Get_Info().fX - _pPlayer->Get_Info().fX);
+		float fHeight = fabsf(monster->Get_Info().fY - _pPlayer->Get_Info().fY);
+
+		float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);
+
+		return fDistance;
+	}
+	
+}

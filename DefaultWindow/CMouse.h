@@ -7,7 +7,7 @@
 class CMouse : public CObj
 {
 public:
-	CMouse(): m_iScrollX(0), m_iScrollY(0) {}
+	CMouse(): m_iScrollX(0), m_iScrollY(0), m_dwTime(0) {}
 	virtual ~CMouse() {}
 
 public:
@@ -23,6 +23,7 @@ public:
 protected:
 	int m_iScrollX;
 	int m_iScrollY;
+	ULONGLONG m_dwTime;
 };
 
 /*---------------
@@ -59,17 +60,5 @@ private:
 --------------------*/
 class GameMouse : public CMouse
 {
-public:
-	GameMouse();
-	~GameMouse();
-public:
-	void Initialize() override;
-	int Update() override;
-	void Late_Update() override;
-	void Render(HDC hDC) override;
-	void Release() override;
 
-private:
-	void MouseInput();
-	void ScrollMove(POINT mouse);
 };

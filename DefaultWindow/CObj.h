@@ -65,6 +65,6 @@ protected:
 
 protected:
 	STAT	m_tStat;
-
+	ULONGLONG m_dwTime;
 };
 

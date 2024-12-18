@@ -112,6 +112,9 @@
     <Filter Include="03. Design\MapMgr">
       <UniqueIdentifier>{b337e5a3-5856-49a1-9a85-41b558bdb7d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\03. Mouse\01.GameMouse">
+      <UniqueIdentifier>{20264e39-3602-41e3-8233-484ea2116b26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -222,6 +225,9 @@
     <ClInclude Include="CMapMgr.h">
       <Filter>03. Design\MapMgr</Filter>
     </ClInclude>
+    <ClInclude Include="CGameMouse.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -316,6 +322,9 @@
     </ClCompile>
     <ClCompile Include="CMapMgr.cpp">
       <Filter>03. Design\MapMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameMouse.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

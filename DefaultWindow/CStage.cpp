@@ -8,7 +8,7 @@
 #include "CMarine.h"
 #include "CMapMgr.h"
 #include "CObj.h"
-#include "CMouse.h"
+#include "CGameMouse.h"
 
 CStage::CStage()
 {
@@ -30,10 +30,11 @@ void CStage::Initialize()
 	CMapMgr::Get_Instance()->Initialize_Map();
 	
 	// 마우스 생산
-	CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<GameMouse>::Create());
+	CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CGameMouse>::Create());
 
 	// 마린 생산
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create());
+	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMarine>::Create(600,600));
 }
 
 int CStage::Update()
