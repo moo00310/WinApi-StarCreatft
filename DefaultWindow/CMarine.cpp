@@ -7,9 +7,8 @@
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
 #include "CMapMgr.h"
-#include "CCollisionMgr.h"
 
-CMarine::CMarine() : CUnit(UNIT_MARINE), m_iImgId(0), m_eCurState(STATE_END), m_ePreState(STATE_END)
+CMarine::CMarine() : CUnit(UNIT_MARINE), m_iImgId(0)
 
 {
     ZeroMemory(&m_tFrame, sizeof(FRAME));
@@ -28,11 +27,9 @@ void CMarine::Initialize()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Marine/Marine.bmp", L"Marine");
 
     m_pImgKey = L"Marine";
-    m_tStat = { 40, 6, 0, 32, 1.8f, 15 , DF_SAMLL, AT_NORMAL };
+    m_tStat = { 40, 6, 0, 64, 1.8f, 15 , DF_SAMLL, AT_NORMAL };
 
-	m_eCurState = STATE_IDLE;
-	m_ePreState = STATE_IDLE;
-	m_eDir = DIR_DOWN_RIGHT;
+
 	m_eRender = RENDER_GAMEOBJECT;
 	m_tInfo.fCX = 50.f;
 	m_tInfo.fCY = 50.f;
@@ -44,8 +41,8 @@ void CMarine::Initialize()
 	m_tInfo.fX = 400.f;
 	m_tInfo.fY = 400.f;
 
-
-
+	m_ePreState = STATE_IDLE;
+	m_eCurState = STATE_IDLE;
 }
 
 int CMarine::Update()
@@ -58,11 +55,8 @@ int CMarine::Update()
 	}
 	
 	Update_State();
-	MoveTo();
-	Attack();
 	Test_Key_Input();
 	
-
 	__super::Update_Rect();
     return OBJ_NOEVENT;
 }
@@ -95,10 +89,6 @@ void CMarine::Render(HDC hDC)
 }
 
 void CMarine::Release()
-{
-}
-
-void CMarine::Update_State()
 {
 }
 
@@ -156,57 +146,4 @@ void CMarine::Test_Key_Input()
 	{
 		m_bDead = true;
 	}
-
-
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
-	{
-		POINT       ptMouse{};
-
-		GetCursorPos(&ptMouse);
-		ScreenToClient(g_hWnd, &ptMouse);
-
-		Pos temp = { (ptMouse.y - CScrollMgr::Get_Instance()->Get_ScrollY())/ TILECY , (ptMouse.x - CScrollMgr::Get_Instance()->Get_ScrollX()) / TILECY };
-		Astar(temp);
-	}
-}
-
-void CMarine::MoveTo()
-{
-	if (m_iPathIndex < _path.size())
-	{
-		Pos _now = { m_tInfo.fY / TILECY , m_tInfo.fX / TILECY };
-		Pos _pos = _path[m_iPathIndex];
-
-		if(_now == _pos)
-			++m_iPathIndex;
-		else
-		{
-			// 방향 설정
-			Pos dir = (_pos - _now);
-			for (int i = 0; i < DIR_END; i++)
-			{
-				if (dir == MoveFront[i])
-				{
-					m_eDir = (DIRECTION)i;
-					break;
-				}
-			}
-			
-			// 단위 벡터로 수정?
-			float x(0.f), y(0.f);
-			float length = sqrtf(dir.x * dir.x + dir.y * dir.y);
-			if (length != 0)
-			{
-				 x = dir.x / length;
-				 y = dir.y / length;
-			}
-
-			// 이동
-			m_eCurState = STATE_MOVE;
-			m_tInfo.fX += m_tStat.m_fSpeed * x;
-			m_tInfo.fY += m_tStat.m_fSpeed * y;
-		}
-	}
-	else if(m_iPathIndex == _path.size())
-		m_eCurState = STATE_IDLE;
 }

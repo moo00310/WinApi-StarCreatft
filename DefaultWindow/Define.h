@@ -54,7 +54,12 @@ enum ATTACKID { AT_END, AT_NORMAL, AT_CONCUSSIVE, AT_EXPLOSIVE};
 enum UNITID{ UNIT_SCV, UNIT_MARINE, UNIT_END };
 enum BUILDID { BUILD_COMMEND, BUILD_BARRCK, BUILD_END };
 
-enum ATIMESTATE { STATE_IDLE ,STATE_MOVE, STATE_ATTACK, STATE_DEAD, STATE_END};
+enum ATIMESTATE { STATE_IDLE ,STATE_MOVE, STATE_ATTACK, STATE_DEAD, STATE_END };
+enum INPUTSTATE { IP_MOVE, IP_ATTACK, IP_HOLD, IP_STOP, IP_PATROL, IP_END };
+enum CURSERSTATE { MS_IDLE, MS_OBJ, MS_ATTACK, MS_MOVE, MS_DRAG,
+	MS_SCROLL_R, MS_SCROLL_UR, MS_SCROLL_U, MS_SCROLL_UL, MS_SCROLL_L,
+	MS_SCROLL_DL, MS_SCROLL_D, MS_SCROLL_DR
+};
 
 enum TILE_GROUP { 
 	TG_GROUND, 
@@ -112,7 +117,7 @@ typedef struct tagStat
 	int m_iHp;			// 체력
 	int m_iAttack;		// 공격력
 	int m_iDefence;     // 방어력
-	int m_iRange;		// 사거리
+	float m_iRange;		// 사거리
 	float m_fSpeed;		// 이동 속도
 	int Colldown;		// 공격속도
 

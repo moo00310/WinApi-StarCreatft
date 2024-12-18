@@ -226,7 +226,7 @@
       <Filter>03. Design\MapMgr</Filter>
     </ClInclude>
     <ClInclude Include="CGameMouse.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>01. Obj\03. Mouse\01.GameMouse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -324,7 +324,7 @@
       <Filter>03. Design\MapMgr</Filter>
     </ClCompile>
     <ClCompile Include="CGameMouse.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>01. Obj\03. Mouse\01.GameMouse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

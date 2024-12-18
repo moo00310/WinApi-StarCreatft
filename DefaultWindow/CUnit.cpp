@@ -1,8 +1,33 @@
 #include "pch.h"
 #include "CUnit.h"
 #include "CMapMgr.h"
+#include "CCollisionMgr.h"
 
-
+void CUnit::Update_State()
+{
+	switch (m_eInput)
+	{
+	case IP_MOVE:
+		Move();
+		break;
+	case IP_ATTACK:
+		Attack();
+		break;
+	case IP_HOLD:
+		Hold();
+		break;
+	case IP_STOP:
+		Stop();
+		break;
+	case IP_PATROL:
+		Partrol();
+		break;
+	case IP_END:
+		break;
+	default:
+		break;
+	}
+}
 
 void CUnit::Astar(Pos _tTarget_Index)
 {
@@ -106,6 +131,148 @@ bool CUnit::CanGo(Pos pos)
 		return true;
 	else
 		return false;
+}
+
+DIRECTION CUnit::GetDirection(float player_x, float player_y, float monster_x, float monster_y)
+{
+	float dx = monster_x - player_x;
+	float dy = monster_y - player_y;
+
+	float angle = atan2(dy, dx);  // 라디안
+	float angle_deg = angle * (180 / PI);  // 각도 변환
+
+	if (angle_deg < 0) {
+		angle_deg += 360;  // 음수를 0-360 범위로
+	}
+
+	int sector = static_cast<int>((angle_deg + 11.25) / 22.5) % 16;
+	switch (sector) {
+	case 0: return DIR_RIGHT;
+	case 1: return DIR_RIGHT_DOWN;
+	case 2: return DIR_RD;
+	case 3: return DIR_DOWN_RIGHT;
+	case 4: return DIR_DOWN;
+	case 5: return DIR_DOWN_LEFT;
+	case 6: return DIR_LD;
+	case 7: return DIR_LEFT_DOWN;
+	case 8: return DIR_LEFT;
+	case 9: return DIR_LEFT_UP;
+	case 10: return DIR_LU;
+	case 11: return DIR_UP_LEFT;
+	case 12: return DIR_UP;
+	case 13: return DIR_UP_RIGHT;
+	case 14: return DIR_RIGHT_UP;
+	case 15: return DIR_RU;	
+	default: return DIR_END;  // 예외 처리
+	}
+}
+
+
+void CUnit::Move()
+{
+	if (m_iPathIndex < _path.size())
+	{
+		Pos _now = { (int)m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
+		Pos _pos = _path[m_iPathIndex];
+
+		if (_now == _pos)
+			++m_iPathIndex;
+		else
+		{
+			// 방향 설정
+			Pos dir = (_pos - _now);
+			for (int i = 0; i < DIR_END; i++)
+			{
+				if (dir == MoveFront[i])
+				{
+					m_eDir = (DIRECTION)i;
+					break;
+				}
+			}
+
+			// 단위 벡터로 수정?
+			float x(0.f), y(0.f);
+			float length = sqrtf(float(dir.x * dir.x + dir.y * dir.y));
+			if (length != 0)
+			{
+				x = dir.x / length;
+				y = dir.y / length;
+			}
+
+			// 이동
+			m_eCurState = STATE_MOVE;
+			m_tInfo.fX += m_tStat.m_fSpeed * x;
+			m_tInfo.fY += m_tStat.m_fSpeed * y;
+		}
+	}
+	else if (m_iPathIndex == _path.size())
+		m_eCurState = STATE_IDLE;
+}
+
+void CUnit::Stop()
+{
+}
+
+void CUnit::Attack()
+{
+	if (m_iPathIndex < _path.size())
+	{
+		CObj* Enemy = nullptr;
+		Pos _now = { (int)m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
+		Pos _pos = _path[m_iPathIndex];
+
+		if (_now == _pos)
+			++m_iPathIndex;
+		else
+		{
+			if ((Enemy = CCollisionMgr::Collision_RangeChack(this, *m_pMonsterList, m_tStat.m_iRange)) == nullptr)
+			{
+				// 방향 설정
+				Pos dir = (_pos - _now);
+				for (int i = 0; i < DIR_END; i++)
+				{
+					if (dir == MoveFront[i])
+					{
+						m_eDir = (DIRECTION)i;
+						break;
+					}
+				}
+
+				// 단위 벡터로 수정?
+				float x(0.f), y(0.f);
+				float length = sqrtf(float(dir.x * dir.x + dir.y * dir.y));
+				if (length != 0)
+				{
+					x = dir.x / length;
+					y = dir.y / length;
+				}
+
+				// 이동
+				m_eCurState = STATE_MOVE;
+				m_tInfo.fX += m_tStat.m_fSpeed * x;
+				m_tInfo.fY += m_tStat.m_fSpeed * y;
+			}
+			else
+			{
+				m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
+				m_eCurState = STATE_ATTACK;
+			}
+
+		}
+	}
+	else if (m_iPathIndex == _path.size())
+	{
+		m_eCurState = STATE_IDLE;
+	}
+		
+}
+
+void CUnit::Hold()
+{
+}
+
+void CUnit::Partrol()
+{
 }
 
 

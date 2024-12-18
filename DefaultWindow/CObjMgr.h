@@ -13,7 +13,7 @@ private:
 
 public:
 	CObj* Get_Player()		{ return m_ObjList[OBJ_PLAYER].front(); }
-	list<CObj*> Get_MonsterList() { return m_ObjList[OBJ_MONSTER]; }
+	list<CObj*>* Get_MonsterList() { return &m_ObjList[OBJ_MONSTER]; }
 
 	CObj* Get_Target(OBJID eID, CObj* pDst);
 

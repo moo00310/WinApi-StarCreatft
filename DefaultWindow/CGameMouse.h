@@ -14,7 +14,13 @@ public:
 	void Release() override;
 
 private:
-	void MouseInput();
+	void MouseInput(POINT ptMouse);
 	void ScrollMove(POINT mouse);
+	void Change_Cursor();
+
+private:
+	CURSERSTATE m_eCurState;
+	CURSERSTATE m_ePreState;
+	int m_indexY;
 };
 

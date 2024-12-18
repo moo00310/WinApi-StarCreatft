@@ -113,7 +113,7 @@ bool CCollisionMgr::Check_Rect(CObj* _Dst, CObj* _Src, float* pX, float* pY)
 
 /// /////////////////////////////////////////////////////////////////////////////////
 
-float CCollisionMgr::Collision_RangeChack(CObj* _pPlayer, list<CObj*> _pMonster)
+CObj* CCollisionMgr::Collision_RangeChack(CObj* _pPlayer, list<CObj*> _pMonster, float _dis)
 {
 	for (auto monster : _pMonster)
 	{
@@ -122,7 +122,9 @@ float CCollisionMgr::Collision_RangeChack(CObj* _pPlayer, list<CObj*> _pMonster)
 
 		float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);
 
-		return fDistance;
+		if (fDistance <= _dis)
+			return monster;
 	}
-	
+
+	return nullptr;
 }

@@ -4,7 +4,8 @@
 class CUnit : public CObj
 {
 public:
-	CUnit(UNITID _id) : m_eUnitID(_id), m_Map(nullptr), m_iPathIndex(0) { }
+	CUnit(UNITID _id) : m_eUnitID(_id), m_Map(nullptr), m_iPathIndex(0),
+	m_pMonsterList(nullptr), m_eCurState(STATE_END), m_ePreState(STATE_END), m_eInput(IP_END) { }
 	~CUnit() {}
 
 	virtual void Initialize() PURE;
@@ -14,26 +15,35 @@ public:
 	virtual void Release() PURE;
 
 public:
-	virtual void Update_State() PURE;
+	void Update_State();
+	void SetInput(INPUTSTATE _input) { m_eInput = _input; }
 
 public:
-	// Move
 	void Astar(Pos _tTarget_Index);
 	bool CanGo(Pos pos);
+	DIRECTION GetDirection(float player_x, float player_y, float monster_x, float monster_y);
+
+	// Move
+	void Move();
 
 	// Stop
-
+	void Stop();
 
 	// Attack
 	void Attack();
 
+	// Hold
+	void Hold();
+
 	// Partrol
+	void Partrol();
 
 
 protected:
 	UNITID m_eUnitID;
 	ATIMESTATE m_ePreState;
 	ATIMESTATE m_eCurState;
+	INPUTSTATE m_eInput;
 
 	//A_star
 	vector<vector<int>>* m_Map;
@@ -42,8 +52,7 @@ protected:
 	
 
 	//Attack
-	list<CObj*> m_pMonsterList;
-
+	list<CObj*>* m_pMonsterList;
 
 };
 

@@ -14,15 +14,10 @@ public:
 	void Render(HDC hDC) override;
 	void Release() override;
 
-public:
-	void Update_State() override;
-
 private:
 	void Change_Motion();
 	void Test_Key_Input();
 
-public:
-	void MoveTo();
 
 private:
 	int m_iImgId;
