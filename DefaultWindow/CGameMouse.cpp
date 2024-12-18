@@ -5,12 +5,13 @@
 #include "CObjMgr.h"
 #include "CBmpMgr.h"
 #include "CMarine.h"
+#include "CCollisionMgr.h"
 
 /*---------------
     GameMouse
 --------------------*/
 
-CGameMouse::CGameMouse() : m_eCurState(MS_IDLE), m_ePreState(MS_IDLE), m_indexY(0)
+CGameMouse::CGameMouse() : m_eCurState(MS_IDLE), m_ePreState(MS_IDLE), m_indexY(0), m_UnitList(nullptr)
 {
 }
 
@@ -29,6 +30,7 @@ void CGameMouse::Initialize()
     m_pImgKey = L"Cursor";
     m_eRender = RENDER_UI;
 
+    m_UnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
 }
 
 int CGameMouse::Update()
@@ -43,17 +45,17 @@ int CGameMouse::Update()
     m_tInfo.fX = (float)ptMouse.x;
     m_tInfo.fY = (float)ptMouse.y;
 
-    __super::Update_Rect();
-
     // 마우스 잠굼
     LockMouse();
    
+    __super::Update_Rect();
     return OBJ_NOEVENT;
 }
 
 void CGameMouse::Late_Update()
 {
     SetScroll();
+    ColObject();
     Change_Cursor();
     ShowCursor(FALSE);
     __super::Move_Frame();
@@ -70,7 +72,7 @@ void CGameMouse::Render(HDC hDC)
         (int)m_tInfo.fCY,
         hMemDC,						// 복사할 이미지 DC	
         (int)m_tInfo.fCX * m_tFrame.iCurCount, // 비트맵 출력 시작 좌표(Left, top)
-        (int)m_tInfo.fCY* m_indexY,
+        (int)m_tInfo.fCY * m_indexY,
         (int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
         (int)m_tInfo.fCY,
         RGB(255, 0, 255));
@@ -84,8 +86,12 @@ void CGameMouse::Release()
 
 void CGameMouse::MouseInput(POINT ptMouse)
 {
-    Pos temp = { int(ptMouse.y - CScrollMgr::Get_Instance()->Get_ScrollY()) / TILECY , int(ptMouse.x - CScrollMgr::Get_Instance()->Get_ScrollX()) / TILECY };
+    if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON) && m_eCurState == MS_IDLE)
+    {
+        // 드래그 구현
+    }
 
+    Pos temp = { int(ptMouse.y - CScrollMgr::Get_Instance()->Get_ScrollY()) / TILECY , int(ptMouse.x - CScrollMgr::Get_Instance()->Get_ScrollX()) / TILECY };
     ///// 유닛컨트롤 매니저로를 가져와서 컨트롤 할 예정
     if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
     {
@@ -159,6 +165,18 @@ void CGameMouse::ScrollMove(POINT mouse)
         m_eCurState = MS_SCROLL_U;
     }
     else if (m_eCurState == MS_SCROLL_U)
+    {
+        m_eCurState = MS_IDLE;
+    }
+}
+
+void CGameMouse::ColObject()
+{
+    if (CCollisionMgr::Collision_Rect_Mouse(m_tRect, *m_UnitList))
+    {
+        m_eCurState = MS_OBJ;
+    }
+    else if (MS_OBJ == m_eCurState)
     {
         m_eCurState = MS_IDLE;
     }

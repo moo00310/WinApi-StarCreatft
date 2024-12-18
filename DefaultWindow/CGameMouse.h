@@ -13,14 +13,21 @@ public:
 	void Render(HDC hDC) override;
 	void Release() override;
 
+public:
+
+
 private:
 	void MouseInput(POINT ptMouse);
 	void ScrollMove(POINT mouse);
+	void ColObject();
 	void Change_Cursor();
 
 private:
 	CURSERSTATE m_eCurState;
 	CURSERSTATE m_ePreState;
 	int m_indexY;
+	list<CObj*>* m_UnitList;
+
+	RECT rc;
 };
 

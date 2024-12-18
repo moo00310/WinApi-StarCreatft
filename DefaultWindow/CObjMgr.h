@@ -14,6 +14,7 @@ private:
 public:
 	CObj* Get_Player()		{ return m_ObjList[OBJ_PLAYER].front(); }
 	list<CObj*>* Get_MonsterList() { return &m_ObjList[OBJ_MONSTER]; }
+	list<CObj*>* Get_ObjList(OBJID _id) { return &m_ObjList[_id]; }
 
 	CObj* Get_Target(OBJID eID, CObj* pDst);
 

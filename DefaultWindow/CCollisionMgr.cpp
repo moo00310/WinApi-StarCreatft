@@ -1,23 +1,6 @@
 #include "pch.h"
 #include "CCollisionMgr.h"
-
-void CCollisionMgr::Collision_Rect(list<CObj*> _Dst, list<CObj*> _Src)
-{
-	RECT rc{};
-
-	for (auto& Dst : _Dst)
-	{
-		for (auto& Src : _Src)
-		{
-			if (IntersectRect(&rc, Dst->Get_Rect(), Src->Get_Rect()))
-			{
-				Dst->Set_Dead();
-				Src->Set_Dead();
-			}
-		}
-	}
-
-}
+#include "CGameMouse.h"
 
 void CCollisionMgr::Collision_Circle(list<CObj*> _Dst, list<CObj*> _Src)
 {
@@ -127,4 +110,18 @@ CObj* CCollisionMgr::Collision_RangeChack(CObj* _pPlayer, list<CObj*> _pMonster,
 	}
 
 	return nullptr;
+}
+
+
+bool CCollisionMgr::Collision_Rect_Mouse(RECT rect, list<CObj*> _Src)
+{
+	RECT rc{};
+
+	for (auto& Src : _Src)
+	{
+		return IntersectRect(&rc, &rect, Src->Get_Scroll_Rect());
+	}
+
+	return false;
+	
 }

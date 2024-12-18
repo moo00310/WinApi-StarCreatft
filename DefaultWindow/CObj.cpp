@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CObj.h"
+#include "CScrollMgr.h"
 
 CObj::CObj() : m_eDir(DIR_RIGHT), m_eRender(RENDER_END), m_bDead(false), m_fAngle(0.f), m_fDistance(0.f), m_pTarget(nullptr), m_pImgKey(nullptr), m_dwTime(GetTickCount64())
 {
@@ -7,10 +8,25 @@ CObj::CObj() : m_eDir(DIR_RIGHT), m_eRender(RENDER_END), m_bDead(false), m_fAngl
 	ZeroMemory(&m_tRect, sizeof(RECT));
 	ZeroMemory(&m_tFrame, sizeof(FRAME));
 	ZeroMemory(&m_tStat, sizeof(STAT));
+	ZeroMemory(&rc, sizeof(STAT));
 }
 
 CObj::~CObj()
 {
+}
+
+const RECT* CObj::Get_Scroll_Rect()
+{
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	rc = m_tRect;
+	rc.left += iScrollX;
+	rc.top += iScrollY;
+	rc.right += iScrollX;
+	rc.bottom += iScrollY;
+
+	return &rc;
 }
 
 void CObj::Update_Rect()

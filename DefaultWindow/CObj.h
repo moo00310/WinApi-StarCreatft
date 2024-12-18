@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Define.h"
+#include "CScrollMgr.h"
 
 class CObj
 {
@@ -12,6 +13,9 @@ public:
 	INFO				Get_Info() { return m_tInfo; }
 	const INFO*			Get_Info_Pointer() { return &m_tInfo; }
 	const RECT*			Get_Rect() { return &m_tRect; }
+
+public:
+	const RECT* Get_Scroll_Rect();
 
 	void		Set_Pos(float _fX, float _fY)
 	{
@@ -46,7 +50,8 @@ public:
 
 	// 공통 기능
 
-
+private:
+	RECT rc;
 
 protected:
 	INFO		m_tInfo;
