@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CObj.h"
+#include "CUI.h"
 
 template<typename T>
 class CAbstractFactory
@@ -27,6 +28,13 @@ public:
 			pObj->Set_Angle(_fAngle);
 
 		return pObj;
+	}
+
+	static CUI* CreateUI()
+	{
+		CUI* pUi = new T;
+		pUi->Initialize();
+		return pUi;
 	}
 };
 

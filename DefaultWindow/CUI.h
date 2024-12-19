@@ -6,7 +6,7 @@ class CUI
 {
 public:
 	CUI();
-	~CUI() {}
+	virtual ~CUI() {}
 
 public:
 	virtual void Initialize() PURE;
@@ -17,8 +17,15 @@ public:
 
 public:
 	void Update_Rect();
+	void Move_Frame();
+
+
 public:
 	INFO m_tInfo;
 	RECT m_tRect;
+	FRAME m_tFrame;
+	const TCHAR* m_pImgKey;
+
+
 };
 

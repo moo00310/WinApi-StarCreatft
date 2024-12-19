@@ -10,6 +10,7 @@ private:
 	~CUIMgr();
 
 public:
+	void Initalize();
 	void Add_UI(UI_TYPE etype, CUI* pUI);
 	int Update();
 	void Late_Update();

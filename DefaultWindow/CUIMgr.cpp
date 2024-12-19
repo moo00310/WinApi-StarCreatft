@@ -1,5 +1,9 @@
 #include "pch.h"
 #include "CUIMgr.h"
+#include "CMainUI.h"
+#include "CAbstractFactory.h"
+#include "CPortUI.h"
+#include "CWireUI.h"
 
 CUIMgr* CUIMgr::m_pInstance = nullptr;
 
@@ -10,6 +14,13 @@ CUIMgr::CUIMgr()
 CUIMgr::~CUIMgr()
 {
 	Release();
+}
+
+void CUIMgr::Initalize()
+{
+	Add_UI(UI_MAIN, CAbstractFactory<CMainUI>::CreateUI());
+	Add_UI(UI_MAIN, CAbstractFactory<CPortUI>::CreateUI());
+	Add_UI(UI_MAIN, CAbstractFactory<CWireUI>::CreateUI());
 }
 
 void CUIMgr::Add_UI(UI_TYPE etype, CUI* pUI)

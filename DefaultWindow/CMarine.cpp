@@ -9,7 +9,6 @@
 #include "CMapMgr.h"
 
 CMarine::CMarine() : CUnit(UNIT_MARINE), m_iImgId(0)
-
 {
     ZeroMemory(&m_tFrame, sizeof(FRAME));
 }

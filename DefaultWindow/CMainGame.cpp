@@ -11,6 +11,7 @@
 #include "CSceneMgr.h"
 #include "CTileMgr.h"
 #include "CMapMgr.h"
+#include "CUIMgr.h"
 
 CMainGame::CMainGame()
 	: m_dwTime(GetTickCount64()), m_iFPS(0), m_hDC(nullptr)
@@ -111,5 +112,6 @@ void CMainGame::Release()
 	CSceneMgr::Destroy_Instance();
 	CObjMgr::DestroyInstance();
 	CMapMgr::Destroy_Instance();
+	CUIMgr::Destroy_Instance();
 	ReleaseDC(g_hWnd, m_hDC);
 }

@@ -118,8 +118,23 @@
     <Filter Include="03. Design\UIMgr">
       <UniqueIdentifier>{d600a634-678c-4699-848c-8b401f048c4f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Design\UIMgr\CUI">
+    <Filter Include="04. UI">
+      <UniqueIdentifier>{144ae177-64db-412e-a399-0ab0913ce647}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\CUI">
       <UniqueIdentifier>{ac5c202b-f1f4-4a9b-9540-dba8a6aa66bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\00.Main_UI">
+      <UniqueIdentifier>{46ddb7dd-f5a6-4336-a08f-ffd89bfc3edd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\01.Icon_UI">
+      <UniqueIdentifier>{e5c7faa3-856c-4883-acf1-e5ec12ec2af1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\02.Port_UI">
+      <UniqueIdentifier>{9a3e3ec2-46a7-4ba2-8493-3a0e5253d8c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\03.Wire_UI">
+      <UniqueIdentifier>{4e956432-4698-4a70-8953-cb59fe9eeaf6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -237,8 +252,20 @@
     <ClInclude Include="CUIMgr.h">
       <Filter>03. Design\UIMgr</Filter>
     </ClInclude>
+    <ClInclude Include="CMainUI.h">
+      <Filter>04. UI\00.Main_UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CIconUI.h">
+      <Filter>04. UI\01.Icon_UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CPortUI.h">
+      <Filter>04. UI\02.Port_UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CWireUI.h">
+      <Filter>04. UI\03.Wire_UI</Filter>
+    </ClInclude>
     <ClInclude Include="CUI.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>04. UI\CUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -341,8 +368,20 @@
     <ClCompile Include="CUIMgr.cpp">
       <Filter>03. Design\UIMgr</Filter>
     </ClCompile>
+    <ClCompile Include="CMainUI.cpp">
+      <Filter>04. UI\00.Main_UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CIconUI.cpp">
+      <Filter>04. UI\01.Icon_UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CPortUI.cpp">
+      <Filter>04. UI\02.Port_UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CWireUI.cpp">
+      <Filter>04. UI\03.Wire_UI</Filter>
+    </ClCompile>
     <ClCompile Include="CUI.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>04. UI\CUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

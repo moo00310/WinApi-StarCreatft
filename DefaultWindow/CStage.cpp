@@ -9,6 +9,7 @@
 #include "CMapMgr.h"
 #include "CObj.h"
 #include "CGameMouse.h"
+#include "CUIMgr.h"
 
 CStage::CStage()
 {
@@ -21,14 +22,13 @@ CStage::~CStage()
 
 void CStage::Initialize()
 {
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Ground.bmp", L"Ground");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/Texture/MyTile/Tile.bmp", L"Tile");
 
-	// 로드 타일
-	CTileMgr::Get_Instance()->Load_Tile();
-	// 타일 옵션 정보 불러오기 
-	CMapMgr::Get_Instance()->Initialize_Map();
-	
+	//매니저 초기화
+	CTileMgr::Get_Instance()->Load_Tile(); // 로드 타일
+	CMapMgr::Get_Instance()->Initialize_Map(); 	// 타일 옵션 정보 불러오기 
+	CUIMgr::Get_Instance()->Initalize(); 	// UI 매니저 초기화 
+
 	// 마우스 생산
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CGameMouse>::Create());
 
@@ -43,6 +43,7 @@ int CStage::Update()
 {
 	CObjMgr::Get_Instance()->Update();
 	CTileMgr::Get_Instance()->Update();
+	CUIMgr::Get_Instance()->Update();
 
 	return 0;
 }
@@ -51,24 +52,20 @@ void CStage::Late_Update()
 {
 	CObjMgr::Get_Instance()->Late_Update();
 	CTileMgr::Get_Instance()->Late_Update();
+	CUIMgr::Get_Instance()->Late_Update();
 }
 
 
 void CStage::Render(HDC hDC)
 {
-	HDC		hGroundDC = CBmpMgr::Get_Instance()->Find_Image(L"Ground");
-
-	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
-	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
-
-	//BitBlt(hDC, iScrollX, iScrollY, 1920, 1280, hGroundDC, 0, 0, SRCCOPY);
-	//CLineMgr::Get_Instance()->Render(hDC);
-
 	CTileMgr::Get_Instance()->Render(hDC);
 	CObjMgr::Get_Instance()->Render(hDC);
+	CUIMgr::Get_Instance()->Render(hDC);
 }
 
 void CStage::Release()
 {
 	CObjMgr::Get_Instance()->Delete_ID(OBJ_PLAYER);
+	CObjMgr::Get_Instance()->Delete_ID(OBJ_MONSTER);
+	CObjMgr::Get_Instance()->Delete_ID(OBJ_MOUSE);
 }
