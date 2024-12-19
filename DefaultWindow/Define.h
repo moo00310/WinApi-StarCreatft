@@ -75,6 +75,16 @@ enum TILE_GROUP {
 	TG_HILL, 
  };
 
+enum Port_Type
+{
+	PT_COMMEND, PT_SCV, PT_MARINE, PT_MEDIC, PT_END
+};
+
+enum Wire_Type
+{
+	WT_Marine,
+};
+
 const int TILE_ID_RANGES[][2] = {
 	{0, 13},    // GROUND
 	{14, 27},   // HILL

@@ -4,7 +4,7 @@
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
 
-CObjMgr::CObjMgr()
+CObjMgr::CObjMgr() :m_PickObj(nullptr)
 {
 }
 
@@ -41,13 +41,15 @@ CObj* CObjMgr::Get_Target(OBJID eID, CObj* pDst)
 	return pTarget;
 }
 
-void CObjMgr::Add_SelectList(CUnit* pObj)
+void CObjMgr::Add_SelectList(CObj*& pObj)
 {
-	m_SelectList.push_back(pObj);
+	m_SelectList.push_back(dynamic_cast<CUnit*>(pObj));
 }
 
 void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 {
+	//m_CentralList.insert(pObj);
+
 	if (OBJ_END <= eID || nullptr == pObj)
 		return;
 
@@ -65,8 +67,8 @@ int CObjMgr::Update()
 
 			if (OBJ_DEAD == iResult)
 			{
+				m_SelectList.remove(*iter);
 				Safe_Delete(*iter);
-				*iter = nullptr;
 				iter = m_ObjList[i].erase(iter);
 			}
 			else
@@ -131,3 +133,21 @@ void CObjMgr::Delete_ID(OBJID eID)
 
 	m_ObjList[eID].clear();
 }
+
+//void CObjMgr::DeleteObject(CObj* pObj)
+//{
+//	// 모든 참조 리스트에서 먼저 제거
+//	//for (size_t i = 0; i < OBJ_END; ++i) {
+//		//m_ObjList[i].remove(pObj);
+//	//}
+//
+//	(pObj);
+//
+//	// 중앙 리스트에서 제거
+//	m_CentralList.erase(pObj);
+//
+//	// 메모리 해제
+//	Safe_Delete(pObj);
+//
+//	
+//}

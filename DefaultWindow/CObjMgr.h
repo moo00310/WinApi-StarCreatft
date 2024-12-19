@@ -17,10 +17,12 @@ public:
 	list<CObj*>* Get_MonsterList() { return &m_ObjList[OBJ_MONSTER]; }
 	list<CObj*>* Get_ObjList(OBJID _id) { return &m_ObjList[_id]; }
 	CObj* Get_Target(OBJID eID, CObj* pDst);
+	CObj* Get_PickObj() { return m_PickObj; }
 
 public:
-	void Add_SelectList(CUnit* pObj);
-	list<CUnit*>* Get_Select_List() { return &m_SelectList; }
+	void Add_SelectList(CObj*& pObj);
+	list<CObj*>* Get_Select_List() { return &m_SelectList; }
+	//void DeleteObject(CObj* pObj);
 
 public:
 	void		Add_Object(OBJID eID, CObj* pObj);
@@ -50,9 +52,12 @@ public:
 	}
 
 private:
+	//set<CObj*> m_CentralList;
 	list<CObj*>		m_ObjList[OBJ_END];
 	list<CObj*>		m_RenderList[RENDER_END];
-	list<CUnit*>	m_SelectList;
+
+	list<CObj*>	m_SelectList;
+	CObj* m_PickObj;
 
 	static CObjMgr* m_pInstance;
 

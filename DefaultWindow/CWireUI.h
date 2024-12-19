@@ -15,7 +15,7 @@ private:
 	void Change_Port();
 
 private:
-	list<CUnit*>* m_pUintlist;
+	list<CObj*>* m_pUintlist;
 	UNITID m_eID;
 	bool m_bRender;
 

@@ -26,6 +26,5 @@ public:
 	FRAME m_tFrame;
 	const TCHAR* m_pImgKey;
 
-
 };
 

@@ -12,7 +12,7 @@
 --------------------*/
 
 CGameMouse::CGameMouse() : m_eCurState(MS_IDLE), m_ePreState(MS_IDLE), m_indexY(0), m_UnitList(nullptr),
-m_Select_UnitList(nullptr)
+m_Select_UnitList(nullptr), m_pPickObj(nullptr)
 {
     ZeroMemory(&ptMouse, sizeof(POINT));
 }
@@ -34,6 +34,7 @@ void CGameMouse::Initialize()
 
     m_UnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
     m_Select_UnitList = CObjMgr::Get_Instance()->Get_Select_List();
+    //m_pPickObj = CObjMgr::Get_Instance()->Get_PickObj();
 }
 
 int CGameMouse::Update()
@@ -97,12 +98,15 @@ void CGameMouse::MouseInput(POINT ptMouse)
     if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
     {
         m_eCurState = MS_MOVE;
-        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CUnit* unit)
+        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
             {
-                if (unit->Get_UnitID() != UNIT_END)
+                if (unit != nullptr)
                 {
-                    unit->Astar(temp);
-                    unit->SetInput(IP_MOVE);
+                    if (auto* pUnit = dynamic_cast<CUnit*>(unit))
+                    {
+                        pUnit->Astar(temp);
+                        pUnit->SetInput(IP_MOVE);
+                    }
                 }
             });
     }
@@ -116,12 +120,15 @@ void CGameMouse::MouseInput(POINT ptMouse)
     {
         m_eCurState = MS_IDLE;
 
-        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CUnit* unit)
+        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
             {
                 if (unit != nullptr)
                 {
-                    unit->Astar(temp);
-                    unit->SetInput(IP_ATTACK);
+                    if (auto* pUnit = dynamic_cast<CUnit*>(unit))
+                    {
+                        pUnit->Astar(temp);
+                        pUnit->SetInput(IP_ATTACK);
+                    }
                 }
             });
     }
@@ -130,7 +137,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
     if (m_eCurState == MS_IDLE && CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
     {
         // 유닛 선택 초기화
-        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CUnit* unit)
+        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
             {
                 if (unit != nullptr)
                     unit->Set_Select(false);
@@ -145,19 +152,29 @@ void CGameMouse::MouseInput(POINT ptMouse)
 
     if (CKeyMgr::Get_Instance()->Key_Down('S'))
     {
-        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CUnit* unit)
+        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
             { 
                 if (unit != nullptr)
-                    unit->SetInput(IP_STOP);
+                {
+                    if (auto* pUnit = dynamic_cast<CUnit*>(unit))
+                    {
+                        pUnit->SetInput(IP_STOP);
+                    }
+                }
             }); 
     }
 
     if (CKeyMgr::Get_Instance()->Key_Down('H'))
     {
-        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CUnit* unit)
+        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
             {
                 if (unit != nullptr)
-                    unit->SetInput(IP_HOLD);
+                {
+                    if (auto* pUnit = dynamic_cast<CUnit*>(unit))
+                    {
+                        pUnit->SetInput(IP_HOLD);
+                    }
+                }
             });
     }
 }
@@ -215,7 +232,7 @@ void CGameMouse::ColObject()
         {
             m_Select_UnitList->clear();
             unit->Set_Select(true);
-            CObjMgr::Get_Instance()->Add_SelectList(dynamic_cast<CUnit*>(unit));
+            CObjMgr::Get_Instance()->Add_SelectList(unit);
         }
            
     }

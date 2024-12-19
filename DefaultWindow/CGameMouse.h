@@ -1,6 +1,7 @@
 #pragma once
 #include "CMouse.h"
 #include "CUnit.h"
+#include "CObj.h"
 
 class CGameMouse : public CMouse
 {
@@ -29,6 +30,7 @@ private:
 	CURSERSTATE m_ePreState;
 	int m_indexY;
 	list<CObj*>* m_UnitList;
-	list<CUnit*>* m_Select_UnitList;
+	list<CObj*>* m_Select_UnitList;
+	CObj* m_pPickObj;
 };
 

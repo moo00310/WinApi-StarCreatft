@@ -20,8 +20,10 @@ private:
 	void Anime_Port(int Start, int End);
 
 private:
-	list<CUnit*>* m_pUintlist;
-	UNITID m_eID;
+	list<CObj*>* m_pUintlist;
 	bool m_bRender;
+
+	Port_Type m_ePreState;
+	Port_Type m_eCurState;
 };
 
