@@ -24,6 +24,7 @@ private:
 	void Change_Cursor();
 
 private:
+	POINT ptMouse{};
 	CURSERSTATE m_eCurState;
 	CURSERSTATE m_ePreState;
 	int m_indexY;

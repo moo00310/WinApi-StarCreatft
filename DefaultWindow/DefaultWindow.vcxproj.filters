@@ -115,6 +115,12 @@
     <Filter Include="01. Obj\03. Mouse\01.GameMouse">
       <UniqueIdentifier>{20264e39-3602-41e3-8233-484ea2116b26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Design\UIMgr">
+      <UniqueIdentifier>{d600a634-678c-4699-848c-8b401f048c4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Design\UIMgr\CUI">
+      <UniqueIdentifier>{ac5c202b-f1f4-4a9b-9540-dba8a6aa66bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -228,6 +234,12 @@
     <ClInclude Include="CGameMouse.h">
       <Filter>01. Obj\03. Mouse\01.GameMouse</Filter>
     </ClInclude>
+    <ClInclude Include="CUIMgr.h">
+      <Filter>03. Design\UIMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CUI.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -325,6 +337,12 @@
     </ClCompile>
     <ClCompile Include="CGameMouse.cpp">
       <Filter>01. Obj\03. Mouse\01.GameMouse</Filter>
+    </ClCompile>
+    <ClCompile Include="CUIMgr.cpp">
+      <Filter>03. Design\UIMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CUI.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

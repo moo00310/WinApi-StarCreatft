@@ -14,6 +14,7 @@
 CGameMouse::CGameMouse() : m_eCurState(MS_IDLE), m_ePreState(MS_IDLE), m_indexY(0), m_UnitList(nullptr),
 m_Select_UnitList(nullptr)
 {
+    ZeroMemory(&ptMouse, sizeof(POINT));
 }
 
 CGameMouse::~CGameMouse()
@@ -37,7 +38,6 @@ void CGameMouse::Initialize()
 
 int CGameMouse::Update()
 {
-    POINT       ptMouse{};
     GetCursorPos(&ptMouse);
     ScreenToClient(g_hWnd, &ptMouse);
 
@@ -56,13 +56,11 @@ int CGameMouse::Update()
 
 void CGameMouse::Late_Update()
 {
-    POINT       ptMouse{};
-    GetCursorPos(&ptMouse);
-    ScreenToClient(g_hWnd, &ptMouse);
+    MouseInput(ptMouse);
 
     ColObject();
     Change_Cursor();
-    MouseInput(ptMouse);
+
     ShowCursor(FALSE);
     __super::Move_Frame();
 }

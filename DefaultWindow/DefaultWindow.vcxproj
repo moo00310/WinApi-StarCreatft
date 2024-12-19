@@ -165,6 +165,8 @@
     <ClInclude Include="CStage.h" />
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CTileMgr.h" />
+    <ClInclude Include="CUI.h" />
+    <ClInclude Include="CUIMgr.h" />
     <ClInclude Include="CUnit.h" />
     <ClInclude Include="DefaultWindow.h" />
     <ClInclude Include="Define.h" />
@@ -203,6 +205,8 @@
     <ClCompile Include="CStage.cpp" />
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CTileMgr.cpp" />
+    <ClCompile Include="CUI.cpp" />
+    <ClCompile Include="CUIMgr.cpp" />
     <ClCompile Include="CUnit.cpp" />
     <ClCompile Include="DefaultWindow.cpp" />
     <ClCompile Include="pch.cpp">
