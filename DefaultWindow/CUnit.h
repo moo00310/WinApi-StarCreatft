@@ -18,6 +18,7 @@ public:
 public:
 	void Update_State();
 	void SetInput(INPUTSTATE _input) { m_eInput = _input; }
+	UNITID Get_UnitID() { return m_eUnitID; }
 
 public:
 	void Astar(Pos _tTarget_Index);

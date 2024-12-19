@@ -29,6 +29,7 @@ void CUnit::Update_State()
 void CUnit::Astar(Pos _tTarget_Index)
 {
 	Pos start = { (int) m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
+	if (start.x >= 74 || start.y >= 74) return;
 
 	// OpenList
 	priority_queue<PQNode, vector<PQNode>, greater<PQNode>> pq;
@@ -166,7 +167,7 @@ DIRECTION CUnit::GetDirection(float player_x, float player_y, float monster_x, f
 
 void CUnit::AttackToEnemy(CObj* _Enemey)
 {
-	if (m_dwTime + _Enemey->Get_Stat()->Colldown < GetTickCount64()&&
+	if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64()&&
 		m_tFrame.iCurCount == m_iAttackFrame)
 	{
 		DEFENCEID Dfence_id = _Enemey->Get_Stat()->m_eDfenceID;
@@ -175,7 +176,7 @@ void CUnit::AttackToEnemy(CObj* _Enemey)
 
 		_Enemey->Add_Stat_hp(-Damge);
 
-		m_dwTime = GetTickCount64();
+		m_AttackTime = GetTickCount64();
 	}
 }
 // 局聪皋捞记苞 教农 巩力

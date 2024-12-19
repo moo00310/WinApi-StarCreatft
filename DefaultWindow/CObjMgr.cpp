@@ -41,6 +41,11 @@ CObj* CObjMgr::Get_Target(OBJID eID, CObj* pDst)
 	return pTarget;
 }
 
+void CObjMgr::Add_SelectList(CUnit* pObj)
+{
+	m_SelectList.push_back(pObj);
+}
+
 void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 {
 	if (OBJ_END <= eID || nullptr == pObj)
@@ -60,7 +65,8 @@ int CObjMgr::Update()
 
 			if (OBJ_DEAD == iResult)
 			{
-				Safe_Delete<CObj*>(*iter);
+				Safe_Delete(*iter);
+				*iter = nullptr;
 				iter = m_ObjList[i].erase(iter);
 			}
 			else

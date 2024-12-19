@@ -2,7 +2,8 @@
 #include "CObj.h"
 #include "CScrollMgr.h"
 
-CObj::CObj() : m_eDir(DIR_RIGHT), m_eRender(RENDER_END), m_bDead(false), m_fAngle(0.f), m_fDistance(0.f), m_pTarget(nullptr), m_pImgKey(nullptr), m_dwTime(GetTickCount64())
+CObj::CObj() : m_eDir(DIR_RIGHT), m_eRender(RENDER_END), m_bDead(false), m_fAngle(0.f), m_fDistance(0.f), m_pTarget(nullptr), m_pImgKey(nullptr), m_AttackTime(GetTickCount64())
+, m_bSelect(false)
 {
 	ZeroMemory(&m_tInfo, sizeof(INFO));
 	ZeroMemory(&m_tRect, sizeof(RECT));

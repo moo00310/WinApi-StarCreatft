@@ -11,7 +11,8 @@
     GameMouse
 --------------------*/
 
-CGameMouse::CGameMouse() : m_eCurState(MS_IDLE), m_ePreState(MS_IDLE), m_indexY(0), m_UnitList(nullptr)
+CGameMouse::CGameMouse() : m_eCurState(MS_IDLE), m_ePreState(MS_IDLE), m_indexY(0), m_UnitList(nullptr),
+m_Select_UnitList(nullptr)
 {
 }
 
@@ -31,6 +32,7 @@ void CGameMouse::Initialize()
     m_eRender = RENDER_UI;
 
     m_UnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
+    m_Select_UnitList = CObjMgr::Get_Instance()->Get_Select_List();
 }
 
 int CGameMouse::Update()
@@ -40,7 +42,7 @@ int CGameMouse::Update()
     ScreenToClient(g_hWnd, &ptMouse);
 
     ScrollMove(ptMouse);
-    MouseInput(ptMouse);
+    SetScroll();
 
     m_tInfo.fX = (float)ptMouse.x;
     m_tInfo.fY = (float)ptMouse.y;
@@ -54,9 +56,13 @@ int CGameMouse::Update()
 
 void CGameMouse::Late_Update()
 {
-    SetScroll();
+    POINT       ptMouse{};
+    GetCursorPos(&ptMouse);
+    ScreenToClient(g_hWnd, &ptMouse);
+
     ColObject();
     Change_Cursor();
+    MouseInput(ptMouse);
     ShowCursor(FALSE);
     __super::Move_Frame();
 }
@@ -88,32 +94,51 @@ void CGameMouse::MouseInput(POINT ptMouse)
 {
 
     Pos temp = { int(ptMouse.y - CScrollMgr::Get_Instance()->Get_ScrollY()) / TILECY , int(ptMouse.x - CScrollMgr::Get_Instance()->Get_ScrollX()) / TILECY };
-    ///// 유닛컨트롤 매니저로를 가져와서 컨트롤 할 예정
+    
+    ///// 우클릭 : MOVE 
     if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
     {
         m_eCurState = MS_MOVE;
-        dynamic_cast<CMarine*>(CObjMgr::Get_Instance()->Get_Player())->Astar(temp);
-        dynamic_cast<CMarine*>(CObjMgr::Get_Instance()->Get_Player())->SetInput(IP_MOVE);
+        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CUnit* unit)
+            {
+                if (unit->Get_UnitID() != UNIT_END)
+                {
+                    unit->Astar(temp);
+                    unit->SetInput(IP_MOVE);
+                }
+            });
     }
-
     if (CKeyMgr::Get_Instance()->Key_Up(VK_RBUTTON))
     {
         m_eCurState = MS_IDLE;
     }
 
+    //// A - 좌클릭 : 어택 땅
     if (m_eCurState == MS_ATTACK && CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
     {
-        dynamic_cast<CMarine*>(CObjMgr::Get_Instance()->Get_Player())->Astar(temp);
-        dynamic_cast<CMarine*>(CObjMgr::Get_Instance()->Get_Player())->SetInput(IP_ATTACK);
         m_eCurState = MS_IDLE;
+
+        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CUnit* unit)
+            {
+                if (unit != nullptr)
+                {
+                    unit->Astar(temp);
+                    unit->SetInput(IP_ATTACK);
+                }
+            });
     }
 
-    if (CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON) && m_eCurState == MS_IDLE)
+    // 중간에 죽었을 때도 고민 해야함
+    if (m_eCurState == MS_IDLE && CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
     {
         // 유닛 선택 초기화
-        // 드래그 구현
+        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CUnit* unit)
+            {
+                if (unit != nullptr)
+                    unit->Set_Select(false);
+            });
+        m_Select_UnitList->clear();
     }
-
 
     if (CKeyMgr::Get_Instance()->Key_Down('A'))
     {
@@ -122,12 +147,20 @@ void CGameMouse::MouseInput(POINT ptMouse)
 
     if (CKeyMgr::Get_Instance()->Key_Down('S'))
     {
-        dynamic_cast<CMarine*>(CObjMgr::Get_Instance()->Get_Player())->SetInput(IP_STOP);
+        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CUnit* unit)
+            { 
+                if (unit != nullptr)
+                    unit->SetInput(IP_STOP);
+            }); 
     }
 
     if (CKeyMgr::Get_Instance()->Key_Down('H'))
     {
-        dynamic_cast<CMarine*>(CObjMgr::Get_Instance()->Get_Player())->SetInput(IP_HOLD);
+        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CUnit* unit)
+            {
+                if (unit != nullptr)
+                    unit->SetInput(IP_HOLD);
+            });
     }
 }
 
@@ -175,9 +208,18 @@ void CGameMouse::ScrollMove(POINT mouse)
 
 void CGameMouse::ColObject()
 {
-    if (CCollisionMgr::Collision_Rect_Mouse(m_tRect, *m_UnitList))
+    CObj* unit(nullptr);
+    // 전체 유닛 리스트에서 마우스랑 충돌했는지 검사
+    if ((unit = CCollisionMgr::Collision_Rect_Mouse(m_tRect, *m_UnitList)) != nullptr)
     {
         m_eCurState = MS_OBJ;
+        if (CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
+        {
+            m_Select_UnitList->clear();
+            unit->Set_Select(true);
+            CObjMgr::Get_Instance()->Add_SelectList(dynamic_cast<CUnit*>(unit));
+        }
+           
     }
     else if (MS_OBJ == m_eCurState)
     {

@@ -15,7 +15,7 @@ public:
 	const RECT*			Get_Rect() { return &m_tRect; }
 	STAT*				Get_Stat() { return &m_tStat; }
 	void				Add_Stat_hp(float hp);
-
+	void				Set_Select(bool _isSelect) { m_bSelect = _isSelect; }
 public:
 	const RECT* Get_Scroll_Rect();
 
@@ -72,6 +72,8 @@ protected:
 
 protected:
 	STAT	m_tStat;
-	ULONGLONG m_dwTime;
+	ULONGLONG m_AttackTime;
+	bool m_bSelect;
+
 };
 

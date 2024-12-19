@@ -14,6 +14,6 @@ public:
 	///////////////////////////////////////////////////////////////////////////
 
 	static CObj* Collision_RangeChack(CObj* _pPlayer, list<CObj*> _pMonster, float _dis);
-	static bool	Collision_Rect_Mouse(RECT rect, list<CObj*> _Src);
+	static CObj* Collision_Rect_Mouse(RECT rect, list<CObj*> _Src);
 };
 

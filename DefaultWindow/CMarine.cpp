@@ -25,6 +25,7 @@ void CMarine::Initialize()
 	m_Map = CMapMgr::Get_Instance()->GetMap();
 	m_pMonsterList = CObjMgr::Get_Instance()->Get_MonsterList();
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Marine/Marine.bmp", L"Marine");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/0.bmp", L"Marine_Select");
 
     m_pImgKey = L"Marine";
     m_tStat = { 40.f, 40.f, 6, 0, 64, 1.8f, 625 , DF_SAMLL, AT_NORMAL };
@@ -68,6 +69,22 @@ void CMarine::Render(HDC hDC)
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
 	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
+	HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Marine_Select");
+
+	if (m_bSelect)
+	{
+		GdiTransparentBlt(hDC,			// 복사 받을 DC
+			m_tRect.left + iScrollX + 10,	// 복사 받을 위치 좌표 X, Y	
+			m_tRect.top + iScrollY + 18,
+			32,			// 복사 받을 이미지의 가로, 세로
+			32,
+			hFxDC,						// 복사할 이미지 DC	
+			0, // 비트맵 출력 시작 좌표(Left, top)
+			0,
+			32,										// 복사할 이미지의 가로, 세로
+			32,
+			RGB(255, 0, 255));		// 제거할 색상
+	}
 
 	GdiTransparentBlt(hDC,			// 복사 받을 DC
 		m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
@@ -81,6 +98,7 @@ void CMarine::Render(HDC hDC)
 		(int)m_tInfo.fCY,
 		RGB(255, 255, 0));		// 제거할 색상
 
+	
 }
 
 void CMarine::Release()

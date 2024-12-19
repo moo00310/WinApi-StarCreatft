@@ -2,6 +2,7 @@
 
 #include "Define.h"
 #include "CObj.h"
+#include "CUnit.h"
 
 class CObjMgr
 {
@@ -15,8 +16,11 @@ public:
 	CObj* Get_Player()		{ return m_ObjList[OBJ_PLAYER].front(); }
 	list<CObj*>* Get_MonsterList() { return &m_ObjList[OBJ_MONSTER]; }
 	list<CObj*>* Get_ObjList(OBJID _id) { return &m_ObjList[_id]; }
-
 	CObj* Get_Target(OBJID eID, CObj* pDst);
+
+public:
+	void Add_SelectList(CUnit* pObj);
+	list<CUnit*>* Get_Select_List() { return &m_SelectList; }
 
 public:
 	void		Add_Object(OBJID eID, CObj* pObj);
@@ -48,6 +52,7 @@ public:
 private:
 	list<CObj*>		m_ObjList[OBJ_END];
 	list<CObj*>		m_RenderList[RENDER_END];
+	list<CUnit*>	m_SelectList;
 
 	static CObjMgr* m_pInstance;
 

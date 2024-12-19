@@ -113,15 +113,19 @@ CObj* CCollisionMgr::Collision_RangeChack(CObj* _pPlayer, list<CObj*> _pMonster,
 }
 
 
-bool CCollisionMgr::Collision_Rect_Mouse(RECT rect, list<CObj*> _Src)
+CObj* CCollisionMgr::Collision_Rect_Mouse(RECT rect, list<CObj*> _Src)
 {
 	RECT rc{};
 
 	for (auto& Src : _Src)
 	{
-		return IntersectRect(&rc, &rect, Src->Get_Scroll_Rect());
+		if (IntersectRect(&rc, &rect, Src->Get_Scroll_Rect()))
+		{
+			return Src;
+		}
+		
 	}
 
-	return false;
+	return nullptr;
 	
 }
