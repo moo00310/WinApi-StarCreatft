@@ -86,10 +86,6 @@ void CGameMouse::Release()
 
 void CGameMouse::MouseInput(POINT ptMouse)
 {
-    if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON) && m_eCurState == MS_IDLE)
-    {
-        // 드래그 구현
-    }
 
     Pos temp = { int(ptMouse.y - CScrollMgr::Get_Instance()->Get_ScrollY()) / TILECY , int(ptMouse.x - CScrollMgr::Get_Instance()->Get_ScrollX()) / TILECY };
     ///// 유닛컨트롤 매니저로를 가져와서 컨트롤 할 예정
@@ -111,6 +107,13 @@ void CGameMouse::MouseInput(POINT ptMouse)
         dynamic_cast<CMarine*>(CObjMgr::Get_Instance()->Get_Player())->SetInput(IP_ATTACK);
         m_eCurState = MS_IDLE;
     }
+
+    if (CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON) && m_eCurState == MS_IDLE)
+    {
+        // 유닛 선택 초기화
+        // 드래그 구현
+    }
+
 
     if (CKeyMgr::Get_Instance()->Key_Down('A'))
     {

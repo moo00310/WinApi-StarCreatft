@@ -22,17 +22,12 @@ public:
 	void Astar(Pos _tTarget_Index);
 	bool CanGo(Pos pos);
 	DIRECTION GetDirection(float player_x, float player_y, float monster_x, float monster_y);
+	void AttackToEnemy(CObj* _Enemey);
 
-	// Move
+	//Unit_BeHavior
 	void Move();
-
-	// Stop
 	void Stop();
-
-	// Attack
 	void Attack();
-
-	// Hold
 	void Hold();
 
 protected:

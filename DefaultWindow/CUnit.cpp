@@ -164,6 +164,20 @@ DIRECTION CUnit::GetDirection(float player_x, float player_y, float monster_x, f
 	}
 }
 
+void CUnit::AttackToEnemy(CObj* _Enemey)
+{
+	if (m_dwTime + _Enemey->Get_Stat()->Colldown < GetTickCount64())
+	{
+		DEFENCEID Dfence_id = _Enemey->Get_Stat()->m_eDfenceID;
+		ATTACKID Attack_id = m_tStat.m_eAttackID;
+		float Damge = fabsf((_Enemey->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * m_tStat.m_iAttack)));
+
+		_Enemey->Add_Stat_hp(-100);
+
+		m_dwTime= GetTickCount64();
+	}
+}
+// 局聪皋捞记苞 教农 巩力
 
 void CUnit::Move()
 {
@@ -255,6 +269,7 @@ void CUnit::Attack()
 			{
 				m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
 				m_eCurState = STATE_ATTACK;
+				AttackToEnemy(Enemy);
 			}
 
 		}

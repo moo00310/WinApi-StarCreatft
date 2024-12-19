@@ -49,8 +49,16 @@ enum SCENEID { SC_LOGO, SC_MENU, SC_EDIT, SC_STAGE, SC_END };
 
 enum EditType { ET_TILE = 0, ET_GRASS, ET_WALL, ET_BRIGE, ET_OBJECT, ET_END };
 
-enum DEFENCEID { DF_END, DF_SAMLL, DF_MEDIUM, DF_LAGE };
-enum ATTACKID { AT_END, AT_NORMAL, AT_CONCUSSIVE, AT_EXPLOSIVE};
+enum DEFENCEID { DF_SAMLL, DF_MEDIUM, DF_LAGE, DF_END};
+enum ATTACKID { AT_NORMAL, AT_CONCUSSIVE, AT_EXPLOSIVE, AT_END};
+
+const float DamageCalcu[AT_END][DF_END]
+{
+	{1.f,1.f,1.f},
+	{0.5f,0.75f,1.f},
+	{0.25f,0.5f,1.f}
+};
+
 enum UNITID{ UNIT_SCV, UNIT_MARINE, UNIT_END };
 enum BUILDID { BUILD_COMMEND, BUILD_BARRCK, BUILD_END };
 
@@ -114,7 +122,8 @@ typedef struct tagFrame
 
 typedef struct tagStat
 {
-	int m_iHp;			// 체력
+	float m_iMaxHp;		// 최대 체력
+	float m_iHp;		// 체력
 	int m_iAttack;		// 공격력
 	int m_iDefence;     // 방어력
 	float m_iRange;		// 사거리

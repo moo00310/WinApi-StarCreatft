@@ -27,7 +27,7 @@ void CMarine::Initialize()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Marine/Marine.bmp", L"Marine");
 
     m_pImgKey = L"Marine";
-    m_tStat = { 40, 6, 0, 64, 1.8f, 15 , DF_SAMLL, AT_NORMAL };
+    m_tStat = { 40.f, 40.f, 6, 0, 64, 1.8f, 625 , DF_SAMLL, AT_NORMAL };
 
 
 	m_eRender = RENDER_GAMEOBJECT;
@@ -41,7 +41,7 @@ void CMarine::Initialize()
 
 int CMarine::Update()
 {
-	if (m_bDead)
+	if (m_bDead || m_tStat.m_iHp <= 0)
 	{
 		// Á×À½ ÀÌÆåÆ®
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT,CAbstractFactory<CMarineDead>::Create(m_tInfo.fX, m_tInfo.fY));
@@ -112,7 +112,7 @@ void CMarine::Change_Motion()
 			m_tFrame.iFrameStart = 13;
 			m_tFrame.iFrameEnd = 14;
 			m_tFrame.iCurCount = 11;
-			m_tFrame.dwSpeed = 150;
+			m_tFrame.dwSpeed = 100;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 		}

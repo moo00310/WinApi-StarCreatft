@@ -15,6 +15,16 @@ CObj::~CObj()
 {
 }
 
+void CObj::Add_Stat_hp(float hp)
+{
+	m_tStat.m_iHp += hp;
+
+	if (m_tStat.m_iHp < 0.f)
+		m_tStat.m_iHp = 0.f;
+	if (m_tStat.m_iHp > m_tStat.m_iMaxHp)
+		m_tStat.m_iHp = m_tStat.m_iMaxHp;
+};
+
 const RECT* CObj::Get_Scroll_Rect()
 {
 	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();

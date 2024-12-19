@@ -13,6 +13,8 @@ public:
 	INFO				Get_Info() { return m_tInfo; }
 	const INFO*			Get_Info_Pointer() { return &m_tInfo; }
 	const RECT*			Get_Rect() { return &m_tRect; }
+	STAT*				Get_Stat() { return &m_tStat; }
+	void				Add_Stat_hp(float hp);
 
 public:
 	const RECT* Get_Scroll_Rect();
