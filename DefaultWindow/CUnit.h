@@ -5,7 +5,8 @@ class CUnit : public CObj
 {
 public:
 	CUnit(UNITID _id) : m_eUnitID(_id), m_Map(nullptr), m_iPathIndex(0),
-	m_pMonsterList(nullptr), m_eCurState(STATE_IDLE), m_ePreState(STATE_IDLE), m_eInput(IP_END) { }
+	m_pMonsterList(nullptr), m_eCurState(STATE_IDLE), m_ePreState(STATE_IDLE), m_eInput(IP_END),
+		m_iAttackFrame(0){ }
 	~CUnit() {}
 
 	virtual void Initialize() PURE;
@@ -35,6 +36,7 @@ protected:
 	ATIMESTATE m_ePreState;
 	ATIMESTATE m_eCurState;
 	INPUTSTATE m_eInput;
+	int m_iAttackFrame;
 
 	//A_star
 	vector<vector<int>>* m_Map;

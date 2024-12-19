@@ -166,15 +166,16 @@ DIRECTION CUnit::GetDirection(float player_x, float player_y, float monster_x, f
 
 void CUnit::AttackToEnemy(CObj* _Enemey)
 {
-	if (m_dwTime + _Enemey->Get_Stat()->Colldown < GetTickCount64())
+	if (m_dwTime + _Enemey->Get_Stat()->Colldown < GetTickCount64()&&
+		m_tFrame.iCurCount == m_iAttackFrame)
 	{
 		DEFENCEID Dfence_id = _Enemey->Get_Stat()->m_eDfenceID;
 		ATTACKID Attack_id = m_tStat.m_eAttackID;
 		float Damge = fabsf((_Enemey->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * m_tStat.m_iAttack)));
 
-		_Enemey->Add_Stat_hp(-100);
+		_Enemey->Add_Stat_hp(-Damge);
 
-		m_dwTime= GetTickCount64();
+		m_dwTime = GetTickCount64();
 	}
 }
 // 局聪皋捞记苞 教农 巩力

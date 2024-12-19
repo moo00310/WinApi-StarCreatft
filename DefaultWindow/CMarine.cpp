@@ -29,6 +29,7 @@ void CMarine::Initialize()
     m_pImgKey = L"Marine";
     m_tStat = { 40.f, 40.f, 6, 0, 64, 1.8f, 625 , DF_SAMLL, AT_NORMAL };
 
+	m_iAttackFrame = 14;
 
 	m_eRender = RENDER_GAMEOBJECT;
 	m_tInfo.fCX = 50.f;
