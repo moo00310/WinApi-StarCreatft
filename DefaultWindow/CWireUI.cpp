@@ -6,6 +6,14 @@
 #include "CKeyMgr.h"
 
 
+CWireUI::CWireUI() : m_pUintlist(nullptr), m_eID(UNIT_END), m_bRender(false), MaxHp(0.f), NowHp(0.f)
+{
+}
+
+CWireUI::~CWireUI()
+{
+}
+
 void CWireUI::Initialize()
 {
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Wire/BigWire.bmp", L"BigWire");
@@ -60,7 +68,8 @@ void CWireUI::Render(HDC hdc)
 		64,
 		RGB(0, 0, 0));		// 제거할 색상
 
-	//Rectangle(hdc, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+	TextPrint(hdc);
+	TextName(hdc);
 }
 
 void CWireUI::Release()
@@ -69,10 +78,46 @@ void CWireUI::Release()
 
 void CWireUI::Change_Port()
 {
-	float MaxHp = m_pUintlist->front()->Get_Stat()->m_iMaxHp;
-	float NowHp = m_pUintlist->front()->Get_Stat()->m_iHp;
+	MaxHp = m_pUintlist->front()->Get_Stat()->m_iMaxHp;
+	NowHp = m_pUintlist->front()->Get_Stat()->m_iHp;
 	float damage = MaxHp / 6.f;
 
 	int frameCount = static_cast<int>((MaxHp - NowHp) / damage);
 	m_tFrame.iCurCount = min(frameCount, 5); // 최대값 5로 제한
+}
+
+void CWireUI::TextPrint(HDC hdc)
+{
+	wchar_t	m_wcHp[32] = L"";
+
+	// 텍스트 색상과 배경 설정
+	SetTextColor(hdc, RGB(0, 200, 0));     // 텍스트 색상
+	//SetBkColor(hdc, RGB(0, 255, 0));      // 배경 색상
+	SetBkMode(hdc, TRANSPARENT);              // 배경 모드: 투명
+
+	// 텍스트 출력
+	swprintf_s(m_wcHp, 32, L"%d / %d", (int)NowHp, (int)MaxHp);
+	TextOut(hdc, 245, 560, m_wcHp, wcslen(m_wcHp));
+}
+
+void CWireUI::TextName(HDC hdc)
+{
+	wchar_t	m_wcHp[32] = L"";
+	SetBkMode(hdc, TRANSPARENT);
+	SetTextColor(hdc, RGB(255, 255, 255));
+
+	switch (m_eID)
+	{
+	case UNIT_SCV:
+		swprintf_s(m_wcHp, 32, L"테란 SCV");
+		break;
+	case UNIT_MARINE:
+		swprintf_s(m_wcHp, 32, L"테란 마린");
+		break;
+	case UNIT_END:
+		//swprintf_s(m_wcHp, 32, L"테란 마린");
+		break;
+	}
+
+	TextOut(hdc, 360, 500, m_wcHp, wcslen(m_wcHp));
 }

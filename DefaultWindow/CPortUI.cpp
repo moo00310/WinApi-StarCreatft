@@ -22,8 +22,8 @@ int CPortUI::Update()
 	if (m_pUintlist->empty())
 	{
 		m_eCurState = PT_END;
-		m_pImgKey = L"";
 		m_bRender = false;
+		return 0;
 	}
 
 	if (m_pUintlist->size() == 1)
@@ -93,6 +93,7 @@ void CPortUI::Change_Port()
 
 
 		case PT_END:
+			m_pImgKey = L"";
 			break;
 		default:
 			break;
