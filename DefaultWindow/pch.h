@@ -26,6 +26,26 @@
 using namespace Gdiplus;
 
 
+#include "fmod.h"
+#include "fmod.hpp"
+//#pragma comment(lib, "fmodex_vc.lib")
+// Debug 일 때
+#pragma comment(lib, "fmodL_vc.lib")
+// Release 일 때
+#pragma comment(lib, "fmod_vc.lib")
+
+///////////////////////////////////////////
+#include <Vfw.h>
+#pragma comment(lib, "vfw32.lib")
+
+#include <io.h>
+#include <iostream>
+
+#include "fmod.h"
+#include "fmod.hpp"
+#pragma comment(lib, "fmodL_vc.lib")
+
+
 #ifdef _DEBUG
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>

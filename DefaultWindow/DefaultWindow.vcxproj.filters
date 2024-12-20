@@ -136,6 +136,12 @@
     <Filter Include="04. UI\03.Wire_UI">
       <UniqueIdentifier>{4e956432-4698-4a70-8953-cb59fe9eeaf6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Design\FMod">
+      <UniqueIdentifier>{4091e04b-ef49-4cea-8aa2-5a14636ae16d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Design\SoundMgr">
+      <UniqueIdentifier>{9ad697ea-5077-4d2e-afab-90e4f4099cdf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -267,6 +273,33 @@
     <ClInclude Include="CUI.h">
       <Filter>04. UI\CUI</Filter>
     </ClInclude>
+    <ClInclude Include="fmod.h">
+      <Filter>03. Design\FMod</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod.hpp">
+      <Filter>03. Design\FMod</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_codec.h">
+      <Filter>03. Design\FMod</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_common.h">
+      <Filter>03. Design\FMod</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_dsp.h">
+      <Filter>03. Design\FMod</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_dsp_effects.h">
+      <Filter>03. Design\FMod</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_errors.h">
+      <Filter>03. Design\FMod</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_output.h">
+      <Filter>03. Design\FMod</Filter>
+    </ClInclude>
+    <ClInclude Include="CSoundMgr.h">
+      <Filter>03. Design\SoundMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -383,6 +416,9 @@
     <ClCompile Include="CUI.cpp">
       <Filter>04. UI\CUI</Filter>
     </ClCompile>
+    <ClCompile Include="CSoundMgr.cpp">
+      <Filter>03. Design\SoundMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DefaultWindow.rc">
@@ -396,5 +432,30 @@
     <Image Include="DefaultWindow.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fmod.cs">
+      <Filter>03. Design\FMod</Filter>
+    </None>
+    <None Include="fmod_dsp.cs">
+      <Filter>03. Design\FMod</Filter>
+    </None>
+    <None Include="fmod_errors.cs">
+      <Filter>03. Design\FMod</Filter>
+    </None>
+    <None Include="fmodL.dll">
+      <Filter>03. Design\FMod</Filter>
+    </None>
+    <None Include="fmod.dll">
+      <Filter>03. Design\FMod</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="fmod_vc.lib">
+      <Filter>03. Design\FMod</Filter>
+    </Library>
+    <Library Include="fmodL_vc.lib">
+      <Filter>03. Design\FMod</Filter>
+    </Library>
   </ItemGroup>
 </Project>

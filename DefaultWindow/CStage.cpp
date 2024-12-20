@@ -10,6 +10,9 @@
 #include "CObj.h"
 #include "CGameMouse.h"
 #include "CUIMgr.h"
+#include "CSoundMgr.h"
+
+float	g_fVolume(1.f);
 
 CStage::CStage()
 {
@@ -22,6 +25,8 @@ CStage::~CStage()
 
 void CStage::Initialize()
 {
+	CSoundMgr::Get_Instance()->PlayBGM(L"BGM_terran_2.mp3", 0.6f); //BGm
+
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/Texture/MyTile/Tile.bmp", L"Tile");
 
 	//매니저 초기화

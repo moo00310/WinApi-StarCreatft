@@ -165,6 +165,7 @@
     <ClInclude Include="CSceneMgr.h" />
     <ClInclude Include="CScrewBullet.h" />
     <ClInclude Include="CScrollMgr.h" />
+    <ClInclude Include="CSoundMgr.h" />
     <ClInclude Include="CStage.h" />
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CTileMgr.h" />
@@ -174,6 +175,14 @@
     <ClInclude Include="CWireUI.h" />
     <ClInclude Include="DefaultWindow.h" />
     <ClInclude Include="Define.h" />
+    <ClInclude Include="fmod.h" />
+    <ClInclude Include="fmod.hpp" />
+    <ClInclude Include="fmod_codec.h" />
+    <ClInclude Include="fmod_common.h" />
+    <ClInclude Include="fmod_dsp.h" />
+    <ClInclude Include="fmod_dsp_effects.h" />
+    <ClInclude Include="fmod_errors.h" />
+    <ClInclude Include="fmod_output.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -209,6 +218,7 @@
     <ClCompile Include="CSceneMgr.cpp" />
     <ClCompile Include="CScrewBullet.cpp" />
     <ClCompile Include="CScrollMgr.cpp" />
+    <ClCompile Include="CSoundMgr.cpp" />
     <ClCompile Include="CStage.cpp" />
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CTileMgr.cpp" />
@@ -230,6 +240,17 @@
   <ItemGroup>
     <Image Include="DefaultWindow.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fmod.cs" />
+    <None Include="fmod.dll" />
+    <None Include="fmodL.dll" />
+    <None Include="fmod_dsp.cs" />
+    <None Include="fmod_errors.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="fmodL_vc.lib" />
+    <Library Include="fmod_vc.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
