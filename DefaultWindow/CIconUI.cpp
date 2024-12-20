@@ -3,7 +3,7 @@
 #include "CBmpMgr.h"
 #include "CObjMgr.h"
 
-CIconUI::CIconUI(): m_pUintlist(nullptr), m_bRender(false), m_ePreState(PT_END), m_eCurState(PT_END)
+CIconUI::CIconUI(): m_pUintlist(nullptr), m_bRender(false), m_ePreState(OT_END), m_eCurState(OT_END)
 {
 }
 
@@ -21,7 +21,7 @@ int CIconUI::Update()
 {
 	if (m_pUintlist->empty())
 	{
-		m_eCurState = PT_END;
+		m_eCurState = OT_END;
 		m_bRender = false;
 		return 0;
 	}
@@ -30,11 +30,12 @@ int CIconUI::Update()
 	{
 		// 해당 오브젝트의 아이디를 가져와야하고, 그 오브젝트의 상태도 가져 와야함 
 
-		m_eCurState = PT_MARINE;
+		m_eCurState = m_pUintlist->front()->Get_ObjID();
 		m_bRender = true;
 		Change_Port();
 	}
 
+	return 0;
 }
 
 void CIconUI::Late_Update()

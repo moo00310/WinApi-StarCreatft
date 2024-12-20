@@ -4,7 +4,7 @@
 class CUnit : public CObj
 {
 public:
-	CUnit(UNITID _id) : m_eUnitID(_id), m_Map(nullptr), m_iPathIndex(0),
+	CUnit() : m_Map(nullptr), m_iPathIndex(0),
 	m_pMonsterList(nullptr), m_eCurState(STATE_IDLE), m_ePreState(STATE_IDLE), m_eInput(IP_ATTACK),
 		m_iAttackFrame(0){ }
 	~CUnit() {}
@@ -19,7 +19,6 @@ public:
 	void Update_State();
 	void SetInput(INPUTSTATE _input) { m_eInput = _input; }
 	INPUTSTATE GetUnitState() { return m_eInput; }
-	UNITID Get_UnitID() { return m_eUnitID; }
 
 public:
 	void Astar(Pos _tTarget_Index);
@@ -34,7 +33,6 @@ public:
 	void Hold();
 
 protected:
-	UNITID m_eUnitID;
 	ATIMESTATE m_ePreState;
 	ATIMESTATE m_eCurState;
 	INPUTSTATE m_eInput;

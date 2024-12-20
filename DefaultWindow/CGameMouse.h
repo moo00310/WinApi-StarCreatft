@@ -17,12 +17,14 @@ public:
 
 public:
 	void ClearList();
+	void ClearDrag();
 
 private:
 	void MouseInput(POINT ptMouse);
 	void ScrollMove(POINT mouse);
 	void ColObject();
 	void Change_Cursor();
+	void ColDrag();
 
 private:
 	POINT ptMouse{};
@@ -31,6 +33,9 @@ private:
 	int m_indexY;
 	list<CObj*>* m_UnitList;
 	list<CObj*>* m_Select_UnitList;
-	CObj* m_pPickObj;
+
+	bool isDrag;
+	POINT	m_DragStart;
+	POINT	m_DragEnd;
 };
 

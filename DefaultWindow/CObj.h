@@ -16,6 +16,8 @@ public:
 	STAT*				Get_Stat() { return &m_tStat; }
 	void				Add_Stat_hp(float hp);
 	void				Set_Select(bool _isSelect) { m_bSelect = _isSelect; }
+	OBJ_TYPE			Get_ObjID() { return m_eObjID; }
+
 public:
 	const RECT* Get_Scroll_Rect();
 
@@ -75,5 +77,6 @@ protected:
 	ULONGLONG m_AttackTime;
 	bool m_bSelect;
 
+	OBJ_TYPE m_eObjID;
 };
 

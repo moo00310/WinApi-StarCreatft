@@ -19,7 +19,5 @@ private:
 
 private:
 	int m_iImgId;
-
-
 };
 

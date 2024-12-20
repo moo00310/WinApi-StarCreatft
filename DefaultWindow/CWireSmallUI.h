@@ -2,11 +2,11 @@
 #include "CUI.h"
 #include "CObj.h"
 
-class CIconUI :public CUI
+class CWireSmallUI : public CUI
 {
 public:
-	CIconUI();
-	~CIconUI();
+	CWireSmallUI();
+	~CWireSmallUI();
 
 public:
 	void Initialize() override;
@@ -16,14 +16,16 @@ public:
 	void Release() override;
 
 private:
-	void Change_Port();
-	void Anime_Port(int Start, int End);
+	void Change_Wire(CObj* unit);
 
 private:
 	list<CObj*>* m_pUintlist;
+	OBJ_TYPE m_eID;
 	bool m_bRender;
+	int iCount;
 
-	OBJ_TYPE m_ePreState;
-	OBJ_TYPE m_eCurState;
+	size_t m_iUnitCount;
+	float MaxHp;
+	float NowHp;
 };
 

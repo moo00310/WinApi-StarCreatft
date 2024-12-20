@@ -12,9 +12,11 @@
 --------------------*/
 
 CGameMouse::CGameMouse() : m_eCurState(MS_IDLE), m_ePreState(MS_IDLE), m_indexY(0), m_UnitList(nullptr),
-m_Select_UnitList(nullptr), m_pPickObj(nullptr)
+m_Select_UnitList(nullptr), isDrag(false)
 {
     ZeroMemory(&ptMouse, sizeof(POINT));
+    ZeroMemory(&m_DragStart, sizeof(POINT));
+    ZeroMemory(&m_DragEnd, sizeof(POINT));
 }
 
 CGameMouse::~CGameMouse()
@@ -34,7 +36,6 @@ void CGameMouse::Initialize()
 
     m_UnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
     m_Select_UnitList = CObjMgr::Get_Instance()->Get_Select_List();
-    //m_pPickObj = CObjMgr::Get_Instance()->Get_PickObj();
 }
 
 int CGameMouse::Update()
@@ -82,7 +83,22 @@ void CGameMouse::Render(HDC hDC)
         (int)m_tInfo.fCY,
         RGB(255, 0, 255));
 
-    //Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+    if (!isDrag) return;
+    HPEN newPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
+    HBRUSH newBrush = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
+
+    HPEN oldPen = (HPEN)SelectObject(hDC, newPen);
+    HPEN oldBrush = (HPEN)SelectObject(hDC, newBrush);
+
+    Rectangle(hDC, (int)m_DragStart.x, (int)m_DragStart.y, (int)m_DragEnd.x, (int)m_DragEnd.y);
+
+
+    SelectObject(hDC, oldPen);
+    SelectObject(hDC, oldBrush);
+
+    DeleteObject(newBrush);
+    DeleteObject(newPen);
+
 }
 
 void CGameMouse::Release()
@@ -100,9 +116,14 @@ void CGameMouse::ClearList()
     m_Select_UnitList->clear();
 }
 
+void CGameMouse::ClearDrag()
+{
+    ZeroMemory(&m_DragStart, sizeof(POINT));
+    ZeroMemory(&m_DragEnd, sizeof(POINT));
+}
+
 void CGameMouse::MouseInput(POINT ptMouse)
 {
-
     Pos temp = { int(ptMouse.y - CScrollMgr::Get_Instance()->Get_ScrollY()) / TILECY , int(ptMouse.x - CScrollMgr::Get_Instance()->Get_ScrollX()) / TILECY };
     
     ///// 우클릭 : MOVE 
@@ -148,6 +169,23 @@ void CGameMouse::MouseInput(POINT ptMouse)
     if (m_eCurState == MS_IDLE && CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
     {
         ClearList();
+        m_DragStart.x = m_tInfo.fX;
+        m_DragStart.y = m_tInfo.fY;
+        isDrag = true;
+    }
+    if (isDrag  == true && CKeyMgr::Get_Instance()->Key_Pressing(VK_LBUTTON))
+    {
+        m_eCurState = MS_DRAG;
+        m_DragEnd.x = m_tInfo.fX;
+        m_DragEnd.y = m_tInfo.fY;
+    }
+
+    if (isDrag == true &&  CKeyMgr::Get_Instance()->Key_Up(VK_LBUTTON))
+    {
+        isDrag = false;
+        ColDrag();
+        ClearDrag();
+        m_eCurState = MS_IDLE;
     }
 
     if (CKeyMgr::Get_Instance()->Key_Down('A'))
@@ -228,6 +266,8 @@ void CGameMouse::ScrollMove(POINT mouse)
 
 void CGameMouse::ColObject()
 {
+    if (isDrag) return;
+
     CObj* unit(nullptr);
     // 전체 유닛 리스트에서 마우스랑 충돌했는지 검사
     if ((unit = CCollisionMgr::Collision_Rect_Mouse(m_tRect, *m_UnitList)) != nullptr)
@@ -290,9 +330,9 @@ void CGameMouse::Change_Cursor()
             break;
 
         case MS_DRAG:
-            m_tFrame.iFrameStart = 6;
-            m_tFrame.iFrameEnd = 6;
-            m_tFrame.iCurCount = 6;
+            m_tFrame.iFrameStart = 5;
+            m_tFrame.iFrameEnd = 5;
+            m_tFrame.iCurCount = 5;
             m_indexY = 0;
             m_tFrame.dwSpeed = 200;
             m_tFrame.dwTime = GetTickCount64();
@@ -373,4 +413,10 @@ void CGameMouse::Change_Cursor()
         m_ePreState = m_eCurState;
     }
 
+}
+
+void CGameMouse::ColDrag()
+{
+    RECT rc = { m_DragStart.x, m_DragStart.y, m_DragEnd.x, m_DragEnd.y };
+    CCollisionMgr::Collision_Rect_Mouse_RECT(rc,*m_UnitList, m_Select_UnitList);
 }

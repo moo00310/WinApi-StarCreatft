@@ -148,6 +148,15 @@
     <Filter Include="01. Obj\01.Unit\Unit">
       <UniqueIdentifier>{53755702-96b8-4665-96f1-0d844ad8d1e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\03.Wire_UI\BigWire">
+      <UniqueIdentifier>{4d73d96d-c0d6-4d60-8845-892facc7aad4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\03.Wire_UI\SmallWire">
+      <UniqueIdentifier>{4ec6030a-f903-442f-8b8a-09d8b046766b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\03. Mouse\Mouse">
+      <UniqueIdentifier>{c06cde4f-372f-4e09-8b32-87b97db7c5cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -188,9 +197,6 @@
     </ClInclude>
     <ClInclude Include="CCollisionMgr.h">
       <Filter>03. Design\CollisionMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="CMouse.h">
-      <Filter>01. Obj\03. Mouse</Filter>
     </ClInclude>
     <ClInclude Include="CScrewBullet.h">
       <Filter>01. Obj\Old\01. Bullet\ScrewBullet</Filter>
@@ -267,9 +273,6 @@
     <ClInclude Include="CPortUI.h">
       <Filter>04. UI\02.Port_UI</Filter>
     </ClInclude>
-    <ClInclude Include="CWireUI.h">
-      <Filter>04. UI\03.Wire_UI</Filter>
-    </ClInclude>
     <ClInclude Include="CUI.h">
       <Filter>04. UI\CUI</Filter>
     </ClInclude>
@@ -306,6 +309,15 @@
     <ClInclude Include="CUnit.h">
       <Filter>01. Obj\01.Unit\Unit</Filter>
     </ClInclude>
+    <ClInclude Include="CWireUI.h">
+      <Filter>04. UI\03.Wire_UI\BigWire</Filter>
+    </ClInclude>
+    <ClInclude Include="CWireSmallUI.h">
+      <Filter>04. UI\03.Wire_UI\SmallWire</Filter>
+    </ClInclude>
+    <ClInclude Include="CMouse.h">
+      <Filter>01. Obj\03. Mouse\Mouse</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -331,9 +343,6 @@
     </ClCompile>
     <ClCompile Include="CCollisionMgr.cpp">
       <Filter>03. Design\CollisionMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="CMouse.cpp">
-      <Filter>01. Obj\03. Mouse</Filter>
     </ClCompile>
     <ClCompile Include="CScrewBullet.cpp">
       <Filter>01. Obj\Old\01. Bullet\ScrewBullet</Filter>
@@ -410,9 +419,6 @@
     <ClCompile Include="CPortUI.cpp">
       <Filter>04. UI\02.Port_UI</Filter>
     </ClCompile>
-    <ClCompile Include="CWireUI.cpp">
-      <Filter>04. UI\03.Wire_UI</Filter>
-    </ClCompile>
     <ClCompile Include="CUI.cpp">
       <Filter>04. UI\CUI</Filter>
     </ClCompile>
@@ -424,6 +430,15 @@
     </ClCompile>
     <ClCompile Include="CUnit.cpp">
       <Filter>01. Obj\01.Unit\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="CWireUI.cpp">
+      <Filter>04. UI\03.Wire_UI\BigWire</Filter>
+    </ClCompile>
+    <ClCompile Include="CWireSmallUI.cpp">
+      <Filter>04. UI\03.Wire_UI\SmallWire</Filter>
+    </ClCompile>
+    <ClCompile Include="CMouse.cpp">
+      <Filter>01. Obj\03. Mouse\Mouse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -61,9 +61,6 @@ const float DamageCalcu[AT_END][DF_END]
 	{0.25f,0.5f,1.f}
 };
 
-enum UNITID{ UNIT_SCV, UNIT_MARINE, UNIT_END };
-enum BUILDID { BUILD_COMMEND, BUILD_BARRCK, BUILD_END };
-
 enum ATIMESTATE { STATE_IDLE ,STATE_MOVE, STATE_ATTACK, STATE_DEAD, STATE_END };
 enum INPUTSTATE { IP_MOVE, IP_ATTACK, IP_HOLD, IP_STOP, IP_PATROL, IP_END };
 enum CURSERSTATE { MS_IDLE, MS_OBJ, MS_ATTACK, MS_MOVE, MS_DRAG,
@@ -76,10 +73,13 @@ enum TILE_GROUP {
 	TG_HILL, 
  };
 
-enum Port_Type
+// À¯´Ö °ú °Ç¹°
+enum OBJ_TYPE
 {
-	PT_COMMEND, PT_SCV, PT_MARINE, PT_MEDIC, PT_END
+	OT_Scv, OT_Marine, OT_Medic, OT_Ghost, OT_Tank, OT_Science_Vessel, OT_Unit_End,
+	OT_Commend, OT_Suffly, OT_Barrck, OT_Build_End, OT_END
 };
+
 
 enum Wire_Type
 {

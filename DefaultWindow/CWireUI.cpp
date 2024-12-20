@@ -6,7 +6,7 @@
 #include "CKeyMgr.h"
 
 
-CWireUI::CWireUI() : m_pUintlist(nullptr), m_eID(UNIT_END), m_bRender(false), MaxHp(0.f), NowHp(0.f)
+CWireUI::CWireUI() : m_pUintlist(nullptr), m_eID(OT_Unit_End), m_bRender(false), MaxHp(0.f), NowHp(0.f)
 {
 }
 
@@ -25,15 +25,15 @@ int CWireUI::Update()
 {
 	if (m_pUintlist->size() == 1)
 	{
-		m_eID = UNIT_MARINE;
+		m_eID = m_pUintlist->front()->Get_ObjID();
 		m_bRender = true;
 		m_pImgKey = L"BigWire";
-		Change_Port();
+		Change_Wire();
 	}
 	else
 	{
 		m_bRender = false;
-		m_eID = UNIT_END;
+		m_eID = OT_END;
 		m_pImgKey = L"";
 	}
 
@@ -78,7 +78,7 @@ void CWireUI::Release()
 {
 }
 
-void CWireUI::Change_Port()
+void CWireUI::Change_Wire()
 {
 	MaxHp = m_pUintlist->front()->Get_Stat()->m_iMaxHp;
 	NowHp = m_pUintlist->front()->Get_Stat()->m_iHp;
@@ -99,7 +99,7 @@ void CWireUI::TextPrint(HDC hdc)
 
 	// 텍스트 출력
 	swprintf_s(m_wcHp, 32, L"%d / %d", (int)NowHp, (int)MaxHp);
-	TextOut(hdc, 245, 560, m_wcHp, wcslen(m_wcHp));
+	TextOut(hdc, 245, 560, m_wcHp, (int)wcslen(m_wcHp));
 }
 
 void CWireUI::TextName(HDC hdc)
@@ -110,16 +110,40 @@ void CWireUI::TextName(HDC hdc)
 
 	switch (m_eID)
 	{
-	case UNIT_SCV:
+	case OT_Scv:
 		swprintf_s(m_wcHp, 32, L"테란 SCV");
 		break;
-	case UNIT_MARINE:
+	case OT_Marine:
 		swprintf_s(m_wcHp, 32, L"테란 마린");
 		break;
-	case UNIT_END:
-		//swprintf_s(m_wcHp, 32, L"테란 마린");
+	case OT_Medic:
+		swprintf_s(m_wcHp, 32, L"테란 메딕");
+		break;
+	case OT_Ghost:
+		swprintf_s(m_wcHp, 32, L"테란 고스트");
+		break;
+	case OT_Tank:
+		swprintf_s(m_wcHp, 32, L"테란 시스 탱크");
+		break;
+	case OT_Science_Vessel:
+		swprintf_s(m_wcHp, 32, L"테란 사이언스 베슬");
+		break;
+	case OT_Unit_End:
+		break;
+	case OT_Commend:
+		swprintf_s(m_wcHp, 32, L"테란 커맨드 센터");
+		break;
+	case OT_Suffly:
+		swprintf_s(m_wcHp, 32, L"테란 보급고");
+		break;
+	case OT_Barrck:
+		swprintf_s(m_wcHp, 32, L"테란 배럭");
+		break;
+	case OT_Build_End:
+		break;
+	default:
 		break;
 	}
 
-	TextOut(hdc, 360, 500, m_wcHp, wcslen(m_wcHp));
+	TextOut(hdc, 360, 500, m_wcHp, (int)wcslen(m_wcHp));
 }

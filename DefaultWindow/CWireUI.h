@@ -1,6 +1,6 @@
 #pragma once
 #include "CUI.h"
-#include "CUnit.h"
+#include "CObj.h"
 
 class CWireUI : public CUI
 {
@@ -16,13 +16,13 @@ public:
 	void Release() override;
 
 private:
-	void Change_Port();
+	void Change_Wire();
 	void TextPrint(HDC hdc);
 	void TextName(HDC hdc);
 
 private:
 	list<CObj*>* m_pUintlist;
-	UNITID m_eID;
+	OBJ_TYPE m_eID;
 	bool m_bRender;
 
 	float MaxHp;

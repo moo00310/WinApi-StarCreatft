@@ -9,7 +9,7 @@
 #include "CMapMgr.h"
 #include "CSoundMgr.h"
 
-CMarine::CMarine() : CUnit(UNIT_MARINE), m_iImgId(0)
+CMarine::CMarine() : m_iImgId(0)
 {
     ZeroMemory(&m_tFrame, sizeof(FRAME));
 }
@@ -28,6 +28,7 @@ void CMarine::Initialize()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/0.bmp", L"Marine_Select");
 
     m_pImgKey = L"Marine";
+	m_eObjID = OT_Marine;
     m_tStat = { 40.f, 40.f, 6, 0, 64, 1.8f, 625 , DF_SAMLL, AT_NORMAL };
 
 	m_iAttackFrame = 14;

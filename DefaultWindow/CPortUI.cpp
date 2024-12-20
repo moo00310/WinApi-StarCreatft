@@ -3,7 +3,7 @@
 #include "CBmpMgr.h"
 #include "CObjMgr.h"
 
-CPortUI::CPortUI() : m_pUintlist(nullptr), m_bRender(false), m_ePreState(PT_END), m_eCurState(PT_END)
+CPortUI::CPortUI() : m_pUintlist(nullptr), m_bRender(false), m_ePreState(OT_END), m_eCurState(OT_END)
 {
 }
 
@@ -21,14 +21,13 @@ int CPortUI::Update()
 {
 	if (m_pUintlist->empty())
 	{
-		m_eCurState = PT_END;
+		m_eCurState = OT_END;
 		m_bRender = false;
 		return 0;
 	}
-
-	if (m_pUintlist->size() == 1)
+	if (m_pUintlist->size() >= 1)
 	{
-		m_eCurState = PT_MARINE;
+		m_eCurState = m_pUintlist->front()->Get_ObjID();
 		m_bRender = true;
 		Change_Port();
 	}
@@ -73,26 +72,31 @@ void CPortUI::Change_Port()
 {
 	if (m_ePreState != m_eCurState)
 	{
+
 		switch (m_eCurState)
 		{
-		case PT_COMMEND:
+		case OT_Scv:
 			break;
-		case PT_SCV:
-			m_pImgKey = L"SCVPort";
-
-			m_tFrame.iFrameStart = 0;
-			m_tFrame.iFrameEnd = 0;
-			m_tFrame.iCurCount = 0;
-			m_tFrame.dwSpeed = 200;
-			m_tFrame.dwTime = GetTickCount64();
-			break;
-		case PT_MARINE:
+		case OT_Marine:
 			m_pImgKey = L"Marine_port";
 			Anime_Port(0, 44);
 			break;
-
-
-		case PT_END:
+		case OT_Medic:
+			break;
+		case OT_Ghost:
+			break;
+		case OT_Tank:
+			break;
+		case OT_Science_Vessel:
+			break;
+		case OT_Commend:
+		case OT_Suffly:
+		case OT_Barrck:
+			// 어드바이저 이미지
+			break;
+		case OT_Unit_End:
+		case OT_Build_End:
+		case OT_END:
 			m_pImgKey = L"";
 			break;
 		default:

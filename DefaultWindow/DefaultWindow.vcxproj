@@ -172,6 +172,7 @@
     <ClInclude Include="CUI.h" />
     <ClInclude Include="CUIMgr.h" />
     <ClInclude Include="CUnit.h" />
+    <ClInclude Include="CWireSmallUI.h" />
     <ClInclude Include="CWireUI.h" />
     <ClInclude Include="DefaultWindow.h" />
     <ClInclude Include="Define.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIMgr.cpp" />
     <ClCompile Include="CUnit.cpp" />
+    <ClCompile Include="CWireSmallUI.cpp" />
     <ClCompile Include="CWireUI.cpp" />
     <ClCompile Include="DefaultWindow.cpp" />
     <ClCompile Include="pch.cpp">

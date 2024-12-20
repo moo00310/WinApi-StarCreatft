@@ -35,30 +35,30 @@ void CMainGame::Initialize()
 
 
 #pragma region 콘솔 디버그
-	//#ifdef _DEBUG
-	//
-	//	if (::AllocConsole() == TRUE)
-	//	{
-	//		FILE* nfp[3];
-	//		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
-	//		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
-	//		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
-	//		std::ios::sync_with_stdio();
-	//	}
-	//
-	//#endif // _DEBUG
-	//
-	//
-	//
-	//#ifdef  _DEBUG
-	//
-	//	if (m_dwTime + 1000 < GetTickCount())
-	//	{
-	//		cout << "마우스 위치 : " << mouse.x << '\t' << CScrollMgr::Get_Instance()->Get_ScrollX() + WINCX - 2 << endl;
-	//		m_dwTime = GetTickCount();
-	//	}
-	//
-	//#endif //  _DEBUG
+//	#ifdef _DEBUG
+//	
+//		if (::AllocConsole() == TRUE)
+//		{
+//			FILE* nfp[3];
+//			freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
+//			freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
+//			freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
+//			std::ios::sync_with_stdio();
+//		}
+//	
+//	#endif // _DEBUG
+//	
+//#ifdef  _DEBUG
+//
+//		if (m_dwTime + 1000 < GetTickCount())
+//		{
+//			cout << "마우스 위치 : " << m_DragStart.x << '\t' << (int)m_DragEnd.x << endl;
+//			m_dwTime = GetTickCount();
+//		}
+//
+//#endif //  _DEBUG
+	
+
 #pragma endregion
 
 }
@@ -73,7 +73,6 @@ void CMainGame::Late_Update()
 	CSceneMgr::Get_Instance()->Late_Update();
 	CKeyMgr::Get_Instance()->Update();
 	CScrollMgr::Get_Instance()->Scroll_Lock();
-
 }
 
 

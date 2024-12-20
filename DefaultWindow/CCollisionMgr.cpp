@@ -129,3 +129,20 @@ CObj* CCollisionMgr::Collision_Rect_Mouse(RECT rect, list<CObj*> _Src)
 	return nullptr;
 	
 }
+
+
+void CCollisionMgr::Collision_Rect_Mouse_RECT(RECT rect, list<CObj*> _Src, list<CObj*>* select)
+{
+	RECT rc{};
+	int count = 0;
+	for (auto& Src : _Src)
+	{
+		if (IntersectRect(&rc, &rect, Src->Get_Scroll_Rect()))
+		{
+			if (count >= 12) return;
+			select->push_back(Src);
+			Src->Set_Select(true);
+			count++;
+		}
+	}
+}

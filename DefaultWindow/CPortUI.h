@@ -23,7 +23,7 @@ private:
 	list<CObj*>* m_pUintlist;
 	bool m_bRender;
 
-	Port_Type m_ePreState;
-	Port_Type m_eCurState;
+	OBJ_TYPE m_ePreState;
+	OBJ_TYPE m_eCurState;
 };
 
