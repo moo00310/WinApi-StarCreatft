@@ -145,6 +145,9 @@
     <Filter Include="02. Scene\Scene">
       <UniqueIdentifier>{74ecd8b7-1018-42e2-a054-6f2c4d8e26a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\01.Unit\Unit">
+      <UniqueIdentifier>{53755702-96b8-4665-96f1-0d844ad8d1e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -234,9 +237,6 @@
     <ClInclude Include="CTileMgr.h">
       <Filter>03. Design\TileMgr</Filter>
     </ClInclude>
-    <ClInclude Include="CUnit.h">
-      <Filter>01. Obj\01.Unit</Filter>
-    </ClInclude>
     <ClInclude Include="CBuild.h">
       <Filter>01. Obj\02.Build</Filter>
     </ClInclude>
@@ -302,6 +302,9 @@
     </ClInclude>
     <ClInclude Include="CScene.h">
       <Filter>02. Scene\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CUnit.h">
+      <Filter>01. Obj\01.Unit\Unit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -377,9 +380,6 @@
     <ClCompile Include="CTileMgr.cpp">
       <Filter>03. Design\TileMgr</Filter>
     </ClCompile>
-    <ClCompile Include="CUnit.cpp">
-      <Filter>01. Obj\01.Unit</Filter>
-    </ClCompile>
     <ClCompile Include="CBuild.cpp">
       <Filter>01. Obj\02.Build</Filter>
     </ClCompile>
@@ -421,6 +421,9 @@
     </ClCompile>
     <ClCompile Include="CScene.cpp">
       <Filter>02. Scene\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CUnit.cpp">
+      <Filter>01. Obj\01.Unit\Unit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

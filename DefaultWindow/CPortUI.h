@@ -1,6 +1,6 @@
 #pragma once
 #include "CUI.h"
-#include "CUnit.h"
+#include "CObj.h"
 
 class CPortUI :public CUI
 {
