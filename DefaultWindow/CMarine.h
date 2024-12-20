@@ -16,8 +16,6 @@ public:
 
 private:
 	void Change_Motion();
-	void Test_Key_Input();
-
 
 private:
 	int m_iImgId;

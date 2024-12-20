@@ -142,6 +142,9 @@
     <Filter Include="03. Design\SoundMgr">
       <UniqueIdentifier>{9ad697ea-5077-4d2e-afab-90e4f4099cdf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Scene\Scene">
+      <UniqueIdentifier>{74ecd8b7-1018-42e2-a054-6f2c4d8e26a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -206,9 +209,6 @@
     </ClInclude>
     <ClInclude Include="CBmpMgr.h">
       <Filter>03. Design\BmpMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="CScene.h">
-      <Filter>02. Scene</Filter>
     </ClInclude>
     <ClInclude Include="CSceneMgr.h">
       <Filter>03. Design\SceneMgr</Filter>
@@ -300,6 +300,9 @@
     <ClInclude Include="CSoundMgr.h">
       <Filter>03. Design\SoundMgr</Filter>
     </ClInclude>
+    <ClInclude Include="CScene.h">
+      <Filter>02. Scene\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -349,9 +352,6 @@
     </ClCompile>
     <ClCompile Include="CBmpMgr.cpp">
       <Filter>03. Design\BmpMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="CScene.cpp">
-      <Filter>02. Scene</Filter>
     </ClCompile>
     <ClCompile Include="CSceneMgr.cpp">
       <Filter>03. Design\SceneMgr</Filter>
@@ -418,6 +418,9 @@
     </ClCompile>
     <ClCompile Include="CSoundMgr.cpp">
       <Filter>03. Design\SoundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene.cpp">
+      <Filter>02. Scene\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

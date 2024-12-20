@@ -89,6 +89,17 @@ void CGameMouse::Release()
 {
 }
 
+void CGameMouse::ClearList()
+{
+    // À¯´Ö ¼±ÅÃ ÃÊ±âÈ­
+    for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+        {
+            if (unit != nullptr)
+                unit->Set_Select(false);
+        });
+    m_Select_UnitList->clear();
+}
+
 void CGameMouse::MouseInput(POINT ptMouse)
 {
 
@@ -133,16 +144,10 @@ void CGameMouse::MouseInput(POINT ptMouse)
             });
     }
 
-    // Áß°£¿¡ Á×¾úÀ» ¶§µµ °í¹Î ÇØ¾ßÇÔ
+    // ¶¥ ÁÂÅ¬¸¯
     if (m_eCurState == MS_IDLE && CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
     {
-        // À¯´Ö ¼±ÅÃ ÃÊ±âÈ­
-        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
-            {
-                if (unit != nullptr)
-                    unit->Set_Select(false);
-            });
-        m_Select_UnitList->clear();
+        ClearList();
     }
 
     if (CKeyMgr::Get_Instance()->Key_Down('A'))
@@ -230,7 +235,7 @@ void CGameMouse::ColObject()
         m_eCurState = MS_OBJ;
         if (CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
         {
-            m_Select_UnitList->clear();
+            ClearList();
             unit->Set_Select(true);
             CObjMgr::Get_Instance()->Add_SelectList(unit);
         }

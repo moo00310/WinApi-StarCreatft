@@ -7,6 +7,7 @@
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
 #include "CMapMgr.h"
+#include "CSoundMgr.h"
 
 CMarine::CMarine() : CUnit(UNIT_MARINE), m_iImgId(0)
 {
@@ -34,10 +35,6 @@ void CMarine::Initialize()
 	m_eRender = RENDER_GAMEOBJECT;
 	m_tInfo.fCX = 50.f;
 	m_tInfo.fCY = 50.f;
-
-	//////////////////////////
-	m_tInfo.fX = 400.f;
-	m_tInfo.fY = 400.f;
 }
 
 int CMarine::Update()
@@ -46,12 +43,12 @@ int CMarine::Update()
 	{
 		// Á×À½ ÀÌÆåÆ®
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT,CAbstractFactory<CMarineDead>::Create(m_tInfo.fX, m_tInfo.fY));
+		CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
+		CSoundMgr::Get_Instance()->PlaySound(L"Marine_Dead_1.mp3", SOUND_EFFECT, 0.8f);
 		return OBJ_DEAD;
 	}
 	
 	Update_State();
-	Test_Key_Input();
-	
 	__super::Update_Rect();
     return OBJ_NOEVENT;
 }
@@ -138,12 +135,4 @@ void CMarine::Change_Motion()
 		m_ePreState = m_eCurState;
 	}
 
-}
-
-void CMarine::Test_Key_Input()
-{
-	if (CKeyMgr::Get_Instance()->Key_Down('R'))
-	{
-		m_bDead = true;
-	}
 }

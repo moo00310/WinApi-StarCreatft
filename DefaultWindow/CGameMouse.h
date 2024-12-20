@@ -16,7 +16,7 @@ public:
 	void Release() override;
 
 public:
-
+	void ClearList();
 
 private:
 	void MouseInput(POINT ptMouse);
