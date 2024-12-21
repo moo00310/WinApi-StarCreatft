@@ -417,6 +417,11 @@ void CGameMouse::Change_Cursor()
 
 void CGameMouse::ColDrag()
 {
-    RECT rc = { m_DragStart.x, m_DragStart.y, m_DragEnd.x, m_DragEnd.y };
+    float left = min(m_DragStart.x, m_DragEnd.x);
+    float right = max(m_DragStart.x, m_DragEnd.x);
+    float top = min(m_DragStart.y, m_DragEnd.y);
+    float bottom = max(m_DragStart.y, m_DragEnd.y);
+
+    RECT rc = { (LONG)left, (LONG)top, (LONG)right, (LONG)bottom };
     CCollisionMgr::Collision_Rect_Mouse_RECT(rc,*m_UnitList, m_Select_UnitList);
 }
