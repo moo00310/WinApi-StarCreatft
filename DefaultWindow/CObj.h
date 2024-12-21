@@ -23,6 +23,8 @@ public:
 public:
 	const RECT* Get_Scroll_Rect();
 	RECT* Get_Scroll_Rect_Line();
+	INFO  Get_Scroll_Info();
+	const INFO* Get_Scroll_Info_Pointer();
 
 	void		Set_Pos(float _fX, float _fY)
 	{
@@ -59,6 +61,7 @@ public:
 
 private:
 	RECT rc;
+	INFO info;
 
 protected:
 	INFO		m_tInfo;

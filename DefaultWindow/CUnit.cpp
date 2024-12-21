@@ -197,7 +197,7 @@ void CUnit::Move()
 			return;
 		}
 
-		const float EPSILON = m_tStat.m_fSpeed * 5.0f;
+		const float EPSILON = m_tStat.m_fSpeed * 10.0f;
 		if (fabsf(_fNow.x - _fPos.x) < EPSILON && fabsf(_fNow.y - _fPos.y) < EPSILON)
 		{
 			// 맵 타일 옵션 변경
@@ -218,7 +218,7 @@ void CUnit::Move()
 			}
 
 			// 이동
-			if (CCollisionMgr::Collision_RangeChack_bool(this, *m_pUnitList, 64.f))
+			if (CCollisionMgr::Collision_RangeChack_bool(this, *m_pUnitList, 50.f))
 			{
 				m_eCurState = STATE_IDLE;
 			}

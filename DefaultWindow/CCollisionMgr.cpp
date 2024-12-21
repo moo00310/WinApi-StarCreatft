@@ -101,8 +101,8 @@ CObj* CCollisionMgr::Collision_RangeChack(CObj* _pPlayer, list<CObj*> _pMonster,
 {
 	for (auto monster : _pMonster)
 	{
-		float fWidth = fabsf(monster->Get_Info().fX - _pPlayer->Get_Info().fX);
-		float fHeight = fabsf(monster->Get_Info().fY - _pPlayer->Get_Info().fY);
+		float fWidth = fabsf(monster->Get_Scroll_Info().fX - _pPlayer->Get_Scroll_Info().fX);
+		float fHeight = fabsf(monster->Get_Scroll_Info().fY - _pPlayer->Get_Scroll_Info().fY);
 
 		float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);
 
@@ -117,8 +117,8 @@ bool CCollisionMgr::Collision_RangeChack_bool(CObj* _pPlayer, list<CObj*> _Src, 
 {
 	for (auto& Src : _Src)
 	{
-		float dx = _pPlayer->Get_Info().fX - Src->Get_Info().fX;
-		float dy = _pPlayer->Get_Info().fY - Src->Get_Info().fY;
+		float dx = _pPlayer->Get_Scroll_Info().fX - Src->Get_Scroll_Info().fX;
+		float dy = _pPlayer->Get_Scroll_Info().fY - Src->Get_Scroll_Info().fY;
 		float distance = sqrtf(dx * dx + dy * dy);
 
 		if (distance > _dis || distance == 0)
@@ -128,24 +128,39 @@ bool CCollisionMgr::Collision_RangeChack_bool(CObj* _pPlayer, list<CObj*> _Src, 
 		DIRECTION dir = _pPlayer->Get_Direction();
 		fPOINT point = Nomalization(MoveFront[dir]);
 
-		x1 = _pPlayer->Get_Info().fX;
-		y1 = _pPlayer->Get_Info().fY;
+		x1 = _pPlayer->Get_Scroll_Info().fX;
+		y1 = _pPlayer->Get_Scroll_Info().fY;
 		x2 = x1 + _dis * point.x;
 		y2 = y1 + _dis * point.y;
 		
 		// 외적(cross product) 계산
-		float crossProduct = (Src->Get_Info().fY - y1) * (x2 - x1) - (Src->Get_Info().fX - x1) * (y2 - y1);
+		float crossProduct = (Src->Get_Scroll_Info().fY - y1) * (x2 - x1) - (Src->Get_Scroll_Info().fX - x1) * (y2 - y1);
+
+#ifdef _DEBUG
+
+		
+
+#endif // DEBUG
 
 		// 외적 오차 허용
-		if (fabs(crossProduct) > 0.5f)
+		if (fabsf(crossProduct) > 1200.f)
+		{
+			cout << "-------------------------------------------------" << endl;
+			cout << "외적 : " << crossProduct << endl;
 			continue;
-		else
-			return true;
+		}
+
 
 		// 선분 범위 안에 있는지 확인
-		if (Src->Get_Info().fX >= min(x1, x2) && Src->Get_Info().fX <= max(x1, x2) &&
-			Src->Get_Info().fY >= min(y1, y2) && Src->Get_Info().fY <= max(y1, y2))
+		if (Src->Get_Scroll_Info().fX >= min(x1, x2) && Src->Get_Scroll_Info().fX <= max(x1, x2) &&
+			Src->Get_Scroll_Info().fY >= min(y1, y2) && Src->Get_Scroll_Info().fY <= max(y1, y2))
 		{
+			cout << "-------------------------------------------------" << endl;
+			cout << "외적 : " << crossProduct << endl;
+			cout << "x1,y1 : " << x1 << " " << y1 << endl;
+			cout << "x2,y3 : " << x2 << " " << y2 << endl;
+			cout << "Src.fX,fY : " << Src->Get_Scroll_Info().fX << " " << Src->Get_Scroll_Info().fY << endl;
+			cout << "-------------------------------------------------" << endl;
 			return true; // 충돌 발생
 		}
 	}

@@ -35,30 +35,35 @@ void CMainGame::Initialize()
 
 
 #pragma region 콘솔 디버그
-	//#ifdef _DEBUG
-	//
-	//	if (::AllocConsole() == TRUE)
-	//	{
-	//		FILE* nfp[3];
-	//		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
-	//		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
-	//		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
-	//		std::ios::sync_with_stdio();
-	//	}
-	//
-	//#endif // _DEBUG
+	#ifdef _DEBUG
 	
-	/*if (m_dwTime + 2000 <= GetTickCount64())
-	{
-		Pos pos = { (int)ptMouse.y / 32 , (int)ptMouse.x / 32 };
-		cout << "-------------------------------------------------" << endl;
+		if (::AllocConsole() == TRUE)
+		{
+			FILE* nfp[3];
+			freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
+			freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
+			freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
+			std::ios::sync_with_stdio();
+		}
+	
+	#endif // _DEBUG
+	
+//#ifdef _DEBUG
+//
+//		if (m_dwTime + 2000 <= GetTickCount64())
+//		{
+//			Pos pos = { (int)ptMouse.y / 32 , (int)ptMouse.x / 32 };
+//			cout << "-------------------------------------------------" << endl;
+//
+//			cout << CMapMgr::Get_Instance()->GetTileType(pos) << endl;
+//
+//
+//			cout << "-------------------------------------------------" << endl;
+//			m_dwTime = GetTickCount64();
+//		}
+//
+//#endif // DEBUG
 
-		cout << CMapMgr::Get_Instance()->GetTileType(pos) << endl;
-
-
-		cout << "-------------------------------------------------" << endl;
-		m_dwTime = GetTickCount64();
-	}*/
 
 #pragma endregion
 

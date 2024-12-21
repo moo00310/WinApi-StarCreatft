@@ -10,6 +10,7 @@ CObj::CObj() : m_eDir(DIR_RIGHT), m_eRender(RENDER_END), m_bDead(false), m_fAngl
 	ZeroMemory(&m_tFrame, sizeof(FRAME));
 	ZeroMemory(&m_tStat, sizeof(STAT));
 	ZeroMemory(&rc, sizeof(STAT));
+	ZeroMemory(&info, sizeof(INFO));
 }
 
 CObj::~CObj()
@@ -52,6 +53,30 @@ RECT* CObj::Get_Scroll_Rect_Line()
 	rc.bottom += iScrollY;
 
 	return &rc;
+}
+
+INFO CObj::Get_Scroll_Info()
+{
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	info = m_tInfo;
+	info.fX += iScrollX;
+	info.fY += iScrollY;
+
+	return info;
+}
+
+const INFO* CObj::Get_Scroll_Info_Pointer()
+{
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	info = m_tInfo;
+	info.fX += iScrollX;
+	info.fY += iScrollY;
+
+	return &info;
 }
 
 void CObj::Update_Rect()
