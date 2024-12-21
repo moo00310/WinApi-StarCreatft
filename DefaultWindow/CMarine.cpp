@@ -23,7 +23,11 @@ void CMarine::Initialize()
 {
 	// 맵의 주소를 받아옴
 	m_Map = CMapMgr::Get_Instance()->GetMap();
+
+	// 리스트 할당
 	m_pMonsterList = CObjMgr::Get_Instance()->Get_MonsterList();
+	m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
+
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Marine/Marine.bmp", L"Marine");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/0.bmp", L"Marine_Select");
 

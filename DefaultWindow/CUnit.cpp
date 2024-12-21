@@ -28,7 +28,7 @@ void CUnit::Update_State()
 
 void CUnit::Astar(Pos _tTarget_Index)
 {
-	Pos start = { (int) m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
+	Pos start = { (int)m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
 	if (start.x >= 74 || start.y >= 74) return;
 
 	// OpenList
@@ -179,7 +179,6 @@ void CUnit::AttackToEnemy(CObj* _Enemey)
 		m_AttackTime = GetTickCount64();
 	}
 }
-// 애니메이션과 싱크 문제
 
 void CUnit::Move()
 {
@@ -187,13 +186,28 @@ void CUnit::Move()
 	{
 		Pos _now = { (int)m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
 		Pos _pos = _path[m_iPathIndex];
+		Pos _pre = _path[max(m_iPathIndex-1,0)];
 
-		if (_now == _pos)
+		fPOINT _fNow = { m_tInfo.fX, m_tInfo.fY};
+		fPOINT _fPos = { _path[m_iPathIndex].x * TILECY + 16.f ,_path[m_iPathIndex].y * TILECY + 16.f};
+
+		if (m_iPathIndex == 0)
+		{
+			m_iPathIndex = 1;
+			return;
+		}
+
+		const float EPSILON = m_tStat.m_fSpeed * 5.0f;
+		if (fabsf(_fNow.x - _fPos.x) < EPSILON && fabsf(_fNow.y - _fPos.y) < EPSILON)
+		{
+			// 맵 타일 옵션 변경
+			CMapMgr::Get_Instance()->SetTileType(_pos, 2);
+			CMapMgr::Get_Instance()->SetTileType(_pre, 0);
 			++m_iPathIndex;
+		}
 		else
 		{
-			// 방향 설정
-			Pos dir = (_pos - _now);
+			Pos dir = (_pos - _pre);
 			for (int i = 0; i < DIR_END; i++)
 			{
 				if (dir == MoveFront[i])
@@ -203,23 +217,27 @@ void CUnit::Move()
 				}
 			}
 
-			// 단위 벡터로 수정?
-			float x(0.f), y(0.f);
-			float length = sqrtf(float(dir.x * dir.x + dir.y * dir.y));
-			if (length != 0)
-			{
-				x = dir.x / length;
-				y = dir.y / length;
-			}
-
 			// 이동
-			m_eCurState = STATE_MOVE;
-			m_tInfo.fX += m_tStat.m_fSpeed * x;
-			m_tInfo.fY += m_tStat.m_fSpeed * y;
+			if (CCollisionMgr::Collision_RangeChack_bool(this, *m_pUnitList, 64.f))
+			{
+				m_eCurState = STATE_IDLE;
+			}
+			else
+			{
+				// 단위 벡터로 수정?
+				fPOINT point = Nomalization(MoveFront[m_eDir]);
+				
+				m_eCurState = STATE_MOVE;
+				m_tInfo.fX += m_tStat.m_fSpeed * point.x;
+				m_tInfo.fY += m_tStat.m_fSpeed * point.y;
+			}
 		}
 	}
 	else if (m_iPathIndex == _path.size())
-		m_eCurState = STATE_IDLE;
+	{
+		m_eInput = IP_STOP;
+	}
+		
 }
 
 void CUnit::Stop()
@@ -233,13 +251,14 @@ void CUnit::Attack()
 	if (m_iPathIndex < _path.size())
 	{
 		CObj* Enemy = nullptr;
-		Pos _now = { (int)m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
+		Pos _now = { (int)(m_tInfo.fY / TILECY) , (int)(m_tInfo.fX / TILECX) };
 		Pos _pos = _path[m_iPathIndex];
 
 		if (_now == _pos)
 			++m_iPathIndex;
 		else
 		{
+
 			if ((Enemy = CCollisionMgr::Collision_RangeChack(this, *m_pMonsterList, m_tStat.m_iRange)) == nullptr)
 			{
 				// 방향 설정
@@ -278,7 +297,7 @@ void CUnit::Attack()
 	}
 	else if (m_iPathIndex == _path.size())
 	{
-		m_eCurState = STATE_IDLE;
+		m_eInput = IP_STOP;
 	}
 		
 }

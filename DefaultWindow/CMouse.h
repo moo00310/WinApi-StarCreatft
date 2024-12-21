@@ -7,7 +7,7 @@
 class CMouse : public CObj
 {
 public:
-	CMouse(): m_iScrollX(0), m_iScrollY(0), m_dwTime(0) {}
+	CMouse(): m_iScrollX(0), m_iScrollY(0), m_dwTime(GetTickCount64()) {}
 	virtual ~CMouse() {}
 
 public:
@@ -51,7 +51,6 @@ public:
 private:
 	EditType m_eEditType;
 	int m_iDrawID;
-	ULONGLONG m_dwTime;
 };
 
 

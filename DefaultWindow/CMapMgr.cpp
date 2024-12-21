@@ -6,14 +6,6 @@
 
 CMapMgr* CMapMgr::m_pInstance = nullptr;
 
-CMapMgr::CMapMgr()
-{
-}
-
-CMapMgr::~CMapMgr()
-{
-}
-
 void CMapMgr::Initialize_Map()
 {
     //// Get_VecTile()에서 벡터 가져오기

@@ -6,6 +6,7 @@
 #include "CBmpMgr.h"
 #include "CMarine.h"
 #include "CCollisionMgr.h"
+#include "CMapMgr.h"
 
 /*---------------
     GameMouse
@@ -124,7 +125,7 @@ void CGameMouse::ClearDrag()
 
 void CGameMouse::MouseInput(POINT ptMouse)
 {
-    Pos temp = { int(ptMouse.y - CScrollMgr::Get_Instance()->Get_ScrollY()) / TILECY , int(ptMouse.x - CScrollMgr::Get_Instance()->Get_ScrollX()) / TILECY };
+    Pos temp = { (int)(ptMouse.y - CScrollMgr::Get_Instance()->Get_ScrollY()) / TILECY , int(ptMouse.x - CScrollMgr::Get_Instance()->Get_ScrollX()) / TILECY };
     
     ///// ¿ìÅ¬¸¯ : MOVE 
     if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
@@ -169,15 +170,15 @@ void CGameMouse::MouseInput(POINT ptMouse)
     if (m_eCurState == MS_IDLE && CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
     {
         ClearList();
-        m_DragStart.x = m_tInfo.fX;
-        m_DragStart.y = m_tInfo.fY;
+        m_DragStart.x = ptMouse.x;
+        m_DragStart.y = ptMouse.y;
         isDrag = true;
     }
     if (isDrag  == true && CKeyMgr::Get_Instance()->Key_Pressing(VK_LBUTTON))
     {
         m_eCurState = MS_DRAG;
-        m_DragEnd.x = m_tInfo.fX;
-        m_DragEnd.y = m_tInfo.fY;
+        m_DragEnd.x = ptMouse.x;
+        m_DragEnd.y = ptMouse.y;
     }
 
     if (isDrag == true &&  CKeyMgr::Get_Instance()->Key_Up(VK_LBUTTON))
@@ -417,10 +418,10 @@ void CGameMouse::Change_Cursor()
 
 void CGameMouse::ColDrag()
 {
-    float left = min(m_DragStart.x, m_DragEnd.x);
-    float right = max(m_DragStart.x, m_DragEnd.x);
-    float top = min(m_DragStart.y, m_DragEnd.y);
-    float bottom = max(m_DragStart.y, m_DragEnd.y);
+    float left = min((float)m_DragStart.x, (float)m_DragEnd.x);
+    float right = max((float)m_DragStart.x, (float)m_DragEnd.x);
+    float top = min((float)m_DragStart.y, (float)m_DragEnd.y);
+    float bottom = max((float)m_DragStart.y, (float)m_DragEnd.y);
 
     RECT rc = { (LONG)left, (LONG)top, (LONG)right, (LONG)bottom };
     CCollisionMgr::Collision_Rect_Mouse_RECT(rc,*m_UnitList, m_Select_UnitList);

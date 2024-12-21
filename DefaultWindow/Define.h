@@ -99,27 +99,6 @@ typedef struct tagInfo
 
 }INFO;
 
-typedef struct tagLinePoint
-{
-	float		fX, fY;
-
-	tagLinePoint()	{ZeroMemory(this, sizeof(tagLinePoint));}
-		tagLinePoint(float _fX, float _fY)
-		: fX(_fX), fY(_fY)
-	{	}
-
-}LINEPOINT;
-
-typedef struct tagLine
-{
-	LINEPOINT	tLPoint;
-	LINEPOINT	tRPoint;
-
-	tagLine() { 	ZeroMemory(this, sizeof(tagLine));	}
-	tagLine(LINEPOINT& _tLPoint, LINEPOINT& _tRPoint)
-		: tLPoint(_tLPoint), tRPoint(_tRPoint) {	}
-
-}LINE;
 
 typedef struct tagFrame
 {
@@ -300,3 +279,27 @@ const Pos MoveFront[] =
 	Pos {1,1},	// 오른쪽 아래 대각선
 	Pos {1,2} 
 };
+
+typedef struct floatPoint
+{
+	float		x, y;
+
+	bool operator==(floatPoint& other)
+	{
+		return y == other.y && x == other.x;
+	}
+
+}fPOINT;
+
+inline fPOINT Nomalization(const Pos _dir)
+{
+	fPOINT point = { 0.f, 0.f };
+	float length = sqrtf(float(_dir.x * _dir.x + _dir.y * _dir.y));
+	if (length != 0)
+	{
+		point.x = _dir.x / length;
+		point.y = _dir.y / length;
+
+		return point;
+	}
+}

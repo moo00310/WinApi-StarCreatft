@@ -16,10 +16,13 @@ public:
 	STAT*				Get_Stat() { return &m_tStat; }
 	void				Add_Stat_hp(float hp);
 	void				Set_Select(bool _isSelect) { m_bSelect = _isSelect; }
+	bool				Get_Select() { return m_bSelect; }
 	OBJ_TYPE			Get_ObjID() { return m_eObjID; }
+	DIRECTION			Get_Direction() { return m_eDir; }
 
 public:
 	const RECT* Get_Scroll_Rect();
+	RECT* Get_Scroll_Rect_Line();
 
 	void		Set_Pos(float _fX, float _fY)
 	{

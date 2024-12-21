@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CCollisionMgr.h"
 #include "CGameMouse.h"
+#include "CUnit.h"
 
 void CCollisionMgr::Collision_Circle(list<CObj*> _Dst, list<CObj*> _Src)
 {
@@ -112,6 +113,63 @@ CObj* CCollisionMgr::Collision_RangeChack(CObj* _pPlayer, list<CObj*> _pMonster,
 	return nullptr;
 }
 
+bool CCollisionMgr::Collision_RangeChack_bool(CObj* _pPlayer, list<CObj*> _Src, float _dis)
+{
+	for (auto& Src : _Src)
+	{
+		float dx = _pPlayer->Get_Info().fX - Src->Get_Info().fX;
+		float dy = _pPlayer->Get_Info().fY - Src->Get_Info().fY;
+		float distance = sqrtf(dx * dx + dy * dy);
+
+		if (distance > _dis || distance == 0)
+			continue;
+
+		float x1(0.f), y1(0.f), x2(0.f), y2(0.f);
+		DIRECTION dir = _pPlayer->Get_Direction();
+		fPOINT point = Nomalization(MoveFront[dir]);
+
+		x1 = _pPlayer->Get_Info().fX;
+		y1 = _pPlayer->Get_Info().fY;
+		x2 = x1 + _dis * point.x;
+		y2 = y1 + _dis * point.y;
+		
+		// 외적(cross product) 계산
+		float crossProduct = (Src->Get_Info().fY - y1) * (x2 - x1) - (Src->Get_Info().fX - x1) * (y2 - y1);
+
+		// 외적 오차 허용
+		if (fabs(crossProduct) > 0.5f)
+			continue;
+		else
+			return true;
+
+		// 선분 범위 안에 있는지 확인
+		if (Src->Get_Info().fX >= min(x1, x2) && Src->Get_Info().fX <= max(x1, x2) &&
+			Src->Get_Info().fY >= min(y1, y2) && Src->Get_Info().fY <= max(y1, y2))
+		{
+			return true; // 충돌 발생
+		}
+	}
+	return false; // 충돌 없음
+}
+#pragma region Test
+	/*for (auto& Src : _Src)
+	{
+		CUnit* pUnit = dynamic_cast<CUnit*>(Src);
+		if (pUnit == nullptr || pUnit->GetAinmeState() == STATE_IDLE )
+			continue;
+
+		float fWidth = fabsf(Src->Get_Info().fX - _pPlayer->Get_Info().fX);
+		float fHeight = fabsf(Src->Get_Info().fY - _pPlayer->Get_Info().fY);
+
+		float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);
+
+		if (fDistance == 0) continue;
+		if (fDistance <= _dis)
+			return true;
+	}
+	return false;*/
+#pragma endregion
+
 
 CObj* CCollisionMgr::Collision_Rect_Mouse(RECT rect, list<CObj*> _Src)
 {
@@ -123,7 +181,6 @@ CObj* CCollisionMgr::Collision_Rect_Mouse(RECT rect, list<CObj*> _Src)
 		{
 			return Src;
 		}
-		
 	}
 
 	return nullptr;

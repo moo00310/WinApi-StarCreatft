@@ -1,12 +1,14 @@
 #pragma once
 #include "CObj.h"
+//#include "Define.h"
 
 class CUnit : public CObj
 {
 public:
-	CUnit() : m_Map(nullptr), m_iPathIndex(0),
-	m_pMonsterList(nullptr), m_eCurState(STATE_IDLE), m_ePreState(STATE_IDLE), m_eInput(IP_ATTACK),
-		m_iAttackFrame(0){ }
+	CUnit() : m_Map(nullptr), m_pMonsterList(nullptr), m_pUnitList(nullptr), m_iPathIndex(0),
+	m_eCurState(STATE_IDLE), m_ePreState(STATE_IDLE), m_eInput(IP_ATTACK), m_iAttackFrame(0),
+	ull_WaitTime(0)
+		{ }
 	~CUnit() {}
 
 	virtual void Initialize() PURE;
@@ -18,7 +20,8 @@ public:
 public:
 	void Update_State();
 	void SetInput(INPUTSTATE _input) { m_eInput = _input; }
-	INPUTSTATE GetUnitState() { return m_eInput; }
+	INPUTSTATE GetInput() { return m_eInput; }
+	ATIMESTATE GetAinmeState() { return m_eCurState; }
 
 public:
 	void Astar(Pos _tTarget_Index);
@@ -47,5 +50,8 @@ protected:
 	//Attack
 	list<CObj*>* m_pMonsterList;
 
+	//Move
+	list<CObj*>* m_pUnitList;
+	ULONGLONG	ull_WaitTime;
 };
 

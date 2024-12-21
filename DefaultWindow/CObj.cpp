@@ -40,6 +40,20 @@ const RECT* CObj::Get_Scroll_Rect()
 	return &rc;
 }
 
+RECT* CObj::Get_Scroll_Rect_Line()
+{
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	rc = m_tRect;
+	rc.left += iScrollX;
+	rc.top += iScrollY;
+	rc.right += iScrollX;
+	rc.bottom += iScrollY;
+
+	return &rc;
+}
+
 void CObj::Update_Rect()
 {
 	m_tRect.left	= LONG(m_tInfo.fX - (m_tInfo.fCX * 0.5f));

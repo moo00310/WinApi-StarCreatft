@@ -39,7 +39,7 @@ void CMouse::LockMouse()
     EditMouse
 --------------------*/
 
-EditMouse::EditMouse() : m_iDrawID(0) , m_dwTime(GetTickCount64()), m_eEditType(ET_END)
+EditMouse::EditMouse() : m_iDrawID(0) , m_eEditType(ET_END)
 {
 }
 

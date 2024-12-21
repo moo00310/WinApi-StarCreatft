@@ -4,8 +4,8 @@
 class CMapMgr
 {
 private:
-	CMapMgr();
-	~CMapMgr();
+	CMapMgr() : m_dwTime(GetTickCount64()) {}
+	~CMapMgr() {}
 
 public:
 	void Initialize_Map();
@@ -17,6 +17,10 @@ public:
 	vector<vector<int>>* GetMap() { return &m_Map; }
 
 	int GetTileType(Pos pos) { return m_Map[pos.y][pos.x]; }
+	void SetTileType(Pos pos, int _Option)
+	{ 
+		m_Map[pos.y][pos.x] = _Option; 
+	}
 
 public:
 	static CMapMgr* Get_Instance()
@@ -40,6 +44,7 @@ public:
 
 private:
 	static CMapMgr* m_pInstance;
+	ULONGLONG m_dwTime;
 	vector<vector<int>> m_Map = vector<vector<int>>(75, vector<int>(75, 0));
 };
 

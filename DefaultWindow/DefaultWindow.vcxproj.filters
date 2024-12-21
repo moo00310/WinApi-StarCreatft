@@ -70,27 +70,6 @@
     <Filter Include="03. Design\TileMgr\Tile">
       <UniqueIdentifier>{b2c00f52-fc2f-4967-937f-14aa3b936e02}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\Old">
-      <UniqueIdentifier>{ff2baa36-8337-454a-8306-77c450f78dee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\Old\00. Player">
-      <UniqueIdentifier>{0d160408-139b-4b41-a75d-ed72a58c3568}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\Old\01. Bullet">
-      <UniqueIdentifier>{e788f02c-0521-4a42-9119-079a06b76f75}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\Old\01. Bullet\ScrewBullet">
-      <UniqueIdentifier>{e96831a9-1ff2-488f-b9f8-0f45774d7173}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\Old\01. Bullet\GuideBullet">
-      <UniqueIdentifier>{d0bc3b22-3ccb-4481-a360-7cd2d912e8b6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\Old\02. Monster">
-      <UniqueIdentifier>{28dd5fd8-800c-41f8-8d4f-b441f0804b18}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\Old\05. Button">
-      <UniqueIdentifier>{b8f9215b-fd37-4dd4-b322-a07d7ccf0bd1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Obj\01.Unit">
       <UniqueIdentifier>{b8320515-8355-441e-9494-2cf1d0362a0e}</UniqueIdentifier>
     </Filter>
@@ -157,6 +136,30 @@
     <Filter Include="01. Obj\03. Mouse\Mouse">
       <UniqueIdentifier>{c06cde4f-372f-4e09-8b32-87b97db7c5cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\Obj">
+      <UniqueIdentifier>{be0b1231-6d2a-4d39-be94-b5216c322bc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\old">
+      <UniqueIdentifier>{ff2baa36-8337-454a-8306-77c450f78dee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\old\00. Player">
+      <UniqueIdentifier>{0d160408-139b-4b41-a75d-ed72a58c3568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\old\01. Bullet">
+      <UniqueIdentifier>{e788f02c-0521-4a42-9119-079a06b76f75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\old\01. Bullet\ScrewBullet">
+      <UniqueIdentifier>{e96831a9-1ff2-488f-b9f8-0f45774d7173}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\old\01. Bullet\GuideBullet">
+      <UniqueIdentifier>{d0bc3b22-3ccb-4481-a360-7cd2d912e8b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\old\02. Monster">
+      <UniqueIdentifier>{28dd5fd8-800c-41f8-8d4f-b441f0804b18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\old\05. Button">
+      <UniqueIdentifier>{b8f9215b-fd37-4dd4-b322-a07d7ccf0bd1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -180,17 +183,14 @@
     <ClInclude Include="Define.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CObj.h">
-      <Filter>01. Obj</Filter>
-    </ClInclude>
     <ClInclude Include="CPlayer.h">
-      <Filter>01. Obj\Old\00. Player</Filter>
+      <Filter>01. Obj\old\00. Player</Filter>
     </ClInclude>
     <ClInclude Include="CBullet.h">
-      <Filter>01. Obj\Old\01. Bullet</Filter>
+      <Filter>01. Obj\old\01. Bullet</Filter>
     </ClInclude>
     <ClInclude Include="CMonster.h">
-      <Filter>01. Obj\Old\02. Monster</Filter>
+      <Filter>01. Obj\old\02. Monster</Filter>
     </ClInclude>
     <ClInclude Include="CAbstractFactory.h">
       <Filter>03. Design\AbstractFactory</Filter>
@@ -199,13 +199,13 @@
       <Filter>03. Design\CollisionMgr</Filter>
     </ClInclude>
     <ClInclude Include="CScrewBullet.h">
-      <Filter>01. Obj\Old\01. Bullet\ScrewBullet</Filter>
+      <Filter>01. Obj\old\01. Bullet\ScrewBullet</Filter>
     </ClInclude>
     <ClInclude Include="CObjMgr.h">
       <Filter>03. Design\ObjMgr</Filter>
     </ClInclude>
     <ClInclude Include="CGuideBullet.h">
-      <Filter>01. Obj\Old\01. Bullet\GuideBullet</Filter>
+      <Filter>01. Obj\old\01. Bullet\GuideBullet</Filter>
     </ClInclude>
     <ClInclude Include="CKeyMgr.h">
       <Filter>03. Design\KeyMgr</Filter>
@@ -229,7 +229,7 @@
       <Filter>02. Scene\01. Menu</Filter>
     </ClInclude>
     <ClInclude Include="CMyButton.h">
-      <Filter>01. Obj\Old\05. Button</Filter>
+      <Filter>01. Obj\old\05. Button</Filter>
     </ClInclude>
     <ClInclude Include="CStage.h">
       <Filter>02. Scene\03. Stage</Filter>
@@ -318,6 +318,9 @@
     <ClInclude Include="CMouse.h">
       <Filter>01. Obj\03. Mouse\Mouse</Filter>
     </ClInclude>
+    <ClInclude Include="CObj.h">
+      <Filter>01. Obj\Obj</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -329,29 +332,26 @@
     <ClCompile Include="CMainGame.cpp">
       <Filter>00. MainGame</Filter>
     </ClCompile>
-    <ClCompile Include="CObj.cpp">
-      <Filter>01. Obj</Filter>
-    </ClCompile>
     <ClCompile Include="CPlayer.cpp">
-      <Filter>01. Obj\Old\00. Player</Filter>
+      <Filter>01. Obj\old\00. Player</Filter>
     </ClCompile>
     <ClCompile Include="CBullet.cpp">
-      <Filter>01. Obj\Old\01. Bullet</Filter>
+      <Filter>01. Obj\old\01. Bullet</Filter>
     </ClCompile>
     <ClCompile Include="CMonster.cpp">
-      <Filter>01. Obj\Old\02. Monster</Filter>
+      <Filter>01. Obj\old\02. Monster</Filter>
     </ClCompile>
     <ClCompile Include="CCollisionMgr.cpp">
       <Filter>03. Design\CollisionMgr</Filter>
     </ClCompile>
     <ClCompile Include="CScrewBullet.cpp">
-      <Filter>01. Obj\Old\01. Bullet\ScrewBullet</Filter>
+      <Filter>01. Obj\old\01. Bullet\ScrewBullet</Filter>
     </ClCompile>
     <ClCompile Include="CObjMgr.cpp">
       <Filter>03. Design\ObjMgr</Filter>
     </ClCompile>
     <ClCompile Include="CGuideBullet.cpp">
-      <Filter>01. Obj\Old\01. Bullet\GuideBullet</Filter>
+      <Filter>01. Obj\old\01. Bullet\GuideBullet</Filter>
     </ClCompile>
     <ClCompile Include="CKeyMgr.cpp">
       <Filter>03. Design\KeyMgr</Filter>
@@ -375,7 +375,7 @@
       <Filter>02. Scene\01. Menu</Filter>
     </ClCompile>
     <ClCompile Include="CMyButton.cpp">
-      <Filter>01. Obj\Old\05. Button</Filter>
+      <Filter>01. Obj\old\05. Button</Filter>
     </ClCompile>
     <ClCompile Include="CStage.cpp">
       <Filter>02. Scene\03. Stage</Filter>
@@ -439,6 +439,9 @@
     </ClCompile>
     <ClCompile Include="CMouse.cpp">
       <Filter>01. Obj\03. Mouse\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="CObj.cpp">
+      <Filter>01. Obj\Obj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
