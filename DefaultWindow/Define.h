@@ -299,7 +299,6 @@ inline fPOINT Nomalization(const Pos _dir)
 	{
 		point.x = _dir.x / length;
 		point.y = _dir.y / length;
-
-		return point;
 	}
+	return point;
 }

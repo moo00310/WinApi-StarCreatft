@@ -39,7 +39,7 @@ void CStage::Initialize()
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CGameMouse>::Create());
 
 	// 마린 생산
-	for (int i = 1; i < 3; i++)
+	for (int i = 1; i < 13; i++)
 	{
 		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(300.f + i * 50.f, 200.f));
 	}

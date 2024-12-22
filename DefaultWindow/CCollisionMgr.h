@@ -17,6 +17,7 @@ public:
 	static bool Collision_RangeChack_bool(CObj* _pPlayer, list<CObj*> _Src, float _dis);
 	static CObj* Collision_Rect_Mouse(RECT rect, list<CObj*> _Src);
 	static void Collision_Rect_Mouse_RECT(RECT rect, list<CObj*> _Src, list<CObj*>* select);
+	static Pos Collision_Neares_Unit_pos(Pos _pMouse, list<CObj*> Unit);
 
 };
 

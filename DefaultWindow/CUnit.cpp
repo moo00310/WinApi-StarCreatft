@@ -45,11 +45,26 @@ void CUnit::Astar(Pos _tTarget_Index)
 
 	// �ʱⰪ
 	{
+		if (!CanGo(_tTarget_Index))
+		{
+			for (int dir = 0; dir < DIR_END; dir++)
+			{
+				Pos nextPos = _tTarget_Index + MoveFront[dir];
+
+				if (CanGo(nextPos) == true)
+				{
+					_tTarget_Index = nextPos;
+					break;
+				}
+
+			}
+		}
 		int g = 0;
 		int h = 10 * (abs(_tTarget_Index.y - _tTarget_Index.y) + abs(_tTarget_Index.x - _tTarget_Index.x));
 		pq.push(PQNode{ g + h, g, start });
 		best[start.y][start.x] = g + h;
 		parent[start] = start;
+
 	}
 
 	while (pq.empty() == false)
@@ -125,6 +140,7 @@ void CUnit::Astar(Pos _tTarget_Index)
 
 bool CUnit::CanGo(Pos pos)
 {
+	if (pos.y > 74 || pos.x > 74) return false;
 	if (CMapMgr::Get_Instance()->GetTileType(pos) <= 1)
 		return true;
 	else

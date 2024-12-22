@@ -117,10 +117,12 @@ bool CCollisionMgr::Collision_RangeChack_bool(CObj* _pPlayer, list<CObj*> _Src, 
 {
 	for (auto& Src : _Src)
 	{
+		if (static_cast<CUnit*>(Src)->GetAinmeState() != STATE_MOVE) continue;
+
 		float dx = _pPlayer->Get_Scroll_Info().fX - Src->Get_Scroll_Info().fX;
 		float dy = _pPlayer->Get_Scroll_Info().fY - Src->Get_Scroll_Info().fY;
 		float distance = sqrtf(dx * dx + dy * dy);
-
+		 
 		if (distance > _dis || distance == 0)
 			continue;
 
@@ -136,54 +138,21 @@ bool CCollisionMgr::Collision_RangeChack_bool(CObj* _pPlayer, list<CObj*> _Src, 
 		// 외적(cross product) 계산
 		float crossProduct = (Src->Get_Scroll_Info().fY - y1) * (x2 - x1) - (Src->Get_Scroll_Info().fX - x1) * (y2 - y1);
 
-#ifdef _DEBUG
-
-		
-
-#endif // DEBUG
-
 		// 외적 오차 허용
 		if (fabsf(crossProduct) > 1200.f)
 		{
-			cout << "-------------------------------------------------" << endl;
-			cout << "외적 : " << crossProduct << endl;
 			continue;
 		}
-
 
 		// 선분 범위 안에 있는지 확인
 		if (Src->Get_Scroll_Info().fX >= min(x1, x2) && Src->Get_Scroll_Info().fX <= max(x1, x2) &&
 			Src->Get_Scroll_Info().fY >= min(y1, y2) && Src->Get_Scroll_Info().fY <= max(y1, y2))
 		{
-			cout << "-------------------------------------------------" << endl;
-			cout << "외적 : " << crossProduct << endl;
-			cout << "x1,y1 : " << x1 << " " << y1 << endl;
-			cout << "x2,y3 : " << x2 << " " << y2 << endl;
-			cout << "Src.fX,fY : " << Src->Get_Scroll_Info().fX << " " << Src->Get_Scroll_Info().fY << endl;
-			cout << "-------------------------------------------------" << endl;
 			return true; // 충돌 발생
 		}
 	}
 	return false; // 충돌 없음
 }
-#pragma region Test
-	/*for (auto& Src : _Src)
-	{
-		CUnit* pUnit = dynamic_cast<CUnit*>(Src);
-		if (pUnit == nullptr || pUnit->GetAinmeState() == STATE_IDLE )
-			continue;
-
-		float fWidth = fabsf(Src->Get_Info().fX - _pPlayer->Get_Info().fX);
-		float fHeight = fabsf(Src->Get_Info().fY - _pPlayer->Get_Info().fY);
-
-		float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);
-
-		if (fDistance == 0) continue;
-		if (fDistance <= _dis)
-			return true;
-	}
-	return false;*/
-#pragma endregion
 
 
 CObj* CCollisionMgr::Collision_Rect_Mouse(RECT rect, list<CObj*> _Src)
@@ -217,4 +186,34 @@ void CCollisionMgr::Collision_Rect_Mouse_RECT(RECT rect, list<CObj*> _Src, list<
 			count++;
 		}
 	}
+}
+
+
+Pos CCollisionMgr::Collision_Neares_Unit_pos(Pos _pMouse, list<CObj*> Unit)
+{
+	float best = 500000.f;
+	CObj* bestObj = nullptr;
+	Pos pos = {};
+
+	for (auto _unit : Unit)
+	{
+		float fWidth = fabsf(_unit->Get_Scroll_Info().fX - _pMouse.x);
+		float fHeight = fabsf(_unit->Get_Scroll_Info().fY - _pMouse.y);
+
+		float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);
+
+		cout << "-------------------------------" << endl;
+		std::cout << "Mouse Pos: (" << _pMouse.x << ", " << _pMouse.y << ")" << std::endl;
+		cout << "Unit Pos: (" << _unit->Get_Scroll_Info().fX << ", "
+			<< _unit->Get_Scroll_Info().fY << ")" << endl;
+		cout << "-------------------------------" << endl;
+
+		if (fDistance < best)
+		{
+			best = fDistance;
+			bestObj = _unit;
+		}
+	}
+
+	return  pos = { (int)bestObj->Get_Scroll_Info().fY/32,(int)bestObj->Get_Scroll_Info().fX/32 };
 }

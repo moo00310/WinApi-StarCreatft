@@ -131,17 +131,48 @@ void CGameMouse::MouseInput(POINT ptMouse)
     if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
     {
         m_eCurState = MS_MOVE;
-        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+        if (m_Select_UnitList->size() == 1)
+        {
+            if (m_Select_UnitList->front() != nullptr)
             {
-                if (unit != nullptr)
+                if (auto* pUnit = dynamic_cast<CUnit*>(m_Select_UnitList->front()))
                 {
+                    pUnit->Astar(temp);
+                    pUnit->SetInput(IP_MOVE);
+                }
+            }
+        }
+        else if (m_Select_UnitList->size() > 1)
+        {
+            Pos IndexArraay[12] = {};
+            int array(0);
+
+            // 마우스랑 가장 가까운 유닛 찾기
+            Pos BestIndex = CCollisionMgr::Collision_Neares_Unit_pos(temp, *m_Select_UnitList);
+
+            // 가장 베스트 인덱스에서 빼기
+            for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+                {
+                    Pos pos = { (int)unit->Get_Scroll_Info().fY / 32, (int)unit->Get_Scroll_Info().fX / 32 };
+                    IndexArraay[array] = BestIndex - pos;
+                    array++;
+                });
+
+
+            // 마우스 포인트 위치에서 각각 정해진 위치로 이동
+            array = 0;
+            for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+                {
+
                     if (auto* pUnit = dynamic_cast<CUnit*>(unit))
                     {
-                        pUnit->Astar(temp);
+                        pUnit->Astar(temp - IndexArraay[array]);
                         pUnit->SetInput(IP_MOVE);
+                        array++;
                     }
-                }
-            });
+                
+                });
+        }
     }
     if (CKeyMgr::Get_Instance()->Key_Up(VK_RBUTTON))
     {

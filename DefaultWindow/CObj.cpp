@@ -61,8 +61,8 @@ INFO CObj::Get_Scroll_Info()
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
 	info = m_tInfo;
-	info.fX += iScrollX;
-	info.fY += iScrollY;
+	info.fX -= iScrollX;
+	info.fY -= iScrollY;
 
 	return info;
 }
@@ -73,8 +73,8 @@ const INFO* CObj::Get_Scroll_Info_Pointer()
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
 	info = m_tInfo;
-	info.fX += iScrollX;
-	info.fY += iScrollY;
+	info.fX -= iScrollX;
+	info.fY -= iScrollY;
 
 	return &info;
 }
