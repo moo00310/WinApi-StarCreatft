@@ -160,6 +160,9 @@
     <Filter Include="01. Obj\old\05. Button">
       <UniqueIdentifier>{b8f9215b-fd37-4dd4-b322-a07d7ccf0bd1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\02.Build\Build">
+      <UniqueIdentifier>{852cd5ea-8e8b-4bcd-9664-68d955269ab1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -243,9 +246,6 @@
     <ClInclude Include="CTileMgr.h">
       <Filter>03. Design\TileMgr</Filter>
     </ClInclude>
-    <ClInclude Include="CBuild.h">
-      <Filter>01. Obj\02.Build</Filter>
-    </ClInclude>
     <ClInclude Include="CMarine.h">
       <Filter>01. Obj\01.Unit\01.Marine</Filter>
     </ClInclude>
@@ -321,6 +321,9 @@
     <ClInclude Include="CObj.h">
       <Filter>01. Obj\Obj</Filter>
     </ClInclude>
+    <ClInclude Include="CBuild.h">
+      <Filter>01. Obj\02.Build\Build</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -389,9 +392,6 @@
     <ClCompile Include="CTileMgr.cpp">
       <Filter>03. Design\TileMgr</Filter>
     </ClCompile>
-    <ClCompile Include="CBuild.cpp">
-      <Filter>01. Obj\02.Build</Filter>
-    </ClCompile>
     <ClCompile Include="CMarine.cpp">
       <Filter>01. Obj\01.Unit\01.Marine</Filter>
     </ClCompile>
@@ -442,6 +442,9 @@
     </ClCompile>
     <ClCompile Include="CObj.cpp">
       <Filter>01. Obj\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="CBuild.cpp">
+      <Filter>01. Obj\02.Build\Build</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -49,7 +49,7 @@ int CMarine::Update()
 		// Á×À½ ÀÌÆåÆ®
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT,CAbstractFactory<CMarineDead>::Create(m_tInfo.fX, m_tInfo.fY));
 		CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
-		CSoundMgr::Get_Instance()->PlaySound(L"Marine_Dead_1.mp3", SOUND_EFFECT, 0.5f);
+		CSoundMgr::Get_Instance()->PlaySound(L"Marine_Dead_1.mp3", SOUND_EFFECT, 0.5f, true);
 
 		return OBJ_DEAD;
 	}

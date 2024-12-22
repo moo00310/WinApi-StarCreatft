@@ -37,7 +37,7 @@ void CSoundMgr::Release()
 	FMOD_System_Close(m_pSystem);
 }
 
-void CSoundMgr::PlaySound(const TCHAR * pSoundKey, CHANNELID eID, float fVolume)
+void CSoundMgr::PlaySound(const TCHAR * pSoundKey, CHANNELID eID, float fVolume, bool isIgnore)
 {
 	map<TCHAR*, FMOD_SOUND*>::iterator iter; 
 
@@ -53,10 +53,18 @@ void CSoundMgr::PlaySound(const TCHAR * pSoundKey, CHANNELID eID, float fVolume)
 
 	FMOD_BOOL bPlay = FALSE; 
 
-	if (FMOD_Channel_IsPlaying(m_pChannelArr[eID], &bPlay))
+	if (isIgnore == true)
 	{
 		FMOD_System_PlaySound(m_pSystem, iter->second, 0, FALSE, &m_pChannelArr[eID]);
 	}
+	else
+	{
+		if (FMOD_Channel_IsPlaying(m_pChannelArr[eID], &bPlay))
+		{
+			FMOD_System_PlaySound(m_pSystem, iter->second, 0, FALSE, &m_pChannelArr[eID]);
+		}
+	}
+	
 
 	FMOD_Channel_SetVolume(m_pChannelArr[eID], fVolume);
 
@@ -130,7 +138,7 @@ void CSoundMgr::LoadSoundFile()
 
 		if (eRes == FMOD_OK)
 		{
-			int iLength = strlen(fd.name) + 1; 
+			int iLength = (int)strlen(fd.name) + 1; 
 
 			TCHAR* pSoundKey = new TCHAR[iLength];
 			ZeroMemory(pSoundKey, sizeof(TCHAR) * iLength);
