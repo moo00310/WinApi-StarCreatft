@@ -16,6 +16,8 @@ public:
 
 private:
 	void Change_Motion();
+	void Block_Map();
+	void UnBlock_Map();
 
 
 };

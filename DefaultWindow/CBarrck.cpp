@@ -33,14 +33,18 @@ void CBarrck::Initialize()
     m_tStat = { 1000.f, 1000.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
      
-    //// 겟으로 받아야할듯
     auto value = ObjCost.at(OT_Barrck);
     m_iMyBuildTIme = get<3>(value);
 
+    __super::Update_Rect();
+    Block_Map();
 }
 
 int CBarrck::Update()
 {
+    if (m_bDead)
+        return OBJ_DEAD;
+
 
 
     __super::Update_Rect();
@@ -65,9 +69,12 @@ void CBarrck::Render(HDC hDC)
 
     if (m_bTemplate)
      {
+        int CX = (int)m_tInfo.fX - (int)(BuildTemplate_Size.x * 0.5f);
+        int CY = (int)m_tInfo.fY - (int)(BuildTemplate_Size.y * 0.5f);
+
        GdiTransparentBlt(hDC,			// 복사 받을 DC
-           m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
-           m_tRect.top + iScrollY,
+           CX + iScrollX,	// 복사 받을 위치 좌표 X, Y	
+           CY + iScrollY,
            (int)BuildTemplate_Size.x,			// 복사 받을 이미지의 가로, 세로
            (int)BuildTemplate_Size.y,
            hMemDC,						// 복사할 이미지 DC	
@@ -99,6 +106,7 @@ void CBarrck::Render(HDC hDC)
 
 void CBarrck::Release()
 {
+    UnBlock_Map();
 }
 
 void CBarrck::Change_Motion()
@@ -161,4 +169,39 @@ void CBarrck::Change_Motion()
 
        m_ePreState_Bulid = m_eCurState_Build;
     }
+}
+
+void CBarrck::Block_Map()
+{
+    int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+    int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+    Pos pos = { m_tRect.left/32 + iScrollX ,m_tRect.top/32 + iScrollY };
+
+    for (int i = 0; i < m_tInfo.fCY / 32; i++)
+    {
+        for (int j = 0; j < m_tInfo.fCX / 32; j++)
+        {
+            Pos temp = {i,j};
+            CMapMgr::Get_Instance()->SetTileType(pos + temp, 2);
+        }
+    }
+}
+
+void CBarrck::UnBlock_Map()
+{
+    int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+    int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+    Pos pos = { m_tRect.left / 32 + iScrollX ,m_tRect.top / 32 + iScrollY };
+
+    for (int i = 0; i < m_tInfo.fCY / 32; i++)
+    {
+        for (int j = 0; j < m_tInfo.fCX / 32; j++)
+        {
+            Pos temp = { i,j };
+            CMapMgr::Get_Instance()->SetTileType(pos + temp, 0);
+        }
+    }
+
 }
