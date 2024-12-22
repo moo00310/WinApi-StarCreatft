@@ -84,5 +84,10 @@ protected:
 	bool m_bSelect;
 
 	OBJ_TYPE m_eObjID;
+
+protected:
+	vector<vector<int>>* m_Map;
+	list<CObj*>* m_pUnitList;
+
 };
 

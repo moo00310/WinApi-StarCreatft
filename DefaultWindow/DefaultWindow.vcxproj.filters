@@ -163,6 +163,15 @@
     <Filter Include="01. Obj\02.Build\Build">
       <UniqueIdentifier>{852cd5ea-8e8b-4bcd-9664-68d955269ab1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\02.Build\01.CommedCenter">
+      <UniqueIdentifier>{fb458baa-5ae8-484f-b1cd-8d70f235c726}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\02.Suffly">
+      <UniqueIdentifier>{21edb747-86ca-4292-94c5-736de2ec4e84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\03.Barrck">
+      <UniqueIdentifier>{f6ef8f70-7d5b-4cc2-b26f-9d4d2609d75d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -324,6 +333,9 @@
     <ClInclude Include="CBuild.h">
       <Filter>01. Obj\02.Build\Build</Filter>
     </ClInclude>
+    <ClInclude Include="CBarrck.h">
+      <Filter>01. Obj\02.Build\03.Barrck</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -445,6 +457,9 @@
     </ClCompile>
     <ClCompile Include="CBuild.cpp">
       <Filter>01. Obj\02.Build\Build</Filter>
+    </ClCompile>
+    <ClCompile Include="CBarrck.cpp">
+      <Filter>01. Obj\02.Build\03.Barrck</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

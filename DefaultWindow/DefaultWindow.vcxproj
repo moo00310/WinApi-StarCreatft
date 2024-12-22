@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CBarrck.h" />
     <ClInclude Include="CBloodEffect.h" />
     <ClInclude Include="CBuild.h" />
     <ClInclude Include="CAbstractFactory.h" />
@@ -190,6 +191,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CBarrck.cpp" />
     <ClCompile Include="CBloodEffect.cpp" />
     <ClCompile Include="CBuild.cpp" />
     <ClCompile Include="CBmpMgr.cpp" />

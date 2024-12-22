@@ -11,6 +11,7 @@
 #include "CGameMouse.h"
 #include "CUIMgr.h"
 #include "CSoundMgr.h"
+#include "CBarrck.h"
 
 float	g_fVolume(1.f);
 
@@ -39,13 +40,16 @@ void CStage::Initialize()
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CGameMouse>::Create());
 
 	// 마린 생산
-	for (int i = 1; i < 13; i++)
+	for (int i = 1; i < 3; i++)
 	{
 		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(300.f + i * 50.f, 200.f));
 	}
 
 	// 적 마린 생산
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMarine>::Create(600,600));
+
+	// 건물 생산
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CBarrck>::Create(400, 400));
 }
 
 int CStage::Update()

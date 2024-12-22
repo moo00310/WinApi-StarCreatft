@@ -5,9 +5,8 @@
 class CUnit : public CObj
 {
 public:
-	CUnit() : m_Map(nullptr), m_pMonsterList(nullptr), m_pUnitList(nullptr), m_iPathIndex(0),
-	m_eCurState(STATE_IDLE), m_ePreState(STATE_IDLE), m_eInput(IP_ATTACK), m_iAttackFrame(0),
-	ull_WaitTime(0)
+	CUnit() : m_pMonsterList(nullptr), m_iPathIndex(0), m_eInput(IP_ATTACK), m_iAttackFrame(0),
+	ull_WaitTime(0), m_eCurState(STATE_IDLE), m_ePreState(STATE_IDLE)
 		{ }
 	~CUnit() {}
 
@@ -36,22 +35,19 @@ public:
 	void Hold();
 
 protected:
-	ATIMESTATE m_ePreState;
-	ATIMESTATE m_eCurState;
 	INPUTSTATE m_eInput;
 	int m_iAttackFrame;
+	ATIMESTATE m_ePreState;
+	ATIMESTATE m_eCurState;
 
 	//A_star
-	vector<vector<int>>* m_Map;
 	vector<Pos>	_path;
 	int m_iPathIndex;
 	
-
 	//Attack
 	list<CObj*>* m_pMonsterList;
 
 	//Move
-	list<CObj*>* m_pUnitList;
 	ULONGLONG	ull_WaitTime;
 };
 

@@ -41,7 +41,7 @@ enum DIRECTION {
 	DIR_END, // 방향 없음
 };
 
-enum OBJID { OBJ_EFFECT, OBJ_PLAYER, OBJ_BULLET, OBJ_MONSTER, OBJ_MOUSE, OBJ_SHIELD, OBJ_BUTTON, OBJ_END };
+enum OBJID { OBJ_EFFECT, OBJ_PLAYER, OBJ_BUILD, OBJ_MONSTER, OBJ_MOUSE, OBJ_BUTTON, OBJ_END };
 
 enum RENDERID { RENDER_BACKGROUND, RENDER_GAMEOBJECT, RENDER_UI, RENDER_EFFECT, RENDER_END };
 
@@ -62,6 +62,8 @@ const float DamageCalcu[AT_END][DF_END]
 };
 
 enum ATIMESTATE { STATE_IDLE ,STATE_MOVE, STATE_ATTACK, STATE_DEAD, STATE_END };
+enum BuildSTATE { BS_TEMP, BS_MAKE, BS_IDLE, BS_RUN, BS_FLY, BS_END };
+
 enum INPUTSTATE { IP_MOVE, IP_ATTACK, IP_HOLD, IP_STOP, IP_PATROL, IP_END };
 enum CURSERSTATE { MS_IDLE, MS_OBJ, MS_ATTACK, MS_MOVE, MS_DRAG,
 	MS_SCROLL_R, MS_SCROLL_UR, MS_SCROLL_U, MS_SCROLL_UL, MS_SCROLL_L,
@@ -72,14 +74,6 @@ enum TILE_GROUP {
 	TG_GROUND, 
 	TG_HILL, 
  };
-
-// 유닛 과 건물
-enum OBJ_TYPE
-{
-	OT_Scv, OT_Marine, OT_Medic, OT_Ghost, OT_Tank, OT_Science_Vessel, OT_Unit_End,
-	OT_Commend, OT_Suffly, OT_Barrck, OT_Build_End, OT_END
-};
-
 
 enum Wire_Type
 {
@@ -302,3 +296,42 @@ inline fPOINT Nomalization(const Pos _dir)
 	}
 	return point;
 }
+
+// 유닛과 건물
+enum OBJ_TYPE
+{
+	OT_Scv, OT_Marine, OT_Medic, OT_Ghost, OT_Tank, OT_Science_Vessel, OT_Unit_End,
+	OT_Commend, OT_Suffly, OT_Refinery, OT_Barrck, OT_Academy ,OT_Factory, OT_Addon, OT_Armory, OT_Starport, OT_StarportAddOn,
+	OT_ScienceFacility, OT_ScienceSecret, OT_CmdNuke, OT_Build_End,
+	
+	OT_END
+};
+
+
+const map<OBJ_TYPE, std::tuple<int, int, int, int>> ObjCost =
+{
+	// 유닛 이름, {미네랄, 가스, 인구수, 소요시간}
+	{OT_Scv,               {50,  0, 1, 20}},
+	{OT_Marine,            {50,  0, 1, 24}},  
+	{OT_Medic,             {50, 25, 1, 30}},
+	{OT_Ghost,             {25, 75, 1, 50}},
+	{OT_Tank,              {150, 100, 2, 50}},
+	{OT_Science_Vessel,    {100, 225, 2, 80}},
+
+	// 건물 이름, {미네랄, 가스, 제공되는 인구수, 소요시간}
+	{OT_Commend,           {400,  0, 10, 120}},
+	{OT_Suffly,            {100,  0,  8, 40}},
+	{OT_Refinery,          {100,  0,  0, 40}},
+	{OT_Barrck,            {150,  0,  0, 80}},
+	{OT_Academy,           {150,  0,  0, 80}},
+	{OT_Factory,           {200, 100, 0, 80}},
+	{OT_Addon,             {50,  50, 0, 40}},
+	{OT_Armory,            {100, 50, 0, 80}},  
+	{OT_Starport,          {150, 100, 0, 70}},
+	{OT_StarportAddOn,     {50,  50, 0, 40}},
+	{OT_ScienceFacility,   {100, 150, 0, 60}},
+	{OT_ScienceSecret,     {50,  50, 0, 40}},
+	{OT_CmdNuke,           {100, 100, 0, 80}}
+};
+
+const fPOINT BuildTemplate_Size = { 160, 128 };
