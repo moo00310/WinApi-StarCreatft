@@ -66,6 +66,9 @@ void CPortUI::Initailize_Img()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Marine/Marine.bmp", L"Marine_port");
 	
 	//SCV
+
+	//어드 바이저
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Advisor/Advosr.bmp", L"Advosr");
 }
 
 void CPortUI::Change_Port()
@@ -93,6 +96,7 @@ void CPortUI::Change_Port()
 		case OT_Suffly:
 		case OT_Barrck:
 			// 어드바이저 이미지
+			m_pImgKey = L"Advosr";
 			break;
 		case OT_Unit_End:
 		case OT_Build_End:

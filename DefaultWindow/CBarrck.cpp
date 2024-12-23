@@ -42,11 +42,16 @@ void CBarrck::Initialize()
 
 int CBarrck::Update()
 {
-    if (m_bDead)
+    if (m_bDead || m_tStat.m_iHp <= 0)
+    {
+        // 터지는이펙트 & 사운드
+
+        UnBlock_Map();
         return OBJ_DEAD;
+    }
 
 
-
+        
     __super::Update_Rect();
     return OBJ_NOEVENT;
 }
@@ -106,7 +111,7 @@ void CBarrck::Render(HDC hDC)
 
 void CBarrck::Release()
 {
-    UnBlock_Map();
+  
 }
 
 void CBarrck::Change_Motion()

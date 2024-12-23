@@ -13,7 +13,7 @@
 --------------------*/
 
 CGameMouse::CGameMouse() : m_eCurState(MS_IDLE), m_ePreState(MS_IDLE), m_indexY(0), m_UnitList(nullptr),
-m_Select_UnitList(nullptr), isDrag(false)
+m_Select_UnitList(nullptr), isDrag(false), m_BuildList(nullptr)
 {
     ZeroMemory(&ptMouse, sizeof(POINT));
     ZeroMemory(&m_DragStart, sizeof(POINT));
@@ -36,6 +36,7 @@ void CGameMouse::Initialize()
     m_eRender = RENDER_UI;
 
     m_UnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
+    m_BuildList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_BUILD);
     m_Select_UnitList = CObjMgr::Get_Instance()->Get_Select_List();
 }
 
@@ -84,6 +85,12 @@ void CGameMouse::Render(HDC hDC)
         (int)m_tInfo.fCY,
         RGB(255, 0, 255));
 
+
+
+
+    /*---------------
+        드래그
+    -------------------*/
     if (!isDrag) return;
     HPEN newPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
     HBRUSH newBrush = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
@@ -300,16 +307,16 @@ void CGameMouse::ColObject()
 {
     if (isDrag) return;
 
-    CObj* unit(nullptr);
-    // 전체 유닛 리스트에서 마우스랑 충돌했는지 검사
-    if ((unit = CCollisionMgr::Collision_Rect_Mouse(m_tRect, *m_UnitList)) != nullptr)
+    CObj* Obj(nullptr);
+    // 전체 유닛과  건물이 마우스랑 충돌했는지 검사
+    if ((Obj = CCollisionMgr::Collision_Rect_Mouse(m_tRect, *m_UnitList, *m_BuildList)) != nullptr)
     {
         m_eCurState = MS_OBJ;
         if (CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
         {
             ClearList();
-            unit->Set_Select(true);
-            CObjMgr::Get_Instance()->Add_SelectList(unit);
+            Obj->Set_Select(true);
+            CObjMgr::Get_Instance()->Add_SelectList(Obj);
         }
            
     }

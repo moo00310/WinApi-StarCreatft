@@ -155,15 +155,23 @@ bool CCollisionMgr::Collision_RangeChack_bool(CObj* _pPlayer, list<CObj*> _Src, 
 }
 
 
-CObj* CCollisionMgr::Collision_Rect_Mouse(RECT rect, list<CObj*> _Src)
+CObj* CCollisionMgr::Collision_Rect_Mouse(RECT rect, list<CObj*> _Unit, list<CObj*> _Build)
 {
 	RECT rc{};
 
-	for (auto& Src : _Src)
+	for (auto& _unit : _Unit)
 	{
-		if (IntersectRect(&rc, &rect, Src->Get_Scroll_Rect()))
+		if (IntersectRect(&rc, &rect, _unit->Get_Scroll_Rect()))
 		{
-			return Src;
+			return _unit;
+		}
+	}
+
+	for (auto& _build : _Build)
+	{
+		if (IntersectRect(&rc, &rect, _build->Get_Scroll_Rect()))
+		{
+			return _build;
 		}
 	}
 

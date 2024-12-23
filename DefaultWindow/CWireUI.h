@@ -24,6 +24,9 @@ private:
 	list<CObj*>* m_pUintlist;
 	OBJ_TYPE m_eID;
 	bool m_bRender;
+	int UnitID;
+
+	int Text_X;
 
 	float MaxHp;
 	float NowHp;

@@ -6,7 +6,7 @@
 #include "CKeyMgr.h"
 
 
-CWireUI::CWireUI() : m_pUintlist(nullptr), m_eID(OT_Unit_End), m_bRender(false), MaxHp(0.f), NowHp(0.f)
+CWireUI::CWireUI() : m_pUintlist(nullptr), m_eID(OT_Unit_End), m_bRender(false), MaxHp(0.f), NowHp(0.f), UnitID(0), Text_X(0)
 {
 }
 
@@ -65,7 +65,7 @@ void CWireUI::Render(HDC hdc)
 		64,
 		hMemDC,						// 복사할 이미지 DC	
 		64 * m_tFrame.iCurCount,
-		64 * (int)m_eID,
+		64 * UnitID,
 		64,										// 복사할 이미지의 가로, 세로
 		64,
 		RGB(0, 0, 0));		// 제거할 색상
@@ -99,7 +99,7 @@ void CWireUI::TextPrint(HDC hdc)
 
 	// 텍스트 출력
 	swprintf_s(m_wcHp, 32, L"%d / %d", (int)NowHp, (int)MaxHp);
-	TextOut(hdc, 245, 560, m_wcHp, (int)wcslen(m_wcHp));
+	TextOut(hdc, Text_X, 560, m_wcHp, (int)wcslen(m_wcHp));
 }
 
 void CWireUI::TextName(HDC hdc)
@@ -112,32 +112,50 @@ void CWireUI::TextName(HDC hdc)
 	{
 	case OT_Scv:
 		swprintf_s(m_wcHp, 32, L"테란 SCV");
+		Text_X = 245;
+		UnitID = 0;
 		break;
 	case OT_Marine:
 		swprintf_s(m_wcHp, 32, L"테란 마린");
+		Text_X = 245;
+		UnitID = 1;
 		break;
 	case OT_Medic:
 		swprintf_s(m_wcHp, 32, L"테란 메딕");
+		Text_X = 245;
+		UnitID = 4;
 		break;
 	case OT_Ghost:
 		swprintf_s(m_wcHp, 32, L"테란 고스트");
+		Text_X = 245;
+		UnitID = 3;
 		break;
 	case OT_Tank:
 		swprintf_s(m_wcHp, 32, L"테란 시스 탱크");
+		Text_X = 245;
+		UnitID = 6;
 		break;
 	case OT_Science_Vessel:
 		swprintf_s(m_wcHp, 32, L"테란 사이언스 베슬");
+		Text_X = 245;
+		UnitID = 10;
 		break;
 	case OT_Unit_End:
 		break;
 	case OT_Commend:
 		swprintf_s(m_wcHp, 32, L"테란 커맨드 센터");
+		Text_X = 230;
+		UnitID = 15;
 		break;
 	case OT_Suffly:
 		swprintf_s(m_wcHp, 32, L"테란 보급고");
+		Text_X = 230;
+		UnitID = 16;
 		break;
 	case OT_Barrck:
 		swprintf_s(m_wcHp, 32, L"테란 배럭");
+		Text_X = 230;
+		UnitID = 18;
 		break;
 	case OT_Build_End:
 		break;

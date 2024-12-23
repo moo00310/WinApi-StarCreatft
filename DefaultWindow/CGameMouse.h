@@ -32,6 +32,7 @@ private:
 	CURSERSTATE m_ePreState;
 	int m_indexY;
 	list<CObj*>* m_UnitList;
+	list<CObj*>* m_BuildList;
 	list<CObj*>* m_Select_UnitList;
 
 	bool isDrag;

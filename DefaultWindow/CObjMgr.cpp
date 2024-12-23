@@ -43,7 +43,7 @@ CObj* CObjMgr::Get_Target(OBJID eID, CObj* pDst)
 
 void CObjMgr::Add_SelectList(CObj*& pObj)
 {
-	m_SelectList.push_back(dynamic_cast<CUnit*>(pObj));
+	m_SelectList.push_back(pObj);
 }
 
 void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
