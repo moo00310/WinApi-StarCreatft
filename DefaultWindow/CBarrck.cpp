@@ -34,7 +34,8 @@ void CBarrck::Initialize()
     m_tStat = { 1000.f, 1.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
      
-    m_iMyBuildTIme = get<3>(ObjCost.at(OT_Barrck));
+    //m_iMyBuildTIme = get<3>(ObjCost.at(OT_Barrck));
+    m_iMyBuildTIme = 80;
 
     __super::Update_Rect();
     Block_Map();
@@ -51,7 +52,7 @@ int CBarrck::Update()
     }
 
     KeyInput();
-    SpawnUint();
+    Spawn_Uint_CoolDown();     // 쿨타임 적용해서 유닛생성
 
     __super::Update_Rect();
     return OBJ_NOEVENT;
@@ -179,10 +180,8 @@ void CBarrck::Change_Motion()
 
 void CBarrck::Block_Map()
 {
-    int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
-    int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
-    Pos pos = { (m_tRect.top - iScrollY) / 32,(m_tRect.left - iScrollX) / 32 };
+    Pos pos = { (m_tRect.top ) / 32,(m_tRect.left ) / 32 };
 
     for (int i = 0; i < m_tInfo.fCY / 32; i++)
     {
@@ -196,10 +195,8 @@ void CBarrck::Block_Map()
 
 void CBarrck::UnBlock_Map()
 {
-    int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
-    int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
-    Pos pos = { (m_tRect.top - iScrollY) / 32,(m_tRect.left - iScrollX) / 32 };
+    Pos pos = { (m_tRect.top) / 32,(m_tRect.left) / 32 };
 
     for (int i = 0; i < m_tInfo.fCY / 32; i++)
     {
@@ -209,7 +206,6 @@ void CBarrck::UnBlock_Map()
             CMapMgr::Get_Instance()->SetTileType(pos + temp, 0);
         }
     }
-
 }
 
 void CBarrck::KeyInput()
@@ -222,8 +218,8 @@ void CBarrck::KeyInput()
     // 마린 생산
     if (CKeyMgr::Get_Instance()->Key_Down('A'))
     {
-        if(m_queSpawn.size() < 5)
-            m_queSpawn.push(OT_Marine);
+        if (m_listSpawn.size() < 5)
+            m_listSpawn.push_back(OT_Marine);
     }
 
     // 메딕 생산

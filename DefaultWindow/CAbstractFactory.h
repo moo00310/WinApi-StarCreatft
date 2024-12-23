@@ -33,7 +33,7 @@ public:
 	static CObj* Create(Pos pos)
 	{
 		CObj* pObj = new T;
-		pObj->Set_Pos(pos.x*32.f, pos.y*32.f);
+		pObj->Set_Pos(pos.x * 32.f, pos.y * 32.f);
 		pObj->Initialize();
 
 		return pObj;

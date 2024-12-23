@@ -307,6 +307,18 @@ enum OBJ_TYPE
 	OT_END
 };
 
+
+
+const Pos Spawn_index[5] =
+{
+	{0, 0},
+	{1, 0},
+	{1, 1},
+	{1, 2},
+	{1, 3},
+};
+
+
 #define Frame  32
 
 const map<OBJ_TYPE, std::tuple<int, int, int, int>> ObjCost =

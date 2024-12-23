@@ -5,7 +5,7 @@ class CBuild : public CObj
 {
 public:
 	CBuild() :m_ePreState_Bulid(BS_END), m_eCurState_Build(BS_END), m_iMyBuildTIme(0), m_iBuildCount(0), m_bTemplate(false),
-		m_iTemplateSize(0), m_MaxSpwanTime(0), m_iSpwanTime(0)
+		m_iTemplateSize(0), m_MaxSpwanTime(0), m_iSpwanTime(0), m_fProgress(0.f)
 	{
 	}
 	~CBuild() {}
@@ -18,10 +18,14 @@ public:
 	virtual void KeyInput() PURE;
 
 public:
-	queue<OBJ_TYPE>* Get_Queue() { return &m_queSpawn; }
+	list<OBJ_TYPE>* Get_SpawnList() { return &m_listSpawn; }
+	BuildSTATE Get_State() { return m_eCurState_Build; }
+	float GetProgress() { return m_fProgress; }
+
 
 protected:
-	void SpawnUint();
+	void Spawn_Uint_CoolDown();
+	void Spawn_Uint_Index(OBJ_TYPE _id);
 
 protected:
 	BuildSTATE m_ePreState_Bulid;
@@ -35,7 +39,8 @@ protected:
 	int m_MaxSpwanTime;
 	int m_iSpwanTime;
 
-	queue<OBJ_TYPE> m_queSpawn;
+	list<OBJ_TYPE> m_listSpawn;
 
+	float m_fProgress;
 };
 
