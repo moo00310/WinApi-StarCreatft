@@ -16,9 +16,14 @@ public:
 	// 맵의 정보를 Unit에게 전달
 	vector<vector<int>>* GetMap() { return &m_Map; }
 
-	int GetTileType(Pos pos) { return m_Map[pos.y][pos.x]; }
+	int GetTileType(Pos pos) 
+	{ 
+		if (pos.x < 0 || pos.x >74 || pos.y < 0 || pos.y >74) return 999;
+		return m_Map[pos.y][pos.x]; 
+	}
 	void SetTileType(Pos pos, int _Option)
 	{ 
+		if (pos.x < 0 || pos.x >74 || pos.y < 0 || pos.y >74) return;
 		m_Map[pos.y][pos.x] = _Option; 
 	}
 

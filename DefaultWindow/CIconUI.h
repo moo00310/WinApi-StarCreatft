@@ -18,12 +18,5 @@ public:
 private:
 	void Change_Port();
 	void Anime_Port(int Start, int End);
-
-private:
-	list<CObj*>* m_pUintlist;
-	bool m_bRender;
-
-	OBJ_TYPE m_ePreState;
-	OBJ_TYPE m_eCurState;
 };
 

@@ -172,6 +172,9 @@
     <Filter Include="01. Obj\02.Build\03.Barrck">
       <UniqueIdentifier>{f6ef8f70-7d5b-4cc2-b26f-9d4d2609d75d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\04.Spawn_UI">
+      <UniqueIdentifier>{d885c613-e99e-4e07-adc5-ff62f8b89614}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -336,11 +339,11 @@
     <ClInclude Include="CBarrck.h">
       <Filter>01. Obj\02.Build\03.Barrck</Filter>
     </ClInclude>
+    <ClInclude Include="CSpawnUI.h">
+      <Filter>04. UI\04.Spawn_UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DefaultWindow.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -460,6 +463,12 @@
     </ClCompile>
     <ClCompile Include="CBarrck.cpp">
       <Filter>01. Obj\02.Build\03.Barrck</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultWindow.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CSpawnUI.cpp">
+      <Filter>04. UI\04.Spawn_UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

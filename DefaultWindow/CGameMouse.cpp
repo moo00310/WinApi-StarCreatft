@@ -8,12 +8,16 @@
 #include "CCollisionMgr.h"
 #include "CMapMgr.h"
 
+#include "CAbstractFactory.h"
+#include "CBarrck.h"
+
 /*---------------
     GameMouse
 --------------------*/
 
 CGameMouse::CGameMouse() : m_eCurState(MS_IDLE), m_ePreState(MS_IDLE), m_indexY(0), m_UnitList(nullptr),
-m_Select_UnitList(nullptr), isDrag(false), m_BuildList(nullptr)
+m_Select_UnitList(nullptr), isDrag(false), m_BuildList(nullptr), isBuildMod(false), m_eBuildType(OT_END),
+m_pImgKey_build(nullptr)
 {
     ZeroMemory(&ptMouse, sizeof(POINT));
     ZeroMemory(&m_DragStart, sizeof(POINT));
@@ -27,10 +31,11 @@ CGameMouse::~CGameMouse()
 
 void CGameMouse::Initialize()
 {
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Mouse/Cursor.bmp", L"Cursor");
+    Initailize_Img();
+
     m_tInfo.fCX = 50.f;
     m_tInfo.fCY = 50.f;
-
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Mouse/Cursor.bmp", L"Cursor");
 
     m_pImgKey = L"Cursor";
     m_eRender = RENDER_UI;
@@ -42,14 +47,20 @@ void CGameMouse::Initialize()
 
 int CGameMouse::Update()
 {
+    m_tInfo.fX = (float)ptMouse.x;
+    m_tInfo.fY = (float)ptMouse.y;
+
     GetCursorPos(&ptMouse);
     ScreenToClient(g_hWnd, &ptMouse);
 
     ScrollMove(ptMouse);
-    SetScroll();
+    SetScroll(); 
+    DrawBulid();
 
-    m_tInfo.fX = (float)ptMouse.x;
-    m_tInfo.fY = (float)ptMouse.y;
+    MouseInput(ptMouse);
+
+    ColObject();
+    Change_Cursor();
 
     // 마우스 잠굼
     LockMouse();
@@ -60,53 +71,67 @@ int CGameMouse::Update()
 
 void CGameMouse::Late_Update()
 {
-    MouseInput(ptMouse);
-
-    ColObject();
-    Change_Cursor();
-
     ShowCursor(FALSE);
     __super::Move_Frame();
 }
 
 void CGameMouse::Render(HDC hDC)
 {
-    HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
+    if (isBuildMod)
+    {
+        HDC		hBuildDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey_build);
+        GdiTransparentBlt(hDC,		
+            m_tRect.left,	
+            m_tRect.top,
+            (int)m_tInfo.fCX,			
+            (int)m_tInfo.fCY,
+            hBuildDC,
+            0,
+            (int)m_tInfo.fCY * 1,
+            (int)m_tInfo.fCX,					
+            (int)m_tInfo.fCY,
+            RGB(0, 255, 0));
 
-    GdiTransparentBlt(hDC,			// 복사 받을 DC
-        m_tRect.left,	// 복사 받을 위치 좌표 X, Y	
-        m_tRect.top,
-        (int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
-        (int)m_tInfo.fCY,
-        hMemDC,						// 복사할 이미지 DC	
-        (int)m_tInfo.fCX * m_tFrame.iCurCount, // 비트맵 출력 시작 좌표(Left, top)
-        (int)m_tInfo.fCY * m_indexY,
-        (int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
-        (int)m_tInfo.fCY,
-        RGB(255, 0, 255));
+    }
+    else
+    {
+        m_tInfo.fCX = 50.f;
+        m_tInfo.fCY = 50.f;
+
+        // 일반 모드
+        HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
+
+        GdiTransparentBlt(hDC,			// 복사 받을 DC
+            m_tRect.left,	// 복사 받을 위치 좌표 X, Y	
+            m_tRect.top,
+            (int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
+            (int)m_tInfo.fCY,
+            hMemDC,						// 복사할 이미지 DC	
+            (int)m_tInfo.fCX * m_tFrame.iCurCount, // 비트맵 출력 시작 좌표(Left, top)
+            (int)m_tInfo.fCY * m_indexY,
+            (int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
+            (int)m_tInfo.fCY,
+            RGB(255, 0, 255));
+
+        /*---------------
+            드래그
+        -------------------*/
+        if (!isDrag) return;
+        HPEN newPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
+        HBRUSH newBrush = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
+
+        HPEN oldPen = (HPEN)SelectObject(hDC, newPen);
+        HPEN oldBrush = (HPEN)SelectObject(hDC, newBrush);
+
+        Rectangle(hDC, (int)m_DragStart.x, (int)m_DragStart.y, (int)m_DragEnd.x, (int)m_DragEnd.y);
 
 
+        SelectObject(hDC, oldPen);
+        SelectObject(hDC, oldBrush);
 
-
-    /*---------------
-        드래그
-    -------------------*/
-    if (!isDrag) return;
-    HPEN newPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
-    HBRUSH newBrush = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
-
-    HPEN oldPen = (HPEN)SelectObject(hDC, newPen);
-    HPEN oldBrush = (HPEN)SelectObject(hDC, newBrush);
-
-    Rectangle(hDC, (int)m_DragStart.x, (int)m_DragStart.y, (int)m_DragEnd.x, (int)m_DragEnd.y);
-
-
-    SelectObject(hDC, oldPen);
-    SelectObject(hDC, oldBrush);
-
-    DeleteObject(newBrush);
-    DeleteObject(newPen);
-
+        DeleteObject(newBrush);
+        DeleteObject(newPen);
+    }
 }
 
 void CGameMouse::Release()
@@ -132,132 +157,164 @@ void CGameMouse::ClearDrag()
 
 void CGameMouse::MouseInput(POINT ptMouse)
 {
+    // 테스트 코드/////////////////////////////
+    if (CKeyMgr::Get_Instance()->Key_Down('O'))
+    {
+        SetBuild_Img(OT_Barrck); // 배럭으로 지정 후 빌드모드로 변경
+    }
+    ///////////////////////////////////
     Pos temp = { (int)(ptMouse.y - CScrollMgr::Get_Instance()->Get_ScrollY()) / TILECY , int(ptMouse.x - CScrollMgr::Get_Instance()->Get_ScrollX()) / TILECY };
-    
-    ///// 우클릭 : MOVE 
-    if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
+
+
+    if (isBuildMod)
     {
-        m_eCurState = MS_MOVE;
-        if (m_Select_UnitList->size() == 1)
+        if (CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
         {
-            if (m_Select_UnitList->front() != nullptr)
+            // 건물을 지울 수 있는 곳인지 아닌지 체크
+            if (AbleBuild())
             {
-                if (auto* pUnit = dynamic_cast<CUnit*>(m_Select_UnitList->front()))
-                {
-                    pUnit->Astar(temp);
-                    pUnit->SetInput(IP_MOVE);
-                }
+                // 건물울 지울 수 있는 곳이면 SCV를 통해 건설
+                CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CBarrck>::Create(temp));
             }
-        }
-        else if (m_Select_UnitList->size() > 1)
-        {
-            Pos IndexArraay[12] = {};
-            int array(0);
-
-            // 마우스랑 가장 가까운 유닛 찾기
-            Pos BestIndex = CCollisionMgr::Collision_Neares_Unit_pos(temp, *m_Select_UnitList);
-
-            // 가장 베스트 인덱스에서 빼기
-            for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
-                {
-                    Pos pos = { (int)unit->Get_Scroll_Info().fY / 32, (int)unit->Get_Scroll_Info().fX / 32 };
-                    IndexArraay[array] = BestIndex - pos;
-                    array++;
-                });
-
-
-            // 마우스 포인트 위치에서 각각 정해진 위치로 이동
-            array = 0;
-            for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
-                {
-
-                    if (auto* pUnit = dynamic_cast<CUnit*>(unit))
-                    {
-                        pUnit->Astar(temp - IndexArraay[array]);
-                        pUnit->SetInput(IP_MOVE);
-                        array++;
-                    }
-                
-                });
-        }
-    }
-    if (CKeyMgr::Get_Instance()->Key_Up(VK_RBUTTON))
-    {
-        m_eCurState = MS_IDLE;
-    }
-
-    //// A - 좌클릭 : 어택 땅
-    if (m_eCurState == MS_ATTACK && CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
-    {
-        m_eCurState = MS_IDLE;
-
-        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+            else
             {
-                if (unit != nullptr)
+                // 아니면 경고 메시지
+            } 
+        }
+
+        if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
+        {
+            isBuildMod = false;
+            ClearList();
+        }
+    }
+    else
+    {
+        ///// 우클릭 : MOVE 
+        if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
+        {
+            m_eCurState = MS_MOVE;
+            if (m_Select_UnitList->size() == 1)
+            {
+                if (m_Select_UnitList->front() != nullptr)
                 {
-                    if (auto* pUnit = dynamic_cast<CUnit*>(unit))
+                    if (auto* pUnit = dynamic_cast<CUnit*>(m_Select_UnitList->front()))
                     {
                         pUnit->Astar(temp);
-                        pUnit->SetInput(IP_ATTACK);
+                        pUnit->SetInput(IP_MOVE);
                     }
                 }
-            });
-    }
-
-    // 땅 좌클릭
-    if (m_eCurState == MS_IDLE && CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
-    {
-        ClearList();
-        m_DragStart.x = ptMouse.x;
-        m_DragStart.y = ptMouse.y;
-        isDrag = true;
-    }
-    if (isDrag  == true && CKeyMgr::Get_Instance()->Key_Pressing(VK_LBUTTON))
-    {
-        m_eCurState = MS_DRAG;
-        m_DragEnd.x = ptMouse.x;
-        m_DragEnd.y = ptMouse.y;
-    }
-
-    if (isDrag == true &&  CKeyMgr::Get_Instance()->Key_Up(VK_LBUTTON))
-    {
-        isDrag = false;
-        ColDrag();
-        ClearDrag();
-        m_eCurState = MS_IDLE;
-    }
-
-    if (CKeyMgr::Get_Instance()->Key_Down('A'))
-    {
-        m_eCurState = MS_ATTACK;
-    }
-
-    if (CKeyMgr::Get_Instance()->Key_Down('S'))
-    {
-        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
-            { 
-                if (unit != nullptr)
-                {
-                    if (auto* pUnit = dynamic_cast<CUnit*>(unit))
-                    {
-                        pUnit->SetInput(IP_STOP);
-                    }
-                }
-            }); 
-    }
-
-    if (CKeyMgr::Get_Instance()->Key_Down('H'))
-    {
-        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+            }
+            else if (m_Select_UnitList->size() > 1)
             {
-                if (unit != nullptr)
-                {
-                    if (auto* pUnit = dynamic_cast<CUnit*>(unit))
+                Pos IndexArraay[12] = {};
+                int array(0);
+
+                // 마우스랑 가장 가까운 유닛 찾기
+                Pos BestIndex = CCollisionMgr::Collision_Neares_Unit_pos(temp, *m_Select_UnitList);
+
+                // 가장 베스트 인덱스에서 빼기
+                for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
                     {
-                        pUnit->SetInput(IP_HOLD);
+                        Pos pos = { (int)unit->Get_Scroll_Info().fY / 32, (int)unit->Get_Scroll_Info().fX / 32 };
+                        IndexArraay[array] = BestIndex - pos;
+                        array++;
+                    });
+
+
+                // 마우스 포인트 위치에서 각각 정해진 위치로 이동
+                array = 0;
+                for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+                    {
+
+                        if (auto* pUnit = dynamic_cast<CUnit*>(unit))
+                        {
+                            pUnit->Astar(temp - IndexArraay[array]);
+                            pUnit->SetInput(IP_MOVE);
+                            array++;
+                        }
+
+                    });
+            }
+        }
+        if (CKeyMgr::Get_Instance()->Key_Up(VK_RBUTTON))
+        {
+            m_eCurState = MS_IDLE;
+        }
+
+        //// A - 좌클릭 : 어택 땅
+        if (m_eCurState == MS_ATTACK && CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
+        {
+            m_eCurState = MS_IDLE;
+
+            for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+                {
+                    if (unit != nullptr)
+                    {
+                        if (auto* pUnit = dynamic_cast<CUnit*>(unit))
+                        {
+                            pUnit->Astar(temp);
+                            pUnit->SetInput(IP_ATTACK);
+                        }
                     }
-                }
-            });
+                });
+        }
+
+        // 땅 좌클릭
+        if (m_eCurState == MS_IDLE && CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
+        {
+            ClearList();
+            m_DragStart.x = ptMouse.x;
+            m_DragStart.y = ptMouse.y;
+            isDrag = true;
+        }
+        if (isDrag == true && CKeyMgr::Get_Instance()->Key_Pressing(VK_LBUTTON))
+        {
+            m_eCurState = MS_DRAG;
+            m_DragEnd.x = ptMouse.x;
+            m_DragEnd.y = ptMouse.y;
+        }
+
+        if (isDrag == true && CKeyMgr::Get_Instance()->Key_Up(VK_LBUTTON))
+        {
+            isDrag = false;
+            ColDrag();
+            ClearDrag();
+            m_eCurState = MS_IDLE;
+        }
+
+        if (CKeyMgr::Get_Instance()->Key_Down('A'))
+        {
+            m_eCurState = MS_ATTACK;
+        }
+
+        if (CKeyMgr::Get_Instance()->Key_Down('S'))
+        {
+            for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+                {
+                    if (unit != nullptr)
+                    {
+                        if (auto* pUnit = dynamic_cast<CUnit*>(unit))
+                        {
+                            pUnit->SetInput(IP_STOP);
+                        }
+                    }
+                });
+        }
+
+        if (CKeyMgr::Get_Instance()->Key_Down('H'))
+        {
+            for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+                {
+                    if (unit != nullptr)
+                    {
+                        if (auto* pUnit = dynamic_cast<CUnit*>(unit))
+                        {
+                            pUnit->SetInput(IP_HOLD);
+                        }
+                    }
+                });
+        }
     }
 }
 
@@ -306,6 +363,7 @@ void CGameMouse::ScrollMove(POINT mouse)
 void CGameMouse::ColObject()
 {
     if (isDrag) return;
+    if (isBuildMod) return;
 
     CObj* Obj(nullptr);
     // 전체 유닛과  건물이 마우스랑 충돌했는지 검사
@@ -328,6 +386,7 @@ void CGameMouse::ColObject()
 
 void CGameMouse::Change_Cursor()
 {
+    if (isBuildMod) return;
     if (m_ePreState != m_eCurState)
     {
         switch (m_eCurState)
@@ -386,15 +445,6 @@ void CGameMouse::Change_Cursor()
             m_tFrame.dwTime = GetTickCount64();
             break;
 
-        case MS_SCROLL_UR:
-            m_tFrame.iFrameStart = 2;
-            m_tFrame.iFrameEnd = 3;
-            m_tFrame.iCurCount = 2;
-            m_indexY = 1;
-            m_tFrame.dwSpeed = 200;
-            m_tFrame.dwTime = GetTickCount64();
-            break;
-
         case MS_SCROLL_U:
             m_tFrame.iFrameStart = 4;
             m_tFrame.iFrameEnd = 5;
@@ -404,27 +454,10 @@ void CGameMouse::Change_Cursor()
             m_tFrame.dwTime = GetTickCount64();
             break;
 
-        case MS_SCROLL_UL:
-            m_tFrame.iFrameStart = 6;
-            m_tFrame.iFrameEnd = 7;
-            m_tFrame.iCurCount = 6;
-            m_indexY = 1;
-            m_tFrame.dwSpeed = 200;
-            m_tFrame.dwTime = GetTickCount64();
-            break;
-
         case MS_SCROLL_L:
             m_tFrame.iFrameStart = 8;
             m_tFrame.iFrameEnd = 9;
             m_tFrame.iCurCount = 8;
-            m_indexY = 1;
-            m_tFrame.dwSpeed = 200;
-            m_tFrame.dwTime = GetTickCount64();
-            break;
-        case MS_SCROLL_DL:
-            m_tFrame.iFrameStart = 10;
-            m_tFrame.iFrameEnd = 11;
-            m_tFrame.iCurCount = 10;
             m_indexY = 1;
             m_tFrame.dwSpeed = 200;
             m_tFrame.dwTime = GetTickCount64();
@@ -439,14 +472,6 @@ void CGameMouse::Change_Cursor()
             m_tFrame.dwTime = GetTickCount64();
             break;
 
-        case MS_SCROLL_DR:
-            m_tFrame.iFrameStart = 13;
-            m_tFrame.iFrameEnd = 14;
-            m_tFrame.iCurCount = 13;
-            m_indexY = 1;
-            m_tFrame.dwSpeed = 200;
-            m_tFrame.dwTime = GetTickCount64();
-            break;
         }
 
         m_ePreState = m_eCurState;
@@ -463,4 +488,82 @@ void CGameMouse::ColDrag()
 
     RECT rc = { (LONG)left, (LONG)top, (LONG)right, (LONG)bottom };
     CCollisionMgr::Collision_Rect_Mouse_RECT(rc,*m_UnitList, m_Select_UnitList);
+}
+
+
+
+void CGameMouse::Initailize_Img()
+{
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Barracks.bmp", L"Barrck");
+}
+
+
+void CGameMouse::DrawBulid()
+{
+    if (!isBuildMod) return;
+
+    switch (m_eBuildType)
+    {
+    case OT_Commend:
+        break;
+    case OT_Suffly:
+        break;
+    case OT_Refinery:
+        break;
+    case OT_Barrck:
+        m_pImgKey_build = L"Barrck";
+        m_tInfo.fCX = 192.f;
+        m_tInfo.fCY = 160.f;
+        break;
+    case OT_Academy:
+        break;
+    case OT_Factory:
+        break;
+    case OT_Addon:
+        break;
+    case OT_Armory:
+        break;
+    case OT_Starport:
+        break;
+    case OT_StarportAddOn:
+        break;
+    case OT_ScienceFacility:
+        break;
+    case OT_ScienceSecret:
+        break;
+    case OT_CmdNuke:
+        break;
+    case OT_Build_End:
+        break;
+    case OT_END:
+        break;
+    default:
+        break;
+    }
+
+}
+
+bool CGameMouse::AbleBuild()
+{
+    int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+    int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+    Pos pos = {  (m_tRect.top  - iScrollY) / 32,(m_tRect.left - iScrollX) / 32 };
+
+    for (int i = 0; i < m_tInfo.fCY / 32; i++)
+    {
+        for (int j = 0; j < m_tInfo.fCX / 32; j++)
+        {
+            int num;
+            Pos temp = { i,j };
+            if ((num = CMapMgr::Get_Instance()->GetTileType(pos + temp)) > 1)
+            {
+                cout << num << endl;
+                return false;
+            }
+               
+        }
+    }
+
+    return true;
 }

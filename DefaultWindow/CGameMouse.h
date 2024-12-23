@@ -16,15 +16,25 @@ public:
 	void Release() override;
 
 public:
+	void SetBuild_Img(OBJ_TYPE _type) { m_eBuildType = _type; isBuildMod = true; }
+
+public:
 	void ClearList();
 	void ClearDrag();
 
 private:
+	void Initailize_Img();
+
+	// 일반 모드
 	void MouseInput(POINT ptMouse);
 	void ScrollMove(POINT mouse);
 	void ColObject();
 	void Change_Cursor();
 	void ColDrag();
+
+	//빌드 모드
+	void DrawBulid();
+	bool AbleBuild();
 
 private:
 	POINT ptMouse{};
@@ -38,5 +48,10 @@ private:
 	bool isDrag;
 	POINT	m_DragStart;
 	POINT	m_DragEnd;
+
+	bool isBuildMod;
+	OBJ_TYPE m_eBuildType;
+	const TCHAR* m_pImgKey_build;
+
 };
 

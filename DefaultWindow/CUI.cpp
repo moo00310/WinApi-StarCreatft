@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CUI.h"
 
-CUI::CUI() : m_pImgKey(nullptr)
+CUI::CUI() : m_pImgKey(nullptr), m_pUintlist(nullptr), m_bRender(false), m_ePreState(OT_END), m_eCurState(OT_END)
 {
 	ZeroMemory(&m_tInfo, sizeof(INFO));
 	ZeroMemory(&m_tRect, sizeof(RECT));

@@ -30,6 +30,16 @@ public:
 		return pObj;
 	}
 
+	static CObj* Create(Pos pos)
+	{
+		CObj* pObj = new T;
+		pObj->Set_Pos(pos.x*32.f, pos.y*32.f);
+		pObj->Initialize();
+
+		return pObj;
+	}
+
+
 	static CUI* CreateUI()
 	{
 		CUI* pUi = new T;

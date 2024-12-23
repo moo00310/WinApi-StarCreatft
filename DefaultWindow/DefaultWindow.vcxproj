@@ -167,6 +167,7 @@
     <ClInclude Include="CScrewBullet.h" />
     <ClInclude Include="CScrollMgr.h" />
     <ClInclude Include="CSoundMgr.h" />
+    <ClInclude Include="CSpawnUI.h" />
     <ClInclude Include="CStage.h" />
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CTileMgr.h" />
@@ -222,6 +223,7 @@
     <ClCompile Include="CScrewBullet.cpp" />
     <ClCompile Include="CScrollMgr.cpp" />
     <ClCompile Include="CSoundMgr.cpp" />
+    <ClCompile Include="CSpawnUI.cpp" />
     <ClCompile Include="CStage.cpp" />
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CTileMgr.cpp" />

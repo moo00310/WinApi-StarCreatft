@@ -3,7 +3,7 @@
 #include "CBmpMgr.h"
 #include "CObjMgr.h"
 
-CIconUI::CIconUI(): m_pUintlist(nullptr), m_bRender(false), m_ePreState(OT_END), m_eCurState(OT_END)
+CIconUI::CIconUI()
 {
 }
 

@@ -2,21 +2,23 @@
 #include "CUI.h"
 #include "CObj.h"
 
-class CPortUI :public CUI
+class CSpawnUI : public CUI
 {
-public:
-	CPortUI();
-	~CPortUI();
-
 public:
 	void Initialize() override;
 	int Update() override;
 	void Late_Update() override;
 	void Render(HDC hdc) override;
 	void Release() override;
+
 private:
-	void Initailize_Img();
-	void Change_Port();
-	void Anime_Port(int Start, int End);
+	void Change_SpawnIcon(OBJ_TYPE _type);
+
+
+private:
+	queue<OBJ_TYPE>* m_queSpawn;
+	queue<OBJ_TYPE> m_showQue;
+	OBJ_TYPE m_eID;
+
 };
 

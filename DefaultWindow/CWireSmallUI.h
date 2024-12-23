@@ -19,9 +19,7 @@ private:
 	void Change_Wire(CObj* unit);
 
 private:
-	list<CObj*>* m_pUintlist;
 	OBJ_TYPE m_eID;
-	bool m_bRender;
 	int iCount;
 
 	size_t m_iUnitCount;

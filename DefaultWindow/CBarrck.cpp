@@ -3,6 +3,7 @@
 #include "CMapMgr.h"
 #include "CObjMgr.h"
 #include "CBmpMgr.h"
+#include "CKeyMgr.h"
 
 CBarrck::CBarrck()
 {
@@ -30,11 +31,10 @@ void CBarrck::Initialize()
     m_bTemplate = true;
     m_eCurState_Build = BS_TEMP;
     m_eObjID = OT_Barrck;
-    m_tStat = { 1000.f, 1000.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
+    m_tStat = { 1000.f, 1.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
      
-    auto value = ObjCost.at(OT_Barrck);
-    m_iMyBuildTIme = get<3>(value);
+    m_iMyBuildTIme = get<3>(ObjCost.at(OT_Barrck));
 
     __super::Update_Rect();
     Block_Map();
@@ -46,12 +46,13 @@ int CBarrck::Update()
     {
         // 터지는이펙트 & 사운드
 
-        UnBlock_Map();
+        UnBlock_Map(); // 바닥 이동 불가 해제
         return OBJ_DEAD;
     }
 
+    KeyInput();
+    SpawnUint();
 
-        
     __super::Update_Rect();
     return OBJ_NOEVENT;
 }
@@ -77,19 +78,17 @@ void CBarrck::Render(HDC hDC)
         int CX = (int)m_tInfo.fX - (int)(BuildTemplate_Size.x * 0.5f);
         int CY = (int)m_tInfo.fY - (int)(BuildTemplate_Size.y * 0.5f);
 
-       GdiTransparentBlt(hDC,			// 복사 받을 DC
-           CX + iScrollX,	// 복사 받을 위치 좌표 X, Y	
+       GdiTransparentBlt(hDC,
+           CX + iScrollX,	
            CY + iScrollY,
-           (int)BuildTemplate_Size.x,			// 복사 받을 이미지의 가로, 세로
+           (int)BuildTemplate_Size.x,			
            (int)BuildTemplate_Size.y,
-           hMemDC,						// 복사할 이미지 DC	
-           (int)BuildTemplate_Size.x * m_iTemplateSize, // 비트맵 출력 시작 좌표(Left, top)
+           hMemDC,						
+           (int)BuildTemplate_Size.x * m_iTemplateSize, 
            (int)BuildTemplate_Size.y * m_tFrame.iCurCount,
-           (int)BuildTemplate_Size.x,										// 복사할 이미지의 가로, 세로
+           (int)BuildTemplate_Size.x,									
            (int)BuildTemplate_Size.y,
-           RGB(0, 255, 0));		// 제거할 색상
-
-       //Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+           RGB(0, 255, 0));		
      }
      else
      {
@@ -133,6 +132,7 @@ void CBarrck::Change_Motion()
         }
             
         m_iBuildCount++;
+        Add_Stat_hp(m_tStat.m_iMaxHp/ m_iMyBuildTIme);
     }
 
   
@@ -146,6 +146,7 @@ void CBarrck::Change_Motion()
             m_eCurState_Build = BS_IDLE;
 
         m_iBuildCount++;
+        Add_Stat_hp(m_tStat.m_iMaxHp / m_iMyBuildTIme);
     }
     
    if (m_ePreState_Bulid != m_eCurState_Build)
@@ -181,7 +182,7 @@ void CBarrck::Block_Map()
     int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
     int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
-    Pos pos = { m_tRect.left/32 + iScrollX ,m_tRect.top/32 + iScrollY };
+    Pos pos = { (m_tRect.top - iScrollY) / 32,(m_tRect.left - iScrollX) / 32 };
 
     for (int i = 0; i < m_tInfo.fCY / 32; i++)
     {
@@ -198,7 +199,7 @@ void CBarrck::UnBlock_Map()
     int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
     int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
-    Pos pos = { m_tRect.left / 32 + iScrollX ,m_tRect.top / 32 + iScrollY };
+    Pos pos = { (m_tRect.top - iScrollY) / 32,(m_tRect.left - iScrollX) / 32 };
 
     for (int i = 0; i < m_tInfo.fCY / 32; i++)
     {
@@ -207,6 +208,34 @@ void CBarrck::UnBlock_Map()
             Pos temp = { i,j };
             CMapMgr::Get_Instance()->SetTileType(pos + temp, 0);
         }
+    }
+
+}
+
+void CBarrck::KeyInput()
+{
+    if (!m_bSelect) return;
+
+    if (m_eCurState_Build == BS_MAKE ||
+        m_eCurState_Build == BS_TEMP) return;
+
+    // 마린 생산
+    if (CKeyMgr::Get_Instance()->Key_Down('A'))
+    {
+        if(m_queSpawn.size() < 5)
+            m_queSpawn.push(OT_Marine);
+    }
+
+    // 메딕 생산
+    if (CKeyMgr::Get_Instance()->Key_Down('E'))
+    {
+        //m_queSpawn.push(OT_Medic);
+    }
+
+    // 고스트 생산
+    if (CKeyMgr::Get_Instance()->Key_Down('G'))
+    {
+        //m_queSpawn.push(OT_Ghost);
     }
 
 }

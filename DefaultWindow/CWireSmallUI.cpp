@@ -3,8 +3,7 @@
 #include "CObjMgr.h"
 #include "CBmpMgr.h"
 
-CWireSmallUI::CWireSmallUI() : m_pUintlist(nullptr), m_eID(OT_Unit_End), m_bRender(false), m_iUnitCount(0),
-MaxHp(0), NowHp(0), iCount(0)
+CWireSmallUI::CWireSmallUI() : m_eID(OT_Unit_End), m_iUnitCount(0), MaxHp(0), NowHp(0), iCount(0)
 {
 }
 

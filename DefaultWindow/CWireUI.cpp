@@ -6,7 +6,7 @@
 #include "CKeyMgr.h"
 
 
-CWireUI::CWireUI() : m_pUintlist(nullptr), m_eID(OT_Unit_End), m_bRender(false), MaxHp(0.f), NowHp(0.f), UnitID(0), Text_X(0)
+CWireUI::CWireUI() :m_eID(OT_Unit_End), MaxHp(0.f), NowHp(0.f), UnitID(0), Text_X(0)
 {
 }
 
@@ -18,7 +18,7 @@ void CWireUI::Initialize()
 {
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Wire/BigWire.bmp", L"BigWire");
 	m_pUintlist = CObjMgr::Get_Instance()->Get_Select_List();
-	m_tInfo = { 270, 530 ,64, 64 };
+	m_tInfo = { 260, 530 ,64, 64 };
 }
 
 int CWireUI::Update()
@@ -98,7 +98,7 @@ void CWireUI::TextPrint(HDC hdc)
 	SetBkMode(hdc, TRANSPARENT);              // 배경 모드: 투명
 
 	// 텍스트 출력
-	swprintf_s(m_wcHp, 32, L"%d / %d", (int)NowHp, (int)MaxHp);
+	swprintf_s(m_wcHp, 32, L"%d / %d", (int)MaxHp, (int)NowHp);
 	TextOut(hdc, Text_X, 560, m_wcHp, (int)wcslen(m_wcHp));
 }
 
@@ -112,49 +112,49 @@ void CWireUI::TextName(HDC hdc)
 	{
 	case OT_Scv:
 		swprintf_s(m_wcHp, 32, L"테란 SCV");
-		Text_X = 245;
+		Text_X = 240;
 		UnitID = 0;
 		break;
 	case OT_Marine:
 		swprintf_s(m_wcHp, 32, L"테란 마린");
-		Text_X = 245;
+		Text_X = 240;
 		UnitID = 1;
 		break;
 	case OT_Medic:
 		swprintf_s(m_wcHp, 32, L"테란 메딕");
-		Text_X = 245;
+		Text_X = 240;
 		UnitID = 4;
 		break;
 	case OT_Ghost:
 		swprintf_s(m_wcHp, 32, L"테란 고스트");
-		Text_X = 245;
+		Text_X = 240;
 		UnitID = 3;
 		break;
 	case OT_Tank:
 		swprintf_s(m_wcHp, 32, L"테란 시스 탱크");
-		Text_X = 245;
+		Text_X = 240;
 		UnitID = 6;
 		break;
 	case OT_Science_Vessel:
 		swprintf_s(m_wcHp, 32, L"테란 사이언스 베슬");
-		Text_X = 245;
+		Text_X = 240;
 		UnitID = 10;
 		break;
 	case OT_Unit_End:
 		break;
 	case OT_Commend:
 		swprintf_s(m_wcHp, 32, L"테란 커맨드 센터");
-		Text_X = 230;
+		Text_X = 220;
 		UnitID = 15;
 		break;
 	case OT_Suffly:
 		swprintf_s(m_wcHp, 32, L"테란 보급고");
-		Text_X = 230;
+		Text_X = 220;
 		UnitID = 16;
 		break;
 	case OT_Barrck:
 		swprintf_s(m_wcHp, 32, L"테란 배럭");
-		Text_X = 230;
+		Text_X = 220;
 		UnitID = 18;
 		break;
 	case OT_Build_End:
