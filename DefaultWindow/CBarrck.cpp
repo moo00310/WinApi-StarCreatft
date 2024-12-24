@@ -22,6 +22,7 @@ void CBarrck::Initialize()
 
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Barracks.bmp", L"Barrck");
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/BuildTemplate.bmp", L"BuildTemplate");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/8.bmp", L"Big_Select");
 
     m_tInfo.fCX = 192.f;
     m_tInfo.fCY = 160.f;
@@ -93,6 +94,24 @@ void CBarrck::Render(HDC hDC)
      }
      else
      {
+        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Big_Select");
+
+        if (m_bSelect)
+        {
+            GdiTransparentBlt(hDC,			// 복사 받을 DC
+                m_tRect.left + iScrollX + 20 ,	// 복사 받을 위치 좌표 X, Y	
+                m_tRect.top + iScrollY + 20,
+                148,			// 복사 받을 이미지의 가로, 세로
+                148,
+                hFxDC,						// 복사할 이미지 DC	
+                0, // 비트맵 출력 시작 좌표(Left, top)
+                0,
+                148,										// 복사할 이미지의 가로, 세로
+                148,
+                RGB(255, 0, 255));		// 제거할 색상
+        }
+
+
        GdiTransparentBlt(hDC,			// 복사 받을 DC
            m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
            m_tRect.top + iScrollY,
