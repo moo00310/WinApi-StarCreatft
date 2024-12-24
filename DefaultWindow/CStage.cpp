@@ -5,13 +5,19 @@
 #include "CAbstractFactory.h"
 #include "CScrollMgr.h"
 #include "CTileMgr.h"
-#include "CMarine.h"
 #include "CMapMgr.h"
-#include "CObj.h"
 #include "CGameMouse.h"
 #include "CUIMgr.h"
 #include "CSoundMgr.h"
+
+
+
+//// 테스트용
+#include "CMarine.h"
 #include "CBarrck.h"
+#include "CScv.h"
+#include "CMedic.h"
+#include "CGhost.h"
 
 float	g_fVolume(1.f);
 
@@ -40,7 +46,11 @@ void CStage::Initialize()
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CGameMouse>::Create());
 
 	// 적 마린 생산
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMarine>::Create(600,600));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMarine>::Create(600,600));
+
+	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(600, 600));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMedic>::Create(500, 500));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::Create(400, 400));
 
 }
 

@@ -1,24 +1,20 @@
 #include "pch.h"
-#include "CMarine.h"
-#include "CScrollMgr.h"
-#include "CBmpMgr.h"
-#include "CKeyMgr.h"
+#include "CMedic.h"
+#include "CMapMgr.h"
 #include "CObjMgr.h"
+#include "CBmpMgr.h"
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
-#include "CMapMgr.h"
-#include "CSoundMgr.h"
 
-CMarine::CMarine()
+CMedic::CMedic()
 {
 }
 
-CMarine::~CMarine()
+CMedic::~CMedic()
 {
-	Release();
 }
 
-void CMarine::Initialize()
+void CMedic::Initialize()
 {
 	// 맵의 주소를 받아옴
 	m_Map = CMapMgr::Get_Instance()->GetMap();
@@ -27,45 +23,45 @@ void CMarine::Initialize()
 	m_pMonsterList = CObjMgr::Get_Instance()->Get_MonsterList();
 	m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
 
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Marine/Marine.bmp", L"Marine");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Medic/Medic.bmp", L"Medic");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/0.bmp", L"Small_Select");
 
-    m_pImgKey = L"Marine";
-	m_eObjID = OT_Marine;
-    m_tStat = { 40.f, 40.f, 6, 0, 64, 1.8f, 625 , DF_SAMLL, AT_NORMAL };
+	m_pImgKey = L"Medic";
+	m_eObjID = OT_Medic;
+	m_tStat = { 60.f, 60.f, 0, 1, 64, 1.8f, 625 , DF_SAMLL, AT_NORMAL };
 
 	m_iAttackFrame = 14;
 
 	m_eRender = RENDER_GAMEOBJECT;
-	m_tInfo.fCX = 50.f;
-	m_tInfo.fCY = 50.f;
+	m_tInfo.fCX = 64.f;
+	m_tInfo.fCY = 64.f;
 }
 
-int CMarine::Update()
+int CMedic::Update()
 {
 	if (m_bDead || m_tStat.m_iHp <= 0)
 	{
 		// 죽음 이펙트
-		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT,CAbstractFactory<CMarineDead>::Create(m_tInfo.fX, m_tInfo.fY));
-		CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
-		CSoundMgr::Get_Instance()->PlaySound(L"Marine_Dead_1.mp3", SOUND_EFFECT, 0.5f, true);
+		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CMedicDead>::Create(m_tInfo.fX, m_tInfo.fY));
+		//CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
+		//CSoundMgr::Get_Instance()->PlaySound(L"Marine_Dead_1.mp3", SOUND_EFFECT, 0.5f, true);
 
 		return OBJ_DEAD;
 	}
-	
+
 	Update_State();
 
 	__super::Update_Rect();
-    return OBJ_NOEVENT;
+	return OBJ_NOEVENT;
 }
 
-void CMarine::Late_Update()
+void CMedic::Late_Update()
 {
 	Change_Motion();
 	__super::Move_Frame();
 }
 
-void CMarine::Render(HDC hDC)
+void CMedic::Render(HDC hDC)
 {
 	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
@@ -76,8 +72,8 @@ void CMarine::Render(HDC hDC)
 	if (m_bSelect)
 	{
 		GdiTransparentBlt(hDC,			// 복사 받을 DC
-			m_tRect.left + iScrollX + 10,	// 복사 받을 위치 좌표 X, Y	
-			m_tRect.top + iScrollY + 18,
+			m_tRect.left + iScrollX + 15,	// 복사 받을 위치 좌표 X, Y	
+			m_tRect.top + iScrollY + 25,
 			32,			// 복사 받을 이미지의 가로, 세로
 			32,
 			hFxDC,						// 복사할 이미지 DC	
@@ -98,16 +94,15 @@ void CMarine::Render(HDC hDC)
 		(int)m_tInfo.fCY * (int)m_eDir,
 		(int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
 		(int)m_tInfo.fCY,
-		RGB(255, 255, 0));		// 제거할 색상
+		RGB(255, 0, 255));		// 제거할 색상
 
-	
 }
 
-void CMarine::Release()
+void CMedic::Release()
 {
 }
 
-void CMarine::Change_Motion()
+void CMedic::Change_Motion()
 {
 	if (m_ePreState != m_eCurState)
 	{
@@ -123,17 +118,17 @@ void CMarine::Change_Motion()
 
 		case STATE_MOVE:
 			m_tFrame.iFrameStart = 1;
-			m_tFrame.iFrameEnd = 8;
+			m_tFrame.iFrameEnd = 6;
 			m_tFrame.iCurCount = 1;
 			m_tFrame.dwSpeed = 100;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 
 		case STATE_ATTACK:
-			m_tFrame.iFrameStart = 13;
-			m_tFrame.iFrameEnd = 14;
-			m_tFrame.iCurCount = 11;
-			m_tFrame.dwSpeed = 100;
+			m_tFrame.iFrameStart = 7;
+			m_tFrame.iFrameEnd = 12;
+			m_tFrame.iCurCount = 7;
+			m_tFrame.dwSpeed = 600;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 		}

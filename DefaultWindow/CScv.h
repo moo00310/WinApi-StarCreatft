@@ -1,19 +1,20 @@
 #pragma once
 #include "CUnit.h"
-#include "Define.h"
-
-class CMarine: public CUnit
+class CScv : public CUnit
 {
 public:
-	CMarine();
-	~CMarine();
-
+	CScv();
+	~CScv();
+public:
 	void Initialize() override;
 	int Update() override;
 	void Late_Update() override;
 	void Render(HDC hDC) override;
 	void Release() override;
 	void Change_Motion() override;
+
+private:
+
 
 };
 

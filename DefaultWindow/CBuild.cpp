@@ -37,7 +37,7 @@ void CBuild::Spawn_Uint_CoolDown()
 
 void CBuild::Spawn_Uint_Index(OBJ_TYPE _id)
 {
-	Pos temp = { m_tInfo.fY / 32 +2, m_tInfo.fX / 32 };
+	Pos temp = { (int)m_tInfo.fY / 32 +2,(int)m_tInfo.fX / 32 };
 
 	switch (_id)
 	{

@@ -62,12 +62,19 @@ void CPortUI::Release()
 
 void CPortUI::Initailize_Img()
 {
+	// SCV
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/SCV/SCV.bmp", L"Scv_port");
+
 	// 마린
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Marine/Marine.bmp", L"Marine_port");
 	
-	//SCV
+	// 메딕
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Medic/Medic.bmp", L"Medic_port");
 
-	//어드 바이저
+	// 고스트
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Ghost/Ghost.bmp", L"Ghost_port");
+
+	// 어드 바이저
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Advisor/Advosr.bmp", L"Advosr");
 }
 
@@ -79,14 +86,20 @@ void CPortUI::Change_Port()
 		switch (m_eCurState)
 		{
 		case OT_Scv:
+			m_pImgKey = L"Scv_port";
+			Anime_Port(0, 44);
 			break;
 		case OT_Marine:
 			m_pImgKey = L"Marine_port";
 			Anime_Port(0, 44);
 			break;
 		case OT_Medic:
+			m_pImgKey = L"Medic_port";
+			Anime_Port(0, 44);
 			break;
 		case OT_Ghost:
+			m_pImgKey = L"Ghost_port";
+			Anime_Port(0, 44);
 			break;
 		case OT_Tank:
 			break;

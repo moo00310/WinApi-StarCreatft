@@ -1,24 +1,20 @@
 #include "pch.h"
-#include "CMarine.h"
-#include "CScrollMgr.h"
-#include "CBmpMgr.h"
-#include "CKeyMgr.h"
-#include "CObjMgr.h"
-#include "CAbstractFactory.h"
-#include "CBloodEffect.h"
+#include "CSCV.h"
 #include "CMapMgr.h"
+#include "CObjMgr.h"
+#include "CBmpMgr.h"
 #include "CSoundMgr.h"
+#include "CAbstractFactory.h"
 
-CMarine::CMarine()
+CScv::CScv()
 {
 }
 
-CMarine::~CMarine()
+CScv::~CScv()
 {
-	Release();
 }
 
-void CMarine::Initialize()
+void CScv::Initialize()
 {
 	// 맵의 주소를 받아옴
 	m_Map = CMapMgr::Get_Instance()->GetMap();
@@ -27,64 +23,64 @@ void CMarine::Initialize()
 	m_pMonsterList = CObjMgr::Get_Instance()->Get_MonsterList();
 	m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
 
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Marine/Marine.bmp", L"Marine");
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/0.bmp", L"Small_Select");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/SCV/SCV.bmp", L"Scv");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/1.bmp", L"Small2_Select");
 
-    m_pImgKey = L"Marine";
-	m_eObjID = OT_Marine;
-    m_tStat = { 40.f, 40.f, 6, 0, 64, 1.8f, 625 , DF_SAMLL, AT_NORMAL };
+
+	m_pImgKey = L"Scv";
+	m_eObjID = OT_Scv;
+	m_tStat = { 60.f, 60.f, 5, 0, 32, 2.3f, 625 , DF_SAMLL, AT_NORMAL };
 
 	m_iAttackFrame = 14;
 
 	m_eRender = RENDER_GAMEOBJECT;
-	m_tInfo.fCX = 50.f;
-	m_tInfo.fCY = 50.f;
+	m_tInfo.fCX = 72.f;
+	m_tInfo.fCY = 72.f;
+
 }
 
-int CMarine::Update()
+int CScv::Update()
 {
 	if (m_bDead || m_tStat.m_iHp <= 0)
 	{
 		// 죽음 이펙트
-		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT,CAbstractFactory<CMarineDead>::Create(m_tInfo.fX, m_tInfo.fY));
-		CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
-		CSoundMgr::Get_Instance()->PlaySound(L"Marine_Dead_1.mp3", SOUND_EFFECT, 0.5f, true);
+		//CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CMarineDead>::Create(m_tInfo.fX, m_tInfo.fY));
+		//CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
+		//CSoundMgr::Get_Instance()->PlaySound(L"Marine_Dead_1.mp3", SOUND_EFFECT, 0.5f, true);
 
 		return OBJ_DEAD;
 	}
-	
 	Update_State();
 
 	__super::Update_Rect();
-    return OBJ_NOEVENT;
+	return OBJ_NOEVENT;
 }
 
-void CMarine::Late_Update()
+void CScv::Late_Update()
 {
 	Change_Motion();
-	__super::Move_Frame();
 }
 
-void CMarine::Render(HDC hDC)
+void CScv::Render(HDC hDC)
 {
 	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
 	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
-	HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Small_Select");
+	HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Small2_Select");
 
 	if (m_bSelect)
 	{
 		GdiTransparentBlt(hDC,			// 복사 받을 DC
-			m_tRect.left + iScrollX + 10,	// 복사 받을 위치 좌표 X, Y	
-			m_tRect.top + iScrollY + 18,
-			32,			// 복사 받을 이미지의 가로, 세로
-			32,
+			m_tRect.left + iScrollX + 17,	// 복사 받을 위치 좌표 X, Y	
+			m_tRect.top + iScrollY + 20,
+			40,			// 복사 받을 이미지의 가로, 세로
+			40,
 			hFxDC,						// 복사할 이미지 DC	
 			0, // 비트맵 출력 시작 좌표(Left, top)
 			0,
-			32,										// 복사할 이미지의 가로, 세로
-			32,
+			40,										// 복사할 이미지의 가로, 세로
+			40,
 			RGB(255, 0, 255));		// 제거할 색상
 	}
 
@@ -98,16 +94,16 @@ void CMarine::Render(HDC hDC)
 		(int)m_tInfo.fCY * (int)m_eDir,
 		(int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
 		(int)m_tInfo.fCY,
-		RGB(255, 255, 0));		// 제거할 색상
+		RGB(0, 255, 0));		// 제거할 색상
 
-	
+
 }
 
-void CMarine::Release()
+void CScv::Release()
 {
 }
 
-void CMarine::Change_Motion()
+void CScv::Change_Motion()
 {
 	if (m_ePreState != m_eCurState)
 	{
@@ -122,17 +118,17 @@ void CMarine::Change_Motion()
 			break;
 
 		case STATE_MOVE:
-			m_tFrame.iFrameStart = 1;
-			m_tFrame.iFrameEnd = 8;
-			m_tFrame.iCurCount = 1;
-			m_tFrame.dwSpeed = 100;
+			m_tFrame.iFrameStart = 0;
+			m_tFrame.iFrameEnd = 0;
+			m_tFrame.iCurCount = 0;
+			m_tFrame.dwSpeed = 200;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 
 		case STATE_ATTACK:
-			m_tFrame.iFrameStart = 13;
-			m_tFrame.iFrameEnd = 14;
-			m_tFrame.iCurCount = 11;
+			m_tFrame.iFrameStart = 1;
+			m_tFrame.iFrameEnd = 2;
+			m_tFrame.iCurCount = 1;
 			m_tFrame.dwSpeed = 100;
 			m_tFrame.dwTime = GetTickCount64();
 			break;

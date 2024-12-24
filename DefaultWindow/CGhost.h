@@ -1,19 +1,17 @@
 #pragma once
 #include "CUnit.h"
-#include "Define.h"
 
-class CMarine: public CUnit
+class CGhost : public CUnit
 {
 public:
-	CMarine();
-	~CMarine();
-
+	CGhost() {}
+	~CGhost() {}
+public:
 	void Initialize() override;
 	int Update() override;
 	void Late_Update() override;
 	void Render(HDC hDC) override;
 	void Release() override;
 	void Change_Motion() override;
-
 };
 

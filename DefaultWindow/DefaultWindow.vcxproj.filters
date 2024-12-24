@@ -175,6 +175,15 @@
     <Filter Include="04. UI\04.Spawn_UI">
       <UniqueIdentifier>{d885c613-e99e-4e07-adc5-ff62f8b89614}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\04.Effect\01.BloodEffect">
+      <UniqueIdentifier>{024928b0-0417-42cc-99e5-39cb50e20534}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04.Effect\Effect">
+      <UniqueIdentifier>{34d0ffd2-59eb-4ad1-b9bf-7dadbc5a8304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Unit\03.Ghost">
+      <UniqueIdentifier>{a3f2a6dc-2d58-4e1b-b446-10465a86abdf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -261,12 +270,6 @@
     <ClInclude Include="CMarine.h">
       <Filter>01. Obj\01.Unit\01.Marine</Filter>
     </ClInclude>
-    <ClInclude Include="CEffect.h">
-      <Filter>01. Obj\04.Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="CBloodEffect.h">
-      <Filter>01. Obj\04.Effect</Filter>
-    </ClInclude>
     <ClInclude Include="CMapMgr.h">
       <Filter>03. Design\MapMgr</Filter>
     </ClInclude>
@@ -342,6 +345,21 @@
     <ClInclude Include="CSpawnUI.h">
       <Filter>04. UI\04.Spawn_UI</Filter>
     </ClInclude>
+    <ClInclude Include="CScv.h">
+      <Filter>01. Obj\01.Unit\00.SCV</Filter>
+    </ClInclude>
+    <ClInclude Include="CMedic.h">
+      <Filter>01. Obj\01.Unit\02.Medic</Filter>
+    </ClInclude>
+    <ClInclude Include="CEffect.h">
+      <Filter>01. Obj\04.Effect\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CBloodEffect.h">
+      <Filter>01. Obj\04.Effect\01.BloodEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="CGhost.h">
+      <Filter>01. Obj\01.Unit\03.Ghost</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -410,12 +428,6 @@
     <ClCompile Include="CMarine.cpp">
       <Filter>01. Obj\01.Unit\01.Marine</Filter>
     </ClCompile>
-    <ClCompile Include="CEffect.cpp">
-      <Filter>01. Obj\04.Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="CBloodEffect.cpp">
-      <Filter>01. Obj\04.Effect</Filter>
-    </ClCompile>
     <ClCompile Include="CMapMgr.cpp">
       <Filter>03. Design\MapMgr</Filter>
     </ClCompile>
@@ -469,6 +481,21 @@
     </ClCompile>
     <ClCompile Include="CSpawnUI.cpp">
       <Filter>04. UI\04.Spawn_UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CScv.cpp">
+      <Filter>01. Obj\01.Unit\00.SCV</Filter>
+    </ClCompile>
+    <ClCompile Include="CMedic.cpp">
+      <Filter>01. Obj\01.Unit\02.Medic</Filter>
+    </ClCompile>
+    <ClCompile Include="CEffect.cpp">
+      <Filter>01. Obj\04.Effect\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CBloodEffect.cpp">
+      <Filter>01. Obj\04.Effect\01.BloodEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="CGhost.cpp">
+      <Filter>01. Obj\01.Unit\03.Ghost</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
