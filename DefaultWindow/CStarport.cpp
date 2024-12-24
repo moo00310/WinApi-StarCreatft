@@ -19,7 +19,7 @@ void CStarport::Initialize()
     m_tInfo.fCY = 160.f;
 
     m_pImgKey = L"BuildTemplate";
-    m_iTemplateSize = TS_NORMAL;
+    m_iTemplateSize = TS_LAGE;
     m_bTemplate = true;
     m_eCurState_Build = BS_TEMP;
     m_eObjID = OT_Starport;
