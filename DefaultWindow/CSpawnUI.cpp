@@ -33,7 +33,7 @@ int CSpawnUI::Update()
 
 	if (m_eID == OT_Suffly || m_eID == OT_StarportAddOn || m_eID == OT_Addon  || m_eID == OT_Refinery)
 	{
-		m_bRender = true;
+		m_bRender = false;
 		return 0;
 	}
 		
@@ -129,15 +129,15 @@ void CSpawnUI::Render(HDC hdc)
 				Change_SpawnIcon(_temp);
 
 				GdiTransparentBlt(hdc,
-					m_tRect.left + (49 * Spawn_index[count].x),
-					m_tRect.top  + (45 * Spawn_index[count].y),
+					m_tRect.left + 0 + (49 * Spawn_index[count].x),
+					m_tRect.top  + 5 + (50 * Spawn_index[count].y),
 					44,
-					40,
+					44,
 					hQueDC,
 					44 * IndexX,
-					40 * IndexY,
+					44 * IndexY,
 					44,
-					40,
+					44,
 					RGB(0, 255, 0));
 
 				count++;
@@ -156,19 +156,27 @@ void CSpawnUI::Change_SpawnIcon(OBJ_TYPE _type)
 	{
 	case OT_Scv:
 		IndexX = 2;
-		IndexY = 12;
+		IndexY = 11;
 		break;
 	case OT_Marine:
 		IndexX = 2;
-		IndexY = 13;
+		IndexY = 12;
 		break;
 	case OT_Medic:
+		IndexX = 2;
+		IndexY = 42;
 		break;
 	case OT_Ghost:
+		IndexX = 2;
+		IndexY = 14;
 		break;
 	case OT_Tank:
+		IndexX = 2;
+		IndexY = 16;
 		break;
 	case OT_Science_Vessel:
+		IndexX = 2;
+		IndexY = 21;
 		break;
 	case OT_Unit_End:
 		break;

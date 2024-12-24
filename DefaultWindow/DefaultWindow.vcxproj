@@ -135,6 +135,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CAcademy.h" />
+    <ClInclude Include="CArmory.h" />
     <ClInclude Include="CBarrck.h" />
     <ClInclude Include="CBloodEffect.h" />
     <ClInclude Include="CBuild.h" />
@@ -142,7 +144,9 @@
     <ClInclude Include="CBmpMgr.h" />
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CCollisionMgr.h" />
+    <ClInclude Include="CCommedCenter.h" />
     <ClInclude Include="CEffect.h" />
+    <ClInclude Include="CFactory.h" />
     <ClInclude Include="CGameMouse.h" />
     <ClInclude Include="CGhost.h" />
     <ClInclude Include="CGuideBullet.h" />
@@ -164,14 +168,18 @@
     <ClInclude Include="CObjMgr.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPortUI.h" />
+    <ClInclude Include="CRefinery.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneMgr.h" />
+    <ClInclude Include="CScienceFacility.h" />
     <ClInclude Include="CScrewBullet.h" />
     <ClInclude Include="CScrollMgr.h" />
     <ClInclude Include="CScv.h" />
     <ClInclude Include="CSoundMgr.h" />
     <ClInclude Include="CSpawnUI.h" />
     <ClInclude Include="CStage.h" />
+    <ClInclude Include="CStarport.h" />
+    <ClInclude Include="CSuffly.h" />
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CTileMgr.h" />
     <ClInclude Include="CUI.h" />
@@ -195,13 +203,17 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CAcademy.cpp" />
+    <ClCompile Include="CArmory.cpp" />
     <ClCompile Include="CBarrck.cpp" />
     <ClCompile Include="CBloodEffect.cpp" />
     <ClCompile Include="CBuild.cpp" />
     <ClCompile Include="CBmpMgr.cpp" />
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CCollisionMgr.cpp" />
+    <ClCompile Include="CCommedCenter.cpp" />
     <ClCompile Include="CEffect.cpp" />
+    <ClCompile Include="CFactory.cpp" />
     <ClCompile Include="CGameMouse.cpp" />
     <ClCompile Include="CGhost.cpp" />
     <ClCompile Include="CGuideBullet.cpp" />
@@ -223,14 +235,18 @@
     <ClCompile Include="CObjMgr.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CPortUI.cpp" />
+    <ClCompile Include="CRefinery.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CSceneMgr.cpp" />
+    <ClCompile Include="CScienceFacility.cpp" />
     <ClCompile Include="CScrewBullet.cpp" />
     <ClCompile Include="CScrollMgr.cpp" />
     <ClCompile Include="CScv.cpp" />
     <ClCompile Include="CSoundMgr.cpp" />
     <ClCompile Include="CSpawnUI.cpp" />
     <ClCompile Include="CStage.cpp" />
+    <ClCompile Include="CStarport.cpp" />
+    <ClCompile Include="CSuffly.cpp" />
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CTileMgr.cpp" />
     <ClCompile Include="CUI.cpp" />

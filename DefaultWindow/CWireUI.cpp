@@ -152,10 +152,60 @@ void CWireUI::TextName(HDC hdc)
 		Text_X = 220;
 		UnitID = 16;
 		break;
+	case OT_Refinery:
+		swprintf_s(m_wcHp, 32, L"테란 정제소");
+		Text_X = 220;
+		UnitID = 17;
+		break;
 	case OT_Barrck:
-		swprintf_s(m_wcHp, 32, L"테란 배럭");
+		swprintf_s(m_wcHp, 32, L"테란 병영");
 		Text_X = 220;
 		UnitID = 18;
+		break;
+	case OT_Academy:
+		swprintf_s(m_wcHp, 32, L"테란 아카데미");
+		Text_X = 220;
+		UnitID = 21;
+		break;
+	case OT_Factory:
+		swprintf_s(m_wcHp, 32, L"테란 군수공장");
+		Text_X = 220;
+		UnitID = 23;
+		break;
+	case OT_Addon:
+		swprintf_s(m_wcHp, 32, L"테란 기계실");
+		Text_X = 220;
+		UnitID = 32;
+		break;
+	case OT_Armory:
+		swprintf_s(m_wcHp, 32, L"테란 무기고");
+		Text_X = 220;
+		UnitID = 26;
+		break;
+	case OT_Starport:
+		swprintf_s(m_wcHp, 32, L"테란 우주공항");
+		Text_X = 220;
+		UnitID = 24;
+		break;
+	case OT_StarportAddOn:
+		swprintf_s(m_wcHp, 32, L"테란 관제탑");
+		Text_X = 220;
+		UnitID = 31;
+		break;
+	case OT_ScienceFacility:
+		swprintf_s(m_wcHp, 32, L"테란 과학시설");
+		Text_X = 220;
+		UnitID = 25;
+		break;
+	case OT_ScienceSecret:
+		swprintf_s(m_wcHp, 32, L"테란 비밀작전실");
+		Text_X = 210;
+		UnitID = 29;
+		break;
+	case OT_CmdNuke:
+		swprintf_s(m_wcHp, 32, L"테란 핵격납고");
+		Text_X = 220;
+		UnitID = 28;
 		break;
 	case OT_Build_End:
 		break;

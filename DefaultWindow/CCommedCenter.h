@@ -1,12 +1,11 @@
 #pragma once
 #include "CBuild.h"
-
-class CBarrck : public CBuild
+class CCommedCenter : public CBuild
 {
-
 public:
-	CBarrck();
-	~CBarrck();
+	CCommedCenter() {}
+	~CCommedCenter() {}
+
 public:
 	void Initialize() override;
 	int Update() override;
@@ -15,5 +14,6 @@ public:
 	void Release() override;
 	void KeyInput() override;
 	void Change_Motion() override;
+
 };
 

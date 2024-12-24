@@ -1,12 +1,10 @@
 #pragma once
 #include "CBuild.h"
-
-class CBarrck : public CBuild
+class CFactory : public CBuild
 {
-
 public:
-	CBarrck();
-	~CBarrck();
+	CFactory() {}
+	~CFactory() {}
 public:
 	void Initialize() override;
 	int Update() override;

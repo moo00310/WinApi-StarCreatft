@@ -28,15 +28,14 @@ void CBarrck::Initialize()
     m_tInfo.fCY = 160.f;
 
     m_pImgKey = L"BuildTemplate";
-    m_iTemplateSize = 2;
+    m_iTemplateSize = TS_LAGE;
     m_bTemplate = true;
     m_eCurState_Build = BS_TEMP;
     m_eObjID = OT_Barrck;
     m_tStat = { 1000.f, 1.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
      
-    //m_iMyBuildTIme = get<3>(ObjCost.at(OT_Barrck));
-    m_iMyBuildTIme = 80;
+    m_iMyBuildTIme = get<3>(ObjCost.at(OT_Barrck));
 
     __super::Update_Rect();
     Block_Map();
@@ -74,6 +73,21 @@ void CBarrck::Render(HDC hDC)
 
     HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
  
+    if (m_bSelect)
+    {
+        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Big_Select");
+        GdiTransparentBlt(hDC,			// 복사 받을 DC
+            m_tRect.left + iScrollX + 20,	// 복사 받을 위치 좌표 X, Y	
+            m_tRect.top + iScrollY + 20,
+            148,			// 복사 받을 이미지의 가로, 세로
+            148,
+            hFxDC,						// 복사할 이미지 DC	
+            0, // 비트맵 출력 시작 좌표(Left, top)
+            0,
+            148,										// 복사할 이미지의 가로, 세로
+            148,
+            RGB(255, 0, 255));		// 제거할 색상
+    }
 
     if (m_bTemplate)
      {
@@ -94,24 +108,7 @@ void CBarrck::Render(HDC hDC)
      }
      else
      {
-        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Big_Select");
-
-        if (m_bSelect)
-        {
-            GdiTransparentBlt(hDC,			// 복사 받을 DC
-                m_tRect.left + iScrollX + 20 ,	// 복사 받을 위치 좌표 X, Y	
-                m_tRect.top + iScrollY + 20,
-                148,			// 복사 받을 이미지의 가로, 세로
-                148,
-                hFxDC,						// 복사할 이미지 DC	
-                0, // 비트맵 출력 시작 좌표(Left, top)
-                0,
-                148,										// 복사할 이미지의 가로, 세로
-                148,
-                RGB(255, 0, 255));		// 제거할 색상
-        }
-
-
+       
        GdiTransparentBlt(hDC,			// 복사 받을 DC
            m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
            m_tRect.top + iScrollY,
@@ -197,36 +194,6 @@ void CBarrck::Change_Motion()
     }
 }
 
-void CBarrck::Block_Map()
-{
-
-    Pos pos = { (m_tRect.top ) / 32,(m_tRect.left ) / 32 };
-
-    for (int i = 0; i < m_tInfo.fCY / 32; i++)
-    {
-        for (int j = 0; j < m_tInfo.fCX / 32; j++)
-        {
-            Pos temp = {i,j};
-            CMapMgr::Get_Instance()->SetTileType(pos + temp, 2);
-        }
-    }
-}
-
-void CBarrck::UnBlock_Map()
-{
-
-    Pos pos = { (m_tRect.top) / 32,(m_tRect.left) / 32 };
-
-    for (int i = 0; i < m_tInfo.fCY / 32; i++)
-    {
-        for (int j = 0; j < m_tInfo.fCX / 32; j++)
-        {
-            Pos temp = { i,j };
-            CMapMgr::Get_Instance()->SetTileType(pos + temp, 0);
-        }
-    }
-}
-
 void CBarrck::KeyInput()
 {
     if (!m_bSelect) return;
@@ -244,13 +211,15 @@ void CBarrck::KeyInput()
     // 메딕 생산
     if (CKeyMgr::Get_Instance()->Key_Down('E'))
     {
-        //m_queSpawn.push(OT_Medic);
+        if (m_listSpawn.size() < 5)
+            m_listSpawn.push_back(OT_Medic);
     }
 
     // 고스트 생산
     if (CKeyMgr::Get_Instance()->Key_Down('G'))
     {
-        //m_queSpawn.push(OT_Ghost);
+        if (m_listSpawn.size() < 5)
+            m_listSpawn.push_back(OT_Ghost);
     }
 
 }

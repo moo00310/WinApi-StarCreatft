@@ -53,5 +53,8 @@ private:
 	OBJ_TYPE m_eBuildType;
 	const TCHAR* m_pImgKey_build;
 
+	int m_iBuild_Index;
+	COLOR m_tColor;
+
 };
 

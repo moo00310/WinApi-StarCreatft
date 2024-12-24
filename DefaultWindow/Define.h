@@ -41,9 +41,9 @@ enum DIRECTION {
 	DIR_END, // 방향 없음
 };
 
-enum OBJID { OBJ_EFFECT, OBJ_PLAYER, OBJ_BUILD, OBJ_MONSTER, OBJ_MOUSE, OBJ_BUTTON, OBJ_END };
+enum OBJID { OBJ_PLAYER, OBJ_BUILD, OBJ_MONSTER, OBJ_EFFECT, OBJ_MOUSE, OBJ_BUTTON, OBJ_END };
 
-enum RENDERID { RENDER_BACKGROUND, RENDER_GAMEOBJECT, RENDER_UI, RENDER_EFFECT, RENDER_END };
+enum RENDERID { RENDER_BACKGROUND, RENDER_EFFECT, RENDER_GAMEOBJECT, RENDER_UI, RENDER_END };
 
 enum CHANNELID { SOUND_EFFECT, SOUND_BGM, SOUND_END };
 enum SCENEID { SC_LOGO, SC_MENU, SC_EDIT, SC_STAGE, SC_END };
@@ -75,10 +75,6 @@ enum TILE_GROUP {
 	TG_HILL, 
  };
 
-enum Wire_Type
-{
-	WT_Marine,
-};
 
 const int TILE_ID_RANGES[][2] = {
 	{0, 13},    // GROUND
@@ -93,6 +89,16 @@ typedef struct tagInfo
 
 }INFO;
 
+struct COLOR
+{
+	int R, G, B;
+
+	void operator=(COLOR& rhs) {
+		R = rhs.R;
+		G = rhs.G;
+		B = rhs.B;
+	}
+};
 
 typedef struct tagFrame
 {
@@ -307,7 +313,7 @@ enum OBJ_TYPE
 	OT_END
 };
 
-
+enum iTemplateSize { TS_SMALL, TS_NORMAL, TS_LAGE };
 
 const Pos Spawn_index[5] =
 {

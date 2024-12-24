@@ -10,6 +10,14 @@
 
 #include "CAbstractFactory.h"
 #include "CBarrck.h"
+#include "CCommedCenter.h"
+#include "CSuffly.h"
+#include "CRefinery.h"
+#include "CFactory.h"
+#include "CStarport.h"
+#include "CAcademy.h"
+#include "CArmory.h"
+#include "CScienceFacility.h"
 
 /*---------------
     GameMouse
@@ -17,11 +25,12 @@
 
 CGameMouse::CGameMouse() : m_eCurState(MS_IDLE), m_ePreState(MS_IDLE), m_indexY(0), m_UnitList(nullptr),
 m_Select_UnitList(nullptr), isDrag(false), m_BuildList(nullptr), isBuildMod(false), m_eBuildType(OT_END),
-m_pImgKey_build(nullptr)
+m_pImgKey_build(nullptr), m_iBuild_Index(0)
 {
     ZeroMemory(&ptMouse, sizeof(POINT));
     ZeroMemory(&m_DragStart, sizeof(POINT));
     ZeroMemory(&m_DragEnd, sizeof(POINT));
+    ZeroMemory(&m_tColor, sizeof(COLOR));
 }
 
 CGameMouse::~CGameMouse()
@@ -87,10 +96,10 @@ void CGameMouse::Render(HDC hDC)
             (int)m_tInfo.fCY,
             hBuildDC,
             0,
-            (int)m_tInfo.fCY * 1,
+            (int)m_tInfo.fCY * m_iBuild_Index,
             (int)m_tInfo.fCX,					
             (int)m_tInfo.fCY,
-            RGB(0, 255, 0));
+            RGB(m_tColor.R, m_tColor.G, m_tColor.B));
 
     }
     else
@@ -160,7 +169,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
     // 테스트 코드/////////////////////////////
     if (CKeyMgr::Get_Instance()->Key_Down('O'))
     {
-        SetBuild_Img(OT_Barrck); // 배럭으로 지정 후 빌드모드로 변경
+        SetBuild_Img(OT_ScienceFacility); // 배럭으로 지정 후 빌드모드로 변경
     }
     ///////////////////////////////////
     Pos temp = { (int)(ptMouse.y - CScrollMgr::Get_Instance()->Get_ScrollY()) / TILECY , int(ptMouse.x - CScrollMgr::Get_Instance()->Get_ScrollX()) / TILECY };
@@ -170,18 +179,19 @@ void CGameMouse::MouseInput(POINT ptMouse)
     {
         if (CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
         {
-            // 건물을 지울 수 있는 곳인지 아닌지 체크
-            if (AbleBuild())
+            if (AbleBuild())  // 건물을 지울 수 있는 곳인지 아닌지 체크
             {
                 // 건물울 지울 수 있는 곳이면 SCV를 통해 건설
-                CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CBarrck>::Create(temp));
+                CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CScienceFacility>::Create(temp));
+                isBuildMod = false;
             }
             else
             {
-                // 아니면 경고 메시지
+                // 경고 메시지
             } 
         }
 
+        // 우클릭으로 취소
         if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
         {
             isBuildMod = false;
@@ -494,7 +504,15 @@ void CGameMouse::ColDrag()
 
 void CGameMouse::Initailize_Img()
 {
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/CommandCenter.bmp", L"CommandCenter");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/SupplyDepot.bmp", L"SupplyDepot");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Refinery.bmp", L"Refinery");
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Barracks.bmp", L"Barrck");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Academy.bmp", L"Academy");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Factory.bmp", L"Factory");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Armory.bmp", L"Armory");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Starport.bmp", L"Starport");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/ScienceFacility.bmp", L"ScienceFacility");
 }
 
 
@@ -505,29 +523,89 @@ void CGameMouse::DrawBulid()
     switch (m_eBuildType)
     {
     case OT_Commend:
+        m_pImgKey_build = L"CommandCenter";
+        m_tInfo.fCX = 128.f;
+        m_tInfo.fCY = 160.f;
+        m_iBuild_Index = 1;
+        m_tColor.R = 0;
+        m_tColor.G = 255;
+        m_tColor.B = 0;
         break;
     case OT_Suffly:
+        m_pImgKey_build = L"SupplyDepot";
+        m_tInfo.fCX = 96.f;
+        m_tInfo.fCY = 128.f;
+        m_iBuild_Index = 1;
+        m_tColor.R = 0;
+        m_tColor.G = 255;
+        m_tColor.B = 0;
         break;
     case OT_Refinery:
+        m_pImgKey_build = L"Refinery";
+        m_tInfo.fCX = 192.f;
+        m_tInfo.fCY = 192.f;
+        m_iBuild_Index = 4;
+        m_tColor.R = 0;
+        m_tColor.G = 255;
+        m_tColor.B = 0;
         break;
     case OT_Barrck:
         m_pImgKey_build = L"Barrck";
         m_tInfo.fCX = 192.f;
         m_tInfo.fCY = 160.f;
+        m_iBuild_Index = 1;
+        m_tColor.R = 0;
+        m_tColor.G = 255;
+        m_tColor.B = 0;
         break;
     case OT_Academy:
+        m_pImgKey_build = L"Academy";
+        m_tInfo.fCX = 96.f;
+        m_tInfo.fCY = 128.f;
+        m_iBuild_Index = 1;
+        m_tColor.R = 0;
+        m_tColor.G = 255;
+        m_tColor.B = 0;
         break;
     case OT_Factory:
+        m_pImgKey_build = L"Factory";
+        m_tInfo.fCX = 128.f;
+        m_tInfo.fCY = 160.f;
+        m_iBuild_Index = 1;
+        m_tColor.R = 0;
+        m_tColor.G = 255;
+        m_tColor.B = 0;
         break;
     case OT_Addon:
         break;
     case OT_Armory:
+        m_pImgKey_build = L"Armory";
+        m_tInfo.fCX = 160.f;
+        m_tInfo.fCY = 128.f;
+        m_iBuild_Index = 1;
+        m_tColor.R = 255;
+        m_tColor.G = 0;
+        m_tColor.B = 255;
         break;
     case OT_Starport:
+        m_pImgKey_build = L"Starport";
+        m_tInfo.fCX = 128.f;
+        m_tInfo.fCY = 160.f;
+        m_iBuild_Index = 1;
+        m_tColor.R = 0;
+        m_tColor.G = 255;
+        m_tColor.B = 0;
         break;
     case OT_StarportAddOn:
         break;
     case OT_ScienceFacility:
+        m_pImgKey_build = L"ScienceFacility";
+        m_tInfo.fCX = 128.f;
+        m_tInfo.fCY = 100.f;
+        m_iBuild_Index = 1;
+        m_tColor.R = 255;
+        m_tColor.G = 0;
+        m_tColor.B = 255;
         break;
     case OT_ScienceSecret:
         break;

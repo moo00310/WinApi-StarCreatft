@@ -107,7 +107,17 @@ void CPortUI::Change_Port()
 			break;
 		case OT_Commend:
 		case OT_Suffly:
+		case OT_Refinery:
 		case OT_Barrck:
+		case OT_Academy:
+		case OT_Factory:
+		case OT_Addon:
+		case OT_Armory:
+		case OT_Starport:
+		case OT_StarportAddOn:
+		case OT_ScienceSecret:
+		case OT_ScienceFacility:
+		case OT_CmdNuke:
 			// 어드바이저 이미지
 			m_pImgKey = L"Advosr";
 			break;

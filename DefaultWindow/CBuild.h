@@ -16,6 +16,7 @@ public:
 	virtual void Render(HDC hDC) PURE;
 	virtual void Release() PURE;
 	virtual void KeyInput() PURE;
+	virtual	void Change_Motion() PURE;
 
 public:
 	list<OBJ_TYPE>* Get_SpawnList() { return &m_listSpawn; }
@@ -26,6 +27,9 @@ public:
 protected:
 	void Spawn_Uint_CoolDown();
 	void Spawn_Uint_Index(OBJ_TYPE _id);
+	void Block_Map();
+	void UnBlock_Map();
+
 
 protected:
 	BuildSTATE m_ePreState_Bulid;

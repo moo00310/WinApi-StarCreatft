@@ -4,6 +4,10 @@
 #include "CMarine.h"
 #include "CAbstractFactory.h"
 #include "CScrollMgr.h"
+#include "CMapMgr.h"
+#include "CScv.h"
+#include "CMedic.h"
+#include "CGhost.h"
 
 void CBuild::Spawn_Uint_CoolDown()
 {
@@ -42,13 +46,16 @@ void CBuild::Spawn_Uint_Index(OBJ_TYPE _id)
 	switch (_id)
 	{
 	case OT_Scv:
+		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(temp));
 		break;
 	case OT_Marine:
 		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(temp));
 		break;
 	case OT_Medic:
+		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMedic>::Create(temp));
 		break;
 	case OT_Ghost:
+		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::Create(temp));
 		break;
 	case OT_Tank:
 		break;
@@ -62,3 +69,32 @@ void CBuild::Spawn_Uint_Index(OBJ_TYPE _id)
 		break;
 	}
 }
+
+void CBuild::Block_Map()
+{
+	Pos pos = { (m_tRect.top) / 32,(m_tRect.left) / 32 };
+
+	for (int i = 0; i < m_tInfo.fCY / 32; i++)
+	{
+		for (int j = 0; j < m_tInfo.fCX / 32; j++)
+		{
+			Pos temp = { i,j };
+			CMapMgr::Get_Instance()->SetTileType(pos + temp, 2);
+		}
+	}
+}
+
+void CBuild::UnBlock_Map()
+{
+	Pos pos = { (m_tRect.top) / 32,(m_tRect.left) / 32 };
+
+	for (int i = 0; i < m_tInfo.fCY / 32; i++)
+	{
+		for (int j = 0; j < m_tInfo.fCX / 32; j++)
+		{
+			Pos temp = { i,j };
+			CMapMgr::Get_Instance()->SetTileType(pos + temp, 0);
+		}
+	}
+}
+

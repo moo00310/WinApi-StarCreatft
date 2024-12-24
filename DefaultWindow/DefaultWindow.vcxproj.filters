@@ -169,9 +169,6 @@
     <Filter Include="01. Obj\02.Build\02.Suffly">
       <UniqueIdentifier>{21edb747-86ca-4292-94c5-736de2ec4e84}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\02.Build\03.Barrck">
-      <UniqueIdentifier>{f6ef8f70-7d5b-4cc2-b26f-9d4d2609d75d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. UI\04.Spawn_UI">
       <UniqueIdentifier>{d885c613-e99e-4e07-adc5-ff62f8b89614}</UniqueIdentifier>
     </Filter>
@@ -183,6 +180,27 @@
     </Filter>
     <Filter Include="01. Obj\01.Unit\03.Ghost">
       <UniqueIdentifier>{a3f2a6dc-2d58-4e1b-b446-10465a86abdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\04.Barrck">
+      <UniqueIdentifier>{f6ef8f70-7d5b-4cc2-b26f-9d4d2609d75d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\03.Refinery">
+      <UniqueIdentifier>{6cbb3504-5d85-432b-ba29-4f960394c93e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\07.Starport">
+      <UniqueIdentifier>{42613180-3a65-42a3-a3ca-8324792ae691}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\06.Factory">
+      <UniqueIdentifier>{b0aa9f67-4640-47f5-a315-79adf16a2a92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\05.Academy">
+      <UniqueIdentifier>{e9802d08-25e1-4c24-9495-399130a0e50c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\08.Armory">
+      <UniqueIdentifier>{0f6b9bb6-0549-4149-9035-fe5b2a512f3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\09.ScienceFacility">
+      <UniqueIdentifier>{7a6f2a44-bc33-4b9d-80f5-d955723522e0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -340,7 +358,7 @@
       <Filter>01. Obj\02.Build\Build</Filter>
     </ClInclude>
     <ClInclude Include="CBarrck.h">
-      <Filter>01. Obj\02.Build\03.Barrck</Filter>
+      <Filter>01. Obj\02.Build\04.Barrck</Filter>
     </ClInclude>
     <ClInclude Include="CSpawnUI.h">
       <Filter>04. UI\04.Spawn_UI</Filter>
@@ -359,6 +377,30 @@
     </ClInclude>
     <ClInclude Include="CGhost.h">
       <Filter>01. Obj\01.Unit\03.Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="CCommedCenter.h">
+      <Filter>01. Obj\02.Build\01.CommedCenter</Filter>
+    </ClInclude>
+    <ClInclude Include="CSuffly.h">
+      <Filter>01. Obj\02.Build\02.Suffly</Filter>
+    </ClInclude>
+    <ClInclude Include="CFactory.h">
+      <Filter>01. Obj\02.Build\06.Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="CStarport.h">
+      <Filter>01. Obj\02.Build\07.Starport</Filter>
+    </ClInclude>
+    <ClInclude Include="CRefinery.h">
+      <Filter>01. Obj\02.Build\03.Refinery</Filter>
+    </ClInclude>
+    <ClInclude Include="CAcademy.h">
+      <Filter>01. Obj\02.Build\05.Academy</Filter>
+    </ClInclude>
+    <ClInclude Include="CArmory.h">
+      <Filter>01. Obj\02.Build\08.Armory</Filter>
+    </ClInclude>
+    <ClInclude Include="CScienceFacility.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -474,7 +516,7 @@
       <Filter>01. Obj\02.Build\Build</Filter>
     </ClCompile>
     <ClCompile Include="CBarrck.cpp">
-      <Filter>01. Obj\02.Build\03.Barrck</Filter>
+      <Filter>01. Obj\02.Build\04.Barrck</Filter>
     </ClCompile>
     <ClCompile Include="DefaultWindow.cpp">
       <Filter>소스 파일</Filter>
@@ -496,6 +538,30 @@
     </ClCompile>
     <ClCompile Include="CGhost.cpp">
       <Filter>01. Obj\01.Unit\03.Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="CCommedCenter.cpp">
+      <Filter>01. Obj\02.Build\01.CommedCenter</Filter>
+    </ClCompile>
+    <ClCompile Include="CSuffly.cpp">
+      <Filter>01. Obj\02.Build\02.Suffly</Filter>
+    </ClCompile>
+    <ClCompile Include="CFactory.cpp">
+      <Filter>01. Obj\02.Build\06.Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="CStarport.cpp">
+      <Filter>01. Obj\02.Build\07.Starport</Filter>
+    </ClCompile>
+    <ClCompile Include="CRefinery.cpp">
+      <Filter>01. Obj\02.Build\03.Refinery</Filter>
+    </ClCompile>
+    <ClCompile Include="CAcademy.cpp">
+      <Filter>01. Obj\02.Build\05.Academy</Filter>
+    </ClCompile>
+    <ClCompile Include="CArmory.cpp">
+      <Filter>01. Obj\02.Build\08.Armory</Filter>
+    </ClCompile>
+    <ClCompile Include="CScienceFacility.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -15,7 +15,7 @@ void CMarineDead::Initialize()
 	m_tInfo.fCX = 100.f;
 	m_tInfo.fCY = 50.f;
 
-	m_eRender = RENDER_GAMEOBJECT;
+	m_eRender = RENDER_EFFECT;
 }
 
 int CMarineDead::Update()
@@ -95,7 +95,7 @@ void CMedicDead::Initialize()
 	m_tInfo.fCX = 64.f;
 	m_tInfo.fCY = 64.f;
 
-	m_eRender = RENDER_GAMEOBJECT;
+	m_eRender = RENDER_EFFECT;
 }
 
 int CMedicDead::Update()
@@ -167,7 +167,7 @@ void CGhostDead::Initialize()
 	m_tInfo.fCX = 64.f;
 	m_tInfo.fCY = 64.f;
 
-	m_eRender = RENDER_GAMEOBJECT;
+	m_eRender = RENDER_EFFECT;
 }
 
 int CGhostDead::Update()
