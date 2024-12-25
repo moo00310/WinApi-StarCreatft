@@ -1,40 +1,37 @@
 #include "pch.h"
-#include "CScienceFacility.h"
+#include "CStarPortAddon.h"
 #include "CMapMgr.h"
 #include "CObjMgr.h"
 #include "CBmpMgr.h"
 #include "CKeyMgr.h"
-#include "CAbstractFactory.h"
-#include "CCovertOps.h"
 
-void CScienceFacility::Initialize()
+void CStarPortAddon::Initialize()
 {
     // 맵의 주소를 받아옴
     m_Map = CMapMgr::Get_Instance()->GetMap();
-    m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
 
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/ScienceFacility.bmp", L"ScienceFacility");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/StarportAddOn.bmp", L"StarportAddOn");
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/BuildTemplate.bmp", L"BuildTemplate");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_7(128.128).bmp", L"Select_7");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_3(64.64).bmp", L"Select_3");
 
     m_tInfo.fCX = 128.f;
-    m_tInfo.fCY = 96.f;
+    m_tInfo.fCY = 64.f;
 
     m_pImgKey = L"BuildTemplate";
-    m_iTemplateSize = TS_NORMAL;
+    m_iTemplateSize = TS_SMALL;
     m_bTemplate = true;
     m_eCurState_Build = BS_TEMP;
-    m_eObjID = OT_ScienceFacility;
-    m_tStat = { 850.f, 1.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
+    m_eObjID = OT_StarportAddOn;
+    m_tStat = { 500.f, 1.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
 
-    m_iMyBuildTIme = get<3>(ObjCost.at(OT_ScienceFacility));
+    m_iMyBuildTIme = get<3>(ObjCost.at(OT_StarportAddOn));
 
     __super::Update_Rect();
     Block_Map();
 }
 
-int CScienceFacility::Update()
+int CStarPortAddon::Update()
 {
     if (m_bDead || m_tStat.m_iHp <= 0)
     {
@@ -51,15 +48,15 @@ int CScienceFacility::Update()
     return OBJ_NOEVENT;
 }
 
-void CScienceFacility::Late_Update()
+void CStarPortAddon::Late_Update()
 {
     Change_Motion();
 
-    if (m_bTemplate) return;
+    if (m_eCurState_Build < BS_IDLE) return;
     __super::Move_Frame();
 }
 
-void CScienceFacility::Render(HDC hDC)
+void CStarPortAddon::Render(HDC hDC)
 {
     int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
     int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
@@ -68,17 +65,17 @@ void CScienceFacility::Render(HDC hDC)
 
     if (m_bSelect)
     {
-        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_7");
+        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_3");
         GdiTransparentBlt(hDC,
-            m_tRect.left + iScrollX -5,
-            m_tRect.top + iScrollY -5,
-            128,
-            128,
+            m_tRect.left + iScrollX + 25,
+            m_tRect.top + iScrollY + 20,
+            64,
+            64,
             hFxDC,
             0,
             0,
-            128,
-            128,
+            64,
+            64,
             RGB(255, 0, 255));
     }
 
@@ -116,30 +113,27 @@ void CScienceFacility::Render(HDC hDC)
     }
 }
 
-void CScienceFacility::Release()
+void CStarPortAddon::Release()
 {
 }
 
-void CScienceFacility::KeyInput()
+void CStarPortAddon::KeyInput()
 {
+
     if (!m_bSelect) return;
 
     if (m_eCurState_Build == BS_MAKE ||
-        m_eCurState_Build == BS_TEMP) return;
+        m_eCurState_Build == BS_TEMP ||
+        m_eCurState_Build == BS_LINK) return;
 
 
-    // 비밀 뭐시기
+    // 관제탑 업글
     if (CKeyMgr::Get_Instance()->Key_Down('C'))
     {
-        if (m_bIsAddOn) return;
-
-        m_listSpawn.push_back(OT_ScienceSecret);
-        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CCovertOps>::Create(m_tInfo.fX + 90, m_tInfo.fY + 20));
-        m_bIsAddOn = true;
     }
 }
 
-void CScienceFacility::Change_Motion()
+void CStarPortAddon::Change_Motion()
 {
     if (m_eCurState_Build == BS_TEMP)
     {
@@ -164,32 +158,57 @@ void CScienceFacility::Change_Motion()
 
     if (m_eCurState_Build == BS_MAKE)
     {
-        m_pImgKey = L"ScienceFacility";
+        m_pImgKey = L"StarportAddOn";
         m_tFrame.iFrameStart = 0;
         m_tFrame.iCurCount = 0;
         m_tFrame.iFrameEnd = 0;
         if (m_iMyBuildTIme < m_iBuildCount)
-            m_eCurState_Build = BS_IDLE;
+        {
+            m_eCurState_Build = BS_LINK;
+            m_iBuildCount = 0;
+        }
 
         m_iBuildCount++;
         Add_Stat_hp(m_tStat.m_iMaxHp / m_iMyBuildTIme);
     }
 
+    if (m_eCurState_Build == BS_LINK)
+    {
+        if (m_iBuildCount < 5)
+            m_tFrame.iCurCount = 0;
+        else if (m_iBuildCount < 20)
+            m_tFrame.iCurCount = 1;
+        else if (m_iBuildCount < 40)
+            m_tFrame.iCurCount = 2;
+        else if (m_iBuildCount < 60)
+            m_tFrame.iCurCount = 3;
+        else if (m_iBuildCount < 80)
+            m_tFrame.iCurCount = 4;
+        else if (m_iBuildCount < 100)
+            m_tFrame.iCurCount = 5;
+        else if (m_iBuildCount > 100)
+            m_eCurState_Build = BS_IDLE;
+
+        m_iBuildCount++;
+    }
+
+
+    //반복 애니메니션
     if (m_ePreState_Bulid != m_eCurState_Build)
     {
         switch (m_eCurState_Build)
         {
         case BS_IDLE:
-            m_tFrame.iFrameStart = 1;
-            m_tFrame.iFrameEnd = 1;
-            m_tFrame.iCurCount = 1;
+            m_tFrame.iFrameStart = 6;
+            m_tFrame.iFrameEnd = 6;
+            m_tFrame.iCurCount = 6;
             m_tFrame.dwSpeed = 200;
             m_tFrame.dwTime = GetTickCount64();
             break;
         case BS_RUN:
-            m_tFrame.iFrameStart = 1;
-            m_tFrame.iFrameEnd = 2;
-            m_tFrame.iCurCount = 1;
+            m_tFrame.iFrameStart = 6;
+            m_tFrame.iFrameEnd = 7;
+            m_tFrame.iCurCount = 6;
             m_tFrame.dwSpeed = 200;
             m_tFrame.dwTime = GetTickCount64();
             break;

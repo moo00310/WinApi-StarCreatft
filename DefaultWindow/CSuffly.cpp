@@ -9,7 +9,7 @@ void CSuffly::Initialize()
     
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/SupplyDepot.bmp", L"SupplyDepot");
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/BuildTemplate.bmp", L"BuildTemplate");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/5.bmp", L"Mid_Select");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_5(96.96).bmp", L"Select_5");
 
     m_tInfo.fCX = 96.f;
     m_tInfo.fCY = 128.f;
@@ -60,7 +60,7 @@ void CSuffly::Render(HDC hDC)
 
     if (m_bSelect)
     {
-        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Mid_Select");
+        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_5");
         GdiTransparentBlt(hDC,			// 복사 받을 DC
             m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
             m_tRect.top + iScrollY + 25,

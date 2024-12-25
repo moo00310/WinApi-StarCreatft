@@ -12,7 +12,8 @@
 void CBuild::Spawn_Uint_CoolDown()
 {
 	if (m_eCurState_Build == BS_MAKE ||
-		m_eCurState_Build == BS_TEMP) return;
+		m_eCurState_Build == BS_TEMP ||
+		m_eCurState_Build == BS_LINK) return;
 
 	if (!m_listSpawn.empty())
 	{

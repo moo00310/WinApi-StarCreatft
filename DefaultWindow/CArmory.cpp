@@ -10,7 +10,7 @@ void CArmory::Initialize()
 
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Armory.bmp", L"Armory");
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/BuildTemplate.bmp", L"BuildTemplate");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/5.bmp", L"Mid_Select");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_7(128.128).bmp", L"Select_7");
 
     m_tInfo.fCX = 160.f;
     m_tInfo.fCY = 128.f;
@@ -64,17 +64,17 @@ void CArmory::Render(HDC hDC)
 
     if (m_bSelect)
     {
-        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Mid_Select");
+        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_7");
         GdiTransparentBlt(hDC,
-            m_tRect.left + iScrollX + 20,
-            m_tRect.top + iScrollY + 20,
-            96,
-            96,
+            m_tRect.left + iScrollX +15,
+            m_tRect.top + iScrollY+10,
+            128,
+            128,
             hFxDC,
             0,
             0,
-            96,
-            96,
+            128,
+            128,
             RGB(255, 0, 255));
     }
 

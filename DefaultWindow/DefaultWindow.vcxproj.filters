@@ -202,6 +202,18 @@
     <Filter Include="01. Obj\02.Build\09.ScienceFacility">
       <UniqueIdentifier>{7a6f2a44-bc33-4b9d-80f5-d955723522e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\02.Build\06.Factory\AddOn">
+      <UniqueIdentifier>{3114a29e-bd79-474f-8e01-cd6cb89e6f31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\07.Starport\StarportAddOn">
+      <UniqueIdentifier>{dd0efcb0-684c-4147-ac9f-d96805900c46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\09.ScienceFacility\CovertOps">
+      <UniqueIdentifier>{a9709daf-6c6a-4cbc-a170-4fb927ed5d08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\01.CommedCenter\CcmdNuke">
+      <UniqueIdentifier>{556cd5e2-41f0-429a-8cb3-cc4322c848cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -400,7 +412,19 @@
       <Filter>01. Obj\02.Build\08.Armory</Filter>
     </ClInclude>
     <ClInclude Include="CScienceFacility.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>01. Obj\02.Build\09.ScienceFacility</Filter>
+    </ClInclude>
+    <ClInclude Include="CAddon.h">
+      <Filter>01. Obj\02.Build\06.Factory\AddOn</Filter>
+    </ClInclude>
+    <ClInclude Include="CStarPortAddon.h">
+      <Filter>01. Obj\02.Build\07.Starport\StarportAddOn</Filter>
+    </ClInclude>
+    <ClInclude Include="CCovertOps.h">
+      <Filter>01. Obj\02.Build\09.ScienceFacility\CovertOps</Filter>
+    </ClInclude>
+    <ClInclude Include="CcmdNuke.h">
+      <Filter>01. Obj\02.Build\01.CommedCenter\CcmdNuke</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -561,7 +585,19 @@
       <Filter>01. Obj\02.Build\08.Armory</Filter>
     </ClCompile>
     <ClCompile Include="CScienceFacility.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>01. Obj\02.Build\09.ScienceFacility</Filter>
+    </ClCompile>
+    <ClCompile Include="CAddon.cpp">
+      <Filter>01. Obj\02.Build\06.Factory\AddOn</Filter>
+    </ClCompile>
+    <ClCompile Include="CStarPortAddon.cpp">
+      <Filter>01. Obj\02.Build\07.Starport\StarportAddOn</Filter>
+    </ClCompile>
+    <ClCompile Include="CCovertOps.cpp">
+      <Filter>01. Obj\02.Build\09.ScienceFacility\CovertOps</Filter>
+    </ClCompile>
+    <ClCompile Include="CcmdNuke.cpp">
+      <Filter>01. Obj\02.Build\01.CommedCenter\CcmdNuke</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -180,6 +180,25 @@ void CSpawnUI::Change_SpawnIcon(OBJ_TYPE _type)
 		break;
 	case OT_Unit_End:
 		break;
+
+	case OT_Addon:
+		IndexX = 2;
+		IndexY = 39;
+		break;
+	case OT_StarportAddOn:
+		IndexX = 2;
+		IndexY = 38;
+		break;
+	case OT_ScienceSecret:
+		IndexX = 2;
+		IndexY = 36;
+		break;
+	case OT_CmdNuke:
+		IndexX = 2;
+		IndexY = 35;
+		break;
+
+
 	default:
 		break;
 	}

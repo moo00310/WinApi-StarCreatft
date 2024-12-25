@@ -3,7 +3,7 @@
 class CStarport : public CBuild
 {
 public:
-	CStarport() {}
+	CStarport(): m_bIsAddOn(false) {}
 	~CStarport() {}
 public:
 	void Initialize() override;
@@ -13,5 +13,8 @@ public:
 	void Release() override;
 	void KeyInput() override;
 	void Change_Motion() override;
+
+private:
+	bool m_bIsAddOn;
 };
 

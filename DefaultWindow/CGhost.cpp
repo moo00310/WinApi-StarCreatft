@@ -17,7 +17,7 @@ void CGhost::Initialize()
 	m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
 
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Ghost/Ghost.bmp", L"Ghost");
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/0.bmp", L"Small_Select");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_0(32.32).bmp", L"Select_0");
 
 	m_pImgKey = L"Ghost";
 	m_eObjID = OT_Ghost;
@@ -60,7 +60,7 @@ void CGhost::Render(HDC hDC)
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
 	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
-	HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Small_Select");
+	HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_0");
 
 	if (m_bSelect)
 	{

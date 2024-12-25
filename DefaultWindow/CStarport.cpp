@@ -4,6 +4,8 @@
 #include "CObjMgr.h"
 #include "CBmpMgr.h"
 #include "CKeyMgr.h"
+#include "CAbstractFactory.h"
+#include "CStarPortAddon.h"
 
 void CStarport::Initialize()
 {
@@ -13,7 +15,7 @@ void CStarport::Initialize()
 
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Starport.bmp", L"Starport");
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/BuildTemplate.bmp", L"BuildTemplate");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/5.bmp", L"Mid_Select");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_7(128.128).bmp", L"Select_7");
 
     m_tInfo.fCX = 128.f;
     m_tInfo.fCY = 160.f;
@@ -26,7 +28,8 @@ void CStarport::Initialize()
     m_tStat = { 1300.f, 1.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
 
-    m_iMyBuildTIme = get<3>(ObjCost.at(OT_Starport));
+   // m_iMyBuildTIme = get<3>(ObjCost.at(OT_Starport));
+    m_iMyBuildTIme = 60;
 
     __super::Update_Rect();
     Block_Map();
@@ -66,17 +69,17 @@ void CStarport::Render(HDC hDC)
 
     if (m_bSelect)
     {
-        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Mid_Select");
+        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_7");
         GdiTransparentBlt(hDC,
-            m_tRect.left + iScrollX + 20,
-            m_tRect.top + iScrollY + 20,
-            96,
-            96,
+            m_tRect.left + iScrollX ,
+            m_tRect.top + iScrollY + 30,
+            128,
+            128,
             hFxDC,
             0,
             0,
-            96,
-            96,
+            128,
+            128,
             RGB(255, 0, 255));
     }
 
@@ -149,6 +152,11 @@ void CStarport::KeyInput()
     // 관제탑 건설
     if (CKeyMgr::Get_Instance()->Key_Down('C'))
     {
+        if (m_bIsAddOn) return;
+
+        m_listSpawn.push_back(OT_StarportAddOn);
+        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CStarPortAddon>::Create(m_tInfo.fX + 100, m_tInfo.fY+10));
+        m_bIsAddOn = true;
     }
 
 }
@@ -201,9 +209,9 @@ void CStarport::Change_Motion()
             m_tFrame.dwTime = GetTickCount64();
             break;
         case BS_RUN:
-            m_tFrame.iFrameStart = 2;
-            m_tFrame.iFrameEnd = 4;
-            m_tFrame.iCurCount = 2;
+            m_tFrame.iFrameStart = 5;
+            m_tFrame.iFrameEnd = 7;
+            m_tFrame.iCurCount = 5;
             m_tFrame.dwSpeed = 200;
             m_tFrame.dwTime = GetTickCount64();
             break;

@@ -22,7 +22,7 @@ void CBarrck::Initialize()
 
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Barracks.bmp", L"Barrck");
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/BuildTemplate.bmp", L"BuildTemplate");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/8.bmp", L"Big_Select");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_8(148.148).bmp", L"Select_8");
 
     m_tInfo.fCX = 192.f;
     m_tInfo.fCY = 160.f;
@@ -75,7 +75,7 @@ void CBarrck::Render(HDC hDC)
  
     if (m_bSelect)
     {
-        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Big_Select");
+        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_8");
         GdiTransparentBlt(hDC,			// 복사 받을 DC
             m_tRect.left + iScrollX + 20,	// 복사 받을 위치 좌표 X, Y	
             m_tRect.top + iScrollY + 20,

@@ -18,6 +18,18 @@ protected:
 	int m_iDeadImg;
 };
 
+class CSCVDead : public CBloodEffect
+{
+public:
+	CSCVDead() {};
+	~CSCVDead() {};
+
+public:
+	void Initialize() override;
+	int Update() override;
+	void Render(HDC hDC) override;
+};
+
 class CMarineDead : public CBloodEffect
 {
 public:

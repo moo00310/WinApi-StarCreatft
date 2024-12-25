@@ -4,6 +4,8 @@
 #include "CObjMgr.h"
 #include "CBmpMgr.h"
 #include "CKeyMgr.h"
+#include "CAddon.h"
+#include "CAbstractFactory.h"
 
 void CFactory::Initialize()
 {
@@ -13,7 +15,7 @@ void CFactory::Initialize()
 
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Factory.bmp", L"Factory");
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/BuildTemplate.bmp", L"BuildTemplate");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/5.bmp", L"Mid_Select");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_7(128.128).bmp", L"Select_7");
 
     m_tInfo.fCX = 128.f;
     m_tInfo.fCY = 160.f;
@@ -67,17 +69,17 @@ void CFactory::Render(HDC hDC)
 
     if (m_bSelect)
     {
-        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Mid_Select");
+        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_7");
         GdiTransparentBlt(hDC,	
-            m_tRect.left + iScrollX +20,	
-            m_tRect.top + iScrollY + 20,
-            96,	
-            96,
+            m_tRect.left + iScrollX,	
+            m_tRect.top + iScrollY + 30,
+            128,	
+            128,
             hFxDC,	
             0, 
             0,
-            96,				
-            96,
+            128,
+            128,
             RGB(255, 0, 255));	
     }
 
@@ -147,6 +149,11 @@ void CFactory::KeyInput()
     // 기계실 건설
     if (CKeyMgr::Get_Instance()->Key_Down('C'))
     {
+        if (m_bIsAddOn) return;
+
+        m_listSpawn.push_back(OT_Addon);
+        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CAddon>::Create(m_tInfo.fX+90 , m_tInfo.fY+20));
+        m_bIsAddOn = true;
     }
 
 }

@@ -5,6 +5,7 @@
 #include "CBmpMgr.h"
 #include "CSoundMgr.h"
 #include "CAbstractFactory.h"
+#include "CBloodEffect.h"
 
 CScv::CScv()
 {
@@ -24,7 +25,7 @@ void CScv::Initialize()
 	m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
 
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/SCV/SCV.bmp", L"Scv");
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/1.bmp", L"Small2_Select");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_1(40.40).bmp", L"Select_1");
 
 
 	m_pImgKey = L"Scv";
@@ -44,7 +45,7 @@ int CScv::Update()
 	if (m_bDead || m_tStat.m_iHp <= 0)
 	{
 		// Á×À½ ÀÌÆåÆ®
-		//CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CMarineDead>::Create(m_tInfo.fX, m_tInfo.fY));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CSCVDead>::Create(m_tInfo.fX, m_tInfo.fY));
 		//CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
 		//CSoundMgr::Get_Instance()->PlaySound(L"Marine_Dead_1.mp3", SOUND_EFFECT, 0.5f, true);
 
@@ -67,7 +68,7 @@ void CScv::Render(HDC hDC)
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
 	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
-	HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Small2_Select");
+	HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_1");
 
 	if (m_bSelect)
 	{

@@ -4,6 +4,8 @@
 #include "CObjMgr.h"
 #include "CMapMgr.h"
 #include "CKeyMgr.h"
+#include "CAbstractFactory.h"
+#include "CcmdNuke.h"
 
 void CCommedCenter::Initialize()
 {
@@ -13,7 +15,7 @@ void CCommedCenter::Initialize()
 
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/CommandCenter.bmp", L"CommandCenter");
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/BuildTemplate.bmp", L"BuildTemplate");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/8.bmp", L"Big_Select");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_8(148.148).bmp", L"Select_8");
 
     m_tInfo.fCX = 128.f;
     m_tInfo.fCY = 160.f;
@@ -26,8 +28,8 @@ void CCommedCenter::Initialize()
     m_tStat = { 1500.f, 1.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
 
-    m_iMyBuildTIme = get<3>(ObjCost.at(OT_Commend));
-    //m_iMyBuildTIme = 80;
+    //m_iMyBuildTIme = get<3>(ObjCost.at(OT_Commend));
+    m_iMyBuildTIme = 80;
 
     __super::Update_Rect();
     Block_Map();
@@ -66,7 +68,7 @@ void CCommedCenter::Render(HDC hDC)
     HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
 
     // 선택
-    HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Big_Select");
+    HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_8");
     if (m_bSelect)
     {
         GdiTransparentBlt(hDC,			// 복사 받을 DC
@@ -128,11 +130,21 @@ void CCommedCenter::KeyInput()
     if (m_eCurState_Build == BS_MAKE ||
         m_eCurState_Build == BS_TEMP) return;
 
-    // 마린 생산
+    // SCV
     if (CKeyMgr::Get_Instance()->Key_Down('S'))
     {
         if (m_listSpawn.size() < 5)
             m_listSpawn.push_back(OT_Scv);
+    }
+
+    // 뉴클리어 건설
+    if (CKeyMgr::Get_Instance()->Key_Down('C'))
+    {
+        if (m_bIsAddOn) return;
+
+        m_listSpawn.push_back(OT_CmdNuke);
+        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CcmdNuke>::Create(m_tInfo.fX + 90, m_tInfo.fY + 20));
+        m_bIsAddOn = true;
     }
 
     

@@ -1,11 +1,11 @@
 #pragma once
 #include "CBuild.h"
-class CCommedCenter : public CBuild
+
+class CCovertOps : public CBuild
 {
 public:
-	CCommedCenter(): m_bIsAddOn(false) {}
-	~CCommedCenter() {}
-
+	CCovertOps() {}
+	~CCovertOps() {}
 public:
 	void Initialize() override;
 	int Update() override;
@@ -15,7 +15,5 @@ public:
 	void KeyInput() override;
 	void Change_Motion() override;
 
-private:
-	bool m_bIsAddOn;
 };
 

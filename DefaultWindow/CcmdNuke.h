@@ -1,11 +1,10 @@
 #pragma once
 #include "CBuild.h"
-class CCommedCenter : public CBuild
+class CcmdNuke : public CBuild
 {
 public:
-	CCommedCenter(): m_bIsAddOn(false) {}
-	~CCommedCenter() {}
-
+	CcmdNuke() {}
+	~CcmdNuke() {}
 public:
 	void Initialize() override;
 	int Update() override;
@@ -14,8 +13,5 @@ public:
 	void Release() override;
 	void KeyInput() override;
 	void Change_Motion() override;
-
-private:
-	bool m_bIsAddOn;
 };
 

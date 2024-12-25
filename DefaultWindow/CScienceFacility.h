@@ -3,7 +3,7 @@
 class CScienceFacility : public CBuild
 {
 public:
-	CScienceFacility() {}
+	CScienceFacility(): m_bIsAddOn(false) {}
 	~CScienceFacility() {}
 public:
 	void Initialize() override;
@@ -13,5 +13,8 @@ public:
 	void Release() override;
 	void KeyInput() override;
 	void Change_Motion() override;
+
+private:
+	bool m_bIsAddOn;
 };
 
