@@ -9,6 +9,19 @@
 #include "CMedic.h"
 #include "CGhost.h"
 
+void CBuild::Move_Frame()
+{
+	if (m_tFrame.dwTime + m_tFrame.dwSpeed < GetTickCount64())
+	{
+		++m_tFrame.iCurCount;
+
+		if (m_tFrame.iCurCount > m_tFrame.iFrameEnd)
+			m_tFrame.iCurCount = m_tFrame.iFrameStart;
+
+		m_tFrame.dwTime = GetTickCount64();
+	}
+}
+
 void CBuild::Spawn_Uint_CoolDown()
 {
 	if (m_eCurState_Build == BS_MAKE ||
@@ -98,4 +111,6 @@ void CBuild::UnBlock_Map()
 		}
 	}
 }
+
+
 

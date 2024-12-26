@@ -62,7 +62,7 @@ int CPlayer::Update()
 void CPlayer::Late_Update()
 {
 	Offset();	
-	__super::Move_Frame();
+	Move_Frame();
 }
 
 
@@ -254,6 +254,10 @@ void CPlayer::Change_Motion()
 		m_ePreState = m_eCurState;
 	}
 
+}
+
+void CPlayer::Move_Frame()
+{
 }
 
 

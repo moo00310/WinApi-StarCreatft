@@ -52,12 +52,10 @@ public:
 	virtual void		Late_Update()PURE;
 	virtual void		Render(HDC hDC)PURE;
 	virtual void		Release()PURE;
+	virtual void		Move_Frame() PURE;
 
 public:
 	void		Update_Rect();
-	void		Move_Frame();
-
-	// 공통 기능
 
 private:
 	RECT rc;

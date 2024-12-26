@@ -80,3 +80,7 @@ void CMyButton::Render(HDC hDC)
 void CMyButton::Release()
 {
 }
+
+void CMyButton::Move_Frame()
+{
+}

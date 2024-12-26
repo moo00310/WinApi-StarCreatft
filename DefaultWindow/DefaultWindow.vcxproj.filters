@@ -214,6 +214,9 @@
     <Filter Include="01. Obj\02.Build\01.CommedCenter\CcmdNuke">
       <UniqueIdentifier>{556cd5e2-41f0-429a-8cb3-cc4322c848cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\01.Unit\04.Tank">
+      <UniqueIdentifier>{a0564ad9-c2e0-4da7-b7c8-0fa09ece3d59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -426,6 +429,9 @@
     <ClInclude Include="CcmdNuke.h">
       <Filter>01. Obj\02.Build\01.CommedCenter\CcmdNuke</Filter>
     </ClInclude>
+    <ClInclude Include="CTank.h">
+      <Filter>01. Obj\01.Unit\04.Tank</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -598,6 +604,9 @@
     </ClCompile>
     <ClCompile Include="CcmdNuke.cpp">
       <Filter>01. Obj\02.Build\01.CommedCenter\CcmdNuke</Filter>
+    </ClCompile>
+    <ClCompile Include="CTank.cpp">
+      <Filter>01. Obj\01.Unit\04.Tank</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

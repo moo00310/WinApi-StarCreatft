@@ -48,7 +48,7 @@ void CSuffly::Late_Update()
     Change_Motion();
 
     if (m_bTemplate) return;
-    __super::Move_Frame();
+    CBuild::Move_Frame();
 }
 
 void CSuffly::Render(HDC hDC)

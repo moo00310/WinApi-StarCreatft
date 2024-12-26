@@ -52,7 +52,7 @@ void CcmdNuke::Late_Update()
     Change_Motion();
 
     if (m_eCurState_Build < BS_IDLE) return;
-    __super::Move_Frame();
+    CBuild::Move_Frame();
 }
 
 void CcmdNuke::Render(HDC hDC)

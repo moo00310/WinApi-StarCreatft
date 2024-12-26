@@ -17,7 +17,7 @@ public:
 	virtual void Release() PURE;
 	virtual void KeyInput() PURE;
 	virtual	void Change_Motion() PURE;
-
+			void Move_Frame() override;
 public:
 	list<OBJ_TYPE>* Get_SpawnList() { return &m_listSpawn; }
 	BuildSTATE Get_State() { return m_eCurState_Build; }
@@ -46,5 +46,8 @@ protected:
 	list<OBJ_TYPE> m_listSpawn;
 
 	float m_fProgress;
+
+	// CObj을(를) 통해 상속됨
+
 };
 

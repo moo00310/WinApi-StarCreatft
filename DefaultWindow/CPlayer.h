@@ -36,5 +36,9 @@ private:
     STATE               m_eCurState;
     STATE               m_ePreState;
 
+
+    // CObj을(를) 통해 상속됨
+    void Move_Frame() override;
+
 };
 

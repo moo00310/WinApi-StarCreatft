@@ -62,7 +62,7 @@ int CMarine::Update()
 void CMarine::Late_Update()
 {
 	Change_Motion();
-	__super::Move_Frame();
+	CUnit::Move_Frame();
 }
 
 void CMarine::Render(HDC hDC)

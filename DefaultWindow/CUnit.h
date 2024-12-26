@@ -16,6 +16,7 @@ public:
 	virtual void Render(HDC hDC) PURE;
 	virtual void Release() PURE;
 	virtual void Change_Motion() PURE;
+			void Move_Frame() override;
 
 public:
 	void Update_State();
@@ -29,11 +30,15 @@ public:
 	DIRECTION GetDirection(float player_x, float player_y, float monster_x, float monster_y);
 	void AttackToEnemy(CObj* _Enemey);
 
+protected:
 	//Unit_BeHavior
-	void Move();
-	void Stop();
-	void Attack();
-	void Hold();
+	virtual void Move();
+	virtual void Stop();
+	virtual void Attack();
+	virtual void Hold();
+
+protected:
+	void AttackFrame(int start, int end, int Shoot);
 
 protected:
 	INPUTSTATE m_eInput;

@@ -51,7 +51,7 @@ int CGhost::Update()
 void CGhost::Late_Update()
 {
 	Change_Motion();
-	__super::Move_Frame();
+	CUnit::Move_Frame();
 }
 
 void CGhost::Render(HDC hDC)
@@ -118,6 +118,16 @@ void CGhost::Change_Motion()
 			break;
 
 		case STATE_ATTACK:
+			m_tFrame.iFrameStart = 11;
+			m_tFrame.iFrameEnd = 12;
+			m_tFrame.iCurCount = 9;
+			m_tFrame.dwSpeed = 200;
+			m_tFrame.dwTime = GetTickCount64();
+			break;
+
+
+			// 9~10 준비 동작 -> 11~12 실제 발싸
+		case STATE_SHOOT:
 			m_tFrame.iFrameStart = 11;
 			m_tFrame.iFrameEnd = 12;
 			m_tFrame.iCurCount = 9;

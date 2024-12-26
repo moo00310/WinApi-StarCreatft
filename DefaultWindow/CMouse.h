@@ -24,6 +24,9 @@ protected:
 	int m_iScrollX;
 	int m_iScrollY;
 	ULONGLONG m_dwTime;
+
+	// CObj을(를) 통해 상속됨
+	void Move_Frame() override;
 };
 
 /*---------------

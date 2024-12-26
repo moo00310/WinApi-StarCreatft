@@ -184,6 +184,7 @@
     <ClInclude Include="CStarport.h" />
     <ClInclude Include="CStarPortAddon.h" />
     <ClInclude Include="CSuffly.h" />
+    <ClInclude Include="CTank.h" />
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CTileMgr.h" />
     <ClInclude Include="CUI.h" />
@@ -255,6 +256,7 @@
     <ClCompile Include="CStarport.cpp" />
     <ClCompile Include="CStarPortAddon.cpp" />
     <ClCompile Include="CSuffly.cpp" />
+    <ClCompile Include="CTank.cpp" />
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CTileMgr.cpp" />
     <ClCompile Include="CUI.cpp" />

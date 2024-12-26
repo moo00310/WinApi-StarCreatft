@@ -60,6 +60,7 @@ int CScv::Update()
 void CScv::Late_Update()
 {
 	Change_Motion();
+	CUnit::Move_Frame();
 }
 
 void CScv::Render(HDC hDC)

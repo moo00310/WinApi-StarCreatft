@@ -58,7 +58,7 @@ int CMedic::Update()
 void CMedic::Late_Update()
 {
 	Change_Motion();
-	__super::Move_Frame();
+	CUnit::Move_Frame();
 }
 
 void CMedic::Render(HDC hDC)

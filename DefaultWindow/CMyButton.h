@@ -18,5 +18,9 @@ public:
 private:
 	int		m_iDrawID;
 
+
+	// CObj을(를) 통해 상속됨
+	void Move_Frame() override;
+
 };
 

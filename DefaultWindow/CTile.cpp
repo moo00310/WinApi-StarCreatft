@@ -60,3 +60,7 @@ void CTile::Render(HDC hDC)
 void CTile::Release()
 {
 }
+
+void CTile::Move_Frame()
+{
+}

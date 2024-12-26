@@ -81,7 +81,7 @@ int CGameMouse::Update()
 void CGameMouse::Late_Update()
 {
     ShowCursor(FALSE);
-    __super::Move_Frame();
+    CMouse::Move_Frame();
 }
 
 void CGameMouse::Render(HDC hDC)

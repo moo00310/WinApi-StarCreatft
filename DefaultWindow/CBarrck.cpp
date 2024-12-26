@@ -63,7 +63,7 @@ void CBarrck::Late_Update()
     Change_Motion();
 
     if (m_bTemplate) return;
-    __super::Move_Frame();
+    CBuild::Move_Frame();
 }
 
 void CBarrck::Render(HDC hDC)
