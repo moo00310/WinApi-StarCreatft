@@ -13,6 +13,8 @@
 #include "CMapMgr.h"
 #include "CUIMgr.h"
 #include "CSoundMgr.h"
+#include "CMemoryPoolMgr.h"
+#include "CBloodEffect.h"
 
 CMainGame::CMainGame()
 	: m_dwTime(GetTickCount64()), m_iFPS(0), m_hDC(nullptr)
@@ -32,6 +34,7 @@ void CMainGame::Initialize()
 
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Back.bmp", L"Back");
 	CSceneMgr::Get_Instance()->Set_Scene(SC_LOGO);
+	CMemoryPoolMgr::Get_Instance(300, 100);
 
 
 #pragma region 콘솔 디버그
@@ -121,5 +124,6 @@ void CMainGame::Release()
 	CMapMgr::Destroy_Instance();
 	CUIMgr::Destroy_Instance();
 	CSoundMgr::Destroy_Instance();
+	CMemoryPoolMgr::Destroy_Instance();
 	ReleaseDC(g_hWnd, m_hDC);
 }

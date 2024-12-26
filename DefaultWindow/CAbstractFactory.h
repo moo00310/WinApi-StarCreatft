@@ -2,6 +2,7 @@
 
 #include "CObj.h"
 #include "CUI.h"
+#include "CMemoryPoolMgr.h"
 
 template<typename T>
 class CAbstractFactory
@@ -45,6 +46,17 @@ public:
 		CUI* pUi = new T;
 		pUi->Initialize();
 		return pUi;
+	}
+
+	static CObj* CreateFX(float _fX, float _fY)
+	{
+		// 메모리 풀에서 메모리 할당
+		void* temp = CMemoryPoolMgr::Get_Instance()->allocate();
+
+		CObj* pObj = new (temp) T();
+		pObj->Set_Pos(_fX, _fY);
+		pObj->Initialize();
+		return pObj;
 	}
 };
 

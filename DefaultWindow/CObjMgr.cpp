@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CObjMgr.h"
 #include "CCollisionMgr.h"
+#include "CMemoryPoolMgr.h"
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
 
@@ -67,9 +68,17 @@ int CObjMgr::Update()
 
 			if (OBJ_DEAD == iResult)
 			{
-				m_SelectList.remove(*iter);
-				Safe_Delete(*iter);
-				iter = m_ObjList[i].erase(iter);
+				if (i == OBJ_EFFECT) 
+				{
+					CMemoryPoolMgr::Get_Instance()->deallocate(*iter);
+					iter = m_ObjList[i].erase(iter); 
+				}
+				else 
+				{
+					m_SelectList.remove(*iter);
+					Safe_Delete(*iter);
+					iter = m_ObjList[i].erase(iter);
+				}
 			}
 			else
 				++iter;
@@ -121,6 +130,7 @@ void CObjMgr::Release()
 {
 	for (size_t i = 0; i < OBJ_END; ++i)
 	{
+		if (i == OBJ_EFFECT) continue;
 		for_each(m_ObjList[i].begin(), m_ObjList[i].end(), Safe_Delete<CObj*>);
 		m_ObjList[i].clear();
 	}

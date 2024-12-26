@@ -2,6 +2,7 @@
 #include "CBloodEffect.h"
 #include "CScrollMgr.h"
 #include "CBmpMgr.h"
+#include "CMemoryPoolMgr.h"
 
 
 /*--------------------
