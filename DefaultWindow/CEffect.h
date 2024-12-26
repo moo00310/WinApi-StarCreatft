@@ -3,14 +3,17 @@
 class CEffect : public CObj
 {
 public:
-	CEffect() {}
+	CEffect() : m_iCount(0), m_iDeadImg(0) {}
 	~CEffect() {}
 	void Initialize() PURE;
 	int Update() PURE;
 	void Late_Update() PURE;
 	void Render(HDC hDC) PURE;
 	void Release() PURE;
-
-	// CObj을(를) 통해 상속됨
 	void Move_Frame() override;
+
+protected:
+	int m_iCount;
+	int m_iDeadImg;
+	
 };

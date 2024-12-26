@@ -27,6 +27,7 @@ public:
 		m_Map[pos.y][pos.x] = _Option; 
 	}
 
+
 public:
 	static CMapMgr* Get_Instance()
 	{

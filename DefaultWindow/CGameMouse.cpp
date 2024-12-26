@@ -219,32 +219,49 @@ void CGameMouse::MouseInput(POINT ptMouse)
             {
                 Pos IndexArraay[12] = {};
                 int array(0);
-
-                // 마우스랑 가장 가까운 유닛 찾기
-                Pos BestIndex = CCollisionMgr::Collision_Neares_Unit_pos(temp, *m_Select_UnitList);
-
-                // 가장 베스트 인덱스에서 빼기
-                for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
-                    {
-                        Pos pos = { (int)unit->Get_Scroll_Info().fY / 32, (int)unit->Get_Scroll_Info().fX / 32 };
-                        IndexArraay[array] = BestIndex - pos;
-                        array++;
-                    });
-
-
+//#pragma region 가장 가까운 놈 기준 부대이동
+//                // 마우스랑 가장 가까운 유닛 찾기
+//                Pos BestIndex = CCollisionMgr::Collision_Neares_Unit_pos(temp, *m_Select_UnitList);
+//
+//                // 가장 베스트 인덱스에서 빼기
+//                for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+//                    {
+//                        Pos pos = { (int)unit->Get_Scroll_Info().fY / 32, (int)unit->Get_Scroll_Info().fX / 32 };
+//                        IndexArraay[array] = BestIndex - pos;
+//                        array++;
+//                    });
+//
+//
+//                // 마우스 포인트 위치에서 각각 정해진 위치로 이동
+//                array = 0;
+//                for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+//                    {
+//
+//                        if (auto* pUnit = dynamic_cast<CUnit*>(unit))
+//                        {
+//                            pUnit->Astar(temp - IndexArraay[array]);
+//                            pUnit->SetInput(IP_MOVE);
+//                            array++;
+//                        }
+//
+//                    });
+//#pragma endregion
+// 
                 // 마우스 포인트 위치에서 각각 정해진 위치로 이동
-                array = 0;
+                
                 for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
                     {
+                        Pos nextPos = temp + MoveFront[array];
 
                         if (auto* pUnit = dynamic_cast<CUnit*>(unit))
                         {
-                            pUnit->Astar(temp - IndexArraay[array]);
+                            pUnit->Astar(nextPos);
                             pUnit->SetInput(IP_MOVE);
                             array++;
                         }
 
                     });
+               
             }
         }
         if (CKeyMgr::Get_Instance()->Key_Up(VK_RBUTTON))

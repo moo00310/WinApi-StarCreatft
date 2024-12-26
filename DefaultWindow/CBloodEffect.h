@@ -4,7 +4,7 @@
 class CBloodEffect : public CEffect
 {
 public:
-	CBloodEffect() : m_iCount(0), m_iDeadImg(0) {}
+	CBloodEffect() {}
 	~CBloodEffect() {}
 
 	void Initialize() PURE;
@@ -12,10 +12,6 @@ public:
 	void Late_Update() { return;  };
 	void Render(HDC hDC) PURE;
 	void Release() {};
-
-protected:
-	int m_iCount;
-	int m_iDeadImg;
 };
 
 class CSCVDead : public CBloodEffect

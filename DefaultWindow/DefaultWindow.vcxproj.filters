@@ -217,6 +217,9 @@
     <Filter Include="01. Obj\01.Unit\04.Tank">
       <UniqueIdentifier>{a0564ad9-c2e0-4da7-b7c8-0fa09ece3d59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\04.Effect\02.BulletEffect">
+      <UniqueIdentifier>{d0c10677-7e21-418f-834f-e18fdfcc5df1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -432,6 +435,9 @@
     <ClInclude Include="CTank.h">
       <Filter>01. Obj\01.Unit\04.Tank</Filter>
     </ClInclude>
+    <ClInclude Include="CBulletEffect.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -607,6 +613,9 @@
     </ClCompile>
     <ClCompile Include="CTank.cpp">
       <Filter>01. Obj\01.Unit\04.Tank</Filter>
+    </ClCompile>
+    <ClCompile Include="CBulletEffect.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
