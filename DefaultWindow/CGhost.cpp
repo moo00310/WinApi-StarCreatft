@@ -118,24 +118,26 @@ void CGhost::Change_Motion()
 			break;
 
 		case STATE_ATTACK:
-			m_tFrame.iFrameStart = 11;
-			m_tFrame.iFrameEnd = 12;
+			m_tFrame.iFrameStart = 9;
+			m_tFrame.iFrameEnd = 10;
 			m_tFrame.iCurCount = 9;
-			m_tFrame.dwSpeed = 200;
+			m_tFrame.dwSpeed = 50;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 
-
-			// 9~10 준비 동작 -> 11~12 실제 발싸
 		case STATE_SHOOT:
 			m_tFrame.iFrameStart = 11;
 			m_tFrame.iFrameEnd = 12;
-			m_tFrame.iCurCount = 9;
-			m_tFrame.dwSpeed = 200;
+			m_tFrame.iCurCount = 11;
+			m_tFrame.dwSpeed = 500;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 		}
 
 		m_ePreState = m_eCurState;
 	}
+}
+
+void CGhost::KeyInput()
+{
 }

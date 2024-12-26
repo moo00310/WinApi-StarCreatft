@@ -134,9 +134,20 @@ void CScv::Change_Motion()
 			m_tFrame.dwSpeed = 100;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
+
+		case STATE_SHOOT:
+			m_tFrame.iFrameStart = 1;
+			m_tFrame.iFrameEnd = 2;
+			m_tFrame.iCurCount = 1;
+			m_tFrame.dwSpeed = 100;
+			m_tFrame.dwTime = GetTickCount64();
 		}
 
 		m_ePreState = m_eCurState;
 	}
 
+}
+
+void CScv::KeyInput()
+{
 }

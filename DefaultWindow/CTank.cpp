@@ -7,6 +7,7 @@
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
 #include "CCollisionMgr.h"
+#include "CKeyMgr.h"
 
 void CTank::Initialize()
 {
@@ -21,7 +22,6 @@ void CTank::Initialize()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Tank/TankHead.bmp", L"TankHead");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_4(80.80).bmp", L"Select_4");
 
-	m_pImgKey = L"TankBody";
 	m_eObjID = OT_Tank;
 	m_tStat = { 150.f, 150.f, 30, 1, 224, 1.8f, 625 , DF_LAGE, AT_EXPLOSIVE };
 
@@ -44,16 +44,25 @@ int CTank::Update()
 		return OBJ_DEAD;
 	}
 
+	KeyInput();
+	SiegeMode();
+	UnSiegeMode();
 	Update_State();
 
 	__super::Update_Rect();
 	return OBJ_NOEVENT;
 }
 
+
 void CTank::Late_Update()
 {
+	// 업데이트 무브 하는 방법으로 돌려야할듯
 	Change_Motion();
+
+	if (m_bSiegeMode_Anime) return;
+	if (m_bSiegeMode) return;
 	CUnit::Move_Frame();
+	MoveBody_Frame();
 }
 
 void CTank::Render(HDC hDC)
@@ -86,7 +95,7 @@ void CTank::Render(HDC hDC)
 		(int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
 		(int)m_tInfo.fCY,
 		hBodyDC,						// 복사할 이미지 DC	
-		(int)m_tInfo.fCX * m_tFrame.iCurCount, // 비트맵 출력 시작 좌표(Left, top)
+		(int)m_tInfo.fCX * m_tBodyFram.iCurCount, // 비트맵 출력 시작 좌표(Left, top)
 		(int)m_tInfo.fCY * (int)m_eDir,
 		(int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
 		(int)m_tInfo.fCY,
@@ -98,7 +107,7 @@ void CTank::Render(HDC hDC)
 		(int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
 		(int)m_tInfo.fCY,
 		hHeadDC,						// 복사할 이미지 DC	
-		(int)m_tInfo.fCX * 0, // 비트맵 출력 시작 좌표(Left, top)
+		(int)m_tInfo.fCX * m_tFrame.iCurCount, // 비트맵 출력 시작 좌표(Left, top)
 		(int)m_tInfo.fCY * (int)m_eAttackDir,
 		(int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
 		(int)m_tInfo.fCY,
@@ -110,7 +119,6 @@ void CTank::Release()
 {
 }
 
-// BodyChange
 void CTank::Change_Motion()
 {
 	if (m_ePreState != m_eCurState)
@@ -118,30 +126,50 @@ void CTank::Change_Motion()
 		switch (m_eCurState)
 		{
 		case STATE_IDLE:
-			m_tFrame.iFrameStart = 0;
-			m_tFrame.iFrameEnd = 0;
-			m_tFrame.iCurCount = 0;
-			m_tFrame.dwSpeed = 200;
-			m_tFrame.dwTime = GetTickCount64();
+			if (!m_bSiegeMode)
+			{
+				Frame_Init_Body(0, 0, 200);
+				Frame_Init_Head(0, 0, 200);
+			}
+			else
+			{
+				m_tBodyFram.iCurCount = 3;
+				m_eDir = (DIRECTION)5;
+				Frame_Init_Head(2, 2, 200);
+			}
 			break;
 
 		case STATE_MOVE:
-			m_tFrame.iFrameStart = 1;
-			m_tFrame.iFrameEnd = 2;
-			m_tFrame.iCurCount = 1;
-			m_tFrame.dwSpeed = 100;
-			m_tFrame.dwTime = GetTickCount64();
+			Frame_Init_Body(1, 2, 200);
+			Frame_Init_Head(0, 0, 200);
 			break;
 
 		case STATE_ATTACK:
-			m_tFrame.iFrameStart = 0;
-			m_tFrame.iFrameEnd = 0;
-			m_tFrame.iCurCount = 0;
-			m_tFrame.dwSpeed = 200;
-			m_tFrame.dwTime = GetTickCount64();
+			if (!m_bSiegeMode)
+			{
+				Frame_Init_Body(0, 0, 200);
+				Frame_Init_Head(0, 1, 200);
+			}
+			else
+			{
+				m_tBodyFram.iCurCount = 3;
+				m_eDir = (DIRECTION)5;
+				Frame_Init_Head(2, 2, 200);
+			}
 			break;
 
 		case STATE_SHOOT:
+			if (!m_bSiegeMode)
+			{
+				Frame_Init_Body(0, 0, 200);
+				Frame_Init_Head(0, 1, 200);
+			}
+			else
+			{
+				m_tBodyFram.iCurCount = 3;
+				m_eDir = (DIRECTION)5;
+				Frame_Init_Head(2, 2, 200);
+			}
 			break;
 		}
 
@@ -149,8 +177,28 @@ void CTank::Change_Motion()
 	}
 }
 
+void CTank::MoveBody_Frame()
+{
+	if (m_tBodyFram.dwTime + m_tBodyFram.dwSpeed < GetTickCount64())
+	{
+		++m_tBodyFram.iCurCount;
+
+		if (m_eCurState == STATE_ATTACK && m_tBodyFram.iCurCount > m_tBodyFram.iFrameEnd)
+		{
+			m_eCurState = STATE_SHOOT;
+			m_tBodyFram.iCurCount = m_tBodyFram.iFrameStart;
+		}
+		else if (m_tBodyFram.iCurCount > m_tBodyFram.iFrameEnd)
+			m_tBodyFram.iCurCount = m_tBodyFram.iFrameStart;
+
+
+		m_tBodyFram.dwTime = GetTickCount64();
+	}
+}
+
 void CTank::Move()
 {
+	if (m_bSiegeMode) return;
 	if (m_iPathIndex < _path.size())
 	{
 		Pos _now = { (int)m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
@@ -210,6 +258,7 @@ void CTank::Move()
 
 void CTank::Attack()
 {
+	if (m_bSiegeMode) return;
 	if (m_iPathIndex < _path.size())
 	{
 		CObj* Enemy = nullptr;
@@ -252,7 +301,10 @@ void CTank::Attack()
 			else
 			{
 				m_eAttackDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
-				m_eCurState = STATE_ATTACK;
+				if (m_eCurState == STATE_SHOOT)
+					m_eCurState = STATE_SHOOT;
+				else
+					m_eCurState = STATE_ATTACK;
 				AttackToEnemy(Enemy);
 			}
 
@@ -267,13 +319,170 @@ void CTank::Attack()
 void CTank::Hold()
 {
 	CObj* Enemy = nullptr;
-	if ((Enemy = CCollisionMgr::Collision_RangeChack(this, *m_pMonsterList, m_tStat.m_iRange)) == nullptr)
+	//if (!m_bSiegeMode)
 	{
-		m_eCurState = STATE_IDLE;
+		if ((Enemy = CCollisionMgr::Collision_RangeChack(this, *m_pMonsterList, m_tStat.m_iRange)) == nullptr)
+		{
+			m_eCurState = STATE_IDLE;
+		}
+		else
+		{
+			m_eAttackDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
+			m_eCurState = STATE_ATTACK;
+		}
 	}
-	else
+
+}
+
+void CTank::SiegeMode()
+{
+	if (!m_bSiegeMode_Anime) return;
+	if (m_bSiegeMode) return;
+
+	m_eInput = IP_STOP;
+	m_tBodyFram.iCurCount = 3;
+	m_tFrame.iCurCount = 3;
+
+	if (SiegeCount < 5)
 	{
-		m_eAttackDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
-		m_eCurState = STATE_ATTACK;
+		m_eDir = (DIRECTION)0;
+		m_eAttackDir = (DIRECTION)0;
+	}
+	else if (SiegeCount < 20)
+	{
+		m_eDir = (DIRECTION)1;
+		m_eAttackDir = (DIRECTION)0;
+	}
+	else if (SiegeCount < 40)
+	{
+		m_eDir = (DIRECTION)2;
+		m_eAttackDir = (DIRECTION)0;
+	}
+	else if (SiegeCount < 60)
+	{
+		m_eDir = (DIRECTION)3;
+		m_eAttackDir = (DIRECTION)0;
+	}
+	else if (SiegeCount < 80)
+	{
+		m_eDir = (DIRECTION)4;
+		m_eAttackDir = (DIRECTION)0;
+	}
+	else if (SiegeCount < 100)
+	{
+		m_eDir = (DIRECTION)5;
+		m_eAttackDir = (DIRECTION)0;
+	}
+	else if (SiegeCount < 120)
+	{
+		m_eAttackDir = (DIRECTION)1;
+	}
+	else if (SiegeCount < 140)
+	{
+		m_eAttackDir = (DIRECTION)2;
+	}
+	else if (SiegeCount < 160)
+	{
+		m_eAttackDir = (DIRECTION)3;
+	}
+	else if (SiegeCount > 160)
+	{
+		m_eAttackDir = (DIRECTION)4;
+		SiegeCount = 0;
+		m_eObjID = OT_SiegeTank;
+		m_bSiegeMode = true;
+		m_bSiegeMode_Anime = false;
+		m_eInput = IP_HOLD;
+	}
+
+	SiegeCount++;
+}
+
+void CTank::UnSiegeMode()
+{
+	if (!m_bSiegeMode_Anime) return;
+	if (!m_bSiegeMode) return;
+
+	m_eInput = IP_STOP;
+	m_tBodyFram.iCurCount = 3;
+	m_tFrame.iCurCount = 3;
+
+	if (SiegeCount < 5)
+	{
+		m_eAttackDir = (DIRECTION)4;
+	}
+	else if (SiegeCount < 20)
+	{
+		m_eAttackDir = (DIRECTION)3;
+	}
+	else if (SiegeCount < 40)
+	{
+		m_eAttackDir = (DIRECTION)2;
+	}
+	else if (SiegeCount < 60)
+	{
+		m_eAttackDir = (DIRECTION)1;
+	}
+	else if (SiegeCount < 80)
+	{
+		m_eDir = (DIRECTION)5;
+		m_eAttackDir = (DIRECTION)0;
+	}
+	else if (SiegeCount < 100)
+	{
+		m_eDir = (DIRECTION)4;
+	}
+	else if (SiegeCount < 120)
+	{
+		m_eDir = (DIRECTION)3;
+	}
+	else if (SiegeCount < 140)
+	{
+		m_eDir = (DIRECTION)2;
+	}
+	else if (SiegeCount < 160)
+	{
+		m_eDir = (DIRECTION)1;
+	}
+	else if (SiegeCount > 160)
+	{
+		m_eDir = (DIRECTION)0;
+		m_eAttackDir = (DIRECTION)0;
+		SiegeCount = 0;
+		m_eObjID = OT_Tank;
+		m_bSiegeMode = false;
+		m_bSiegeMode_Anime = false;
+		m_eInput = IP_HOLD;
+	}
+
+	SiegeCount++;
+}
+
+void CTank::Frame_Init_Body(int start, int end, int time)
+{
+	m_tBodyFram.iFrameStart = start;
+	m_tBodyFram.iFrameEnd = end;
+	m_tBodyFram.iCurCount = start;
+	m_tBodyFram.dwSpeed = time;
+	m_tBodyFram.dwTime = GetTickCount64();
+}
+
+void CTank::Frame_Init_Head(int start, int end, int time)
+{
+	m_tFrame.iFrameStart = start;
+	m_tFrame.iFrameEnd = end;
+	m_tFrame.iCurCount = start;
+	m_tFrame.dwSpeed = time;
+	m_tFrame.dwTime = GetTickCount64();
+}
+
+void CTank::KeyInput()
+{
+	if (!m_bSelect) return;
+
+	// 시즈모드
+	if (CKeyMgr::Get_Instance()->Key_Down('E'))
+	{
+		m_bSiegeMode_Anime = true;
 	}
 }

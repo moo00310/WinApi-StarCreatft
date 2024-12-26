@@ -17,6 +17,7 @@ public:
 
 private:
 	void Change_Wire(CObj* unit);
+	int UnitWire(OBJ_TYPE m_eID);
 
 private:
 	OBJ_TYPE m_eID;

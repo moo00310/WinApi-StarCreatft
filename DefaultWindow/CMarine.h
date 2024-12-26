@@ -14,6 +14,7 @@ public:
 	void Render(HDC hDC) override;
 	void Release() override;
 	void Change_Motion() override;
+	void KeyInput() override;
 
 };
 

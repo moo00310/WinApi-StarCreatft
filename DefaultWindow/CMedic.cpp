@@ -126,14 +126,28 @@ void CMedic::Change_Motion()
 
 		case STATE_ATTACK:
 			m_tFrame.iFrameStart = 7;
-			m_tFrame.iFrameEnd = 12;
+			m_tFrame.iFrameEnd = 11;
 			m_tFrame.iCurCount = 7;
-			m_tFrame.dwSpeed = 600;
+			m_tFrame.dwSpeed = 300;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
+
+		case STATE_SHOOT:
+			m_tFrame.iFrameStart = 7;
+			m_tFrame.iFrameEnd = 11;
+			m_tFrame.iCurCount = 7;
+			m_tFrame.dwSpeed = 300;
+			m_tFrame.dwTime = GetTickCount64();
+			break;
+
+
 		}
 
 		m_ePreState = m_eCurState;
 	}
 
+}
+
+void CMedic::KeyInput()
+{
 }

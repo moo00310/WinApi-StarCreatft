@@ -74,6 +74,9 @@ void CPortUI::Initailize_Img()
 	// 고스트
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Ghost/Ghost.bmp", L"Ghost_port");
 
+	// 시스 탱크
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/SeigeTank/Tank.bmp", L"Tank_port");
+
 	// 어드 바이저
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Advisor/Advosr.bmp", L"Advosr");
 }
@@ -102,6 +105,8 @@ void CPortUI::Change_Port()
 			Anime_Port(0, 44);
 			break;
 		case OT_Tank:
+			m_pImgKey = L"Tank_port";
+			Anime_Port(0, 44);
 			break;
 		case OT_Science_Vessel:
 			break;

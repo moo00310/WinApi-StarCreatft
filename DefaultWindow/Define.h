@@ -306,7 +306,7 @@ inline fPOINT Nomalization(const Pos _dir)
 // À¯´Ö°ú °Ç¹°
 enum OBJ_TYPE
 {
-	OT_Scv, OT_Marine, OT_Medic, OT_Ghost, OT_Tank, OT_Science_Vessel, OT_Unit_End,
+	OT_Scv, OT_Marine, OT_Medic, OT_Ghost, OT_Tank, OT_SiegeTank, OT_Science_Vessel, OT_Unit_End,
 	OT_Commend, OT_Suffly, OT_Refinery, OT_Barrck, OT_Academy ,OT_Factory, OT_Addon, OT_Armory, OT_Starport, OT_StarportAddOn,
 	OT_ScienceFacility, OT_ScienceSecret, OT_CmdNuke, OT_Build_End,
 	

@@ -9,8 +9,14 @@ void CUnit::Move_Frame()
 	{
 		++m_tFrame.iCurCount;
 
-		if (m_tFrame.iCurCount > m_tFrame.iFrameEnd)
+		if (m_eCurState == STATE_ATTACK && m_tFrame.iCurCount > m_tFrame.iFrameEnd)
+		{
+			m_eCurState = STATE_SHOOT;
 			m_tFrame.iCurCount = m_tFrame.iFrameStart;
+		}
+		else if (m_tFrame.iCurCount > m_tFrame.iFrameEnd)
+			m_tFrame.iCurCount = m_tFrame.iFrameStart;
+		
 
 		m_tFrame.dwTime = GetTickCount64();
 	}
@@ -318,7 +324,10 @@ void CUnit::Attack()
 			else
 			{
 				m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
-				m_eCurState = STATE_ATTACK;
+				if (m_eCurState == STATE_SHOOT) 
+					m_eCurState = STATE_SHOOT;
+				else 
+					m_eCurState = STATE_ATTACK;
 				AttackToEnemy(Enemy);
 			}
 

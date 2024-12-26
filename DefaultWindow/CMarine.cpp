@@ -130,10 +130,18 @@ void CMarine::Change_Motion()
 			break;
 
 		case STATE_ATTACK:
-			m_tFrame.iFrameStart = 13;
-			m_tFrame.iFrameEnd = 14;
+			m_tFrame.iFrameStart = 11;
+			m_tFrame.iFrameEnd = 12;
 			m_tFrame.iCurCount = 11;
 			m_tFrame.dwSpeed = 100;
+			m_tFrame.dwTime = GetTickCount64();
+			break;
+
+		case STATE_SHOOT:
+			m_tFrame.iFrameStart = 13;
+			m_tFrame.iFrameEnd = 14;
+			m_tFrame.iCurCount = 13;
+			m_tFrame.dwSpeed = 75;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 		}
@@ -141,4 +149,8 @@ void CMarine::Change_Motion()
 		m_ePreState = m_eCurState;
 	}
 
+}
+
+void CMarine::KeyInput()
+{
 }

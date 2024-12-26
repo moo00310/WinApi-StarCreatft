@@ -16,6 +16,7 @@ public:
 	virtual void Render(HDC hDC) PURE;
 	virtual void Release() PURE;
 	virtual void Change_Motion() PURE;
+	virtual void KeyInput() PURE;
 			void Move_Frame() override;
 
 public:

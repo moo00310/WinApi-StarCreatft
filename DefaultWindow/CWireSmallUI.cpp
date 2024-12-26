@@ -46,7 +46,7 @@ void CWireSmallUI::Render(HDC hdc)
 	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
 	HDC		hMemDC2 = CBmpMgr::Get_Instance()->Find_Image(L"upgradeDetail");
 
-	for_each(m_pUintlist->begin(), m_pUintlist->end(), [=](CObj* unit)
+	for_each(m_pUintlist->begin(), m_pUintlist->end(), [&](CObj* unit)
 	{
 		GdiTransparentBlt(hdc,			// 복사 받을 DC
 			m_tRect.left + 50 * ((int)iCount % 6),	// 복사 받을 위치 좌표 X, Y	
@@ -62,6 +62,7 @@ void CWireSmallUI::Render(HDC hdc)
 
 
 		Change_Wire(unit);
+		m_eID = unit->Get_ObjID();
 
 		GdiTransparentBlt(hdc,			// 복사 받을 DC
 			m_tRect.left+5 + 50 * ((int)iCount % 6),	// 복사 받을 위치 좌표 X, Y	
@@ -70,7 +71,7 @@ void CWireSmallUI::Render(HDC hdc)
 			32,
 			hMemDC,						// 복사할 이미지 DC	
 			32 * (m_tFrame.iCurCount),
-			32 * (int)unit->Get_ObjID(),
+			32 * UnitWire(unit->Get_ObjID()),
 			32,										// 복사할 이미지의 가로, 세로
 			32,
 			RGB(0, 0, 0));
@@ -80,8 +81,6 @@ void CWireSmallUI::Render(HDC hdc)
 
 	iCount = 0;
 
-	//((int)m_iUnitCount % 11)
-	//
 }
 
 void CWireSmallUI::Release()
@@ -96,4 +95,32 @@ void CWireSmallUI::Change_Wire(CObj* unit)
 
 	int frameCount = static_cast<int>((MaxHp - NowHp) / damage);
 	m_tFrame.iCurCount = min(frameCount, 5); // 최대값 5로 제한
+}
+
+int CWireSmallUI::UnitWire(OBJ_TYPE m_eID)
+{
+	switch (m_eID)
+	{
+	case OT_Scv:
+		return 0;
+		break;
+	case OT_Marine:
+		return 1;
+		break;
+	case OT_Medic:
+		return 4;
+		break;
+	case OT_Ghost:
+		return 3;
+		break;
+	case OT_Tank:
+		return 6;
+	case OT_SiegeTank:
+		return 7;
+		break;
+	case OT_Science_Vessel:
+		return 10;
+		break;
+	}
+	return 999;
 }
