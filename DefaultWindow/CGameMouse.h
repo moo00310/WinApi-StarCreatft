@@ -35,7 +35,6 @@ private:
 	//ºôµå ¸ðµå
 	void DrawBulid();
 	bool AbleBuild();
-	void SpwanBulid(OBJ_TYPE _type, Pos temp);
 
 private:
 	POINT ptMouse{};

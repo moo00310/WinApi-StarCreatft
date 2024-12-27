@@ -19,9 +19,9 @@ public:
 	virtual void KeyInput() PURE;
 			void Move_Frame() override;
 	virtual void AttackToEnemy(CObj* _Enemey) PURE;
+	virtual void Update_State();
 
 public:
-	void Update_State();
 	void SetInput(INPUTSTATE _input) { m_eInput = _input; }
 	INPUTSTATE GetInput() { return m_eInput; }
 	ATIMESTATE GetAinmeState() { return m_eCurState; }
@@ -38,6 +38,9 @@ protected:
 	virtual void Stop();
 	virtual void Attack();
 	virtual void Hold();
+
+protected:
+	virtual void Move_toNext();
 
 protected:
 	INPUTSTATE m_eInput;

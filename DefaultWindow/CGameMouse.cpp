@@ -7,17 +7,8 @@
 #include "CMarine.h"
 #include "CCollisionMgr.h"
 #include "CMapMgr.h"
+#include "CScv.h"
 
-#include "CAbstractFactory.h"
-#include "CBarrck.h"
-#include "CCommedCenter.h"
-#include "CSuffly.h"
-#include "CRefinery.h"
-#include "CFactory.h"
-#include "CStarport.h"
-#include "CAcademy.h"
-#include "CArmory.h"
-#include "CScienceFacility.h"
 
 /*---------------
     GameMouse
@@ -174,8 +165,13 @@ void CGameMouse::MouseInput(POINT ptMouse)
         {
             if (AbleBuild())  // 건물을 지울 수 있는 곳인지 아닌지 체크
             {
-                SpwanBulid(m_eBuildType, temp);
                 isBuildMod = false;
+                if (auto* pUnit = dynamic_cast<CScv*>(m_Select_UnitList->front()))
+                {
+                    pUnit->Astar(temp);
+                    pUnit->SetInput(IP_BUILD);
+                    pUnit->SetPos(temp);
+                }
             }
             else
             {
@@ -202,6 +198,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
                 {
                     if (auto* pUnit = dynamic_cast<CUnit*>(m_Select_UnitList->front()))
                     {
+                        if (pUnit->GetInput() == IP_BUILD) return;
                         pUnit->Astar(temp);
                         pUnit->SetInput(IP_MOVE);
                     }
@@ -247,6 +244,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
 
                         if (auto* pUnit = dynamic_cast<CUnit*>(unit))
                         {
+                            if (pUnit->GetInput() == IP_BUILD) return;
                             pUnit->Astar(nextPos);
                             pUnit->SetInput(IP_MOVE);
                             array++;
@@ -272,6 +270,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
                     {
                         if (auto* pUnit = dynamic_cast<CUnit*>(unit))
                         {
+                            if (pUnit->GetInput() == IP_BUILD) return;
                             pUnit->Astar(temp);
                             pUnit->SetInput(IP_ATTACK);
                         }
@@ -655,42 +654,4 @@ bool CGameMouse::AbleBuild()
     return true;
 }
 
-void CGameMouse::SpwanBulid(OBJ_TYPE _type, Pos temp)
-{
-    switch (_type)
-    {
-    case OT_Commend:
-        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CCommedCenter>::Create(temp));
-        break;
-    case OT_Suffly:
-        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CSuffly>::Create(temp));
-        break;
-    case OT_Refinery:
-        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CRefinery>::Create(temp));
-        break;
-    case OT_Barrck:
-        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CBarrck>::Create(temp));
-        break;
-    case OT_Academy:
-        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CAcademy>::Create(temp));
-        break;
-    case OT_Factory:
-        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CFactory>::Create(temp));
-        break;
-    case OT_Armory:
-        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CArmory>::Create(temp));
-        break;
-    case OT_Starport:
-        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CStarport>::Create(temp));
-        break;
-    case OT_ScienceFacility:
-        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CScienceFacility>::Create(temp));
-        break;
-    case OT_Build_End:
-        break;
-    case OT_END:
-        break;
-    default:
-        break;
-    }
-}
+

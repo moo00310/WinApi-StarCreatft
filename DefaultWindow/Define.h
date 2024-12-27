@@ -64,7 +64,7 @@ const float DamageCalcu[AT_END][DF_END]
 enum ATIMESTATE { STATE_IDLE ,STATE_MOVE, STATE_ATTACK, STATE_SHOOT, STATE_DEAD, STATE_END };
 enum BuildSTATE { BS_TEMP, BS_MAKE, BS_LINK, BS_IDLE, BS_RUN, BS_FLY, BS_END };
 
-enum INPUTSTATE { IP_MOVE, IP_ATTACK, IP_HOLD, IP_STOP, IP_PATROL, IP_END };
+enum INPUTSTATE { IP_MOVE, IP_ATTACK, IP_HOLD, IP_STOP, IP_PATROL, IP_BUILD, IP_END };
 enum CURSERSTATE { MS_IDLE, MS_OBJ, MS_ATTACK, MS_MOVE, MS_DRAG, MS_SCROLL_R, MS_SCROLL_U, MS_SCROLL_L, MS_SCROLL_D,
 
 
@@ -300,6 +300,10 @@ inline fPOINT Nomalization(const Pos _dir)
 		point.x = _dir.x / length;
 		point.y = _dir.y / length;
 	}
+	
+	point.x = std::round(point.x * 100) / 100;
+	point.y = std::round(point.y * 100) / 100;
+
 	return point;
 }
 

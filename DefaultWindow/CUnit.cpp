@@ -206,54 +206,7 @@ void CUnit::Move()
 {
 	if (m_iPathIndex < _path.size())
 	{
-		Pos _now = { (int)m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
-		Pos _pos = _path[m_iPathIndex];
-		Pos _pre = _path[max(m_iPathIndex-1,0)];
-
-		fPOINT _fNow = { m_tInfo.fX, m_tInfo.fY};
-		fPOINT _fPos = { _path[m_iPathIndex].x * TILECY + 16.f ,_path[m_iPathIndex].y * TILECY + 16.f};
-
-		if (m_iPathIndex == 0)
-		{
-			m_iPathIndex = 1;
-			return;
-		}
-
-		const float EPSILON = m_tStat.m_fSpeed * 10.0f;
-		if (fabsf(_fNow.x - _fPos.x) < EPSILON && fabsf(_fNow.y - _fPos.y) < EPSILON)
-		{
-			// 맵 타일 옵션 변경
-			CMapMgr::Get_Instance()->SetTileType(_pos, 2);
-			CMapMgr::Get_Instance()->SetTileType(_pre, 0);
-			++m_iPathIndex;
-		}
-		else
-		{
-			Pos dir = (_pos - _pre);
-			for (int i = 0; i < DIR_END; i++)
-			{
-				if (dir == MoveFront[i])
-				{
-					m_eDir = (DIRECTION)i;
-					break;
-				}
-			}
-
-			// 이동
-			if (CCollisionMgr::Collision_RangeChack_bool(this, *m_pUnitList, 50.f))
-			{
-				m_eCurState = STATE_IDLE;
-			}
-			else
-			{
-				// 단위 벡터로 수정?
-				fPOINT point = Nomalization(MoveFront[m_eDir]);
-				
-				m_eCurState = STATE_MOVE;
-				m_tInfo.fX += m_tStat.m_fSpeed * point.x;
-				m_tInfo.fY += m_tStat.m_fSpeed * point.y;
-			}
-		}
+		Move_toNext();
 	}
 	else if (m_iPathIndex == _path.size())
 	{
@@ -340,6 +293,58 @@ void CUnit::Hold()
 		m_eCurState = STATE_ATTACK;
 	}
 
+}
+
+void CUnit::Move_toNext()
+{
+	Pos _now = { (int)m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
+	Pos _pos = _path[m_iPathIndex];
+	Pos _pre = _path[max(m_iPathIndex - 1, 0)];
+
+	fPOINT _fNow = { m_tInfo.fX, m_tInfo.fY };
+	fPOINT _fPos = { _path[m_iPathIndex].x * TILECY + 16.f ,_path[m_iPathIndex].y * TILECY + 16.f };
+
+	if (m_iPathIndex == 0)
+	{
+		m_iPathIndex = 1;
+		return;
+	}
+
+	const float EPSILON = m_tStat.m_fSpeed * 10.0f;
+	if (fabsf(_fNow.x - _fPos.x) < EPSILON && fabsf(_fNow.y - _fPos.y) < EPSILON)
+	{
+		// 맵 타일 옵션 변경
+		CMapMgr::Get_Instance()->SetTileType(_pos, 2);
+		CMapMgr::Get_Instance()->SetTileType(_pre, 0);
+		++m_iPathIndex;
+	}
+	else
+	{
+		Pos dir = (_pos - _pre);
+		for (int i = 0; i < DIR_END; i++)
+		{
+			if (dir == MoveFront[i])
+			{
+				m_eDir = (DIRECTION)i;
+				break;
+			}
+		}
+
+		// 이동
+		if (CCollisionMgr::Collision_RangeChack_bool(this, *m_pUnitList, 50.f))
+		{
+			m_eCurState = STATE_IDLE;
+		}
+		else
+		{
+			// 단위 벡터로 수정?
+			fPOINT point = Nomalization(MoveFront[m_eDir]);
+
+			m_eCurState = STATE_MOVE;
+			m_tInfo.fX += m_tStat.m_fSpeed * point.x;
+			m_tInfo.fY += m_tStat.m_fSpeed * point.y;
+		}
+	}
 }
 
 

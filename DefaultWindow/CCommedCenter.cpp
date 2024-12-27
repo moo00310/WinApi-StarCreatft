@@ -28,8 +28,8 @@ void CCommedCenter::Initialize()
     m_tStat = { 1500.f, 1.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
 
-    //m_iMyBuildTIme = get<3>(ObjCost.at(OT_Commend));
-    m_iMyBuildTIme = 80;
+    m_iMyBuildTIme = get<3>(ObjCost.at(OT_Commend));
+    //m_iMyBuildTIme = 80;
 
     __super::Update_Rect();
     Block_Map();
