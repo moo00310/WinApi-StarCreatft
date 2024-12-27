@@ -8,6 +8,7 @@
 #include "CBloodEffect.h"
 #include "CBulletEffect.h"
 #include "CKeyMgr.h"
+#include "CMouseMgr.h"
 
 void CScv::Initialize()
 {
@@ -46,6 +47,7 @@ int CScv::Update()
 		return OBJ_DEAD;
 	}
 	Update_State();
+	KeyInput();
 
 	__super::Update_Rect();
 	return OBJ_NOEVENT;
@@ -146,14 +148,6 @@ void CScv::KeyInput()
 {
 	if (!m_bSelect) return;
 
-	// 마우스 우클릭으로 취소
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
-	{
-		m_bBuildStructure = false;
-		m_BuildAdvancedStructure = false;
-	}
-
-
 	if (m_bBuildStructure == false && m_BuildAdvancedStructure == false)
 	{
 		if (CKeyMgr::Get_Instance()->Key_Down('B'))
@@ -168,14 +162,75 @@ void CScv::KeyInput()
 	}
 	
 
-
-
 	if (m_bBuildStructure == true)
 	{
+		if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
+		{
+			m_bBuildStructure = false;
+			m_BuildAdvancedStructure = false;
+		}
+
 		if(CKeyMgr::Get_Instance()->Key_Down('C'))
 		{
-			// 커맨드 센터 (마우스 옮겨야 겠음
-			// SetBuild_Img(OT_ScienceFacility);
+			CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_Commend);
+			m_bBuildStructure = false;
+		}
+
+		if (CKeyMgr::Get_Instance()->Key_Down('S'))
+		{
+			CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_Suffly);
+			m_bBuildStructure = false;
+		}
+
+		if (CKeyMgr::Get_Instance()->Key_Down('R'))
+		{
+			CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_Refinery);
+			m_bBuildStructure = false;
+		}
+
+		if (CKeyMgr::Get_Instance()->Key_Down('A'))
+		{
+			CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_Academy);
+			m_bBuildStructure = false;
+		}
+
+		if (CKeyMgr::Get_Instance()->Key_Down('B'))
+		{
+			CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_Barrck);
+			m_bBuildStructure = false;
+		}
+	}
+
+	if (m_BuildAdvancedStructure == true)
+	{
+		if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
+		{
+			m_bBuildStructure = false;
+			m_BuildAdvancedStructure = false;
+		}
+
+		if (CKeyMgr::Get_Instance()->Key_Down('F'))
+		{
+			CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_Factory);
+			m_BuildAdvancedStructure = false;
+		}
+
+		if (CKeyMgr::Get_Instance()->Key_Down('S'))
+		{
+			CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_Starport);
+			m_BuildAdvancedStructure = false;
+		}
+
+		if (CKeyMgr::Get_Instance()->Key_Down('A'))
+		{
+			CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_Armory);
+			m_BuildAdvancedStructure = false;
+		}
+
+		if (CKeyMgr::Get_Instance()->Key_Down('I'))
+		{
+			CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_ScienceFacility);
+			m_BuildAdvancedStructure = false;
 		}
 	}
 

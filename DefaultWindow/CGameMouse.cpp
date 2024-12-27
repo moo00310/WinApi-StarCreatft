@@ -168,15 +168,13 @@ void CGameMouse::MouseInput(POINT ptMouse)
     ///////////////////////////////////
     Pos temp = { (int)(ptMouse.y - CScrollMgr::Get_Instance()->Get_ScrollY()) / TILECY , int(ptMouse.x - CScrollMgr::Get_Instance()->Get_ScrollX()) / TILECY };
 
-
     if (isBuildMod)
     {
         if (CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
         {
             if (AbleBuild())  // 건물을 지울 수 있는 곳인지 아닌지 체크
             {
-                // 건물울 지울 수 있는 곳이면 SCV를 통해 건설
-                CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CScienceFacility>::Create(temp));
+                SpwanBulid(m_eBuildType, temp);
                 isBuildMod = false;
             }
             else
@@ -655,4 +653,44 @@ bool CGameMouse::AbleBuild()
     }
 
     return true;
+}
+
+void CGameMouse::SpwanBulid(OBJ_TYPE _type, Pos temp)
+{
+    switch (_type)
+    {
+    case OT_Commend:
+        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CCommedCenter>::Create(temp));
+        break;
+    case OT_Suffly:
+        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CSuffly>::Create(temp));
+        break;
+    case OT_Refinery:
+        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CRefinery>::Create(temp));
+        break;
+    case OT_Barrck:
+        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CBarrck>::Create(temp));
+        break;
+    case OT_Academy:
+        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CAcademy>::Create(temp));
+        break;
+    case OT_Factory:
+        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CFactory>::Create(temp));
+        break;
+    case OT_Armory:
+        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CArmory>::Create(temp));
+        break;
+    case OT_Starport:
+        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CStarport>::Create(temp));
+        break;
+    case OT_ScienceFacility:
+        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CScienceFacility>::Create(temp));
+        break;
+    case OT_Build_End:
+        break;
+    case OT_END:
+        break;
+    default:
+        break;
+    }
 }

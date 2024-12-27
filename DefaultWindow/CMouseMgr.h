@@ -1,5 +1,6 @@
 #pragma once
 #include "CObj.h"
+#include "CGameMouse.h"
 
 class CMouseMgr
 {
@@ -14,6 +15,11 @@ public:
 
 public:
 	void Add_Mouse(CObj* _mouse);
+	CGameMouse* Get_Mouse()
+	{ 
+		CGameMouse* temp = static_cast<CGameMouse*>(m_pMouse);
+		return temp;
+	}
 
 public:
 	static CMouseMgr* Get_Instance()
