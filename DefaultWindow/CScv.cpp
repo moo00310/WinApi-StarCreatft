@@ -7,14 +7,7 @@
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
 #include "CBulletEffect.h"
-
-CScv::CScv()
-{
-}
-
-CScv::~CScv()
-{
-}
+#include "CKeyMgr.h"
 
 void CScv::Initialize()
 {
@@ -151,6 +144,41 @@ void CScv::Change_Motion()
 
 void CScv::KeyInput()
 {
+	if (!m_bSelect) return;
+
+	// 마우스 우클릭으로 취소
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
+	{
+		m_bBuildStructure = false;
+		m_BuildAdvancedStructure = false;
+	}
+
+
+	if (m_bBuildStructure == false && m_BuildAdvancedStructure == false)
+	{
+		if (CKeyMgr::Get_Instance()->Key_Down('B'))
+		{
+			m_bBuildStructure = true;
+		}
+
+		if (CKeyMgr::Get_Instance()->Key_Down('V'))
+		{
+			m_BuildAdvancedStructure = true;
+		}
+	}
+	
+
+
+
+	if (m_bBuildStructure == true)
+	{
+		if(CKeyMgr::Get_Instance()->Key_Down('C'))
+		{
+			// 커맨드 센터 (마우스 옮겨야 겠음
+			// SetBuild_Img(OT_ScienceFacility);
+		}
+	}
+
 }
 
 void CScv::AttackToEnemy(CObj* _Enemey)

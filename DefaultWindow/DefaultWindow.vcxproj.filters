@@ -223,6 +223,9 @@
     <Filter Include="03. Design\MemoryPool">
       <UniqueIdentifier>{8be6032b-645f-4040-9dd4-e96ad2fcab3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Design\MouseMgr">
+      <UniqueIdentifier>{9e01296f-6025-46ae-9588-3c34b383143e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -444,6 +447,9 @@
     <ClInclude Include="CMemoryPoolMgr.h">
       <Filter>03. Design\MemoryPool</Filter>
     </ClInclude>
+    <ClInclude Include="CMouseMgr.h">
+      <Filter>03. Design\MouseMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -625,6 +631,9 @@
     </ClCompile>
     <ClCompile Include="CMemoryPoolMgr.cpp">
       <Filter>03. Design\MemoryPool</Filter>
+    </ClCompile>
+    <ClCompile Include="CMouseMgr.cpp">
+      <Filter>03. Design\MouseMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

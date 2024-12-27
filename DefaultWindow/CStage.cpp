@@ -9,7 +9,7 @@
 #include "CGameMouse.h"
 #include "CUIMgr.h"
 #include "CSoundMgr.h"
-
+#include "CMouseMgr.h"
 
 
 //// 테스트용
@@ -44,7 +44,8 @@ void CStage::Initialize()
 	CUIMgr::Get_Instance()->Initalize(); 	// UI 매니저 초기화 
 
 	// 마우스 생산
-	CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CGameMouse>::Create());
+	//CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CGameMouse>::Create());
+	CMouseMgr::Get_Instance()->Add_Mouse(CAbstractFactory<CGameMouse>::Create());
 
 	// 적 마린 생산
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMarine>::Create(600,600));
@@ -61,6 +62,7 @@ int CStage::Update()
 	CObjMgr::Get_Instance()->Update();
 	CTileMgr::Get_Instance()->Update();
 	CUIMgr::Get_Instance()->Update();
+	CMouseMgr::Get_Instance()->Update();
 
 	return 0;
 }
@@ -70,6 +72,7 @@ void CStage::Late_Update()
 	CObjMgr::Get_Instance()->Late_Update();
 	CTileMgr::Get_Instance()->Late_Update();
 	CUIMgr::Get_Instance()->Late_Update();
+	CMouseMgr::Get_Instance()->Late_Update();
 }
 
 
@@ -78,11 +81,11 @@ void CStage::Render(HDC hDC)
 	CTileMgr::Get_Instance()->Render(hDC);
 	CObjMgr::Get_Instance()->Render(hDC);
 	CUIMgr::Get_Instance()->Render(hDC);
+	CMouseMgr::Get_Instance()->Render(hDC);
 }
 
 void CStage::Release()
 {
 	CObjMgr::Get_Instance()->Delete_ID(OBJ_PLAYER);
 	CObjMgr::Get_Instance()->Delete_ID(OBJ_MONSTER);
-	CObjMgr::Get_Instance()->Delete_ID(OBJ_MOUSE);
 }

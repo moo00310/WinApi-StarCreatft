@@ -164,6 +164,7 @@
     <ClInclude Include="CMemoryPoolMgr.h" />
     <ClInclude Include="CMonster.h" />
     <ClInclude Include="CMouse.h" />
+    <ClInclude Include="CMouseMgr.h" />
     <ClInclude Include="CMyBmp.h" />
     <ClInclude Include="CMyButton.h" />
     <ClInclude Include="CMyEdit.h" />
@@ -238,6 +239,7 @@
     <ClCompile Include="CMemoryPoolMgr.cpp" />
     <ClCompile Include="CMonster.cpp" />
     <ClCompile Include="CMouse.cpp" />
+    <ClCompile Include="CMouseMgr.cpp" />
     <ClCompile Include="CMyBmp.cpp" />
     <ClCompile Include="CMyButton.cpp" />
     <ClCompile Include="CMyEdit.cpp" />

@@ -47,7 +47,6 @@ void CGameMouse::Initialize()
     m_tInfo.fCY = 50.f;
 
     m_pImgKey = L"Cursor";
-    m_eRender = RENDER_UI;
 
     m_UnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
     m_BuildList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_BUILD);
@@ -166,11 +165,6 @@ void CGameMouse::ClearDrag()
 
 void CGameMouse::MouseInput(POINT ptMouse)
 {
-    // 테스트 코드/////////////////////////////
-    if (CKeyMgr::Get_Instance()->Key_Down('O'))
-    {
-        SetBuild_Img(OT_ScienceFacility); // 배럭으로 지정 후 빌드모드로 변경
-    }
     ///////////////////////////////////
     Pos temp = { (int)(ptMouse.y - CScrollMgr::Get_Instance()->Get_ScrollY()) / TILECY , int(ptMouse.x - CScrollMgr::Get_Instance()->Get_ScrollX()) / TILECY };
 

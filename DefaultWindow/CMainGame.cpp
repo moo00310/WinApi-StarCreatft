@@ -2,8 +2,7 @@
 #include "CMainGame.h"
 #include "CAbstractFactory.h"
 #include "CObjMgr.h"
-
-#include "CCollisionMgr.h"
+#include "CMouseMgr.h"
 
 #include "CKeyMgr.h"
 #include "CScrollMgr.h"
@@ -123,6 +122,7 @@ void CMainGame::Release()
 	CObjMgr::DestroyInstance();
 	CMapMgr::Destroy_Instance();
 	CUIMgr::Destroy_Instance();
+	CMouseMgr::DestroyInstance();
 	CSoundMgr::Destroy_Instance();
 	CMemoryPoolMgr::Destroy_Instance();
 	ReleaseDC(g_hWnd, m_hDC);

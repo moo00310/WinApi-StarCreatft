@@ -3,8 +3,8 @@
 class CScv : public CUnit
 {
 public:
-	CScv();
-	~CScv();
+	CScv():m_bBuildStructure(false), m_BuildAdvancedStructure(false) {}
+	~CScv() {}
 public:
 	void Initialize() override;
 	int Update() override;
@@ -16,6 +16,8 @@ public:
 
 	void AttackToEnemy(CObj* _Enemey);
 private:
+	bool m_bBuildStructure;
+	bool m_BuildAdvancedStructure;
 
 };
 
