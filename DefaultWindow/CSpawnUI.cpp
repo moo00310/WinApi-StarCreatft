@@ -102,6 +102,8 @@ void CSpawnUI::Render(HDC hdc)
 			12,
 			RGB(0, 255, 255));
 
+		if (m_pUintlist->empty()) return;
+
 		float m_fProgress = static_cast<CBuild*>(m_pUintlist->front())->GetProgress();
 
 		GdiTransparentBlt(hdc,			// 복사 받을 DC

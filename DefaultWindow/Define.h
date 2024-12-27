@@ -301,9 +301,6 @@ inline fPOINT Nomalization(const Pos _dir)
 		point.y = _dir.y / length;
 	}
 	
-	point.x = std::round(point.x * 100) / 100;
-	point.y = std::round(point.y * 100) / 100;
-
 	return point;
 }
 
@@ -329,7 +326,7 @@ const Pos Spawn_index[5] =
 };
 
 
-#define Frame  32
+#define Frame  16
 
 const map<OBJ_TYPE, std::tuple<int, int, int, int>> ObjCost =
 {

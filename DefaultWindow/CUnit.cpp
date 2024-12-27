@@ -168,13 +168,19 @@ bool CUnit::CanGo(Pos pos)
 		return false;
 }
 
-DIRECTION CUnit::GetDirection(float player_x, float player_y, float monster_x, float monster_y)
+float CUnit::GetLadanAngle(float player_x, float player_y, float monster_x, float monster_y)
 {
+	float angle(0.f);
+
 	float dx = monster_x - player_x;
 	float dy = monster_y - player_y;
 
-	float angle = atan2(dy, dx);  // 라디안
-	float angle_deg = angle * (180 / PI);  // 각도 변환
+	return atan2(dy, dx);  // 라디안
+}
+
+DIRECTION CUnit::GetDirection(float player_x, float player_y, float monster_x, float monster_y)
+{
+	float angle_deg = GetLadanAngle( player_x,  player_y,  monster_x,  monster_y) * (180 / PI);
 
 	if (angle_deg < 0) {
 		angle_deg += 360;  // 음수를 0-360 범위로

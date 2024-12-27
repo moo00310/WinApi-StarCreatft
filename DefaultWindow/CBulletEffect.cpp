@@ -64,7 +64,7 @@ int CScvHit::Update()
 	{
 		m_iDeadImg = 10;
 	}
-	else if (m_iCount > 100)
+	else if (m_iCount > 55)
 	{
 		return OBJ_DEAD;
 	}

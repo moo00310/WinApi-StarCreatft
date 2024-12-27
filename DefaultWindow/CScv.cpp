@@ -104,8 +104,6 @@ void CScv::Render(HDC hDC)
 		(int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
 		(int)m_tInfo.fCY,
 		RGB(0, 255, 0));		// 제거할 색상
-
-
 }
 
 void CScv::Release()
@@ -138,17 +136,21 @@ void CScv::Change_Motion()
 			m_tFrame.iFrameStart = 1;
 			m_tFrame.iFrameEnd = 2;
 			m_tFrame.iCurCount = 1;
-			m_tFrame.dwSpeed = 100;
+			m_tFrame.dwSpeed = 150;
 			m_tFrame.dwTime = GetTickCount64();
+
 			break;
 
 		case STATE_SHOOT:
 			m_tFrame.iFrameStart = 1;
 			m_tFrame.iFrameEnd = 2;
 			m_tFrame.iCurCount = 1;
-			m_tFrame.dwSpeed = 100;
+			m_tFrame.dwSpeed = 150;
 			m_tFrame.dwTime = GetTickCount64();
+			break;
 		}
+
+
 
 		m_ePreState = m_eCurState;
 	}
@@ -291,7 +293,7 @@ void CScv::AttackToEnemy(CObj* _Enemey)
 		ATTACKID Attack_id = m_tStat.m_eAttackID;
 		float Damge = fabsf((_Enemey->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * m_tStat.m_iAttack)));
 
-
+		
 		_Enemey->Add_Stat_hp(-Damge);
 
 		m_AttackTime = GetTickCount64();
@@ -303,6 +305,7 @@ void CScv::Build()
 	if (m_iPathIndex < _path.size())
 	{
 		Move_toNext();
+		m_eCurState = STATE_IDLE;
 	}
 	else if (m_iPathIndex == _path.size())
 	{
@@ -318,14 +321,37 @@ void CScv::Build()
 
 bool CScv::GoToTarget(fPOINT temp)
 {
-	const float EPSILON = m_tStat.m_fSpeed * 10.0f;
-	if (fabsf(temp.x - m_tInfo.fX) < EPSILON && fabsf(temp.y - m_tInfo.fY) < EPSILON) return true;
-		
-	m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, temp.x, temp.y);
-	fPOINT point = Nomalization(MoveFront[m_eDir]);
-	m_eCurState = STATE_MOVE;
-	m_tInfo.fX += m_tStat.m_fSpeed * point.x;
-	m_tInfo.fY += m_tStat.m_fSpeed * point.y;
+	const float EPSILON = m_tStat.m_fSpeed * 0.10f;
+
+	// 목표 위치에 도달했는지 확인
+	float dx = temp.x - m_tInfo.fX;
+	float dy = temp.y - m_tInfo.fY;
+	float distance = sqrtf(dx * dx + dy * dy);
+
+	if (distance < EPSILON)
+		return true;
+
+	if (m_eCurState != STATE_MOVE)
+	{
+		m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, temp.x, temp.y);
+		m_eCurState = STATE_MOVE;
+	}
+
+
+	// 이동 각도 계산
+	float Ladian = GetLadanAngle(m_tInfo.fX, m_tInfo.fY, temp.x, temp.y);
+
+	// 속도가 목표 좌표를 초과하지 않도록 제한
+	if (distance < m_tStat.m_fSpeed) {
+		m_tInfo.fX = temp.x;
+		m_tInfo.fY = temp.y;
+		return true;
+	}
+
+	// 좌표 업데이트 (좌표계 방향에 맞게 수정)
+	m_tInfo.fX += m_tStat.m_fSpeed * cosf(Ladian);
+	m_tInfo.fY += m_tStat.m_fSpeed * sinf(Ladian);
+
 	return false;
 }
 
@@ -337,7 +363,7 @@ void CScv::BuildAime()
 	if (m_iBuildCount < (m_iMyBuildTIme * 0.2) * 1)
 	{
 		//해당 좌표로 점점 이동이 끝났으면 건물 방향으로 계속 수리 모션
-		fPOINT targetPos = { m_pos.x * 32 , m_pos.y * 32 - 65 };
+		fPOINT targetPos = { m_pos.x * 32 , m_pos.y * 32 - 50 };
 		if (GoToTarget(targetPos))
 		{
 			m_eDir = GetDirection( m_tInfo.fX, m_tInfo.fY, m_pos.x * 32, m_pos.y * 32);
@@ -347,16 +373,18 @@ void CScv::BuildAime()
 	}
 	else if (m_iBuildCount < (m_iMyBuildTIme * 0.2) * 2)
 	{
-		fPOINT targetPos = { m_pos.x * 32 + 65 , m_pos.y * 32 + 65 };
+		fPOINT targetPos = { m_pos.x * 32 + 50 , m_pos.y * 32 + 50 };
 		if (GoToTarget(targetPos))
 		{
 			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, m_pos.x * 32, m_pos.y * 32);
 			m_eCurState = STATE_ATTACK;
+			
+			
 		}
 	}
 	else if (m_iBuildCount < (m_iMyBuildTIme * 0.2) * 3)
 	{
-		fPOINT targetPos = { m_pos.x * 32 - 65 , m_pos.y * 32 + 65 };
+		fPOINT targetPos = { m_pos.x * 32 - 50 , m_pos.y * 32 + 50 };
 		if (GoToTarget(targetPos))
 		{
 			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, m_pos.x * 32, m_pos.y * 32);
@@ -365,7 +393,7 @@ void CScv::BuildAime()
 	}
 	else if (m_iBuildCount < (m_iMyBuildTIme * 0.2) * 4)
 	{
-		fPOINT targetPos = { m_pos.x * 32 + 70, m_pos.y * 32 + 65 };
+		fPOINT targetPos = { m_pos.x * 32 + 50 , m_pos.y * 32 - 50 };
 		if (GoToTarget(targetPos))
 		{
 			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, m_pos.x * 32, m_pos.y * 32);
@@ -387,6 +415,8 @@ void CScv::BuildAime()
 		m_eInput = IP_HOLD;
 	}
 
+	if (m_tFrame.iCurCount == 2 && m_iBuildCount % 15 == 0)
+		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CScvHit>::CreateFX(m_pos.x * 32 - (m_pos.x * 32 - Get_Info().fX)*0.5, m_pos.y * 32 - (m_pos.y * 32 - Get_Info().fY)*0.5));
 	m_iBuildCount++;
 }
 
