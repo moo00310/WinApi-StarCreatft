@@ -14,6 +14,7 @@ public:
 	void Change_Motion() override;
 	void KeyInput() override;
 
+	void AttackToEnemy(CObj* _Enemey);
 private:
 
 };

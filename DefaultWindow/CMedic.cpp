@@ -42,7 +42,7 @@ int CMedic::Update()
 	if (m_bDead || m_tStat.m_iHp <= 0)
 	{
 		// Á×À½ ÀÌÆåÆ®
-		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CMedicDead>::Create(m_tInfo.fX, m_tInfo.fY));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CMedicDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
 		//CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
 		//CSoundMgr::Get_Instance()->PlaySound(L"Marine_Dead_1.mp3", SOUND_EFFECT, 0.5f, true);
 
@@ -150,4 +150,20 @@ void CMedic::Change_Motion()
 
 void CMedic::KeyInput()
 {
+}
+
+void CMedic::AttackToEnemy(CObj* _Enemey)
+{
+	if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64() &&
+		m_tFrame.iCurCount == m_iAttackFrame)
+	{
+		DEFENCEID Dfence_id = _Enemey->Get_Stat()->m_eDfenceID;
+		ATTACKID Attack_id = m_tStat.m_eAttackID;
+		float Damge = fabsf((_Enemey->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * m_tStat.m_iAttack)));
+
+		//CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CMarineHit>::CreateFX(_Enemey->Get_Info().fX, _Enemey->Get_Info().fY));
+		_Enemey->Add_Stat_hp(-Damge);
+
+		m_AttackTime = GetTickCount64();
+	}
 }

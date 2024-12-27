@@ -18,6 +18,7 @@ public:
 	virtual void Change_Motion() PURE;
 	virtual void KeyInput() PURE;
 			void Move_Frame() override;
+	virtual void AttackToEnemy(CObj* _Enemey) PURE;
 
 public:
 	void Update_State();
@@ -29,7 +30,7 @@ public:
 	void Astar(Pos _tTarget_Index);
 	bool CanGo(Pos pos);
 	DIRECTION GetDirection(float player_x, float player_y, float monster_x, float monster_y);
-	void AttackToEnemy(CObj* _Enemey);
+
 
 protected:
 	//Unit_BeHavior
@@ -37,9 +38,6 @@ protected:
 	virtual void Stop();
 	virtual void Attack();
 	virtual void Hold();
-
-protected:
-	void AttackFrame(int start, int end, int Shoot);
 
 protected:
 	INPUTSTATE m_eInput;

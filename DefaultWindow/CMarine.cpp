@@ -8,6 +8,7 @@
 #include "CBloodEffect.h"
 #include "CMapMgr.h"
 #include "CSoundMgr.h"
+#include "CBulletEffect.h"
 
 CMarine::CMarine()
 {
@@ -153,4 +154,20 @@ void CMarine::Change_Motion()
 
 void CMarine::KeyInput()
 {
+}
+
+void CMarine::AttackToEnemy(CObj* _Enemey)
+{
+	if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64() &&
+		m_tFrame.iCurCount == m_iAttackFrame)
+	{
+		DEFENCEID Dfence_id = _Enemey->Get_Stat()->m_eDfenceID;
+		ATTACKID Attack_id = m_tStat.m_eAttackID;
+		float Damge = fabsf((_Enemey->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * m_tStat.m_iAttack)));
+
+		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CMarineHit>::CreateFX(_Enemey->Get_Info().fX, _Enemey->Get_Info().fY));
+		_Enemey->Add_Stat_hp(-Damge);
+
+		m_AttackTime = GetTickCount64();
+	}
 }

@@ -6,6 +6,7 @@
 #include "CSoundMgr.h"
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
+#include "CBulletEffect.h"
 #include "CCollisionMgr.h"
 #include "CKeyMgr.h"
 
@@ -25,7 +26,7 @@ void CTank::Initialize()
 	m_eObjID = OT_Tank;
 	m_tStat = { 150.f, 150.f, 30, 1, 224, 1.8f, 625 , DF_LAGE, AT_EXPLOSIVE };
 
-	m_iAttackFrame = 14;
+	m_iAttackFrame = 1;
 
 	m_eRender = RENDER_GAMEOBJECT;
 	m_tInfo.fCX = 128.f;
@@ -37,7 +38,7 @@ int CTank::Update()
 	if (m_bDead || m_tStat.m_iHp <= 0)
 	{
 		// 죽음 이펙트
-		//CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CGhostDead>::Create(m_tInfo.fX, m_tInfo.fY));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CSCVDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
 		//CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
 		//CSoundMgr::Get_Instance()->PlaySound(L"Marine_Dead_1.mp3", SOUND_EFFECT, 0.5f, true);
 
@@ -148,7 +149,7 @@ void CTank::Change_Motion()
 			if (!m_bSiegeMode)
 			{
 				Frame_Init_Body(0, 0, 200);
-				Frame_Init_Head(0, 1, 200);
+				Frame_Init_Head(0, 0, 200);
 			}
 			else
 			{
@@ -162,13 +163,15 @@ void CTank::Change_Motion()
 			if (!m_bSiegeMode)
 			{
 				Frame_Init_Body(0, 0, 200);
-				Frame_Init_Head(0, 1, 200);
+				Frame_Init_Head(0, 1, 600);
 			}
 			else
 			{
 				m_tBodyFram.iCurCount = 3;
 				m_eDir = (DIRECTION)5;
 				Frame_Init_Head(2, 2, 200);
+				
+
 			}
 			break;
 		}
@@ -194,6 +197,40 @@ void CTank::MoveBody_Frame()
 
 		m_tBodyFram.dwTime = GetTickCount64();
 	}
+}
+
+void CTank::AttackToEnemy(CObj* _Enemey)
+{
+	if (!m_bSiegeMode)
+	{
+		if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64() &&
+			m_tFrame.iCurCount == m_iAttackFrame)
+		{
+			DEFENCEID Dfence_id = _Enemey->Get_Stat()->m_eDfenceID;
+			ATTACKID Attack_id = m_tStat.m_eAttackID;
+			float Damge = fabsf((_Enemey->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * m_tStat.m_iAttack)));
+
+			CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CTankHit>::CreateFX(_Enemey->Get_Info().fX, _Enemey->Get_Info().fY));
+			_Enemey->Add_Stat_hp(-Damge);
+
+			m_AttackTime = GetTickCount64();
+		}
+	}
+	else
+	{
+		if (m_AttackTime + _Enemey->Get_Stat()->Colldown + 2000 < GetTickCount64())
+		{
+			DEFENCEID Dfence_id = _Enemey->Get_Stat()->m_eDfenceID;
+			ATTACKID Attack_id = m_tStat.m_eAttackID;
+			float Damge = fabsf((_Enemey->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * m_tStat.m_iAttack)));
+
+			CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CSiegeTankHit>::CreateFX(_Enemey->Get_Info().fX, _Enemey->Get_Info().fY));
+			//_Enemey->Add_Stat_hp(-(Damge + 200));
+
+			m_AttackTime = GetTickCount64();
+		}
+	}
+	
 }
 
 void CTank::Move()
@@ -305,7 +342,8 @@ void CTank::Attack()
 					m_eCurState = STATE_SHOOT;
 				else
 					m_eCurState = STATE_ATTACK;
-				AttackToEnemy(Enemy);
+				
+				AttackToEnemy(Enemy); // 실제 데미지 주는 코드
 			}
 
 		}
@@ -329,6 +367,7 @@ void CTank::Hold()
 		{
 			m_eAttackDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
 			m_eCurState = STATE_ATTACK;
+			AttackToEnemy(Enemy); // 실제 데미지 주는 코드
 		}
 	}
 

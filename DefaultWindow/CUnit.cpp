@@ -2,7 +2,9 @@
 #include "CUnit.h"
 #include "CMapMgr.h"
 #include "CCollisionMgr.h"
-
+#include "CAbstractFactory.h"
+#include "CObjMgr.h"
+#include "CBulletEffect.h"
 void CUnit::Move_Frame()
 {
 	if (m_tFrame.dwTime + m_tFrame.dwSpeed < GetTickCount64())
@@ -200,21 +202,6 @@ DIRECTION CUnit::GetDirection(float player_x, float player_y, float monster_x, f
 	}
 }
 
-void CUnit::AttackToEnemy(CObj* _Enemey)
-{
-	if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64()&&
-		m_tFrame.iCurCount == m_iAttackFrame)
-	{
-		DEFENCEID Dfence_id = _Enemey->Get_Stat()->m_eDfenceID;
-		ATTACKID Attack_id = m_tStat.m_eAttackID;
-		float Damge = fabsf((_Enemey->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * m_tStat.m_iAttack)));
-
-		_Enemey->Add_Stat_hp(-Damge);
-
-		m_AttackTime = GetTickCount64();
-	}
-}
-
 void CUnit::Move()
 {
 	if (m_iPathIndex < _path.size())
@@ -352,12 +339,6 @@ void CUnit::Hold()
 		m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
 		m_eCurState = STATE_ATTACK;
 	}
-
-}
-
-void CUnit::AttackFrame(int start, int end, int Shoot)
-{
-	
 
 }
 

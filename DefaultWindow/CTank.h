@@ -18,6 +18,7 @@ public:
 	void Change_Motion() override;
 	void KeyInput() override;
 
+	void AttackToEnemy(CObj* _Enemey) override;
 	virtual void Move();
 	virtual void Attack();
 	virtual void Hold();

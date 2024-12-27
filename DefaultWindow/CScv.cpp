@@ -6,6 +6,7 @@
 #include "CSoundMgr.h"
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
+#include "CBulletEffect.h"
 
 CScv::CScv()
 {
@@ -32,7 +33,7 @@ void CScv::Initialize()
 	m_eObjID = OT_Scv;
 	m_tStat = { 60.f, 60.f, 5, 0, 32, 2.3f, 625 , DF_SAMLL, AT_NORMAL };
 
-	m_iAttackFrame = 14;
+	m_iAttackFrame = 2;
 
 	m_eRender = RENDER_GAMEOBJECT;
 	m_tInfo.fCX = 72.f;
@@ -45,7 +46,7 @@ int CScv::Update()
 	if (m_bDead || m_tStat.m_iHp <= 0)
 	{
 		// Á×À½ ÀÌÆåÆ®
-		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CSCVDead>::Create(m_tInfo.fX, m_tInfo.fY));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CSCVDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
 		//CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
 		//CSoundMgr::Get_Instance()->PlaySound(L"Marine_Dead_1.mp3", SOUND_EFFECT, 0.5f, true);
 
@@ -150,4 +151,20 @@ void CScv::Change_Motion()
 
 void CScv::KeyInput()
 {
+}
+
+void CScv::AttackToEnemy(CObj* _Enemey)
+{
+	if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64() &&
+		m_tFrame.iCurCount == m_iAttackFrame)
+	{
+		DEFENCEID Dfence_id = _Enemey->Get_Stat()->m_eDfenceID;
+		ATTACKID Attack_id = m_tStat.m_eAttackID;
+		float Damge = fabsf((_Enemey->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * m_tStat.m_iAttack)));
+
+
+		_Enemey->Add_Stat_hp(-Damge);
+
+		m_AttackTime = GetTickCount64();
+	}
 }
