@@ -360,56 +360,56 @@ void CScv::BuildAime()
 {
 	m_iMyBuildTIme = get<3>(ObjCost.at(m_eBuildType));
 
-	if (m_iBuildCount < (m_iMyBuildTIme * 0.2) * 1)
+	if (m_iBuildCount < (m_iMyBuildTIme * 0.2f) * 1)
 	{
 		//해당 좌표로 점점 이동이 끝났으면 건물 방향으로 계속 수리 모션
 		fPOINT targetPos = { m_pos.x * 32 , m_pos.y * 32 - 50 };
 		if (GoToTarget(targetPos))
 		{
-			m_eDir = GetDirection( m_tInfo.fX, m_tInfo.fY, m_pos.x * 32, m_pos.y * 32);
+			m_eDir = GetDirection( m_tInfo.fX, m_tInfo.fY, m_pos.x * 32.f, m_pos.y * 32.f);
 			m_eCurState = STATE_ATTACK;
 		}
 			
 	}
-	else if (m_iBuildCount < (m_iMyBuildTIme * 0.2) * 2)
+	else if (m_iBuildCount < (m_iMyBuildTIme * 0.2f) * 2)
 	{
 		fPOINT targetPos = { m_pos.x * 32 + 50 , m_pos.y * 32 + 50 };
 		if (GoToTarget(targetPos))
 		{
-			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, m_pos.x * 32, m_pos.y * 32);
+			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, m_pos.x * 32.f, m_pos.y * 32.f);
 			m_eCurState = STATE_ATTACK;
 			
 			
 		}
 	}
-	else if (m_iBuildCount < (m_iMyBuildTIme * 0.2) * 3)
+	else if (m_iBuildCount < (m_iMyBuildTIme * 0.2f) * 3)
 	{
 		fPOINT targetPos = { m_pos.x * 32 - 50 , m_pos.y * 32 + 50 };
 		if (GoToTarget(targetPos))
 		{
-			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, m_pos.x * 32, m_pos.y * 32);
+			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, m_pos.x * 32.f, m_pos.y * 32.f);
 			m_eCurState = STATE_ATTACK;
 		}
 	}
-	else if (m_iBuildCount < (m_iMyBuildTIme * 0.2) * 4)
+	else if (m_iBuildCount < (m_iMyBuildTIme * 0.2f) * 4)
 	{
 		fPOINT targetPos = { m_pos.x * 32 + 50 , m_pos.y * 32 - 50 };
 		if (GoToTarget(targetPos))
 		{
-			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, m_pos.x * 32, m_pos.y * 32);
+			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, m_pos.x * 32.f, m_pos.y * 32.f);
 			m_eCurState = STATE_ATTACK;
 		}
 	}
-	else if (m_iBuildCount < (m_iMyBuildTIme * 0.2) * 5)
+	else if (m_iBuildCount < (m_iMyBuildTIme * 0.2f) * 5)
 	{
 		fPOINT targetPos = { m_pos.x * 32 - 75 , m_pos.y * 32 + 30 };
 		if (GoToTarget(targetPos))
 		{
-			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, m_pos.x * 32, m_pos.y * 32);
+			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, m_pos.x * 32.f, m_pos.y * 32.f);
 			m_eCurState = STATE_ATTACK;
 		}
 	}
-	else if (m_iBuildCount > (m_iMyBuildTIme * 0.2) * 5)
+	else if (m_iBuildCount > (m_iMyBuildTIme * 0.2f) * 5)
 	{
 		m_iBuildCount = 0;
 		m_eInput = IP_HOLD;

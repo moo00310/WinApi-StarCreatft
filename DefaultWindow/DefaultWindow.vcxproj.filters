@@ -19,9 +19,6 @@
     <Filter Include="01. Obj">
       <UniqueIdentifier>{e2af40d7-7336-426a-b430-c284427d1e40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\03. Mouse">
-      <UniqueIdentifier>{d6dccbdc-b8ff-4078-9255-600f278d61ba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Design">
       <UniqueIdentifier>{fc3aca44-edbd-446a-8d69-20db269dcfd8}</UniqueIdentifier>
     </Filter>
@@ -91,9 +88,6 @@
     <Filter Include="03. Design\MapMgr">
       <UniqueIdentifier>{b337e5a3-5856-49a1-9a85-41b558bdb7d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\03. Mouse\01.GameMouse">
-      <UniqueIdentifier>{20264e39-3602-41e3-8233-484ea2116b26}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Design\UIMgr">
       <UniqueIdentifier>{d600a634-678c-4699-848c-8b401f048c4f}</UniqueIdentifier>
     </Filter>
@@ -132,9 +126,6 @@
     </Filter>
     <Filter Include="04. UI\03.Wire_UI\SmallWire">
       <UniqueIdentifier>{4ec6030a-f903-442f-8b8a-09d8b046766b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\03. Mouse\Mouse">
-      <UniqueIdentifier>{c06cde4f-372f-4e09-8b32-87b97db7c5cd}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. Obj\Obj">
       <UniqueIdentifier>{be0b1231-6d2a-4d39-be94-b5216c322bc1}</UniqueIdentifier>
@@ -223,17 +214,26 @@
     <Filter Include="03. Design\MouseMgr">
       <UniqueIdentifier>{9e01296f-6025-46ae-9588-3c34b383143e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\05. Button">
+    <Filter Include="01. Obj\03.Mouse">
+      <UniqueIdentifier>{d6dccbdc-b8ff-4078-9255-600f278d61ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\03.Mouse\01.GameMouse">
+      <UniqueIdentifier>{20264e39-3602-41e3-8233-484ea2116b26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\03.Mouse\Mouse">
+      <UniqueIdentifier>{c06cde4f-372f-4e09-8b32-87b97db7c5cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\03.Mouse\02.ButtonMouse">
+      <UniqueIdentifier>{32de2228-2ea2-4372-a438-b1451873a9f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\05.Button">
       <UniqueIdentifier>{b8f9215b-fd37-4dd4-b322-a07d7ccf0bd1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\05. Button\01.MyButton">
+    <Filter Include="01. Obj\05.Button\01.MyButton">
       <UniqueIdentifier>{74445d34-1f74-4dc9-a2ff-c6445e35cacf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\05. Button\02.AnimeButton">
+    <Filter Include="01. Obj\05.Button\02.AnimeButton">
       <UniqueIdentifier>{ae8010aa-375e-4e5b-8af2-5f5300287ed3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\03. Mouse\02.ButtonMouse">
-      <UniqueIdentifier>{32de2228-2ea2-4372-a438-b1451873a9f3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -322,7 +322,7 @@
       <Filter>03. Design\MapMgr</Filter>
     </ClInclude>
     <ClInclude Include="CGameMouse.h">
-      <Filter>01. Obj\03. Mouse\01.GameMouse</Filter>
+      <Filter>01. Obj\03.Mouse\01.GameMouse</Filter>
     </ClInclude>
     <ClInclude Include="CUIMgr.h">
       <Filter>03. Design\UIMgr</Filter>
@@ -379,7 +379,7 @@
       <Filter>04. UI\03.Wire_UI\SmallWire</Filter>
     </ClInclude>
     <ClInclude Include="CMouse.h">
-      <Filter>01. Obj\03. Mouse\Mouse</Filter>
+      <Filter>01. Obj\03.Mouse\Mouse</Filter>
     </ClInclude>
     <ClInclude Include="CObj.h">
       <Filter>01. Obj\Obj</Filter>
@@ -457,13 +457,13 @@
       <Filter>03. Design\MouseMgr</Filter>
     </ClInclude>
     <ClInclude Include="CMyButton.h">
-      <Filter>01. Obj\05. Button\01.MyButton</Filter>
+      <Filter>01. Obj\05.Button\01.MyButton</Filter>
     </ClInclude>
     <ClInclude Include="CAnimeButton.h">
-      <Filter>01. Obj\05. Button\02.AnimeButton</Filter>
+      <Filter>01. Obj\05.Button\02.AnimeButton</Filter>
     </ClInclude>
     <ClInclude Include="CButtonMouse.h">
-      <Filter>01. Obj\03. Mouse\02.ButtonMouse</Filter>
+      <Filter>01. Obj\03.Mouse\02.ButtonMouse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -534,7 +534,7 @@
       <Filter>03. Design\MapMgr</Filter>
     </ClCompile>
     <ClCompile Include="CGameMouse.cpp">
-      <Filter>01. Obj\03. Mouse\01.GameMouse</Filter>
+      <Filter>01. Obj\03.Mouse\01.GameMouse</Filter>
     </ClCompile>
     <ClCompile Include="CUIMgr.cpp">
       <Filter>03. Design\UIMgr</Filter>
@@ -567,7 +567,7 @@
       <Filter>04. UI\03.Wire_UI\SmallWire</Filter>
     </ClCompile>
     <ClCompile Include="CMouse.cpp">
-      <Filter>01. Obj\03. Mouse\Mouse</Filter>
+      <Filter>01. Obj\03.Mouse\Mouse</Filter>
     </ClCompile>
     <ClCompile Include="CObj.cpp">
       <Filter>01. Obj\Obj</Filter>
@@ -648,13 +648,13 @@
       <Filter>03. Design\MouseMgr</Filter>
     </ClCompile>
     <ClCompile Include="CMyButton.cpp">
-      <Filter>01. Obj\05. Button\01.MyButton</Filter>
+      <Filter>01. Obj\05.Button\01.MyButton</Filter>
     </ClCompile>
     <ClCompile Include="CAnimeButton.cpp">
-      <Filter>01. Obj\05. Button\02.AnimeButton</Filter>
+      <Filter>01. Obj\05.Button\02.AnimeButton</Filter>
     </ClCompile>
     <ClCompile Include="CButtonMouse.cpp">
-      <Filter>01. Obj\03. Mouse\02.ButtonMouse</Filter>
+      <Filter>01. Obj\03.Mouse\02.ButtonMouse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

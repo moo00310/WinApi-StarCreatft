@@ -9,6 +9,7 @@ private:
 
 public:
 	void Initialize_Map();
+	void Render(HDC hdc);
 
 	//TODO
 	// 인덱스를 사용해서 이동 가능 불가능 변경(건물, 광물)
@@ -18,12 +19,12 @@ public:
 
 	int GetTileType(Pos pos) 
 	{ 
-		if (pos.x < 0 || pos.x >74 || pos.y < 0 || pos.y >74) return 999;
+		if (pos.x < 0 || pos.x >127 || pos.y < 0 || pos.y >127) return 999;
 		return m_Map[pos.y][pos.x]; 
 	}
 	void SetTileType(Pos pos, int _Option)
 	{ 
-		if (pos.x < 0 || pos.x >74 || pos.y < 0 || pos.y >74) return;
+		if (pos.x < 0 || pos.x >127 || pos.y < 0 || pos.y >127) return;
 		m_Map[pos.y][pos.x] = _Option; 
 	}
 
@@ -51,6 +52,6 @@ public:
 private:
 	static CMapMgr* m_pInstance;
 	ULONGLONG m_dwTime;
-	vector<vector<int>> m_Map = vector<vector<int>>(75, vector<int>(75, 0));
+	vector<vector<int>> m_Map = vector<vector<int>>(128, vector<int>(128, 0));
 };
 

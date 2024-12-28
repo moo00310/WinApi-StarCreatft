@@ -58,7 +58,7 @@ void CTileMgr::Render(HDC hDC)
 	{
 		for (int j = iScrollX; j < iMaxX; ++j)
 		{
-			int		iIndex = i * TILEWIDTH + j;
+			int		iIndex = i * 75 + j;
 
 			if (0 > iIndex || m_vecTile.size() <= (size_t)iIndex)
 				continue;
@@ -101,7 +101,7 @@ void CTileMgr::Object_Tile(POINT pt, int iStartID, int CX, int CY, int iOption)
 	{
 		for (int j = 0; j < CX; ++j)
 		{
-			int ID = (iIndex + j) + 75 * i;
+			int ID = (iIndex + j) + 128 * i;
 			if (ID >= 5625) break;
 			dynamic_cast<CTile*>(m_vecTile[ID])->Set_DrawID((14 * i) + (j + iStartID));
 			dynamic_cast<CTile*>(m_vecTile[ID])->Set_Option(iOption);
@@ -165,6 +165,6 @@ void CTileMgr::Load_Tile()
 	}
 
 	CloseHandle(hFile);
-	MessageBox(g_hWnd, L"Load Save", L"성공", MB_OK);
+	//MessageBox(g_hWnd, L"Load Save", L"성공", MB_OK);
 
 }

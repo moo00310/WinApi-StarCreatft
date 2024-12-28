@@ -50,15 +50,15 @@ void CMyEdit::Render(HDC hDC)
 	float fScrollY = CScrollMgr::Get_Instance()->Get_ScrollY();
 
 	//그리드 그리기
-	for (int i = 0; i < 75; ++i)
+	for (int i = 0; i < 128; ++i)
 	{
 		MoveToEx(hDC, int(i * 32 + fScrollX), int(0 + fScrollY), nullptr);
-		LineTo(hDC, int(i * 32 + fScrollX), int(75 * 32 + fScrollY));
+		LineTo(hDC, int(i * 32 + fScrollX), int(128 * 32 + fScrollY));
 	}
-	for (int i = 0; i < 75; ++i)
+	for (int i = 0; i < 128; ++i)
 	{
 		MoveToEx(hDC, int(0 + fScrollX), int(i * 32 + fScrollY), nullptr);
-		LineTo(hDC, int(75 * 32 + fScrollX), int(i * 32 + fScrollY));
+		LineTo(hDC, int(128 * 32 + fScrollX), int(i * 32 + fScrollY));
 	}
 }
 

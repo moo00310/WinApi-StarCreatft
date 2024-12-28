@@ -3,11 +3,16 @@
 #include "CTileMgr.h"
 #include "CTile.h"
 #include "CObj.h"
+#include "CBmpMgr.h"
+#include "CScrollMgr.h"
 
 CMapMgr* CMapMgr::m_pInstance = nullptr;
 
 void CMapMgr::Initialize_Map()
 {
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/FightSpirit.bmp", L"FightSpirit");
+    //FightSpirit.bmp
+    // 
     //// Get_VecTile()에서 벡터 가져오기
      vector<CObj*> vecTile = *(CTileMgr::Get_Instance()->Get_VecTile());
  
@@ -31,4 +36,18 @@ void CMapMgr::Initialize_Map()
             }
         }
     }
+}
+
+void CMapMgr::Render(HDC hdc)
+{
+    HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"FightSpirit");
+    int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+    int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+    BitBlt(hdc,
+        0, 0, 4096, 4096,
+        hMemDC,
+        0 - iScrollX,
+        0 - iScrollY,
+        SRCCOPY);
 }

@@ -16,6 +16,7 @@ void CButtonMouse::Initialize()
     m_indexY = 0;
     m_tFrame.dwSpeed = 200;
     m_tFrame.dwTime = GetTickCount64();
+    m_eRender = RENDER_UI;
 }
 
 int CButtonMouse::Update()

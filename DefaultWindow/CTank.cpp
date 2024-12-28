@@ -57,7 +57,7 @@ int CTank::Update()
 
 void CTank::Late_Update()
 {
-	// 업데이트 무브 하는 방법으로 돌려야할듯
+	
 	Change_Motion();
 
 	if (m_bSiegeMode_Anime) return;
@@ -357,9 +357,22 @@ void CTank::Attack()
 void CTank::Hold()
 {
 	CObj* Enemy = nullptr;
-	//if (!m_bSiegeMode)
+	if (!m_bSiegeMode)
 	{
 		if ((Enemy = CCollisionMgr::Collision_RangeChack(this, *m_pMonsterList, m_tStat.m_iRange)) == nullptr)
+		{
+			m_eCurState = STATE_IDLE;
+		}
+		else
+		{
+			m_eAttackDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
+			m_eCurState = STATE_ATTACK;
+			AttackToEnemy(Enemy); // 실제 데미지 주는 코드
+		}
+	}
+	else
+	{
+		if ((Enemy = CCollisionMgr::Collision_RangeChack(this, *m_pMonsterList, m_tStat.m_iRange + 250.f)) == nullptr)
 		{
 			m_eCurState = STATE_IDLE;
 		}

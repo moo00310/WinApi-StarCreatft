@@ -79,7 +79,8 @@ void CStage::Late_Update()
 
 void CStage::Render(HDC hDC)
 {
-	CTileMgr::Get_Instance()->Render(hDC);
+	CMapMgr::Get_Instance()->Render(hDC);
+	//CTileMgr::Get_Instance()->Render(hDC);
 	CObjMgr::Get_Instance()->Render(hDC);
 	CUIMgr::Get_Instance()->Render(hDC);
 	CMouseMgr::Get_Instance()->Render(hDC);
@@ -88,5 +89,6 @@ void CStage::Render(HDC hDC)
 void CStage::Release()
 {
 	CObjMgr::Get_Instance()->Delete_ID(OBJ_PLAYER);
+	CObjMgr::Get_Instance()->Delete_ID(OBJ_BUILD);
 	CObjMgr::Get_Instance()->Delete_ID(OBJ_MONSTER);
 }

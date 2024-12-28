@@ -31,8 +31,7 @@ void CMyMenu::Initialize()
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MainMenu/Button/exit_button.bmp", L"exit_button");
 
 
-    m_pMouse = new CButtonMouse();
-    m_pMouse->Initialize();
+    CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CButtonMouse>::Create());
 
     CObj* pButton = CAbstractFactory<CMyButton>::CreateButton(200.f, 200.f, L"single");
     CObjMgr::Get_Instance()->Add_Object(OBJ_BUTTON, pButton);
@@ -60,14 +59,12 @@ void CMyMenu::Initialize()
 int CMyMenu::Update()
 {
     CObjMgr::Get_Instance()->Update();
-    m_pMouse->Update();
     return 0;
 }
 
 void CMyMenu::Late_Update()
 {
     CObjMgr::Get_Instance()->Late_Update();
-    m_pMouse->Late_Update();
 }
 
 void CMyMenu::Render(HDC hDC)
@@ -82,11 +79,12 @@ void CMyMenu::Render(HDC hDC)
         SRCCOPY);
 
     CObjMgr::Get_Instance()->Render(hDC);
-    m_pMouse->Render(hDC);
+
 }
 
 void CMyMenu::Release()
 {
     CObjMgr::Get_Instance()->Delete_ID(OBJ_BUTTON);
-    Safe_Delete<CButtonMouse*>(m_pMouse);
+    CObjMgr::Get_Instance()->Delete_ID(OBJ_MOUSE);
+
 }
