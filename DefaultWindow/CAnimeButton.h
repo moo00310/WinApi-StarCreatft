@@ -1,20 +1,19 @@
 #pragma once
-#include "CScene.h"
-#include "CMyButton.h"
-#include "CAnimeButton.h"
-
-
-class CMyMenu :   public CScene
+#include "CObj.h"
+class CAnimeButton : public CObj
 {
 public:
-	CMyMenu();
-	virtual ~CMyMenu();
-
+	CAnimeButton():m_bRender(false) {}
+	~CAnimeButton() {}
 public:
 	void Initialize() override;
 	int Update() override;
 	void Late_Update() override;
 	void Render(HDC hDC) override;
 	void Release() override;
+	void Move_Frame() override;
+
+private:
+	bool m_bRender;
 };
 

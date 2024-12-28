@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CScene.h"
-
 #include "CLogo.h"
 #include "CMyMenu.h"
 #include "CStage.h"

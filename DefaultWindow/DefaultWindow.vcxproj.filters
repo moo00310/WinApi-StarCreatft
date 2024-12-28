@@ -157,9 +157,6 @@
     <Filter Include="01. Obj\old\02. Monster">
       <UniqueIdentifier>{28dd5fd8-800c-41f8-8d4f-b441f0804b18}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\old\05. Button">
-      <UniqueIdentifier>{b8f9215b-fd37-4dd4-b322-a07d7ccf0bd1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Obj\02.Build\Build">
       <UniqueIdentifier>{852cd5ea-8e8b-4bcd-9664-68d955269ab1}</UniqueIdentifier>
     </Filter>
@@ -225,6 +222,15 @@
     </Filter>
     <Filter Include="03. Design\MouseMgr">
       <UniqueIdentifier>{9e01296f-6025-46ae-9588-3c34b383143e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\05. Button">
+      <UniqueIdentifier>{b8f9215b-fd37-4dd4-b322-a07d7ccf0bd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\05. Button\01.MyButton">
+      <UniqueIdentifier>{74445d34-1f74-4dc9-a2ff-c6445e35cacf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\05. Button\02.AnimeButton">
+      <UniqueIdentifier>{ae8010aa-375e-4e5b-8af2-5f5300287ed3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -293,9 +299,6 @@
     </ClInclude>
     <ClInclude Include="CMyMenu.h">
       <Filter>02. Scene\01. Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="CMyButton.h">
-      <Filter>01. Obj\old\05. Button</Filter>
     </ClInclude>
     <ClInclude Include="CStage.h">
       <Filter>02. Scene\03. Stage</Filter>
@@ -450,6 +453,12 @@
     <ClInclude Include="CMouseMgr.h">
       <Filter>03. Design\MouseMgr</Filter>
     </ClInclude>
+    <ClInclude Include="CMyButton.h">
+      <Filter>01. Obj\05. Button\01.MyButton</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimeButton.h">
+      <Filter>01. Obj\05. Button\02.AnimeButton</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -499,9 +508,6 @@
     </ClCompile>
     <ClCompile Include="CMyMenu.cpp">
       <Filter>02. Scene\01. Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="CMyButton.cpp">
-      <Filter>01. Obj\old\05. Button</Filter>
     </ClCompile>
     <ClCompile Include="CStage.cpp">
       <Filter>02. Scene\03. Stage</Filter>
@@ -634,6 +640,12 @@
     </ClCompile>
     <ClCompile Include="CMouseMgr.cpp">
       <Filter>03. Design\MouseMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CMyButton.cpp">
+      <Filter>01. Obj\05. Button\01.MyButton</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimeButton.cpp">
+      <Filter>01. Obj\05. Button\02.AnimeButton</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

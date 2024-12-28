@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClInclude Include="CAcademy.h" />
     <ClInclude Include="CAddon.h" />
+    <ClInclude Include="CAnimeButton.h" />
     <ClInclude Include="CArmory.h" />
     <ClInclude Include="CBarrck.h" />
     <ClInclude Include="CBloodEffect.h" />
@@ -213,6 +214,7 @@
   <ItemGroup>
     <ClCompile Include="CAcademy.cpp" />
     <ClCompile Include="CAddon.cpp" />
+    <ClCompile Include="CAnimeButton.cpp" />
     <ClCompile Include="CArmory.cpp" />
     <ClCompile Include="CBarrck.cpp" />
     <ClCompile Include="CBloodEffect.cpp" />

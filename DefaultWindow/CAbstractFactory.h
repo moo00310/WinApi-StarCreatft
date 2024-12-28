@@ -40,6 +40,15 @@ public:
 		return pObj;
 	}
 
+	static CObj* CreateButton(float _fX, float _fY, const TCHAR* _name)
+	{
+		CObj* pObj = new T;
+		pObj->Set_Pos(_fX, _fY);
+		pObj->Set_ImgKey(_name);
+		pObj->Initialize();
+		return pObj;
+	}
+
 
 	static CUI* CreateUI()
 	{

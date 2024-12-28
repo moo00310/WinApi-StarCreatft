@@ -17,22 +17,37 @@ void CMyMenu::Initialize()
 {
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MenuBack.bmp", L"MenuBack");
 
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Button/Start.bmp", L"Start");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Button/Edit.bmp", L"Edit");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Button/Exit.bmp", L"Exit");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MainMenu/SinglePlay/single0_34(320.116).bmp", L"single");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MainMenu/Editor/editor0_84(160.140).bmp", L"editor");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MainMenu/Exit/exit0_49(184.128).bmp", L"exit");
 
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MainMenu/SinglePlay/singleon0_59(252.124).bmp", L"singleon");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MainMenu/Editor/editoron0_19(204.132).bmp", L"editoron");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MainMenu/Exit/exiton0_29(216.136).bmp", L"exiton");
 
-    CObj* pButton = CAbstractFactory<CMyButton>::Create(200.f, 400.f);
-    pButton->Set_ImgKey(L"Start");
+  
+
+    CObj* pButton = CAbstractFactory<CMyButton>::CreateButton(200.f, 200.f, L"single");
     CObjMgr::Get_Instance()->Add_Object(OBJ_BUTTON, pButton);
 
-    pButton = CAbstractFactory<CMyButton>::Create(400.f, 400.f);
-    pButton->Set_ImgKey(L"Edit");
+    pButton = CAbstractFactory<CMyButton>::CreateButton(550.f, 200.f, L"editor");
     CObjMgr::Get_Instance()->Add_Object(OBJ_BUTTON, pButton);
 
-    pButton = CAbstractFactory<CMyButton>::Create(600.f, 400.f);
-    pButton->Set_ImgKey(L"Exit");
+    pButton = CAbstractFactory<CMyButton>::CreateButton(550.f, 400.f, L"exit");
     CObjMgr::Get_Instance()->Add_Object(OBJ_BUTTON, pButton);
+
+    //-------------------------------------------------------------------------------
+
+    pButton = CAbstractFactory<CAnimeButton>::CreateButton(200.f, 280.f, L"singleon");
+    CObjMgr::Get_Instance()->Add_Object(OBJ_BUTTON, pButton);
+
+    pButton = CAbstractFactory<CAnimeButton>::CreateButton(611.f, 220.f, L"editoron");
+    CObjMgr::Get_Instance()->Add_Object(OBJ_BUTTON, pButton);
+
+    pButton = CAbstractFactory<CAnimeButton>::CreateButton(580.f, 400.f, L"exiton");
+    CObjMgr::Get_Instance()->Add_Object(OBJ_BUTTON, pButton);
+
+    
 }
 
 int CMyMenu::Update()
