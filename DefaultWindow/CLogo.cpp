@@ -15,7 +15,7 @@ CLogo::~CLogo()
 
 void CLogo::Initialize()
 {
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Logo/Logo.bmp", L"Logo");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/StartDisplay.bmp", L"StartDisplay");
 }
 
 int CLogo::Update()
@@ -36,7 +36,7 @@ void CLogo::Late_Update()
 
 void CLogo::Render(HDC hDC)
 {
-	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"Logo");
+	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"StartDisplay");
 
 	BitBlt(hDC,
 		0, 0, WINCX, WINCY,

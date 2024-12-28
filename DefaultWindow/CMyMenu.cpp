@@ -15,7 +15,7 @@ CMyMenu::~CMyMenu()
 
 void CMyMenu::Initialize()
 {
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Menu/Menu.bmp", L"Menu");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MenuBack.bmp", L"MenuBack");
 
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Button/Start.bmp", L"Start");
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Button/Edit.bmp", L"Edit");
@@ -49,7 +49,7 @@ void CMyMenu::Late_Update()
 
 void CMyMenu::Render(HDC hDC)
 {
-    HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"Menu");
+    HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"MenuBack");
 
     BitBlt(hDC,
         0, 0, WINCX, WINCY,

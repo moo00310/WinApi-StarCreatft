@@ -354,4 +354,4 @@ const map<OBJ_TYPE, std::tuple<int, int, int, int>> ObjCost =
 	{OT_CmdNuke,           {100, 100, 0, 80 * Frame}}
 };
 
-const fPOINT BuildTemplate_Size = { 160, 128 };
+const fPOINT BuildTemplate_Size = { 160, 128 }; 
