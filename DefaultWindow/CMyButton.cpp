@@ -4,8 +4,10 @@
 #include "CSceneMgr.h"
 #include "CKeyMgr.h"
 
-CMyButton::CMyButton()
+CMyButton::CMyButton() : m_iCount(0), m_Name(nullptr)
 {
+	ZeroMemory(&m_tButton, sizeof(INFO));
+	ZeroMemory(&m_tButtonRect, sizeof(INFO));
 }
 
 CMyButton::~CMyButton()
@@ -25,6 +27,9 @@ void CMyButton::Initialize()
 		m_tFrame.iCurCount = 0;
 		m_tFrame.dwSpeed = 100;
 		m_tFrame.dwTime = GetTickCount64();
+
+		m_tButton = { 200.f, 150.f,143.f,22.f };
+		m_Name = L"single_button";
 	}
 	else if (!lstrcmp(L"editor", m_pImgKey))
 	{
@@ -36,6 +41,9 @@ void CMyButton::Initialize()
 		m_tFrame.iCurCount = 0;
 		m_tFrame.dwSpeed = 100;
 		m_tFrame.dwTime = GetTickCount64();
+
+		m_tButton = { 650.f, 150.f, 70.f, 25.f};
+		m_Name = L"editor_button";
 	}
 
 	else if (!lstrcmp(L"exit", m_pImgKey))
@@ -48,6 +56,9 @@ void CMyButton::Initialize()
 		m_tFrame.iCurCount = 0;
 		m_tFrame.dwSpeed = 100;
 		m_tFrame.dwTime = GetTickCount64();
+
+		m_tButton = { 550.f, 500.f, 49.f, 24.f};
+		m_Name = L"exit_button";
 	}
 	
 
@@ -57,6 +68,7 @@ void CMyButton::Initialize()
 int CMyButton::Update()
 {
 	__super::Update_Rect();
+	Update_Button_Rect();
 	Move_Frame();
 	return OBJ_NOEVENT;
 }
@@ -83,6 +95,11 @@ void CMyButton::Late_Update()
 
 			return;
 		}
+		m_iCount = 1;
+	}
+	else
+	{
+		m_iCount = 0;
 	}
 }
 
@@ -91,16 +108,30 @@ void CMyButton::Render(HDC hDC)
 	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
 	
 	GdiTransparentBlt(hDC,			
-						m_tRect.left,	
-						m_tRect.top,
-						(int)m_tInfo.fCX,	
-						(int)m_tInfo.fCY,
-						hMemDC,				
-						(int)m_tInfo.fCX * m_tFrame.iCurCount,
-						0,
-						(int)m_tInfo.fCX,	
-						(int)m_tInfo.fCY,
-						RGB(0, 0, 0));
+		m_tRect.left,	
+		m_tRect.top,
+		(int)m_tInfo.fCX,	
+		(int)m_tInfo.fCY,
+		hMemDC,				
+		(int)m_tInfo.fCX * m_tFrame.iCurCount,
+		0,
+		(int)m_tInfo.fCX,	
+		(int)m_tInfo.fCY,
+		RGB(0, 0, 0));
+
+	HDC		hButtonDC = CBmpMgr::Get_Instance()->Find_Image(m_Name);
+
+	GdiTransparentBlt(hDC,
+		m_tButtonRect.left,
+		m_tButtonRect.top,
+		(int)m_tButton.fCX,
+		(int)m_tButton.fCY,
+		hButtonDC,
+		(int)m_tButton.fCX * m_iCount,
+		0,
+		(int)m_tButton.fCX,
+		(int)m_tButton.fCY,
+		RGB(0, 0, 0));
 }
 
 void CMyButton::Release()
@@ -118,4 +149,12 @@ void CMyButton::Move_Frame()
 
 		m_tFrame.dwTime = GetTickCount64();
 	}
+}
+
+void CMyButton::Update_Button_Rect()
+{
+	m_tButtonRect.left = LONG(m_tButton.fX - (m_tButton.fCX * 0.5f));
+	m_tButtonRect.top = LONG(m_tButton.fY - (m_tButton.fCY * 0.5f));
+	m_tButtonRect.right = LONG(m_tButton.fX + (m_tButton.fCX * 0.5f));
+	m_tButtonRect.bottom = LONG(m_tButton.fY + (m_tButton.fCY * 0.5f));
 }

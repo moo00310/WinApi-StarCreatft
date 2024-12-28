@@ -2,6 +2,7 @@
 #include "CScene.h"
 #include "CMyButton.h"
 #include "CAnimeButton.h"
+#include "CButtonMouse.h"
 
 
 class CMyMenu :   public CScene
@@ -16,5 +17,7 @@ public:
 	void Late_Update() override;
 	void Render(HDC hDC) override;
 	void Release() override;
+
+	CButtonMouse* m_pMouse;
 };
 

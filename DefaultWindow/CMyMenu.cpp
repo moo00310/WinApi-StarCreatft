@@ -4,7 +4,7 @@
 #include "CAbstractFactory.h"
 #include "CObjMgr.h"
 
-CMyMenu::CMyMenu()
+CMyMenu::CMyMenu():m_pMouse(nullptr)
 {
 }
 
@@ -26,6 +26,13 @@ void CMyMenu::Initialize()
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MainMenu/Exit/exiton0_29(216.136).bmp", L"exiton");
 
   
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MainMenu/Button/single_button.bmp", L"single_button");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MainMenu/Button/editor_button.bmp", L"editor_button");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MainMenu/Button/exit_button.bmp", L"exit_button");
+
+
+    m_pMouse = new CButtonMouse();
+    m_pMouse->Initialize();
 
     CObj* pButton = CAbstractFactory<CMyButton>::CreateButton(200.f, 200.f, L"single");
     CObjMgr::Get_Instance()->Add_Object(OBJ_BUTTON, pButton);
@@ -38,7 +45,7 @@ void CMyMenu::Initialize()
 
     //-------------------------------------------------------------------------------
 
-    pButton = CAbstractFactory<CAnimeButton>::CreateButton(200.f, 280.f, L"singleon");
+    pButton = CAbstractFactory<CAnimeButton>::CreateButton(200.f, 270.f, L"singleon");
     CObjMgr::Get_Instance()->Add_Object(OBJ_BUTTON, pButton);
 
     pButton = CAbstractFactory<CAnimeButton>::CreateButton(611.f, 220.f, L"editoron");
@@ -53,13 +60,14 @@ void CMyMenu::Initialize()
 int CMyMenu::Update()
 {
     CObjMgr::Get_Instance()->Update();
-
+    m_pMouse->Update();
     return 0;
 }
 
 void CMyMenu::Late_Update()
 {
     CObjMgr::Get_Instance()->Late_Update();
+    m_pMouse->Late_Update();
 }
 
 void CMyMenu::Render(HDC hDC)
@@ -74,9 +82,11 @@ void CMyMenu::Render(HDC hDC)
         SRCCOPY);
 
     CObjMgr::Get_Instance()->Render(hDC);
+    m_pMouse->Render(hDC);
 }
 
 void CMyMenu::Release()
 {
     CObjMgr::Get_Instance()->Delete_ID(OBJ_BUTTON);
+    Safe_Delete<CButtonMouse*>(m_pMouse);
 }

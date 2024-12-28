@@ -56,11 +56,3 @@ private:
 	int m_iDrawID;
 };
 
-
-/*---------------
-	GameMouse
---------------------*/
-class GameMouse : public CMouse
-{
-
-};

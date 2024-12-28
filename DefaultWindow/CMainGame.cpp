@@ -49,7 +49,7 @@ void CMainGame::Initialize()
 	//	}
 	//
 	//#endif // _DEBUG
-	
+	//
 //#ifdef _DEBUG
 //
 //		if (m_dwTime + 2000 <= GetTickCount64())

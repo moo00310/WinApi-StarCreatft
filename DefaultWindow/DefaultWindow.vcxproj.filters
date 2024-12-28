@@ -232,6 +232,9 @@
     <Filter Include="01. Obj\05. Button\02.AnimeButton">
       <UniqueIdentifier>{ae8010aa-375e-4e5b-8af2-5f5300287ed3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\03. Mouse\02.ButtonMouse">
+      <UniqueIdentifier>{32de2228-2ea2-4372-a438-b1451873a9f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -459,6 +462,9 @@
     <ClInclude Include="CAnimeButton.h">
       <Filter>01. Obj\05. Button\02.AnimeButton</Filter>
     </ClInclude>
+    <ClInclude Include="CButtonMouse.h">
+      <Filter>01. Obj\03. Mouse\02.ButtonMouse</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -646,6 +652,9 @@
     </ClCompile>
     <ClCompile Include="CAnimeButton.cpp">
       <Filter>01. Obj\05. Button\02.AnimeButton</Filter>
+    </ClCompile>
+    <ClCompile Include="CButtonMouse.cpp">
+      <Filter>01. Obj\03. Mouse\02.ButtonMouse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

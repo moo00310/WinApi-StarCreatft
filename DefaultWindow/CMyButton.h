@@ -16,5 +16,12 @@ public:
 	void Release()		override;
 	void Move_Frame() override;
 
+	void Update_Button_Rect();
+
+	INFO m_tButton;
+	RECT m_tButtonRect;
+
+	int m_iCount;
+	const TCHAR* m_Name;
 };
 

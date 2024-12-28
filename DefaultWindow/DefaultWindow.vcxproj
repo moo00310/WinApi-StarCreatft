@@ -146,6 +146,7 @@
     <ClInclude Include="CBmpMgr.h" />
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CBulletEffect.h" />
+    <ClInclude Include="CButtonMouse.h" />
     <ClInclude Include="CcmdNuke.h" />
     <ClInclude Include="CCollisionMgr.h" />
     <ClInclude Include="CCommedCenter.h" />
@@ -222,6 +223,7 @@
     <ClCompile Include="CBmpMgr.cpp" />
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CBulletEffect.cpp" />
+    <ClCompile Include="CButtonMouse.cpp" />
     <ClCompile Include="CcmdNuke.cpp" />
     <ClCompile Include="CCollisionMgr.cpp" />
     <ClCompile Include="CCommedCenter.cpp" />
