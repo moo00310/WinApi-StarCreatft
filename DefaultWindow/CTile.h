@@ -9,10 +9,7 @@ public:
 	virtual ~CTile();
 
 public:
-	int			Get_DrawID() { return m_iDrawID; }
 	int			Get_Option() { return m_iOption; }
-
-	void		Set_DrawID(int _iDrawID) { m_iDrawID = _iDrawID;  }
 	void		Set_Option(int _iOption) { m_iOption = _iOption; }
 
 public:
@@ -23,10 +20,7 @@ public:
 	void Release() override;
 
 private:
-	int		m_iDrawID;
 	int		m_iOption;
-
-	// CObj을(를) 통해 상속됨
 	void Move_Frame() override;
 };
 

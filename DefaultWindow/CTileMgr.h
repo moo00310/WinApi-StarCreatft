@@ -11,13 +11,12 @@ private:
 
 public:
 	void Initialize();
-	int Update() ;
+	int Update();
 	void Late_Update() ;
 	void Render(HDC hDC) ;
 	void Release() ;
 
-	void		Picking_Tile(POINT pt, int iDrawID_x, int iOption);
-	void		Object_Tile(POINT pt, int iStartID, int CX, int CY, int iOption);
+	void		Picking_Tile(POINT pt, int iOption);
 
 	void		Save_Tile();
 	void		Load_Tile();

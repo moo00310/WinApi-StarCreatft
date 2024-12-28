@@ -19,7 +19,7 @@ public:
 private:
 	void	Key_Input();
 	void	TileChange();
-	void	ChangeTileID(TILE_GROUP eGroup);
+	void	ChangeTileID();
 
 private:
 	int		m_TileID;

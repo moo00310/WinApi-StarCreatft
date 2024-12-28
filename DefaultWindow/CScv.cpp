@@ -363,7 +363,7 @@ void CScv::BuildAime()
 	if (m_iBuildCount < (m_iMyBuildTIme * 0.2f) * 1)
 	{
 		//해당 좌표로 점점 이동이 끝났으면 건물 방향으로 계속 수리 모션
-		fPOINT targetPos = { m_pos.x * 32 , m_pos.y * 32 - 50 };
+		fPOINT targetPos = { m_pos.x * 32.f , m_pos.y * 32.f - 50 };
 		if (GoToTarget(targetPos))
 		{
 			m_eDir = GetDirection( m_tInfo.fX, m_tInfo.fY, m_pos.x * 32.f, m_pos.y * 32.f);
@@ -373,7 +373,7 @@ void CScv::BuildAime()
 	}
 	else if (m_iBuildCount < (m_iMyBuildTIme * 0.2f) * 2)
 	{
-		fPOINT targetPos = { m_pos.x * 32 + 50 , m_pos.y * 32 + 50 };
+		fPOINT targetPos = { m_pos.x * 32.f + 50.f , m_pos.y * 32.f + 50.f };
 		if (GoToTarget(targetPos))
 		{
 			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, m_pos.x * 32.f, m_pos.y * 32.f);
@@ -384,7 +384,7 @@ void CScv::BuildAime()
 	}
 	else if (m_iBuildCount < (m_iMyBuildTIme * 0.2f) * 3)
 	{
-		fPOINT targetPos = { m_pos.x * 32 - 50 , m_pos.y * 32 + 50 };
+		fPOINT targetPos = { m_pos.x * 32.f - 50.f , m_pos.y * 32.f + 50.f };
 		if (GoToTarget(targetPos))
 		{
 			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, m_pos.x * 32.f, m_pos.y * 32.f);
@@ -393,7 +393,7 @@ void CScv::BuildAime()
 	}
 	else if (m_iBuildCount < (m_iMyBuildTIme * 0.2f) * 4)
 	{
-		fPOINT targetPos = { m_pos.x * 32 + 50 , m_pos.y * 32 - 50 };
+		fPOINT targetPos = { m_pos.x * 32.f + 50.f , m_pos.y * 32.f - 50.f };
 		if (GoToTarget(targetPos))
 		{
 			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, m_pos.x * 32.f, m_pos.y * 32.f);
@@ -402,21 +402,21 @@ void CScv::BuildAime()
 	}
 	else if (m_iBuildCount < (m_iMyBuildTIme * 0.2f) * 5)
 	{
-		fPOINT targetPos = { m_pos.x * 32 - 75 , m_pos.y * 32 + 30 };
+		fPOINT targetPos = { m_pos.x * 32.f - 75.f , m_pos.y * 32.f + 30.f };
 		if (GoToTarget(targetPos))
 		{
 			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, m_pos.x * 32.f, m_pos.y * 32.f);
 			m_eCurState = STATE_ATTACK;
 		}
 	}
-	else if (m_iBuildCount > (m_iMyBuildTIme * 0.2f) * 5)
+	else if (m_iBuildCount > (m_iMyBuildTIme * 0.2f) * 5.f)
 	{
 		m_iBuildCount = 0;
 		m_eInput = IP_HOLD;
 	}
 
 	if (m_tFrame.iCurCount == 2 && m_iBuildCount % 15 == 0)
-		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CScvHit>::CreateFX(m_pos.x * 32 - (m_pos.x * 32 - Get_Info().fX)*0.5, m_pos.y * 32 - (m_pos.y * 32 - Get_Info().fY)*0.5));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CScvHit>::CreateFX(m_pos.x * 32.f - (m_pos.x * 32.f - Get_Info().fX)*0.5f, m_pos.y * 32.f - (m_pos.y * 32.f - Get_Info().fY)*0.5f));
 	m_iBuildCount++;
 }
 

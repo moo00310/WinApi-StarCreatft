@@ -44,7 +44,6 @@ void CStage::Initialize()
 	CUIMgr::Get_Instance()->Initalize(); 	// UI 매니저 초기화 
 
 	// 마우스 생산
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CGameMouse>::Create());
 	CMouseMgr::Get_Instance()->Add_Mouse(CAbstractFactory<CGameMouse>::Create());
 
 	// 적 마린 생산
@@ -61,7 +60,7 @@ void CStage::Initialize()
 int CStage::Update()
 {
 	CObjMgr::Get_Instance()->Update();
-	CTileMgr::Get_Instance()->Update();
+	//CTileMgr::Get_Instance()->Update();
 	CUIMgr::Get_Instance()->Update();
 	CMouseMgr::Get_Instance()->Update();
 
@@ -71,7 +70,7 @@ int CStage::Update()
 void CStage::Late_Update()
 {
 	CObjMgr::Get_Instance()->Late_Update();
-	CTileMgr::Get_Instance()->Late_Update();
+	//CTileMgr::Get_Instance()->Late_Update();
 	CUIMgr::Get_Instance()->Late_Update();
 	CMouseMgr::Get_Instance()->Late_Update();
 }

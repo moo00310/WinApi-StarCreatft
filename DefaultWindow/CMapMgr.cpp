@@ -10,9 +10,7 @@ CMapMgr* CMapMgr::m_pInstance = nullptr;
 
 void CMapMgr::Initialize_Map()
 {
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/FightSpirit.bmp", L"FightSpirit");
-    //FightSpirit.bmp
-    // 
+
     //// Get_VecTile()에서 벡터 가져오기
      vector<CObj*> vecTile = *(CTileMgr::Get_Instance()->Get_VecTile());
  
@@ -26,7 +24,6 @@ void CMapMgr::Initialize_Map()
                  CTile* pTile = dynamic_cast<CTile*>(vecTile[index]);
                  if (pTile)
                  {
-
                      // y, x
                      m_Map[i][j] = pTile->Get_Option();
                  }

@@ -31,6 +31,7 @@ void CMainGame::Initialize()
 	m_hDC = GetDC(g_hWnd);
 	CSoundMgr::Get_Instance()->Initialize();
 
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/FightSpirit.bmp", L"FightSpirit");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Back.bmp", L"Back");
 	CSceneMgr::Get_Instance()->Set_Scene(SC_LOGO);
 	CMemoryPoolMgr::Get_Instance(300, 100);

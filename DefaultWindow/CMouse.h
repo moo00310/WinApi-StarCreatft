@@ -45,14 +45,13 @@ public:
 	void Render(HDC hDC) override;
 	void Release() override;
 
-	void GetEditInfo(EditType _type , int _id)
+	void GetEditInfo(int _id)
 	{ 
-		m_eEditType = _type;
-		m_iDrawID = _id; 
+		m_iOption = _id;
 	}
 
 private:
 	EditType m_eEditType;
-	int m_iDrawID;
+	int m_iOption;
 };
 

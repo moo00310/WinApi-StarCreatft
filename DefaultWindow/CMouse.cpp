@@ -52,7 +52,7 @@ void CMouse::Move_Frame()
     EditMouse
 --------------------*/
 
-EditMouse::EditMouse() : m_iDrawID(0) , m_eEditType(ET_END)
+EditMouse::EditMouse() : m_iOption(0) , m_eEditType(ET_END)
 {
 }
 
@@ -66,7 +66,7 @@ void EditMouse::Initialize()
     m_tInfo.fCX = 32.f;
     m_tInfo.fCY = 32.f;
 
-    m_pImgKey = L"Tile";
+    m_pImgKey = L"Tilesquare";
 }
 
 int EditMouse::Update()
@@ -77,8 +77,8 @@ int EditMouse::Update()
     ScreenToClient(g_hWnd, &ptMouse);
     SetScroll();
   
-    m_tInfo.fX = (float)ptMouse.x - m_iScrollX;
-    m_tInfo.fY = (float)ptMouse.y - m_iScrollY;
+    m_tInfo.fX = (float)ptMouse.x;
+    m_tInfo.fY = (float)ptMouse.y;
 
     __super::Update_Rect();
 
@@ -96,20 +96,19 @@ void EditMouse::Late_Update()
 void EditMouse::Render(HDC hDC)
 {
     HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
-    int iX(0), iY(0);
 
-    iX = m_iDrawID % 14;
-    iY = m_iDrawID / 14;
+    GdiTransparentBlt(hDC,			// 복사 받을 DC
+        m_tRect.left,	// 복사 받을 위치 좌표 X, Y	
+        m_tRect.top,
+        (int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
+        (int)m_tInfo.fCY,
+        hMemDC,						// 복사할 이미지 DC	
+        (int)m_tInfo.fCX * m_iOption, // 비트맵 출력 시작 좌표(Left, top)
+        0,
+        (int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
+        (int)m_tInfo.fCY,
+        RGB(0, 255, 0));		// 제거할 색상
 
-    BitBlt(hDC,
-        m_tRect.left + m_iScrollX,
-        m_tRect.top + m_iScrollY,
-        TILECX,
-        TILECY,
-        hMemDC,
-        TILECX * iX,
-        TILECY * iY,
-        SRCCOPY);
 }
 
 void EditMouse::Release()

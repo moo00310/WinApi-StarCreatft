@@ -58,7 +58,7 @@ void CTileMgr::Render(HDC hDC)
 	{
 		for (int j = iScrollX; j < iMaxX; ++j)
 		{
-			int		iIndex = i * 75 + j;
+			int		iIndex = i * 128 + j;
 
 			if (0 > iIndex || m_vecTile.size() <= (size_t)iIndex)
 				continue;
@@ -75,7 +75,7 @@ void CTileMgr::Release()
 	m_vecTile.shrink_to_fit();
 }
 
-void CTileMgr::Picking_Tile(POINT pt, int iDrawID, int iOption)
+void CTileMgr::Picking_Tile(POINT pt, int iOption)
 {
 	int		x = pt.x / TILECX;
 	int		y = pt.y / TILECY;
@@ -85,28 +85,8 @@ void CTileMgr::Picking_Tile(POINT pt, int iDrawID, int iOption)
 	if (0 > iIndex || (size_t)iIndex >= m_vecTile.size())
 		return;
 
-	dynamic_cast<CTile*>(m_vecTile[iIndex])->Set_DrawID(iDrawID);
 	dynamic_cast<CTile*>(m_vecTile[iIndex])->Set_Option(iOption);
 
-}
-
-void CTileMgr::Object_Tile(POINT pt, int iStartID, int CX, int CY, int iOption)
-{
-	int		x = pt.x / TILECX;
-	int		y = pt.y / TILECY;
-
-	int	iIndex = y * TILEHIGHT + x;
-
-	for (int i = 0; i < CY; ++i)
-	{
-		for (int j = 0; j < CX; ++j)
-		{
-			int ID = (iIndex + j) + 128 * i;
-			if (ID >= 5625) break;
-			dynamic_cast<CTile*>(m_vecTile[ID])->Set_DrawID((14 * i) + (j + iStartID));
-			dynamic_cast<CTile*>(m_vecTile[ID])->Set_Option(iOption);
-		}
-	}
 }
 
 void CTileMgr::Save_Tile()
@@ -122,7 +102,6 @@ void CTileMgr::Save_Tile()
 
 	for (auto& pTile : m_vecTile)
 	{
-		iDrawID = dynamic_cast<CTile*>(pTile)->Get_DrawID();
 		iOption = dynamic_cast<CTile*>(pTile)->Get_Option();
 
 		WriteFile(hFile, pTile->Get_Info_Pointer(), sizeof(INFO), &dwByte, NULL);
@@ -158,7 +137,6 @@ void CTileMgr::Load_Tile()
 			break;
 
 		CObj* pTile = CAbstractFactory<CTile>::Create(tTile.fX, tTile.fY);
-		dynamic_cast<CTile*>(pTile)->Set_DrawID(iDrawID);
 		dynamic_cast<CTile*>(pTile)->Set_Option(iOption);
 
 		m_vecTile.push_back(pTile);
