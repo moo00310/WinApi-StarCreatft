@@ -20,6 +20,7 @@
 #include "CAcademy.h"
 #include "CArmory.h"
 #include "CScienceFacility.h"
+#include "CGameMgr.h"
 
 void CScv::Initialize()
 {
@@ -202,9 +203,13 @@ void CScv::KeyInput()
 
 		if (CKeyMgr::Get_Instance()->Key_Down('A'))
 		{
-			CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_Academy);
-			m_eBuildType = OT_Academy;
-			m_bBuildStructure = false;
+			if (CGameMgr::Get_Instance()->GetTechCount(TECH_Braack) > 0)
+			{
+				CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_Academy);
+				m_eBuildType = OT_Academy;
+				m_bBuildStructure = false;
+			}
+			
 		}
 
 		if (CKeyMgr::Get_Instance()->Key_Down('B'))
@@ -225,30 +230,43 @@ void CScv::KeyInput()
 
 		if (CKeyMgr::Get_Instance()->Key_Down('F'))
 		{
-			CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_Factory);
-			m_eBuildType = OT_Factory;
-			m_BuildAdvancedStructure = false;
+			if (CGameMgr::Get_Instance()->GetTechCount(TECH_Braack) > 0)
+			{
+				CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_Factory);
+				m_eBuildType = OT_Factory;
+				m_BuildAdvancedStructure = false;
+			}
 		}
 
 		if (CKeyMgr::Get_Instance()->Key_Down('S'))
 		{
-			CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_Starport);
-			m_eBuildType = OT_Starport;
-			m_BuildAdvancedStructure = false;
+			if (CGameMgr::Get_Instance()->GetTechCount(TECH_Factory) > 0)
+			{
+				CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_Starport);
+				m_eBuildType = OT_Starport;
+				m_BuildAdvancedStructure = false;
+			}
 		}
 
 		if (CKeyMgr::Get_Instance()->Key_Down('A'))
 		{
-			CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_Armory);
-			m_eBuildType = OT_Armory;
-			m_BuildAdvancedStructure = false;
+			if (CGameMgr::Get_Instance()->GetTechCount(TECH_Factory) > 0)
+			{
+				CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_Armory);
+				m_eBuildType = OT_Armory;
+				m_BuildAdvancedStructure = false;
+			}
+			
 		}
 
 		if (CKeyMgr::Get_Instance()->Key_Down('I'))
 		{
-			CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_ScienceFacility);
-			m_eBuildType = OT_ScienceFacility;
-			m_BuildAdvancedStructure = false;
+			if (CGameMgr::Get_Instance()->GetTechCount(TECH_Starport) > 0)
+			{
+				CMouseMgr::Get_Instance()->Get_Mouse()->SetBuild_Img(OT_ScienceFacility);
+				m_eBuildType = OT_ScienceFacility;
+				m_BuildAdvancedStructure = false;
+			}
 		}
 	}
 
@@ -409,6 +427,10 @@ void CScv::BuildAime()
 	else if (m_iBuildCount > (m_iMyBuildTIme * 0.2f) * 5.f)
 	{
 		m_iBuildCount = 0;
+		if(m_eBuildType == OT_Commend)
+			CGameMgr::Get_Instance()->Add_MaxPop(10);
+		if (m_eBuildType == OT_Suffly)
+			CGameMgr::Get_Instance()->Add_MaxPop(8);
 		m_eInput = IP_HOLD;
 	}
 

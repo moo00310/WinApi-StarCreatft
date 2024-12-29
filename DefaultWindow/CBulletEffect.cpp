@@ -7,8 +7,6 @@
 ----------------------*/
 void CScvHit::Initialize()
 {
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/SCV/SCVEffect.bmp", L"SCVEffect");
-
 	m_pImgKey = L"SCVEffect";
 	m_tInfo.fCX = 48.f;
 	m_tInfo.fCY = 48.f;
@@ -99,8 +97,6 @@ void CScvHit::Render(HDC hDC)
 
 void CMarineHit::Initialize()
 {
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Marine/MarineGunSpark.bmp", L"MarineGunSpark");
-
 	m_pImgKey = L"MarineGunSpark";
 	m_tInfo.fCX = 40.f;
 	m_tInfo.fCY = 40.f;
@@ -207,8 +203,7 @@ void CMarineHit::Render(HDC hDC)
 
 void CGhostHit::Initialize()
 {
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Ghost/GhostShot.bmp", L"GhostShot");
-
+	
 	m_pImgKey = L"GhostShot";
 	m_tInfo.fCX = 20.f;
 	m_tInfo.fCY = 20.f;
@@ -301,8 +296,6 @@ void CGhostHit::Render(HDC hDC)
 
 void CTankHit::Initialize()
 {
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/TankAtt/TankHit.bmp", L"TankHit");
-
 	m_pImgKey = L"TankHit";
 	m_tInfo.fCX = 56.f;
 	m_tInfo.fCY = 56.f;
@@ -385,8 +378,7 @@ void CTankHit::Render(HDC hDC)
 
 void CSiegeTankHit::Initialize()
 {
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/TankAtt/Tank(100,108).bmp", L"SiegeTankHit");
-
+	
 	m_pImgKey = L"SiegeTankHit";
 	m_tInfo.fCX = 100.f;
 	m_tInfo.fCY = 108.f;

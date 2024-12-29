@@ -339,8 +339,8 @@ const map<OBJ_TYPE, std::tuple<int, int, int, int>> ObjCost =
 	{OT_Science_Vessel,    {100, 225, 2, 80 * Frame}},
 
 	// 건물 이름, {미네랄, 가스, 제공되는 인구수, 소요시간}
-	{OT_Commend,           {400,  0, 10, 120 * Frame}},
-	{OT_Suffly,            {100,  0,  8, 40 * Frame}},
+	{OT_Commend,           {400,  0, 0, 120 * Frame}},
+	{OT_Suffly,            {100,  0,  0, 40 * Frame}},
 	{OT_Refinery,          {100,  0,  0, 40 * Frame}},
 	{OT_Barrck,            {150,  0,  0, 80 * Frame}},
 	{OT_Academy,           {150,  0,  0, 80 * Frame}},
@@ -355,3 +355,14 @@ const map<OBJ_TYPE, std::tuple<int, int, int, int>> ObjCost =
 };
 
 const fPOINT BuildTemplate_Size = { 160, 128 }; 
+
+
+enum Tech
+{
+	TECH_Braack,
+	TECH_Academy,
+	TECH_Factory,
+	TECH_Starport,
+	TECH_CovertOps,
+	TECH_END
+};

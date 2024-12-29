@@ -3,6 +3,7 @@
 #include "CMapMgr.h"
 #include "CBmpMgr.h"
 #include "CKeyMgr.h"
+#include "CGameMgr.h"
 
 void CAcademy::Initialize()
 {
@@ -33,6 +34,7 @@ int CAcademy::Update()
         // 터지는이펙트 & 사운드
 
         UnBlock_Map(); // 바닥 이동 불가 해제
+        CGameMgr::Get_Instance()->AddTechCount(TECH_Academy, -1);
         return OBJ_DEAD;
     }
 
@@ -157,7 +159,10 @@ void CAcademy::Change_Motion()
         m_tFrame.iCurCount = 0;
         m_tFrame.iFrameEnd = 0;
         if (m_iMyBuildTIme < m_iBuildCount)
+        {
             m_eCurState_Build = BS_IDLE;
+            CGameMgr::Get_Instance()->AddTechCount(TECH_Academy, 1);
+        }
 
         m_iBuildCount++;
         Add_Stat_hp(m_tStat.m_iMaxHp / m_iMyBuildTIme);

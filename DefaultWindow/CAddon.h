@@ -3,7 +3,7 @@
 class CAddon : public CBuild
 {
 public:
-	CAddon() {}
+	CAddon(): isDoon(false) {}
 	~CAddon() {}
 public:
 	void Initialize() override;
@@ -13,5 +13,10 @@ public:
 	void Release() override;
 	void KeyInput() override;
 	void Change_Motion() override;
+
+public:
+	bool IsBuild() { return isDoon; }
+private:
+	bool isDoon;
 };
 

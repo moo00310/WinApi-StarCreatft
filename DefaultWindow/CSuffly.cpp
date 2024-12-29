@@ -2,11 +2,11 @@
 #include "CSuffly.h"
 #include "CMapMgr.h"
 #include "CBmpMgr.h"
+#include "CGameMgr.h"
 
 void CSuffly::Initialize()
 {
     m_Map = CMapMgr::Get_Instance()->GetMap();
-    
  
     m_tInfo.fCX = 96.f;
     m_tInfo.fCY = 128.f;

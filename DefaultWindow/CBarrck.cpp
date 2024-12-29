@@ -4,6 +4,7 @@
 #include "CObjMgr.h"
 #include "CBmpMgr.h"
 #include "CKeyMgr.h"
+#include "CGameMgr.h"
 
 CBarrck::CBarrck()
 {
@@ -44,6 +45,7 @@ int CBarrck::Update()
         // 터지는이펙트 & 사운드
 
         UnBlock_Map(); // 바닥 이동 불가 해제
+        CGameMgr::Get_Instance()->AddTechCount(TECH_Braack, -1);
         return OBJ_DEAD;
     }
 
@@ -156,8 +158,11 @@ void CBarrck::Change_Motion()
         m_tFrame.iCurCount = 0;
         m_tFrame.iFrameEnd = 0;
         if (m_iMyBuildTIme < m_iBuildCount)
+        {
+            CGameMgr::Get_Instance()->AddTechCount(TECH_Braack, 1);
             m_eCurState_Build = BS_IDLE;
-
+        }
+           
         m_iBuildCount++;
         Add_Stat_hp(m_tStat.m_iMaxHp / m_iMyBuildTIme);
     }
@@ -200,21 +205,23 @@ void CBarrck::KeyInput()
     // 마린 생산
     if (CKeyMgr::Get_Instance()->Key_Down('A'))
     {
-        if (m_listSpawn.size() < 5)
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Marine))
             m_listSpawn.push_back(OT_Marine);
     }
 
     // 메딕 생산
     if (CKeyMgr::Get_Instance()->Key_Down('E'))
     {
-        if (m_listSpawn.size() < 5)
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->GetTechCount(TECH_Academy) > 0 && 
+            CGameMgr::Get_Instance()->isBuying(OT_Medic))
             m_listSpawn.push_back(OT_Medic);
     }
 
     // 고스트 생산
     if (CKeyMgr::Get_Instance()->Key_Down('G'))
     {
-        if (m_listSpawn.size() < 5)
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->GetTechCount(TECH_CovertOps) > 0 && 
+            CGameMgr::Get_Instance()->isBuying(OT_Ghost))
             m_listSpawn.push_back(OT_Ghost);
     }
 

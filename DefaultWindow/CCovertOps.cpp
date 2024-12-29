@@ -4,6 +4,7 @@
 #include "CObjMgr.h"
 #include "CBmpMgr.h"
 #include "CKeyMgr.h"
+#include "CGameMgr.h"
 
 
 void CCovertOps::Initialize()
@@ -35,6 +36,7 @@ int CCovertOps::Update()
         // 터지는이펙트 & 사운드
 
         UnBlock_Map(); // 바닥 이동 불가 해제
+        CGameMgr::Get_Instance()->AddTechCount(TECH_CovertOps, -1);
         return OBJ_DEAD;
     }
 
@@ -183,7 +185,11 @@ void CCovertOps::Change_Motion()
         else if (m_iBuildCount < 100)
             m_tFrame.iCurCount = 5;
         else if (m_iBuildCount > 100)
+        {
+            CGameMgr::Get_Instance()->AddTechCount(TECH_CovertOps, 1);
             m_eCurState_Build = BS_IDLE;
+        }
+           
 
         m_iBuildCount++;
     }

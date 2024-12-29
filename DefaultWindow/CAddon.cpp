@@ -35,6 +35,7 @@ int CAddon::Update()
         // 터지는이펙트 & 사운드
 
         UnBlock_Map(); // 바닥 이동 불가 해제
+        isDoon = false;
         return OBJ_DEAD;
     }
 
@@ -112,6 +113,7 @@ void CAddon::Render(HDC hDC)
 
 void CAddon::Release()
 {
+
 }
 
 void CAddon::KeyInput()
@@ -179,7 +181,11 @@ void CAddon::Change_Motion()
         else if (m_iBuildCount < 60)
             m_tFrame.iCurCount = 3;
         else if (m_iBuildCount > 60)
+        {
             m_eCurState_Build = BS_IDLE;
+            isDoon = true;
+        }
+
 
         m_iBuildCount++;
     }

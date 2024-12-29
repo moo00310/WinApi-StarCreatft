@@ -6,6 +6,8 @@
 #include "CKeyMgr.h"
 #include "CAbstractFactory.h"
 #include "CcmdNuke.h"
+#include "CGameMgr.h"
+
 
 void CCommedCenter::Initialize()
 {
@@ -25,7 +27,6 @@ void CCommedCenter::Initialize()
     m_eRender = RENDER_GAMEOBJECT;
 
     m_iMyBuildTIme = get<3>(ObjCost.at(OT_Commend));
-    //m_iMyBuildTIme = 80;
 
     __super::Update_Rect();
     Block_Map();
@@ -129,8 +130,9 @@ void CCommedCenter::KeyInput()
     // SCV
     if (CKeyMgr::Get_Instance()->Key_Down('S'))
     {
-        if (m_listSpawn.size() < 5)
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Scv))
             m_listSpawn.push_back(OT_Scv);
+        
     }
 
     // 뉴클리어 건설
@@ -138,9 +140,13 @@ void CCommedCenter::KeyInput()
     {
         if (m_bIsAddOn) return;
 
-        m_listSpawn.push_back(OT_CmdNuke);
-        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CcmdNuke>::Create(m_tInfo.fX + 90, m_tInfo.fY + 20));
-        m_bIsAddOn = true;
+        if (CGameMgr::Get_Instance()->GetTechCount(TECH_CovertOps) > 0 && 
+            CGameMgr::Get_Instance()->isBuying(OT_CmdNuke))
+        {
+            m_listSpawn.push_back(OT_CmdNuke);
+            CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CcmdNuke>::Create(m_tInfo.fX + 90, m_tInfo.fY + 20));
+            m_bIsAddOn = true;
+        }
     }
 
     

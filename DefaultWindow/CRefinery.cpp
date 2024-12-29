@@ -2,6 +2,7 @@
 #include "CRefinery.h"
 #include "CMapMgr.h"
 #include "CBmpMgr.h"
+#include "CGameMgr.h"
 
 void CRefinery::Initialize()
 {

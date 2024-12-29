@@ -6,6 +6,7 @@
 #include "CKeyMgr.h"
 #include "CAddon.h"
 #include "CAbstractFactory.h"
+#include "CGameMgr.h"
 
 void CFactory::Initialize()
 {
@@ -13,7 +14,6 @@ void CFactory::Initialize()
     m_Map = CMapMgr::Get_Instance()->GetMap();
     m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
 
-   
     m_tInfo.fCX = 128.f;
     m_tInfo.fCY = 160.f;
 
@@ -25,8 +25,7 @@ void CFactory::Initialize()
     m_tStat = { 1250.f, 1.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
 
-    //m_iMyBuildTIme = get<3>(ObjCost.at(OT_Factory));
-    m_iMyBuildTIme = 80;
+    m_iMyBuildTIme = get<3>(ObjCost.at(OT_Factory));
 
     __super::Update_Rect();
     Block_Map();
@@ -39,6 +38,7 @@ int CFactory::Update()
         // 터지는이펙트 & 사운드
 
         UnBlock_Map(); // 바닥 이동 불가 해제
+        CGameMgr::Get_Instance()->AddTechCount(TECH_Factory, -1);
         return OBJ_DEAD;
     }
 
@@ -52,6 +52,14 @@ int CFactory::Update()
 void CFactory::Late_Update()
 {
     Change_Motion();
+
+    // 아마 또 nullptr 안돼서 오류날듯
+    if (m_pAddOn != nullptr)
+    {
+        m_bIsAddOn = static_cast<CAddon*>(m_pAddOn)->IsBuild();
+    }
+    else
+        m_bIsAddOn = false;
 
     if (m_bTemplate) return;
     CBuild::Move_Frame();
@@ -134,23 +142,26 @@ void CFactory::KeyInput()
     // 탱크 생산
     if (CKeyMgr::Get_Instance()->Key_Down('T'))
     {
-        if (m_listSpawn.size() < 5)
+        if (!m_bIsAddOn) return;
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Tank))
             m_listSpawn.push_back(OT_Tank);
     }
 
     // 골리앗 생산
     if (CKeyMgr::Get_Instance()->Key_Down('G'))
     {
+        if (!m_bIsAddOn) return;
     }
 
     // 기계실 건설
     if (CKeyMgr::Get_Instance()->Key_Down('C'))
     {
         if (m_bIsAddOn) return;
-
+        if (m_bBuildAddon) return;
         m_listSpawn.push_back(OT_Addon);
-        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CAddon>::Create(m_tInfo.fX+90 , m_tInfo.fY+20));
-        m_bIsAddOn = true;
+        m_pAddOn = CAbstractFactory<CAddon>::Create(m_tInfo.fX + 90, m_tInfo.fY + 20);
+        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, m_pAddOn);
+        m_bBuildAddon = true;
     }
 
 }
@@ -185,8 +196,11 @@ void CFactory::Change_Motion()
         m_tFrame.iCurCount = 0;
         m_tFrame.iFrameEnd = 0;
         if (m_iMyBuildTIme < m_iBuildCount)
+        {
+            CGameMgr::Get_Instance()->AddTechCount(TECH_Factory, 1);
             m_eCurState_Build = BS_IDLE;
-
+        }
+           
         m_iBuildCount++;
         Add_Stat_hp(m_tStat.m_iMaxHp / m_iMyBuildTIme);
     }

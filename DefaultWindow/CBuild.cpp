@@ -8,6 +8,7 @@
 #include "CScv.h"
 #include "CMedic.h"
 #include "CGhost.h"
+#include "CTank.h"
 
 void CBuild::Move_Frame()
 {
@@ -72,6 +73,7 @@ void CBuild::Spawn_Uint_Index(OBJ_TYPE _id)
 		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::Create(temp));
 		break;
 	case OT_Tank:
+		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CTank>::Create(temp));
 		break;
 	case OT_Science_Vessel:
 		break;

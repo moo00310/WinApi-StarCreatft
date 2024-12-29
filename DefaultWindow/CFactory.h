@@ -3,7 +3,7 @@
 class CFactory : public CBuild
 {
 public:
-	CFactory(): m_bIsAddOn(false) {}
+	CFactory(): m_bIsAddOn(false), m_pAddOn(nullptr), m_bBuildAddon(false){}
 	~CFactory() {}
 public:
 	void Initialize() override;
@@ -16,4 +16,6 @@ public:
 
 private:
 	bool m_bIsAddOn;
+	bool m_bBuildAddon;
+	CObj* m_pAddOn;
 };

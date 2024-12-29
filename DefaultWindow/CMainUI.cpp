@@ -4,7 +4,7 @@
 
 void CMainUI::Initialize()
 {
-l
+
 }
 
 int CMainUI::Update()
