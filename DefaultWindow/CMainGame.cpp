@@ -14,6 +14,7 @@
 #include "CSoundMgr.h"
 #include "CMemoryPoolMgr.h"
 #include "CBloodEffect.h"
+#include "CGameMgr.h"
 
 CMainGame::CMainGame()
 	: m_dwTime(GetTickCount64()), m_iFPS(0), m_hDC(nullptr)
@@ -126,5 +127,6 @@ void CMainGame::Release()
 	CMouseMgr::DestroyInstance();
 	CSoundMgr::Destroy_Instance();
 	CMemoryPoolMgr::Destroy_Instance();
+	CGameMgr::Get_Instance()->Destroy_Instance();
 	ReleaseDC(g_hWnd, m_hDC);
 }

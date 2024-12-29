@@ -14,9 +14,7 @@ CSpawnUI::~CSpawnUI()
 
 void CSpawnUI::Initialize()
 {
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Icon/ETC.bmp", L"ETC");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Icon/ButtonIcon.bmp", L"ButtonIcon");
-    m_pUintlist = CObjMgr::Get_Instance()->Get_Select_List();
+   m_pUintlist = CObjMgr::Get_Instance()->Get_Select_List();
     
 	m_tInfo = { 400.f, 540.f ,194.f, 95.f };
 }

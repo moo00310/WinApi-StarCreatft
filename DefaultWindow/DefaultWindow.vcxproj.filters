@@ -235,6 +235,9 @@
     <Filter Include="01. Obj\CObj">
       <UniqueIdentifier>{be0b1231-6d2a-4d39-be94-b5216c322bc1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Design\GameMgr">
+      <UniqueIdentifier>{5fffb5b8-25b1-49d9-94f8-12f7a645e7bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -465,6 +468,9 @@
     <ClInclude Include="CButtonMouse.h">
       <Filter>01. Obj\03.Mouse\02.ButtonMouse</Filter>
     </ClInclude>
+    <ClInclude Include="CGameMgr.h">
+      <Filter>03. Design\GameMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -655,6 +661,9 @@
     </ClCompile>
     <ClCompile Include="CButtonMouse.cpp">
       <Filter>01. Obj\03.Mouse\02.ButtonMouse</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameMgr.cpp">
+      <Filter>03. Design\GameMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

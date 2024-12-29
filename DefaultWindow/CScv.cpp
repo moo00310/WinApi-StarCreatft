@@ -30,9 +30,6 @@ void CScv::Initialize()
 	m_pMonsterList = CObjMgr::Get_Instance()->Get_MonsterList();
 	m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
 
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/SCV/SCV.bmp", L"Scv");
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_1(40.40).bmp", L"Select_1");
-
 
 	m_pImgKey = L"Scv";
 	m_eObjID = OT_Scv;

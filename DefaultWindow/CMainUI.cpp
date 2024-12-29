@@ -4,8 +4,7 @@
 
 void CMainUI::Initialize()
 {
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MainUI.bmp", L"MainUI");
-
+l
 }
 
 int CMainUI::Update()

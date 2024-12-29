@@ -19,10 +19,6 @@ void CTank::Initialize()
 	m_pMonsterList = CObjMgr::Get_Instance()->Get_MonsterList();
 	m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
 
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Tank/TankBody.bmp", L"TankBody");
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Tank/TankHead.bmp", L"TankHead");
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_4(80.80).bmp", L"Select_4");
-
 	m_eObjID = OT_Tank;
 	m_tStat = { 150.f, 150.f, 30, 1, 224, 1.8f, 625 , DF_LAGE, AT_EXPLOSIVE };
 

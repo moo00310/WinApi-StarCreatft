@@ -24,9 +24,7 @@ void CMedic::Initialize()
 	m_pMonsterList = CObjMgr::Get_Instance()->Get_MonsterList();
 	m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
 
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Medic/Medic.bmp", L"Medic");
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_0(32.32).bmp", L"Select_0");
-
+	
 	m_pImgKey = L"Medic";
 	m_eObjID = OT_Medic;
 	m_tStat = { 60.f, 60.f, 0, 1, 64, 1.8f, 625 , DF_SAMLL, AT_NORMAL };

@@ -16,7 +16,6 @@ CWireUI::~CWireUI()
 
 void CWireUI::Initialize()
 {
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Wire/BigWire.bmp", L"BigWire");
 	m_pUintlist = CObjMgr::Get_Instance()->Get_Select_List();
 	m_tInfo = { 260, 530 ,64, 64 };
 }

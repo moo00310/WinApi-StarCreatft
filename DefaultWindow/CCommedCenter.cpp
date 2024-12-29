@@ -13,10 +13,6 @@ void CCommedCenter::Initialize()
     m_Map = CMapMgr::Get_Instance()->GetMap();
     m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
 
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/CommandCenter.bmp", L"CommandCenter");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/BuildTemplate.bmp", L"BuildTemplate");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_8(148.148).bmp", L"Select_8");
-
     m_tInfo.fCX = 128.f;
     m_tInfo.fCY = 160.f;
 

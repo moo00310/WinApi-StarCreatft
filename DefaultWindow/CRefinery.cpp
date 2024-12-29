@@ -7,9 +7,6 @@ void CRefinery::Initialize()
 {
     m_Map = CMapMgr::Get_Instance()->GetMap();
     
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Refinery.bmp", L"Refinery");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_8(148.148).bmp", L"Select_8");
-
     m_tInfo.fCX = 192.f;
     m_tInfo.fCY = 192.f;
 

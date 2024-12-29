@@ -11,7 +11,6 @@
 
 void CSCVDead::Initialize()
 {
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Bang/Bang(128.128).bmp", L"Bang_1");
 
 	m_pImgKey = L"Bang_1";
 	m_tInfo.fCX = 128.f;

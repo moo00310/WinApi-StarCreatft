@@ -13,8 +13,7 @@ CIconUI::~CIconUI()
 
 void CIconUI::Initialize()
 {
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Icon/ButtonIcon.bmp", L"ButtonIcon");
-	m_pUintlist = CObjMgr::Get_Instance()->Get_Select_List();
+    m_pUintlist = CObjMgr::Get_Instance()->Get_Select_List();
 }
 
 int CIconUI::Update()

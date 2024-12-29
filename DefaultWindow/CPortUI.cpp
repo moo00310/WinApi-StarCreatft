@@ -13,7 +13,6 @@ CPortUI::~CPortUI()
 
 void CPortUI::Initialize()
 {
-	Initailize_Img();
 	m_pUintlist = CObjMgr::Get_Instance()->Get_Select_List();
 }
 
@@ -58,27 +57,6 @@ void CPortUI::Render(HDC hdc)
 
 void CPortUI::Release()
 {
-}
-
-void CPortUI::Initailize_Img()
-{
-	// SCV
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/SCV/SCV.bmp", L"Scv_port");
-
-	// 마린
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Marine/Marine.bmp", L"Marine_port");
-	
-	// 메딕
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Medic/Medic.bmp", L"Medic_port");
-
-	// 고스트
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Ghost/Ghost.bmp", L"Ghost_port");
-
-	// 시스 탱크
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/SeigeTank/Tank.bmp", L"Tank_port");
-
-	// 어드 바이저
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Advisor/Advosr.bmp", L"Advosr");
 }
 
 void CPortUI::Change_Port()

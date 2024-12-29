@@ -8,10 +8,7 @@ void CArmory::Initialize()
 {
     m_Map = CMapMgr::Get_Instance()->GetMap();
 
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Armory.bmp", L"Armory");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/BuildTemplate.bmp", L"BuildTemplate");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_7(128.128).bmp", L"Select_7");
-
+  
     m_tInfo.fCX = 160.f;
     m_tInfo.fCY = 128.f;
 

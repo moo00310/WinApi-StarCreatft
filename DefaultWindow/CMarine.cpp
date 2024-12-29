@@ -28,9 +28,6 @@ void CMarine::Initialize()
 	m_pMonsterList = CObjMgr::Get_Instance()->Get_MonsterList();
 	m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
 
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Marine/Marine.bmp", L"Marine");
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_0(32.32).bmp", L"Select_0");
-
     m_pImgKey = L"Marine";
 	m_eObjID = OT_Marine;
     m_tStat = { 40.f, 40.f, 6, 0, 64, 1.8f, 625 , DF_SAMLL, AT_NORMAL };

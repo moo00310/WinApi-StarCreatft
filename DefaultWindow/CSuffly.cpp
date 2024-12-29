@@ -7,10 +7,7 @@ void CSuffly::Initialize()
 {
     m_Map = CMapMgr::Get_Instance()->GetMap();
     
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/SupplyDepot.bmp", L"SupplyDepot");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/BuildTemplate.bmp", L"BuildTemplate");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_5(96.96).bmp", L"Select_5");
-
+ 
     m_tInfo.fCX = 96.f;
     m_tInfo.fCY = 128.f;
 

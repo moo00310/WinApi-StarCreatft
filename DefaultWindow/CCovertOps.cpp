@@ -11,10 +11,6 @@ void CCovertOps::Initialize()
     // ¸ÊÀÇ ÁÖ¼Ò¸¦ ¹Þ¾Æ¿È
     m_Map = CMapMgr::Get_Instance()->GetMap();
 
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/ScienceSecret.bmp", L"ScienceSecret");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/BuildTemplate.bmp", L"BuildTemplate");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_3(64.64).bmp", L"Select_3");
-
     m_tInfo.fCX = 128.f;
     m_tInfo.fCY = 128.f;
 

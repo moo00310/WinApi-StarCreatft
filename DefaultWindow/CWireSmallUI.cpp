@@ -13,8 +13,6 @@ CWireSmallUI::~CWireSmallUI()
 
 void CWireSmallUI::Initialize()
 {
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Wire/SmallWire.bmp", L"SmallWire");
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/UpGrade_Icon/upgradeDetail.bmp", L"upgradeDetail");
 	m_pUintlist = CObjMgr::Get_Instance()->Get_Select_List();
 	m_tInfo = { 219, 510 ,32, 32 };
 }
