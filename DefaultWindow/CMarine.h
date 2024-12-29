@@ -17,5 +17,9 @@ public:
 	void KeyInput() override;
 	void AttackToEnemy(CObj* _Enemey) override;
 
+	void StreamPackCoolDown();
+
+	bool m_bIsSteamPack;
+	ULONGLONG m_CoolDown;
 };
 

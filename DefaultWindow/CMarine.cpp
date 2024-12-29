@@ -10,7 +10,7 @@
 #include "CSoundMgr.h"
 #include "CBulletEffect.h"
 
-CMarine::CMarine()
+CMarine::CMarine(): m_bIsSteamPack(false), m_CoolDown(0)
 {
 }
 
@@ -54,7 +54,9 @@ int CMarine::Update()
 		return OBJ_DEAD;
 	}
 	
+	KeyInput();
 	Update_State();
+
 
 	__super::Update_Rect();
     return OBJ_NOEVENT;
@@ -63,6 +65,7 @@ int CMarine::Update()
 void CMarine::Late_Update()
 {
 	Change_Motion();
+	StreamPackCoolDown();
 	CUnit::Move_Frame();
 }
 
@@ -134,16 +137,22 @@ void CMarine::Change_Motion()
 			m_tFrame.iFrameStart = 11;
 			m_tFrame.iFrameEnd = 12;
 			m_tFrame.iCurCount = 11;
-			m_tFrame.dwSpeed = 100;
 			m_tFrame.dwTime = GetTickCount64();
+			if (!m_bIsSteamPack)
+				m_tFrame.dwSpeed = 100;
+			else
+				m_tFrame.dwSpeed = 55;
 			break;
 
 		case STATE_SHOOT:
 			m_tFrame.iFrameStart = 13;
 			m_tFrame.iFrameEnd = 14;
 			m_tFrame.iCurCount = 13;
-			m_tFrame.dwSpeed = 75;
 			m_tFrame.dwTime = GetTickCount64();
+			if(!m_bIsSteamPack)
+				m_tFrame.dwSpeed = 100;
+			else
+				m_tFrame.dwSpeed = 55;
 			break;
 		}
 
@@ -154,6 +163,19 @@ void CMarine::Change_Motion()
 
 void CMarine::KeyInput()
 {
+
+	if (!m_bSelect) return;
+
+	// ½ºÆÀ ÆÑ
+	if (CKeyMgr::Get_Instance()->Key_Down('T'))
+	{
+		m_bIsSteamPack = true;
+		m_tFrame.dwSpeed = 55;
+		Add_Stat_hp(-10);
+		m_tStat.m_fSpeed = 2.5f;
+		m_CoolDown = GetTickCount64();
+	}
+
 }
 
 void CMarine::AttackToEnemy(CObj* _Enemey)
@@ -170,4 +192,17 @@ void CMarine::AttackToEnemy(CObj* _Enemey)
 
 		m_AttackTime = GetTickCount64();
 	}
+}
+
+void CMarine::StreamPackCoolDown()
+{
+	if (!m_bIsSteamPack) return;
+	
+	if (m_CoolDown + 3000 < GetTickCount64())
+	{
+		m_tFrame.dwSpeed = 100;
+		m_bIsSteamPack = false;
+		m_tStat.m_fSpeed = 1.8f;
+	}
+
 }
