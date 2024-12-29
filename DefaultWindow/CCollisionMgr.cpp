@@ -113,6 +113,20 @@ CObj* CCollisionMgr::Collision_RangeChack(CObj* _pPlayer, list<CObj*> _pMonster,
 	return nullptr;
 }
 
+bool CCollisionMgr::Collision_Range_Bool(CObj* _pPlayer, CObj* _unit, float _dis)
+{
+
+	float fWidth = fabsf(_unit->Get_Scroll_Info().fX - _pPlayer->Get_Scroll_Info().fX);
+	float fHeight = fabsf(_unit->Get_Scroll_Info().fY - _pPlayer->Get_Scroll_Info().fY);
+
+	float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);
+
+	if (fDistance <= _dis)
+		return true;
+	else
+		return false;
+}
+
 bool CCollisionMgr::Collision_RangeChack_bool(CObj* _pPlayer, list<CObj*> _Src, float _dis)
 {
 	for (auto& Src : _Src)
@@ -196,32 +210,35 @@ void CCollisionMgr::Collision_Rect_Mouse_RECT(RECT rect, list<CObj*> _Src, list<
 	}
 }
 
-
-Pos CCollisionMgr::Collision_Neares_Unit_pos(Pos _pMouse, list<CObj*> Unit)
+CObj* CCollisionMgr::Collision_RangeChack_Heal(CObj* _pPlayer, list<CObj*> _unit, float _dis)
 {
-	float best = 500000.f;
-	CObj* bestObj = nullptr;
-	Pos pos = {};
-
-	for (auto _unit : Unit)
+	for (auto unit : _unit)
 	{
-		float fWidth = fabsf(_unit->Get_Scroll_Info().fX - _pMouse.x);
-		float fHeight = fabsf(_unit->Get_Scroll_Info().fY - _pMouse.y);
+		if(OT_Tank == unit->Get_ObjID()|| OT_SiegeTank == unit->Get_ObjID()) continue;
+		if((unit->Get_Stat()->m_iHp - unit->Get_Stat()->m_iMaxHp) >= 0.f) continue;
 
+		float fWidth = fabsf(unit->Get_Scroll_Info().fX - _pPlayer->Get_Scroll_Info().fX);
+		float fHeight = fabsf(unit->Get_Scroll_Info().fY - _pPlayer->Get_Scroll_Info().fY);
 		float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);
 
-		cout << "-------------------------------" << endl;
-		std::cout << "Mouse Pos: (" << _pMouse.x << ", " << _pMouse.y << ")" << std::endl;
-		cout << "Unit Pos: (" << _unit->Get_Scroll_Info().fX << ", "
-			<< _unit->Get_Scroll_Info().fY << ")" << endl;
-		cout << "-------------------------------" << endl;
-
-		if (fDistance < best)
-		{
-			best = fDistance;
-			bestObj = _unit;
-		}
+		if (fDistance <= _dis)
+			return unit;
 	}
 
-	return  pos = { (int)bestObj->Get_Scroll_Info().fY/32,(int)bestObj->Get_Scroll_Info().fX/32 };
+	return nullptr;
+}
+
+Pos CCollisionMgr::Collision_RangePos(CObj* _pPlayer, CObj* _unit, float _dis)
+{
+	float fWidth = _unit->Get_Info().fX - _pPlayer->Get_Info().fX;
+	float fHeight = _unit->Get_Info().fY - _pPlayer->Get_Info().fY;
+
+	float distance = sqrtf(fWidth * fWidth + fHeight * fHeight);
+
+	float x = _unit->Get_Info().fX + (_dis * -1 * fWidth / distance);
+	float y = _unit->Get_Info().fY + (_dis * -1 * fHeight / distance);
+
+	Pos pos{(int)(y / 32), (int)(x / 32) };
+
+	return pos;
 }

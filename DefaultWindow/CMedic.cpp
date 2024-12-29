@@ -5,8 +5,9 @@
 #include "CBmpMgr.h"
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
+#include "CCollisionMgr.h"
 
-CMedic::CMedic()
+CMedic::CMedic() :preUint(nullptr)
 {
 }
 
@@ -30,7 +31,7 @@ void CMedic::Initialize()
 	m_eObjID = OT_Medic;
 	m_tStat = { 60.f, 60.f, 0, 1, 64, 1.8f, 625 , DF_SAMLL, AT_NORMAL };
 
-	m_iAttackFrame = 14;
+	m_iAttackFrame = 10;
 
 	m_eRender = RENDER_GAMEOBJECT;
 	m_tInfo.fCX = 64.f;
@@ -150,6 +151,102 @@ void CMedic::Change_Motion()
 
 void CMedic::KeyInput()
 {
+	return;
+}
+
+void CMedic::Update_State()
+{
+	switch (m_eInput)
+	{
+	case IP_MOVE:
+		Move();
+		break;
+	case IP_ATTACK:
+		Move();
+		break;
+	case IP_HOLD:
+		Hold();
+		break;
+	case IP_STOP:
+		Stop();
+		break;
+	case IP_HEAL:
+		HealUnit();
+	case IP_END:
+		break;
+	default:
+		break;
+	}
+}
+
+
+void CMedic::Move()
+{
+	if (m_iPathIndex < _path.size())
+	{
+		Move_toNext();
+	}
+	else if (m_iPathIndex == _path.size())
+	{
+		m_eInput = IP_HEAL;
+	}
+
+}
+
+void CMedic::Hold()
+{
+	CObj* unit(nullptr);
+	if ((unit = CCollisionMgr::Collision_RangeChack_Heal(this, *m_pUnitList, 98.f)) != nullptr)
+	{
+		// Èú
+		m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, unit->Get_Info().fX, unit->Get_Info().fY);
+		m_eCurState = STATE_ATTACK;
+		AttackToEnemy(unit);
+	}
+	else
+	{
+		m_eCurState = STATE_IDLE;
+	}
+}
+
+
+void CMedic::HealUnit()
+{
+	CObj* unit(nullptr);
+
+	if ((unit = CCollisionMgr::Collision_RangeChack_Heal(this, *m_pUnitList, 256.f)) != nullptr)
+	{
+		if (preUint != unit)
+		{
+			Astar(CCollisionMgr::Collision_RangePos(this, unit, 32.f));
+			preUint = unit;
+		}
+			
+		if (m_iPathIndex < _path.size())
+		{
+			Move_toNext(); // °¡±îÈ÷ ´Ù°¡°¡±â
+		}
+		else if (m_iPathIndex == _path.size())
+		{
+			if (CCollisionMgr::Collision_Range_Bool(this, unit, 98.f))
+			{
+				// Èú
+				m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, unit->Get_Info().fX, unit->Get_Info().fY);
+				m_eCurState = STATE_ATTACK;
+				AttackToEnemy(unit);
+			}
+			else
+			{
+				m_eCurState = STATE_IDLE;
+				preUint = nullptr;
+			}
+		}
+	}
+	else
+	{
+		m_eCurState = STATE_IDLE;
+		return;
+	}
 }
 
 void CMedic::AttackToEnemy(CObj* _Enemey)
@@ -157,12 +254,7 @@ void CMedic::AttackToEnemy(CObj* _Enemey)
 	if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64() &&
 		m_tFrame.iCurCount == m_iAttackFrame)
 	{
-		DEFENCEID Dfence_id = _Enemey->Get_Stat()->m_eDfenceID;
-		ATTACKID Attack_id = m_tStat.m_eAttackID;
-		float Damge = fabsf((_Enemey->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * m_tStat.m_iAttack)));
-
-		//CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CMarineHit>::CreateFX(_Enemey->Get_Info().fX, _Enemey->Get_Info().fY));
-		_Enemey->Add_Stat_hp(-Damge);
+		_Enemey->Add_Stat_hp(10);
 
 		m_AttackTime = GetTickCount64();
 	}

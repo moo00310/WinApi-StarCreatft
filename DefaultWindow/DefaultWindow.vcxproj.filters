@@ -127,9 +127,6 @@
     <Filter Include="04. UI\03.Wire_UI\SmallWire">
       <UniqueIdentifier>{4ec6030a-f903-442f-8b8a-09d8b046766b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\Obj">
-      <UniqueIdentifier>{be0b1231-6d2a-4d39-be94-b5216c322bc1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Obj\old">
       <UniqueIdentifier>{ff2baa36-8337-454a-8306-77c450f78dee}</UniqueIdentifier>
     </Filter>
@@ -234,6 +231,9 @@
     </Filter>
     <Filter Include="01. Obj\05.Button\02.AnimeButton">
       <UniqueIdentifier>{ae8010aa-375e-4e5b-8af2-5f5300287ed3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\CObj">
+      <UniqueIdentifier>{be0b1231-6d2a-4d39-be94-b5216c322bc1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -382,7 +382,7 @@
       <Filter>01. Obj\03.Mouse\Mouse</Filter>
     </ClInclude>
     <ClInclude Include="CObj.h">
-      <Filter>01. Obj\Obj</Filter>
+      <Filter>01. Obj\CObj</Filter>
     </ClInclude>
     <ClInclude Include="CBuild.h">
       <Filter>01. Obj\02.Build\Build</Filter>
@@ -570,7 +570,7 @@
       <Filter>01. Obj\03.Mouse\Mouse</Filter>
     </ClCompile>
     <ClCompile Include="CObj.cpp">
-      <Filter>01. Obj\Obj</Filter>
+      <Filter>01. Obj\CObj</Filter>
     </ClCompile>
     <ClCompile Include="CBuild.cpp">
       <Filter>01. Obj\02.Build\Build</Filter>
