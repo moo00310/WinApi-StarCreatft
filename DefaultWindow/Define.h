@@ -362,6 +362,7 @@ enum Tech
 	TECH_Braack,
 	TECH_Academy,
 	TECH_Factory,
+	TECH_Armory,
 	TECH_Starport,
 	TECH_CovertOps,
 	TECH_END

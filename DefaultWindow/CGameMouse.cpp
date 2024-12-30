@@ -164,14 +164,17 @@ void CGameMouse::MouseInput(POINT ptMouse)
     {
         if (CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
         {
-            if (AbleBuild()&& CGameMgr::Get_Instance()->isBuying(m_eBuildType))  // 건물을 지울 수 있는 곳인지 아닌지 체크
+            if (AbleBuild())  // 건물을 지울 수 있는 곳인지 아닌지 체크
             {
-                isBuildMod = false;
-                if (auto* pUnit = dynamic_cast<CScv*>(m_Select_UnitList->front()))
+                if (CGameMgr::Get_Instance()->isBuying(m_eBuildType))
                 {
-                    pUnit->Astar(temp);
-                    pUnit->SetInput(IP_BUILD);
-                    pUnit->SetPos(temp);
+                    isBuildMod = false;
+                    if (auto* pUnit = dynamic_cast<CScv*>(m_Select_UnitList->front()))
+                    {
+                        pUnit->Astar(temp);
+                        pUnit->SetInput(IP_BUILD);
+                        pUnit->SetPos(temp);
+                    }
                 }
             }
             else

@@ -6,6 +6,7 @@
 #include "CWireUI.h"
 #include "CWireSmallUI.h"
 #include "CSpawnUI.h"
+#include "CIconUI.h"
 
 CUIMgr* CUIMgr::m_pInstance = nullptr;
 
@@ -25,6 +26,7 @@ void CUIMgr::Initalize()
 	Add_UI(UI_MAIN, CAbstractFactory<CWireUI>::CreateUI());
 	Add_UI(UI_MAIN, CAbstractFactory<CWireSmallUI>::CreateUI());
 	Add_UI(UI_MAIN, CAbstractFactory<CSpawnUI>::CreateUI());
+	Add_UI(UI_MAIN, CAbstractFactory<CIconUI>::CreateUI());
 }
 
 void CUIMgr::Add_UI(UI_TYPE etype, CUI* pUI)

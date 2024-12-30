@@ -3,6 +3,7 @@
 #include "CMapMgr.h"
 #include "CBmpMgr.h"
 #include "CKeyMgr.h"
+#include "CGameMgr.h"
 
 void CArmory::Initialize()
 {
@@ -34,6 +35,7 @@ int CArmory::Update()
         // 터지는이펙트 & 사운드
 
         UnBlock_Map(); // 바닥 이동 불가 해제
+        CGameMgr::Get_Instance()->AddTechCount(TECH_Armory,-1);
         return OBJ_DEAD;
     }
 
@@ -156,7 +158,11 @@ void CArmory::Change_Motion()
         m_tFrame.iCurCount = 0;
         m_tFrame.iFrameEnd = 0;
         if (m_iMyBuildTIme < m_iBuildCount)
+        {
+            CGameMgr::Get_Instance()->AddTechCount(TECH_Armory, 1);
             m_eCurState_Build = BS_IDLE;
+        }
+           
 
         m_iBuildCount++;
         Add_Stat_hp(m_tStat.m_iMaxHp / m_iMyBuildTIme);

@@ -20,6 +20,8 @@ public:
 
 public:
 	void SetPos(Pos _pos) { m_pos = _pos; }
+	bool GetBulid() { return m_bBuildStructure; }
+	bool GetAdBuild() { return m_BuildAdvancedStructure; }
 
 private:
 	void Update_State() override;

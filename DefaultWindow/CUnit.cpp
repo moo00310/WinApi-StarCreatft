@@ -302,6 +302,7 @@ void CUnit::Move_toNext()
 
 	if (m_iPathIndex == 0)
 	{
+		CMapMgr::Get_Instance()->SetTileType(_pos, 0);
 		m_iPathIndex = 1;
 		return;
 	}

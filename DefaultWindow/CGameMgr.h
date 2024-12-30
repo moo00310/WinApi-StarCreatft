@@ -68,7 +68,7 @@ public:
 	int m_iPop;
 	int m_iMaxPop;
 
-	int TechnicArray[TECH_END] = { 0,0,0,0,0 };
+	int TechnicArray[TECH_END] = { 0,0,0,0,0,0 };
 	ULONGLONG m_Time;
 	static CGameMgr* m_pInstance;
 };

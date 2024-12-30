@@ -14,6 +14,8 @@ public:
 	void KeyInput() override;
 	void Change_Motion() override;
 
+public:
+	bool GetIsAddOn() { return m_bIsAddOn; }
 private:
 	bool m_bIsAddOn;
 	bool m_bBuildAddon;

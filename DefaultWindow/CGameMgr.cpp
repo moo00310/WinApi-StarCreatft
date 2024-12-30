@@ -13,6 +13,7 @@ void CGameMgr::Initialize()
 	TechnicArray[TECH_Braack] = 0;
 	TechnicArray[TECH_Academy] = 0;
 	TechnicArray[TECH_Factory] = 0;
+	TechnicArray[TECH_Armory] = 0;
 	TechnicArray[TECH_Starport] = 0;
 	TechnicArray[TECH_CovertOps] = 0;
 }
@@ -76,6 +77,8 @@ bool CGameMgr::isBuying(OBJ_TYPE _Type)
 		m_iMineral -= _mineral;
 		m_iGas -= _gas;
 		m_iPop += _pop;
+
+		return true;
 	}
 	else
 	{

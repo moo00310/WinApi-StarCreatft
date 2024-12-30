@@ -2,8 +2,14 @@
 #include "CIconUI.h"
 #include "CBmpMgr.h"
 #include "CObjMgr.h"
+#include "CUnit.h"
+#include "CBuild.h"
+#include "CGameMgr.h"
 
-CIconUI::CIconUI()
+#include "CScv.h"
+#include "CFactory.h"
+
+CIconUI::CIconUI() : IconCX(0), IconCY(0), m_buildState(BS_END), m_UnitState(STATE_END), m_InputState(IP_END)
 {
 }
 
@@ -14,6 +20,8 @@ CIconUI::~CIconUI()
 void CIconUI::Initialize()
 {
     m_pUintlist = CObjMgr::Get_Instance()->Get_Select_List();
+	IconCX = 44;
+	IconCY = 44;
 }
 
 int CIconUI::Update()
@@ -31,7 +39,12 @@ int CIconUI::Update()
 
 		m_eCurState = m_pUintlist->front()->Get_ObjID();
 		m_bRender = true;
-		Change_Port();
+		Change_Button();
+	}
+
+	if (m_pUintlist->size() >= 1)
+	{
+		//여려 마리 일때 어캐할건지
 	}
 
 	return 0;
@@ -45,24 +58,1291 @@ void CIconUI::Render(HDC hdc)
 {
 	if (!m_bRender) return;
 
-	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
+	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"ButtonIcon");
 
-	BitBlt(hdc,
-		526, 520, 60, 56,
-		hMemDC,
-		60 * m_tFrame.iCurCount,
-		0,
-		SRCCOPY);
+	// 1번 버튼
+	{
+		BitBlt(hdc,
+			633, 449, 44, 41,
+			hMemDC,
+			IconCX * m_Button_Icon[0].first,
+			IconCY * m_Button_Icon[0].second,
+			SRCCOPY);
+	}
+
+	// 2번 버튼
+	{
+		BitBlt(hdc,
+			690, 449, 44, 41,
+			hMemDC,
+			IconCX * m_Button_Icon[1].first,
+			IconCY * m_Button_Icon[1].second,
+			SRCCOPY);
+	}
+
+	// 3번 버튼
+	{
+		BitBlt(hdc,
+			748, 449, 44, 41,
+			hMemDC,
+			IconCX * m_Button_Icon[2].first,
+			IconCY * m_Button_Icon[2].second,
+			SRCCOPY);
+	}
+
+	// 4번 버튼
+	{
+		BitBlt(hdc,
+			633, 499, 44, 41,
+			hMemDC,
+			IconCX * m_Button_Icon[3].first,
+			IconCY * m_Button_Icon[3].second,
+			SRCCOPY);
+	}
+	
+	// 5번 버튼
+	{
+		BitBlt(hdc,
+			690, 499, 44, 41,
+			hMemDC,
+			IconCX * m_Button_Icon[4].first,
+			IconCY * m_Button_Icon[4].second,
+			SRCCOPY);
+	}
+
+	// 6번 버튼
+	{
+		BitBlt(hdc,
+			748, 499, 44, 41,
+			hMemDC,
+			IconCX * m_Button_Icon[5].first,
+			IconCY * m_Button_Icon[5].second,
+			SRCCOPY);
+	}
+
+	// 7번 버튼
+	{
+		BitBlt(hdc,
+			633, 549, 44, 41,
+			hMemDC,
+			IconCX * m_Button_Icon[6].first,
+			IconCY * m_Button_Icon[6].second,
+			SRCCOPY);
+	}
+
+	// 8번 버튼
+	{
+		BitBlt(hdc,
+			690, 549, 44, 41,
+			hMemDC,
+			IconCX * m_Button_Icon[7].first,
+			IconCY * m_Button_Icon[7].second,
+			SRCCOPY);
+	}
+
+	// 9번 버튼
+	{
+		BitBlt(hdc,
+			748, 549, 44, 41,
+			hMemDC,
+			IconCX * m_Button_Icon[8].first,
+			IconCY * m_Button_Icon[8].second,
+			SRCCOPY);
+	}
+
 }
 
 void CIconUI::Release()
 {
 }
 
-void CIconUI::Change_Port()
+void CIconUI::Change_Button()
 {
+	if (m_eCurState < OT_Unit_End)
+	{
+		m_UnitState = static_cast<CUnit*>(m_pUintlist->front())->GetAinmeState();
+		m_InputState = static_cast<CUnit*>(m_pUintlist->front())->GetInput();
+	}
+	else if (m_eCurState < OT_Build_End)
+		m_buildState = static_cast<CBuild*>(m_pUintlist->front())->Get_State();
+	else
+		return;
+
+	switch (m_eCurState)
+	{
+	case OT_Scv:
+		SCV();
+		break;
+	case OT_Marine:
+		Marine();
+		break;
+	case OT_Medic:
+		Medic();
+		break;
+	case OT_Ghost:
+		Ghost();
+		break;
+	case OT_Tank:
+		Tank();
+		break;
+	case OT_SiegeTank:
+		SiegeTank();
+		break;
+	case OT_Science_Vessel:
+		break;
+	case OT_Unit_End:
+		break;
+	case OT_Commend:
+		CommedCenter();
+		break;
+	case OT_Suffly:
+		Suffly();
+		break;
+	case OT_Refinery:
+		Refinery();
+		break;
+	case OT_Barrck:
+		Barrack();
+		break;
+	case OT_Academy:
+		Archerdemy();
+		break;
+	case OT_Factory:
+		Factory();
+		break;
+	case OT_Addon:
+		FactoryAddon();
+		break;
+	case OT_Armory:
+		Armory();
+		break;
+	case OT_Starport:
+		Starport();
+		break;
+	case OT_StarportAddOn:
+		StarportAddon();
+		break;
+	case OT_ScienceFacility:
+		Siencefacilly();
+		break;
+	case OT_ScienceSecret:
+		CovertOps();
+		break;
+	case OT_CmdNuke:
+		cmdNuke();
+		break;
+	case OT_Build_End:
+		break;
+	case OT_END:
+		break;
+	default:
+		break;
+	}
 }
 
-void CIconUI::Anime_Port(int Start, int End)
+void CIconUI::SCV()
 {
+	if (static_cast<CScv*>(m_pUintlist->front())->GetBulid())
+	{
+		m_Button_Icon[0].first = 0;
+		m_Button_Icon[0].second = IC_Commend;
+
+		m_Button_Icon[1].first = 0;
+		m_Button_Icon[1].second = IC_Suffly;
+
+		m_Button_Icon[2].first = 0;
+		m_Button_Icon[2].second = IC_Refinery;
+
+		m_Button_Icon[3].first = 0;
+		m_Button_Icon[3].second = IC_Barrack;
+
+		m_Button_Icon[4].first = 4;
+		m_Button_Icon[4].second = IC_Enginer;
+
+		m_Button_Icon[5].first = 4;
+		m_Button_Icon[5].second = IC_Terret;
+
+		if(CGameMgr::Get_Instance()->GetTechCount(TECH_Braack) > 0)
+			m_Button_Icon[6].first = 0;
+		else
+			m_Button_Icon[6].first = 4;
+		m_Button_Icon[6].second = IC_Archerdemy;
+
+
+		m_Button_Icon[7].first = 4;
+		m_Button_Icon[7].second = IC_Bungker;
+
+		m_Button_Icon[8].first = 0;
+		m_Button_Icon[8].second = IC_Cancel;
+	}
+	else if (static_cast<CScv*>(m_pUintlist->front())->GetAdBuild())
+	{
+		if (CGameMgr::Get_Instance()->GetTechCount(TECH_Braack) > 0)
+			m_Button_Icon[0].first = 0;
+		else
+			m_Button_Icon[0].first = 4;
+		m_Button_Icon[0].second = IC_Factory;
+
+		if (CGameMgr::Get_Instance()->GetTechCount(TECH_Factory) > 0)
+			m_Button_Icon[1].first = 0;
+		else
+			m_Button_Icon[1].first = 4;
+		m_Button_Icon[1].second = IC_Starport;
+
+		if (CGameMgr::Get_Instance()->GetTechCount(TECH_Starport) > 0)
+			m_Button_Icon[2].first = 0;
+		else
+			m_Button_Icon[2].first = 4;
+		m_Button_Icon[2].second = IC_Siencefacilly;
+
+		if (CGameMgr::Get_Instance()->GetTechCount(TECH_Factory) > 0)
+			m_Button_Icon[3].first = 0;
+		else
+			m_Button_Icon[3].first = 4;
+		m_Button_Icon[3].second = IC_Armory;
+
+		m_Button_Icon[4].first = 999;
+		m_Button_Icon[4].second = 999;
+
+		m_Button_Icon[5].first = 999;
+		m_Button_Icon[5].second = 999;
+
+		m_Button_Icon[6].first = 999;
+		m_Button_Icon[6].second = 999;
+
+		m_Button_Icon[7].first = 999;
+		m_Button_Icon[7].second = 999;
+
+		m_Button_Icon[8].first = 0;
+		m_Button_Icon[8].second = IC_Cancel;
+	}
+	else
+	{
+		if(m_UnitState == STATE_MOVE)
+			m_Button_Icon[0].first = 1;
+		else
+			m_Button_Icon[0].first = 0;
+		m_Button_Icon[0].second = IC_Move;
+
+		if (m_UnitState == STATE_IDLE)
+			m_Button_Icon[1].first = 1;
+		else
+			m_Button_Icon[1].first = 0;
+		m_Button_Icon[1].second = IC_Stop;
+
+		if (m_UnitState == STATE_ATTACK || m_UnitState == STATE_SHOOT)
+			m_Button_Icon[2].first = 1;
+		else
+			m_Button_Icon[2].first = 0;
+		m_Button_Icon[2].second = IC_Attack;
+
+		if (m_InputState == IP_BUILD)
+		{
+			m_Button_Icon[3].first = 1;
+			m_Button_Icon[4].first = 99;
+			m_Button_Icon[6].first = 99;
+			m_Button_Icon[7].first = 99;
+		}
+		else
+		{
+			m_Button_Icon[3].first = 0;
+			m_Button_Icon[4].first = 0;
+			m_Button_Icon[6].first = 0;
+			m_Button_Icon[7].first = 0;
+		}
+			
+		m_Button_Icon[3].second = IC_Refair;
+		m_Button_Icon[4].second = IC_Gater;
+
+		m_Button_Icon[5].first = 0;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].second = IC_Build;
+		m_Button_Icon[7].second = IC_AdBUild;
+
+		m_Button_Icon[8].first = 99;
+		m_Button_Icon[8].second = 99;
+	}
+
+}
+
+void CIconUI::Marine()
+{
+	if (m_UnitState == STATE_MOVE)
+		m_Button_Icon[0].first = 1;
+	else
+		m_Button_Icon[0].first = 0;
+	m_Button_Icon[0].second = IC_Move;
+
+	if (m_UnitState == STATE_IDLE)
+		m_Button_Icon[1].first = 1;
+	else
+		m_Button_Icon[1].first = 0;
+	m_Button_Icon[1].second = IC_Stop;
+
+	if (m_UnitState == STATE_ATTACK || m_UnitState == STATE_SHOOT)
+		m_Button_Icon[2].first = 1;
+	else
+		m_Button_Icon[2].first = 0;
+	m_Button_Icon[2].second = IC_Attack;
+
+	m_Button_Icon[3].first = 0;
+	m_Button_Icon[3].second = IC_Patrol;
+
+	if(m_InputState == IP_HOLD)
+		m_Button_Icon[4].first = 1;
+	else
+		m_Button_Icon[4].first = 0;
+	m_Button_Icon[4].second = IC_Hold;
+
+
+	m_Button_Icon[5].first = 99;
+	m_Button_Icon[5].second = 99;
+
+	m_Button_Icon[6].first = 99;
+	m_Button_Icon[6].second = 99;
+
+	m_Button_Icon[7].first = 99;
+	m_Button_Icon[7].second = 99;
+
+	m_Button_Icon[8].first = 0;
+	m_Button_Icon[8].second = IC_MarineSteamPack;
+
+}
+
+void CIconUI::Medic()
+{
+	if (m_UnitState == STATE_MOVE)
+		m_Button_Icon[0].first = 1;
+	else
+		m_Button_Icon[0].first = 0;
+	m_Button_Icon[0].second = IC_Move;
+
+	if (m_UnitState == STATE_IDLE)
+		m_Button_Icon[1].first = 1;
+	else
+		m_Button_Icon[1].first = 0;
+	m_Button_Icon[1].second = IC_Stop;
+
+	if (m_UnitState == STATE_ATTACK || m_UnitState == STATE_SHOOT)
+		m_Button_Icon[2].first = 1;
+	else
+		m_Button_Icon[2].first = 0;
+	m_Button_Icon[2].second = IC_Attack;
+
+	m_Button_Icon[3].first = 0;
+	m_Button_Icon[3].second = IC_Patrol;
+
+	if (m_InputState == IP_HOLD)
+		m_Button_Icon[4].first = 1;
+	else
+		m_Button_Icon[4].first = 0;
+	m_Button_Icon[4].second = IC_Hold;
+
+
+	m_Button_Icon[5].first = 99;
+	m_Button_Icon[5].second = 99;
+
+	m_Button_Icon[6].first = 99;
+	m_Button_Icon[6].second = 99;
+
+	m_Button_Icon[7].first = 0;
+	m_Button_Icon[7].second = IC_MedicMegic_1;
+
+	m_Button_Icon[8].first = 0;
+	m_Button_Icon[8].second = IC_MedicMegic_2;
+}
+
+void CIconUI::Ghost()
+{
+	if (m_UnitState == STATE_MOVE)
+		m_Button_Icon[0].first = 1;
+	else
+		m_Button_Icon[0].first = 0;
+	m_Button_Icon[0].second = IC_Move;
+
+	if (m_UnitState == STATE_IDLE)
+		m_Button_Icon[1].first = 1;
+	else
+		m_Button_Icon[1].first = 0;
+	m_Button_Icon[1].second = IC_Stop;
+
+	if (m_UnitState == STATE_ATTACK || m_UnitState == STATE_SHOOT)
+		m_Button_Icon[2].first = 1;
+	else
+		m_Button_Icon[2].first = 0;
+	m_Button_Icon[2].second = IC_Attack;
+
+	m_Button_Icon[3].first = 0;
+	m_Button_Icon[3].second = IC_Patrol;
+
+	if (m_InputState == IP_HOLD)
+		m_Button_Icon[4].first = 1;
+	else
+		m_Button_Icon[4].first = 0;
+	m_Button_Icon[4].second = IC_Hold;
+
+
+	m_Button_Icon[5].first = 99;
+	m_Button_Icon[5].second = 99;
+
+	m_Button_Icon[6].first = 0;
+	m_Button_Icon[6].second = IC_Ghost_Cloak;
+
+	m_Button_Icon[7].first = 0;
+	m_Button_Icon[7].second = IC_Ghost_LockDown;
+
+	m_Button_Icon[8].first = 0;
+	m_Button_Icon[8].second = IC_Ghost_Nuke;
+}
+
+void CIconUI::Tank()
+{
+	if (m_UnitState == STATE_MOVE)
+		m_Button_Icon[0].first = 1;
+	else
+		m_Button_Icon[0].first = 0;
+	m_Button_Icon[0].second = IC_Move;
+
+	if (m_UnitState == STATE_IDLE)
+		m_Button_Icon[1].first = 1;
+	else
+		m_Button_Icon[1].first = 0;
+	m_Button_Icon[1].second = IC_Stop;
+
+	if (m_UnitState == STATE_ATTACK || m_UnitState == STATE_SHOOT)
+		m_Button_Icon[2].first = 1;
+	else
+		m_Button_Icon[2].first = 0;
+	m_Button_Icon[2].second = IC_Attack;
+
+	m_Button_Icon[3].first = 0;
+	m_Button_Icon[3].second = IC_Patrol;
+
+	if (m_InputState == IP_HOLD)
+		m_Button_Icon[4].first = 1;
+	else
+		m_Button_Icon[4].first = 0;
+	m_Button_Icon[4].second = IC_Hold;
+
+
+	m_Button_Icon[5].first = 99;
+	m_Button_Icon[5].second = 99;
+
+	m_Button_Icon[6].first = 99;
+	m_Button_Icon[6].second = 99;
+
+	m_Button_Icon[7].first = 99;
+	m_Button_Icon[7].second = 99;
+
+	m_Button_Icon[8].first = 0;
+	m_Button_Icon[8].second = IC_Siegemod;
+}
+
+void CIconUI::SiegeTank()
+{
+	if (m_UnitState == STATE_MOVE)
+		m_Button_Icon[0].first = 1;
+	else
+		m_Button_Icon[0].first = 0;
+	m_Button_Icon[0].second = IC_Move;
+
+	if (m_UnitState == STATE_IDLE)
+		m_Button_Icon[1].first = 1;
+	else
+		m_Button_Icon[1].first = 0;
+	m_Button_Icon[1].second = IC_Stop;
+
+	if (m_UnitState == STATE_ATTACK || m_UnitState == STATE_SHOOT)
+		m_Button_Icon[2].first = 1;
+	else
+		m_Button_Icon[2].first = 0;
+	m_Button_Icon[2].second = IC_Attack;
+
+	m_Button_Icon[3].first = 0;
+	m_Button_Icon[3].second = IC_Patrol;
+
+	if (m_InputState == IP_HOLD)
+		m_Button_Icon[4].first = 1;
+	else
+		m_Button_Icon[4].first = 0;
+	m_Button_Icon[4].second = IC_Hold;
+
+
+	m_Button_Icon[5].first = 99;
+	m_Button_Icon[5].second = 99;
+
+	m_Button_Icon[6].first = 99;
+	m_Button_Icon[6].second = 99;
+
+	m_Button_Icon[7].first = 99;
+	m_Button_Icon[7].second = 99;
+
+	m_Button_Icon[8].first = 0;
+	m_Button_Icon[8].second = IC_Tankmod;
+}
+
+void CIconUI::CommedCenter()
+{
+	if (m_buildState == BS_TEMP || m_buildState == BS_MAKE || m_buildState == BS_LINK)
+	{
+		m_Button_Icon[0].first = 99;
+		m_Button_Icon[0].second = 99;
+
+		m_Button_Icon[1].first = 99;
+		m_Button_Icon[1].second = 99;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 0;
+		m_Button_Icon[5].second = IC_Return;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 0;
+		m_Button_Icon[8].second = IC_Cancel;
+	}
+	else
+	{
+		m_Button_Icon[0].first = 0;
+		m_Button_Icon[0].second = IC_Scv;
+
+		m_Button_Icon[1].first = 99;
+		m_Button_Icon[1].second = 99;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 0;
+		m_Button_Icon[5].second = IC_Return;
+
+		if (CGameMgr::Get_Instance()->GetTechCount(TECH_Academy) > 0)
+			m_Button_Icon[6].first = 0;
+		else
+			m_Button_Icon[6].first = 4;
+		m_Button_Icon[6].second = IC_Scan_Addon;
+
+		if (CGameMgr::Get_Instance()->GetTechCount(TECH_CovertOps) > 0)
+			m_Button_Icon[7].first = 0;
+		else
+			m_Button_Icon[7].first = 4;
+		m_Button_Icon[7].second = IC_Nuke_Addon;
+
+		m_Button_Icon[8].first = 99;
+		m_Button_Icon[8].second = 99;
+	}
+	
+}
+
+void CIconUI::Suffly()
+{
+	m_Button_Icon[0].first = 99;
+	m_Button_Icon[0].second = 99;
+
+	m_Button_Icon[1].first = 99;
+	m_Button_Icon[1].second = 99;
+
+	m_Button_Icon[2].first = 99;
+	m_Button_Icon[2].second = 99;
+
+	m_Button_Icon[3].first = 99;
+	m_Button_Icon[3].second = 99;
+
+	m_Button_Icon[4].first = 99;
+	m_Button_Icon[4].second = 99;
+
+	m_Button_Icon[5].first = 99;
+	m_Button_Icon[5].second = 99;
+
+	m_Button_Icon[6].first = 99;
+	m_Button_Icon[6].second = 99;
+
+	m_Button_Icon[7].first = 99;
+	m_Button_Icon[7].second = 99;
+
+	m_Button_Icon[8].first = 0;
+	m_Button_Icon[8].second = IC_Cancel;
+}
+
+void CIconUI::Refinery()
+{
+	m_Button_Icon[0].first = 99;
+	m_Button_Icon[0].second = 99;
+
+	m_Button_Icon[1].first = 99;
+	m_Button_Icon[1].second = 99;
+
+	m_Button_Icon[2].first = 99;
+	m_Button_Icon[2].second = 99;
+
+	m_Button_Icon[3].first = 99;
+	m_Button_Icon[3].second = 99;
+
+	m_Button_Icon[4].first = 99;
+	m_Button_Icon[4].second = 99;
+
+	m_Button_Icon[5].first = 99;
+	m_Button_Icon[5].second = 99;
+
+	m_Button_Icon[6].first = 99;
+	m_Button_Icon[6].second = 99;
+
+	m_Button_Icon[7].first = 99;
+	m_Button_Icon[7].second = 99;
+
+	m_Button_Icon[8].first = 0;
+	m_Button_Icon[8].second = IC_Cancel;
+}
+
+void CIconUI::Barrack()
+{
+	if (m_buildState == BS_TEMP || m_buildState == BS_MAKE || m_buildState == BS_LINK)
+	{
+		m_Button_Icon[0].first = 99;
+		m_Button_Icon[0].second = 99;
+
+		m_Button_Icon[1].first = 99;
+		m_Button_Icon[1].second = 99;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 0;
+		m_Button_Icon[5].second = IC_Return;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 0;
+		m_Button_Icon[8].second = IC_Cancel;
+	}
+	else
+	{
+		m_Button_Icon[0].first = 0;
+		m_Button_Icon[0].second = IC_Marine;
+
+		if (CGameMgr::Get_Instance()->GetTechCount(TECH_Academy) > 0)
+			m_Button_Icon[1].first = 0;
+		else
+			m_Button_Icon[1].first = 4;
+		m_Button_Icon[1].second = IC_firebat;
+
+		if (CGameMgr::Get_Instance()->GetTechCount(TECH_CovertOps) > 0)
+			m_Button_Icon[2].first = 0;
+		else
+			m_Button_Icon[2].first = 4;
+		m_Button_Icon[2].second = IC_Ghost;
+
+		if (CGameMgr::Get_Instance()->GetTechCount(TECH_Academy) > 0)
+			m_Button_Icon[3].first = 0;
+		else
+			m_Button_Icon[3].first = 4;
+		m_Button_Icon[3].second = IC_Medic;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 0;
+		m_Button_Icon[5].second = IC_Return;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 99;
+		m_Button_Icon[8].second = 99;
+	}
+}
+
+void CIconUI::Archerdemy()
+{
+	if (m_buildState == BS_TEMP || m_buildState == BS_MAKE || m_buildState == BS_LINK)
+	{
+		m_Button_Icon[0].first = 99;
+		m_Button_Icon[0].second = 99;
+
+		m_Button_Icon[1].first = 99;
+		m_Button_Icon[1].second = 99;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 99;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 0;
+		m_Button_Icon[8].second = IC_Cancel;
+	}
+	else
+	{
+		m_Button_Icon[0].first = 0;
+		m_Button_Icon[0].second = IC_MarineRichUp;
+
+		m_Button_Icon[1].first = 0;
+		m_Button_Icon[1].second = IC_MarineSteamPack;
+					  
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 0;
+		m_Button_Icon[3].second = IC_MedicMegic_1;
+
+		m_Button_Icon[4].first = 0;
+		m_Button_Icon[4].second = IC_MedicMegic_2;
+
+		m_Button_Icon[5].first = 0;
+		m_Button_Icon[5].second = IC_MedicMana;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 99;
+		m_Button_Icon[8].second = 99;
+	}
+}
+
+void CIconUI::Factory()
+{
+	if (m_buildState == BS_TEMP || m_buildState == BS_MAKE || m_buildState == BS_LINK)
+	{
+		m_Button_Icon[0].first = 99;
+		m_Button_Icon[0].second = 99;
+
+		m_Button_Icon[1].first = 99;
+		m_Button_Icon[1].second = 99;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 0;
+		m_Button_Icon[5].second = IC_Return;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 0;
+		m_Button_Icon[8].second = IC_Cancel;
+	}
+	else
+	{
+		m_Button_Icon[0].first = 0;
+		m_Button_Icon[0].second = IC_Vulture;
+
+		if (static_cast<CFactory*>(m_pUintlist->front())->GetIsAddOn())
+			m_Button_Icon[1].first = 0;
+		else
+			m_Button_Icon[1].first = 4;
+		m_Button_Icon[1].second = IC_Tank;
+
+		if (static_cast<CFactory*>(m_pUintlist->front())->GetIsAddOn() &&
+			(CGameMgr::Get_Instance()->GetTechCount(TECH_Armory) > 0))
+			m_Button_Icon[2].first = 0;
+		else
+			m_Button_Icon[2].first = 4;
+		m_Button_Icon[2].second = IC_Goliath;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 0;
+		m_Button_Icon[5].second = IC_Return;
+
+		m_Button_Icon[6].first = 0;
+		m_Button_Icon[6].second = IC_FactoryAddon;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 99;
+		m_Button_Icon[8].second = 99;
+	}
+}
+
+void CIconUI::Starport()
+{
+	if (m_buildState == BS_TEMP || m_buildState == BS_MAKE || m_buildState == BS_LINK)
+	{
+		m_Button_Icon[0].first = 99;
+		m_Button_Icon[0].second = 99;
+
+		m_Button_Icon[1].first = 99;
+		m_Button_Icon[1].second = 99;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 0;
+		m_Button_Icon[5].second = IC_Return;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 0;
+		m_Button_Icon[8].second = IC_Cancel;
+	}
+	else
+	{
+		m_Button_Icon[0].first = 0;
+		m_Button_Icon[0].second = IC_Wirse;
+
+		m_Button_Icon[1].first = 4;
+		m_Button_Icon[1].second = IC_Dropship;
+
+		m_Button_Icon[2].first = 4;
+		m_Button_Icon[2].second = IC_Vassle;
+
+		m_Button_Icon[3].first = 4;
+		m_Button_Icon[3].second = IC_BattleCulsor;
+
+		m_Button_Icon[4].first = 4;
+		m_Button_Icon[4].second = IC_Vakily;
+
+		m_Button_Icon[5].first = 0;
+		m_Button_Icon[5].second = IC_Return;
+
+		m_Button_Icon[6].first = 0;
+		m_Button_Icon[6].second = IC_StarportAddon;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 99;
+		m_Button_Icon[8].second = 99;
+	}
+}
+
+void CIconUI::Armory()
+{
+	if (m_buildState == BS_TEMP || m_buildState == BS_MAKE || m_buildState == BS_LINK)
+	{
+		m_Button_Icon[0].first = 99;
+		m_Button_Icon[0].second = 99;
+
+		m_Button_Icon[1].first = 99;
+		m_Button_Icon[1].second = 99;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 99;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 0;
+		m_Button_Icon[8].second = IC_Cancel;
+	}
+	else
+	{
+		m_Button_Icon[0].first = 0;
+		m_Button_Icon[0].second = IC_Mecha_AtkUp;
+
+		m_Button_Icon[1].first = 0;
+		m_Button_Icon[1].second = IC_Sky_AtkUp;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 0;
+		m_Button_Icon[3].second = IC_Mecha_DefUp;
+
+		m_Button_Icon[4].first = 0;
+		m_Button_Icon[4].second = IC_Sky_DefUp;
+
+		m_Button_Icon[5].first = 99;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 99;
+		m_Button_Icon[8].second = 99;
+	}
+}
+
+void CIconUI::Siencefacilly()
+{
+	if (m_buildState == BS_TEMP || m_buildState == BS_MAKE || m_buildState == BS_LINK)
+	{
+		m_Button_Icon[0].first = 99;
+		m_Button_Icon[0].second = 99;
+
+		m_Button_Icon[1].first = 99;
+		m_Button_Icon[1].second = 99;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 99;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 0;
+		m_Button_Icon[8].second = IC_Cancel;
+	}
+	else
+	{
+		m_Button_Icon[0].first = 0;
+		m_Button_Icon[0].second = IC_Vasse_Emp;
+
+		m_Button_Icon[1].first = 0;
+		m_Button_Icon[1].second = IC_Vasse_Eraady;
+
+		m_Button_Icon[2].first = 0;
+		m_Button_Icon[2].second = IC_Vasse_Mana;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 99;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].first = 0;
+		m_Button_Icon[6].second = IC_CoOvp_Addon;
+
+		m_Button_Icon[7].first = 0;
+		m_Button_Icon[7].second = IC_BattleAddon;
+
+		m_Button_Icon[8].first = 99;
+		m_Button_Icon[8].second = 99;
+	}
+}
+
+void CIconUI::FactoryAddon()
+{
+	if (m_buildState == BS_TEMP || m_buildState == BS_MAKE || m_buildState == BS_LINK)
+	{
+		m_Button_Icon[0].first = 99;
+		m_Button_Icon[0].second = 99;
+
+		m_Button_Icon[1].first = 99;
+		m_Button_Icon[1].second = 99;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 99;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 0;
+		m_Button_Icon[8].second = IC_Cancel;
+	}
+	else
+	{
+		m_Button_Icon[0].first = 0;
+		m_Button_Icon[0].second = IC_Vulture_SpeedUp;
+
+		m_Button_Icon[1].first = 0;
+		m_Button_Icon[1].second = IC_Vulture_MineUp;
+
+		m_Button_Icon[2].first = 0;
+		m_Button_Icon[2].second = IC_Tank_SiegeUp;
+
+		m_Button_Icon[3].first = 0;
+		m_Button_Icon[3].second = IC_Goliath_SightUp;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 99;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 99;
+		m_Button_Icon[8].second = 99;
+	}
+}
+
+void CIconUI::StarportAddon()
+{
+	if (m_buildState == BS_TEMP || m_buildState == BS_MAKE || m_buildState == BS_LINK)
+	{
+		m_Button_Icon[0].first = 99;
+		m_Button_Icon[0].second = 99;
+
+		m_Button_Icon[1].first = 99;
+		m_Button_Icon[1].second = 99;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 99;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 0;
+		m_Button_Icon[8].second = IC_Cancel;
+	}
+	else
+	{
+		m_Button_Icon[0].first = 0;
+		m_Button_Icon[0].second = IC_Wirse_Cloak;
+
+		m_Button_Icon[1].first = 0;
+		m_Button_Icon[1].second = IC_Wirse_Mana;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99; 
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99; 
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 99;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 99;
+		m_Button_Icon[8].second = 99;
+	}
+}
+
+void CIconUI::CovertOps()
+{
+	if (m_buildState == BS_TEMP || m_buildState == BS_MAKE || m_buildState == BS_LINK)
+	{
+		m_Button_Icon[0].first = 99;
+		m_Button_Icon[0].second = 99;
+
+		m_Button_Icon[1].first = 99;
+		m_Button_Icon[1].second = 99;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 99;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 0;
+		m_Button_Icon[8].second = IC_Cancel;
+	}
+	else
+	{
+		m_Button_Icon[0].first = 0;
+		m_Button_Icon[0].second = IC_Ghost_LockDownUp;
+
+		m_Button_Icon[1].first = 0;
+		m_Button_Icon[1].second = IC_Ghost_CloakUp;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 0;
+		m_Button_Icon[3].second = IC_Ghost_SightUp;
+
+		m_Button_Icon[4].first = 0;
+		m_Button_Icon[4].second =IC_Ghost_Mana;
+
+		m_Button_Icon[5].first = 99;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 99;
+		m_Button_Icon[8].second = 99;
+	}
+}
+
+void CIconUI::cmdNuke()
+{
+	if (m_buildState == BS_TEMP || m_buildState == BS_MAKE || m_buildState == BS_LINK)
+	{
+		m_Button_Icon[0].first = 99;
+		m_Button_Icon[0].second = 99;
+
+		m_Button_Icon[1].first = 99;
+		m_Button_Icon[1].second = 99;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 99;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 0;
+		m_Button_Icon[8].second = IC_Cancel;
+	}
+	else
+	{
+		m_Button_Icon[0].first = 0;
+		m_Button_Icon[0].second = IC_Cmd_NukeUp;
+
+		m_Button_Icon[1].first = 99;
+		m_Button_Icon[1].second = 99;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 99;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 99;
+		m_Button_Icon[8].second = 99;
+	}
 }
