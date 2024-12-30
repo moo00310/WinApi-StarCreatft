@@ -7,7 +7,7 @@
 #include "CBloodEffect.h"
 #include "CCollisionMgr.h"
 
-CMedic::CMedic() :preUint(nullptr)
+CMedic::CMedic() 
 {
 }
 

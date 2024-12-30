@@ -20,6 +20,5 @@ public:
 	void Update_State() override;
 
 	void HealUnit();
-	CObj* preUint;
 };
 

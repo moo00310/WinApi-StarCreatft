@@ -234,58 +234,11 @@ void CTank::Move()
 	if (m_bSiegeMode) return;
 	if (m_iPathIndex < _path.size())
 	{
-		Pos _now = { (int)m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
-		Pos _pos = _path[m_iPathIndex];
-		Pos _pre = _path[max(m_iPathIndex - 1, 0)];
-
-		fPOINT _fNow = { m_tInfo.fX, m_tInfo.fY };
-		fPOINT _fPos = { _path[m_iPathIndex].x * TILECY + 16.f ,_path[m_iPathIndex].y * TILECY + 16.f };
-
-		if (m_iPathIndex == 0)
-		{
-			m_iPathIndex = 1;
-			return;
-		}
-
-		const float EPSILON = m_tStat.m_fSpeed * 10.0f;
-		if (fabsf(_fNow.x - _fPos.x) < EPSILON && fabsf(_fNow.y - _fPos.y) < EPSILON)
-		{
-			// 맵 타일 옵션 변경
-			CMapMgr::Get_Instance()->SetTileType(_pos, 2);
-			CMapMgr::Get_Instance()->SetTileType(_pre, 0);
-			++m_iPathIndex;
-		}
-		else
-		{
-			Pos dir = (_pos - _pre);
-			for (int i = 0; i < DIR_END; i++)
-			{
-				if (dir == MoveFront[i])
-				{
-					m_eDir = (DIRECTION)i;
-					m_eAttackDir = (DIRECTION)i;
-					break;
-				}
-			}
-
-			// 이동
-			if (CCollisionMgr::Collision_RangeChack_bool(this, *m_pUnitList, 50.f))
-			{
-				m_eCurState = STATE_IDLE;
-			}
-			else
-			{
-				fPOINT point = Nomalization(MoveFront[m_eDir]);
-
-				m_eCurState = STATE_MOVE;
-				m_tInfo.fX += m_tStat.m_fSpeed * point.x;
-				m_tInfo.fY += m_tStat.m_fSpeed * point.y;
-			}
-		}
+		Move_toNext();
 	}
 	else if (m_iPathIndex == _path.size())
 	{
-		m_eInput = IP_STOP;
+		m_eInput = IP_Chase;
 	}
 }
 
@@ -377,6 +330,61 @@ void CTank::Hold()
 			m_eAttackDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
 			m_eCurState = STATE_ATTACK;
 			AttackToEnemy(Enemy); // 실제 데미지 주는 코드
+		}
+	}
+
+}
+
+void CTank::Move_toNext()
+{
+	Pos _now = { (int)m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
+	Pos _pos = _path[m_iPathIndex];
+	Pos _pre = _path[max(m_iPathIndex - 1, 0)];
+
+	fPOINT _fNow = { m_tInfo.fX, m_tInfo.fY };
+	fPOINT _fPos = { _path[m_iPathIndex].x * TILECY + 16.f ,_path[m_iPathIndex].y * TILECY + 16.f };
+
+	if (m_iPathIndex == 0)
+	{
+		CMapMgr::Get_Instance()->SetTileType(_pos, 0);
+		m_iPathIndex = 1;
+		return;
+	}
+
+	const float EPSILON = m_tStat.m_fSpeed * 10.0f;
+	if (fabsf(_fNow.x - _fPos.x) < EPSILON && fabsf(_fNow.y - _fPos.y) < EPSILON)
+	{
+		// 맵 타일 옵션 변경
+		CMapMgr::Get_Instance()->SetTileType(_pos, 2);
+		CMapMgr::Get_Instance()->SetTileType(_pre, 0);
+		++m_iPathIndex;
+	}
+	else
+	{
+		Pos dir = (_pos - _pre);
+		for (int i = 0; i < DIR_END; i++)
+		{
+			if (dir == MoveFront[i])
+			{
+				m_eDir = (DIRECTION)i;
+				m_eAttackDir = (DIRECTION)i;
+				break;
+			}
+		}
+
+		// 이동
+		if (CCollisionMgr::Collision_RangeChack_bool(this, *m_pUnitList, 50.f))
+		{
+			m_eCurState = STATE_IDLE;
+		}
+		else
+		{
+			// 단위 벡터로 수정?
+			fPOINT point = Nomalization(MoveFront[m_eDir]);
+
+			m_eCurState = STATE_MOVE;
+			m_tInfo.fX += m_tStat.m_fSpeed * point.x;
+			m_tInfo.fY += m_tStat.m_fSpeed * point.y;
 		}
 	}
 
@@ -532,5 +540,47 @@ void CTank::KeyInput()
 	if (CKeyMgr::Get_Instance()->Key_Down('E'))
 	{
 		m_bSiegeMode_Anime = true;
+	}
+}
+
+void CTank::ChaseUnit()
+{
+	CObj* unit(nullptr);
+
+	if ((unit = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pMonsterList, m_tStat.m_iRange + 64.f)) != nullptr)
+	{
+		if (preUint != unit)
+		{
+			Astar(CCollisionMgr::Collision_RangePos(this, unit, m_tStat.m_iRange - 32.f));
+			preUint = unit;
+		}
+
+		if (m_iPathIndex < _path.size())
+		{
+			Move_toNext();
+		}
+		else if (m_iPathIndex == _path.size())
+		{
+			if (CCollisionMgr::Collision_Range_Bool(this, unit, m_tStat.m_iRange))
+			{
+				// 공격
+				m_eAttackDir = GetDirection(m_tInfo.fX, m_tInfo.fY, unit->Get_Info().fX, unit->Get_Info().fY);
+				if (m_eCurState == STATE_SHOOT)
+					m_eCurState = STATE_SHOOT;
+				else
+					m_eCurState = STATE_ATTACK;
+				AttackToEnemy(unit);
+			}
+			else
+			{
+				m_eCurState = STATE_IDLE;
+				preUint = nullptr;
+			}
+		}
+	}
+	else
+	{
+		m_eCurState = STATE_IDLE;
+		return;
 	}
 }

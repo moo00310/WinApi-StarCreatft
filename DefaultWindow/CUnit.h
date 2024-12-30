@@ -6,7 +6,7 @@ class CUnit : public CObj
 {
 public:
 	CUnit() : m_pMonsterList(nullptr), m_iPathIndex(0), m_eInput(IP_ATTACK), m_iAttackFrame(0),
-	ull_WaitTime(0), m_eCurState(STATE_IDLE), m_ePreState(STATE_IDLE)
+	ull_WaitTime(0), m_eCurState(STATE_IDLE), m_ePreState(STATE_IDLE), preUint(nullptr)
 		{ }
 	~CUnit() {}
 
@@ -41,6 +41,7 @@ protected:
 
 protected:
 	virtual void Move_toNext();
+	virtual void ChaseUnit();
 
 protected:
 	INPUTSTATE m_eInput;
@@ -57,5 +58,6 @@ protected:
 
 	//Move
 	ULONGLONG	ull_WaitTime;
+	CObj* preUint;
 };
 

@@ -40,6 +40,9 @@ void CUnit::Update_State()
 	case IP_STOP:
 		Stop();
 		break;
+	case IP_Chase:
+		ChaseUnit();
+		break;
 	case IP_END:
 		break;
 	default:
@@ -206,7 +209,7 @@ void CUnit::Move()
 	}
 	else if (m_iPathIndex == _path.size())
 	{
-		m_eInput = IP_STOP;
+		m_eInput = IP_Chase;
 	}
 		
 }
@@ -286,9 +289,12 @@ void CUnit::Hold()
 	else
 	{
 		m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
-		m_eCurState = STATE_ATTACK;
+		if (m_eCurState == STATE_SHOOT)
+			m_eCurState = STATE_SHOOT;
+		else
+			m_eCurState = STATE_ATTACK;
+		AttackToEnemy(Enemy);
 	}
-
 }
 
 void CUnit::Move_toNext()
@@ -341,6 +347,48 @@ void CUnit::Move_toNext()
 			m_tInfo.fX += m_tStat.m_fSpeed * point.x;
 			m_tInfo.fY += m_tStat.m_fSpeed * point.y;
 		}
+	}
+}
+
+void CUnit::ChaseUnit()
+{
+	CObj* unit(nullptr);
+
+	if ((unit = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pMonsterList, m_tStat.m_iRange + 64.f)) != nullptr)
+	{
+		if (preUint != unit)
+		{
+			Astar(CCollisionMgr::Collision_RangePos(this, unit, m_tStat.m_iRange - 32.f));
+			preUint = unit;
+		}
+
+		if (m_iPathIndex < _path.size())
+		{
+			Move_toNext(); 
+		}
+		else if (m_iPathIndex == _path.size())
+		{
+			if (CCollisionMgr::Collision_Range_Bool(this, unit, m_tStat.m_iRange))
+			{
+				// АјАн
+				m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, unit->Get_Info().fX, unit->Get_Info().fY);
+				if (m_eCurState == STATE_SHOOT)
+					m_eCurState = STATE_SHOOT;
+				else
+					m_eCurState = STATE_ATTACK;
+				AttackToEnemy(unit);
+			}
+			else
+			{
+				m_eCurState = STATE_IDLE;
+				preUint = nullptr;
+			}
+		}
+	}
+	else
+	{
+		m_eCurState = STATE_IDLE;
+		return;
 	}
 }
 

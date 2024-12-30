@@ -242,3 +242,19 @@ Pos CCollisionMgr::Collision_RangePos(CObj* _pPlayer, CObj* _unit, float _dis)
 
 	return pos;
 }
+
+CObj* CCollisionMgr::Collision_RangeChack_Attack(CObj* _pPlayer, list<CObj*> _unit, float _dis)
+{
+	for (auto unit : _unit)
+	{
+
+		float fWidth = fabsf(unit->Get_Scroll_Info().fX - _pPlayer->Get_Scroll_Info().fX);
+		float fHeight = fabsf(unit->Get_Scroll_Info().fY - _pPlayer->Get_Scroll_Info().fY);
+		float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);
+
+		if (fDistance <= _dis)
+			return unit;
+	}
+
+	return nullptr;
+}
