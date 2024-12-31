@@ -96,7 +96,7 @@ void CTileMgr::Save_Tile()
 	if (INVALID_HANDLE_VALUE == hFile)
 		return;
 
-	int		iDrawID(0), iOption(0);
+	int		iOption(0);
 	DWORD	dwByte(0);
 
 
@@ -105,7 +105,6 @@ void CTileMgr::Save_Tile()
 		iOption = dynamic_cast<CTile*>(pTile)->Get_Option();
 
 		WriteFile(hFile, pTile->Get_Info_Pointer(), sizeof(INFO), &dwByte, NULL);
-		WriteFile(hFile, &iDrawID, sizeof(int), &dwByte, NULL);
 		WriteFile(hFile, &iOption, sizeof(int), &dwByte, NULL);
 	}
 
@@ -130,7 +129,6 @@ void CTileMgr::Load_Tile()
 	while (true)
 	{
 		bool a =ReadFile(hFile, &tTile, sizeof(INFO), &dwByte, NULL);
-		a = ReadFile(hFile, &iDrawID, sizeof(int), &dwByte, NULL);
 		a = ReadFile(hFile, &iOption, sizeof(int), &dwByte, NULL);
 
 		if (0 == dwByte)

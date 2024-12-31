@@ -165,6 +165,7 @@
     <ClInclude Include="CMarine.h" />
     <ClInclude Include="CMedic.h" />
     <ClInclude Include="CMemoryPoolMgr.h" />
+    <ClInclude Include="CMineral.h" />
     <ClInclude Include="CMonster.h" />
     <ClInclude Include="CMouse.h" />
     <ClInclude Include="CMouseMgr.h" />
@@ -177,6 +178,8 @@
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPortUI.h" />
     <ClInclude Include="CRefinery.h" />
+    <ClInclude Include="CResource.h" />
+    <ClInclude Include="CResourceMgr.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneMgr.h" />
     <ClInclude Include="CScienceFacility.h" />
@@ -243,6 +246,7 @@
     <ClCompile Include="CMarine.cpp" />
     <ClCompile Include="CMedic.cpp" />
     <ClCompile Include="CMemoryPoolMgr.cpp" />
+    <ClCompile Include="CMineral.cpp" />
     <ClCompile Include="CMonster.cpp" />
     <ClCompile Include="CMouse.cpp" />
     <ClCompile Include="CMouseMgr.cpp" />
@@ -256,6 +260,8 @@
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CPortUI.cpp" />
     <ClCompile Include="CRefinery.cpp" />
+    <ClCompile Include="CResource.cpp" />
+    <ClCompile Include="CResourceMgr.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CSceneMgr.cpp" />
     <ClCompile Include="CScienceFacility.cpp" />
