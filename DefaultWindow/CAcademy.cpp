@@ -125,8 +125,9 @@ void CAcademy::KeyInput()
     // 마린 사거리업
     if (CKeyMgr::Get_Instance()->Key_Down('E'))
     {
-        //이미 업그레이드 되어있으면 리턴
-
+        if (ChekList_OBJ(OT_Marine_SightUp)||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Marine_SightUp)) return;
+        
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Marine_SightUp))
             m_listSpawn.push_back(OT_Marine_SightUp);
     }
@@ -134,6 +135,9 @@ void CAcademy::KeyInput()
     // 스팀팩 업그레이드
     if (CKeyMgr::Get_Instance()->Key_Down('T'))
     {
+        if (ChekList_OBJ(OT_Marine_Streampack) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Marine_Streampack)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Marine_Streampack))
             m_listSpawn.push_back(OT_Marine_Streampack);
     }
@@ -141,18 +145,27 @@ void CAcademy::KeyInput()
     // 메딕 마법 1
     if (CKeyMgr::Get_Instance()->Key_Down('Z'))
     {
+        if (ChekList_OBJ(OT_Medic_Magic1) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Medic_Magic1)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Medic_Magic1))
             m_listSpawn.push_back(OT_Medic_Magic1);
     }
     // 메딕 마법 2
     if (CKeyMgr::Get_Instance()->Key_Down('X'))
     {
+        if (ChekList_OBJ(OT_Medic_Magic2) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Medic_Magic2)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Medic_Magic2))
             m_listSpawn.push_back(OT_Medic_Magic2);
     }
     // 메딕 마나
     if (CKeyMgr::Get_Instance()->Key_Down('C'))
     {
+        if (ChekList_OBJ(OT_Medic_Mana) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Medic_Mana)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Medic_Mana))
             m_listSpawn.push_back(OT_Medic_Mana);
     }

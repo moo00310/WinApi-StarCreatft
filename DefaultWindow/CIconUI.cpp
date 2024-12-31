@@ -405,10 +405,15 @@ void CIconUI::Marine()
 	m_Button_Icon[7].first = 99;
 	m_Button_Icon[7].second = 99;
 
-	if(CKeyMgr::Get_Instance()->GetKeyState('T'))
-		m_Button_Icon[8].first = 1;
+	if (CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Marine_Streampack))
+	{
+		if (CKeyMgr::Get_Instance()->GetKeyState('T'))
+			m_Button_Icon[8].first = 1;
+		else
+			m_Button_Icon[8].first = 0;
+	}
 	else
-		m_Button_Icon[8].first = 0;
+		m_Button_Icon[8].first = 4;
 	m_Button_Icon[8].second = IC_MarineSteamPack;
 
 }
@@ -802,7 +807,7 @@ void CIconUI::Barrack()
 				m_Button_Icon[3].first = 0;
 		}
 		else
-			m_Button_Icon[2].first = 4;
+			m_Button_Icon[3].first = 4;
 		m_Button_Icon[3].second = IC_Medic;
 
 		m_Button_Icon[4].first = 99;

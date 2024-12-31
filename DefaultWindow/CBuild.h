@@ -29,7 +29,7 @@ protected:
 	void Spawn_Uint_Index(OBJ_TYPE _id);
 	void Block_Map();
 	void UnBlock_Map();
-
+	bool ChekList_OBJ(OBJ_TYPE _id);
 
 protected:
 	BuildSTATE m_ePreState_Bulid;

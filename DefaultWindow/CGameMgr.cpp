@@ -10,12 +10,16 @@ void CGameMgr::Initialize()
 	m_iGas = 99999;
 	m_iPop = 0;
 	m_iMaxPop = 200;
-	TechnicArray[TECH_Braack] = 1;
-	TechnicArray[TECH_Academy] = 1;
-	TechnicArray[TECH_Factory] = 1;
-	TechnicArray[TECH_Armory] = 1;
-	TechnicArray[TECH_Starport] = 1;
-	TechnicArray[TECH_CovertOps] = 1;
+
+	for (int i = 0; i < TECH_END; i++)
+	{
+		TechnicArray[i] = 1;
+	}
+
+	for (int i = 0; i < UG_END; ++i) {
+		UpGrade_Compelate[i] = false;
+	}
+	int a =0;
 }
 
 void CGameMgr::Update()

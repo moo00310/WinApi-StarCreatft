@@ -126,6 +126,9 @@ void CStarPortAddon::KeyInput()
     // 레이스 클록킹
     if (CKeyMgr::Get_Instance()->Key_Down('C'))
     {
+        if (ChekList_OBJ(OT_Wirse_Cloak) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Wirse_Cloak)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Wirse_Cloak))
             m_listSpawn.push_back(OT_Wirse_Cloak);
     }
@@ -133,6 +136,9 @@ void CStarPortAddon::KeyInput()
     // 레이스 마나업
     if (CKeyMgr::Get_Instance()->Key_Down('A'))
     {
+        if (ChekList_OBJ(OT_Wires_Mana) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Wires_Mana)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Wires_Mana))
             m_listSpawn.push_back(OT_Wires_Mana);
     }

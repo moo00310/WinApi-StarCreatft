@@ -125,12 +125,18 @@ void CArmory::KeyInput()
     //  공격력 방어력 업그레이드
     if (CKeyMgr::Get_Instance()->Key_Down('W'))
     {
+        if (ChekList_OBJ(OT_Mecha_AtkUp) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Mecha_AtkUp)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Mecha_AtkUp))
             m_listSpawn.push_back(OT_Mecha_AtkUp);
     }
     //  공격력 방어력 업그레이드
     if (CKeyMgr::Get_Instance()->Key_Down('P'))
     {
+        if (ChekList_OBJ(OT_Sky_AtkUp) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Sky_AtkUp)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Sky_AtkUp))
             m_listSpawn.push_back(OT_Sky_AtkUp);
     }
@@ -138,6 +144,9 @@ void CArmory::KeyInput()
     //  공격력 방어력 업그레이드
     if (CKeyMgr::Get_Instance()->Key_Down('S'))
     {
+        if (ChekList_OBJ(OT_Mecha_DefUp) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Mecha_DefUp)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Mecha_DefUp))
             m_listSpawn.push_back(OT_Mecha_DefUp);
     }
@@ -145,6 +154,9 @@ void CArmory::KeyInput()
     //  공격력 방어력 업그레이드
     if (CKeyMgr::Get_Instance()->Key_Down('H'))
     {
+        if (ChekList_OBJ(OT_Sky_DefUp) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Sky_DefUp)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Sky_DefUp))
             m_listSpawn.push_back(OT_Sky_DefUp);
     }

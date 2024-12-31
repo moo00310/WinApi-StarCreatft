@@ -128,20 +128,29 @@ void CAddon::KeyInput()
     // 国贸 加诀
     if (CKeyMgr::Get_Instance()->Key_Down('I'))
     {
+        if (ChekList_OBJ(OT_Vulture_Speed) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Vulture_Speed)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Vulture_Speed))
             m_listSpawn.push_back(OT_Vulture_Speed);
     }
 
-    // 国贸 加诀
+    // 国贸 付牢诀
     if (CKeyMgr::Get_Instance()->Key_Down('M'))
     {
+        if (ChekList_OBJ(OT_Vulture_mine) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Vulture_mine)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Vulture_mine))
             m_listSpawn.push_back(OT_Vulture_mine);
     }
 
-    // 国贸 加诀
+    // 矫胶 诀
     if (CKeyMgr::Get_Instance()->Key_Down('S'))
     {
+        if (ChekList_OBJ(OT_Tank_SiegeMod) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Tank_SiegeMod)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Tank_SiegeMod))
             m_listSpawn.push_back(OT_Tank_SiegeMod);
     }
@@ -149,6 +158,9 @@ void CAddon::KeyInput()
     // 榜府狙 荤芭府诀
     if (CKeyMgr::Get_Instance()->Key_Down('C'))
     {
+        if (ChekList_OBJ(OT_Gholiat_SightUp) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Gholiat_SightUp)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Gholiat_SightUp))
             m_listSpawn.push_back(OT_Gholiat_SightUp);
     }

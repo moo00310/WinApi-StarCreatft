@@ -318,7 +318,7 @@ const Pos Spawn_index[5] =
 };
 
 
-#define Frame  16
+#define Frame  8
 
 const map<OBJ_TYPE, std::tuple<int, int, int, int>> ObjCost =
 {
@@ -489,4 +489,38 @@ enum ICON
 	IC_Ghost_Nuke,
 	//------
 	IC_Battle_Amato
+};
+
+enum Upgrade
+{
+	UG_Marine_SightUp,
+	UG_Marine_Streampack,
+	UG_Medic_Magic1,
+	UG_Medic_Magic2,
+	UG_Medic_Mana,
+
+	UG_Vulture_Speed,
+	UG_Vulture_mine,
+	UG_Tank_SiegeMod,
+	UG_Gholiat_SightUp,
+
+	UG_Mecha_AtkUp,
+	UG_Sky_AtkUp,
+	UG_Mecha_DefUp,
+	UG_Sky_DefUp,
+
+	UG_Wirse_Cloak,
+	UG_Wires_Mana,
+
+	UG_Vessle_Emp,
+	UG_Vessle_Irradiate,
+	UG_Vessle_Mana,
+
+	UG_Ghost_LockDown,
+	UG_Ghost_Cloak,
+	UG_Ghost_SightUp,
+	UG_Ghost_Mana,
+
+	UG_Cmd_Nuke,
+	UG_END
 };

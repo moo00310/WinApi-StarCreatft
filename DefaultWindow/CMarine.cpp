@@ -9,6 +9,7 @@
 #include "CMapMgr.h"
 #include "CSoundMgr.h"
 #include "CBulletEffect.h"
+#include "CGameMgr.h"
 
 CMarine::CMarine(): m_bIsSteamPack(false), m_CoolDown(0)
 {
@@ -166,6 +167,8 @@ void CMarine::KeyInput()
 	// ½ºÆÀ ÆÑ
 	if (CKeyMgr::Get_Instance()->Key_Down('T'))
 	{
+		if (!CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Marine_Streampack)) return;
+
 		m_bIsSteamPack = true;
 		m_tFrame.dwSpeed = 55;
 		Add_Stat_hp(-10);

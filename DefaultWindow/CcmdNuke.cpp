@@ -125,6 +125,9 @@ void CcmdNuke::KeyInput()
     // ÇÙ »ý»ê
     if (CKeyMgr::Get_Instance()->Key_Down('N'))
     {
+        if (ChekList_OBJ(OT_Cmd_Nuke) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Cmd_Nuke)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Cmd_Nuke))
             m_listSpawn.push_back(OT_Cmd_Nuke);
     }

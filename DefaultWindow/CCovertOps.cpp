@@ -128,6 +128,9 @@ void CCovertOps::KeyInput()
     // 락다운 업글
     if (CKeyMgr::Get_Instance()->Key_Down('L'))
     {
+        if (ChekList_OBJ(OT_Ghost_LockDown) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Ghost_LockDown)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Ghost_LockDown))
             m_listSpawn.push_back(OT_Ghost_LockDown);
     }
@@ -135,6 +138,9 @@ void CCovertOps::KeyInput()
     // 클록킹
     if (CKeyMgr::Get_Instance()->Key_Down('C'))
     {
+        if (ChekList_OBJ(OT_Ghost_Cloak) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Ghost_Cloak)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Ghost_Cloak))
             m_listSpawn.push_back(OT_Ghost_Cloak);
     }
@@ -142,6 +148,9 @@ void CCovertOps::KeyInput()
     // 시야 업
     if (CKeyMgr::Get_Instance()->Key_Down('O'))
     {
+        if (ChekList_OBJ(OT_Ghost_SightUp) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Ghost_SightUp)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Ghost_SightUp))
             m_listSpawn.push_back(OT_Ghost_SightUp);
     }
@@ -149,6 +158,9 @@ void CCovertOps::KeyInput()
     // 마나 업
     if (CKeyMgr::Get_Instance()->Key_Down('M'))
     {
+        if (ChekList_OBJ(OT_Ghost_Mana) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Ghost_Mana)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Ghost_Mana))
             m_listSpawn.push_back(OT_Ghost_Mana);
     }

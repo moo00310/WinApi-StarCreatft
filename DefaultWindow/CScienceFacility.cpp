@@ -127,16 +127,25 @@ void CScienceFacility::KeyInput()
 
     if (CKeyMgr::Get_Instance()->Key_Down('E'))
     {
+        if (ChekList_OBJ(OT_Vessle_Emp) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Vessle_Emp)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Vessle_Emp))
             m_listSpawn.push_back(OT_Vessle_Emp);
     }
     if (CKeyMgr::Get_Instance()->Key_Down('I'))
     {
+        if (ChekList_OBJ(OT_Vessle_Irradiate) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Vessle_Irradiate)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Vessle_Irradiate))
             m_listSpawn.push_back(OT_Vessle_Irradiate);
     }
     if (CKeyMgr::Get_Instance()->Key_Down('T'))
     {
+        if (ChekList_OBJ(OT_Vessle_Mana) ||
+            CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Vessle_Mana)) return;
+
         if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Vessle_Mana))
             m_listSpawn.push_back(OT_Vessle_Mana);
     }

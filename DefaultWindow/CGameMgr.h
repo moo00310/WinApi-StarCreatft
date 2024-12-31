@@ -39,9 +39,13 @@ public:
 		return TechnicArray[_eTech];
 	}
 
-	bool isBuying(OBJ_TYPE _Type);
-	
 
+public:
+	bool Get_UpGrade_Compelate(Upgrade _type) { return UpGrade_Compelate[_type]; }
+	void Set_UpGrade_Compelate(Upgrade _type, bool _bool) { UpGrade_Compelate[_type] = _bool; }
+
+public:
+	bool isBuying(OBJ_TYPE _Type);
 private:
 	void TextPrint(HDC hdc);
 
@@ -68,17 +72,9 @@ public:
 	int m_iPop;
 	int m_iMaxPop;
 
-	int TechnicArray[TECH_END] = { 0,0,0,0,0,0 };
+	int TechnicArray[TECH_END] = { 0 };
+	bool UpGrade_Compelate[UG_END] = { false };
 	ULONGLONG m_Time;
 	static CGameMgr* m_pInstance;
 };
 
-
-/// <summary>
-/// 기초 - 커맨드 센터,가스, 서플라이, 배럭, 아카데미/ 마린, SCV
-/// (배럭) -> 팩토리, 아카데미
-/// (아카데미) -> 메딕
-/// (팩토리) -> 스타포트, 아머리
-/// (스타포트) ->  사이언스 퍼실리티
-/// 사이언스 퍼실리티 코버드옵스-> 고스트, 뉴클리어 
-/// </summary>
