@@ -81,8 +81,8 @@ void CGameMouse::Render(HDC hDC)
     {
         HDC		hBuildDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey_build);
         GdiTransparentBlt(hDC,		
-            m_tRect.left,	
-            m_tRect.top,
+            (int)(m_tRect.left/32.f) * 32.f,	
+            (int)(m_tRect.top/32.f) * 32.f,
             (int)m_tInfo.fCX,			
             (int)m_tInfo.fCY,
             hBuildDC,
