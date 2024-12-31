@@ -19,11 +19,9 @@ public:
 private:
 	void	Key_Input();
 	void	TileChange();
-	void	ChangeTileID();
 
 private:
-	int		m_TileID;
-	int		m_TileOption;
+	int		m_Option;
 
 	int		m_ObjectTile_iCX;
 	int		m_ObjectTile_iCY;

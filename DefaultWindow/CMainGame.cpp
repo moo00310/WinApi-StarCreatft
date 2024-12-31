@@ -3,7 +3,6 @@
 #include "CAbstractFactory.h"
 #include "CObjMgr.h"
 #include "CMouseMgr.h"
-
 #include "CKeyMgr.h"
 #include "CScrollMgr.h"
 #include "CBmpMgr.h"
@@ -13,6 +12,7 @@
 #include "CUIMgr.h"
 #include "CSoundMgr.h"
 #include "CMemoryPoolMgr.h"
+#include "CResourceMgr.h"
 #include "CBloodEffect.h"
 #include "CGameMgr.h"
 
@@ -33,6 +33,7 @@ void CMainGame::Initialize()
 	CSoundMgr::Get_Instance()->Initialize();
 
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/FightSpirit.bmp", L"FightSpirit");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/Mineral_Gas/Resource.bmp", L"Resource");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Back.bmp", L"Back");
 	CSceneMgr::Get_Instance()->Set_Scene(SC_LOGO);
 	CMemoryPoolMgr::Get_Instance(300, 100);
@@ -127,6 +128,7 @@ void CMainGame::Release()
 	CMouseMgr::DestroyInstance();
 	CSoundMgr::Destroy_Instance();
 	CMemoryPoolMgr::Destroy_Instance();
-	CGameMgr::Get_Instance()->Destroy_Instance();
+	CGameMgr::Destroy_Instance();
+	CResourceMgr::Destroy_Instance();
 	ReleaseDC(g_hWnd, m_hDC);
 }

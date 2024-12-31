@@ -4,7 +4,7 @@
 class CGameMgr
 {
 public:
-	CGameMgr(): m_iMineral(0), m_iGas(0), m_iPop(0), m_iMaxPop(0), m_Time(GetTickCount64())
+	CGameMgr(): m_iMineral(0), m_iGas(0), m_iPop(0), m_iMaxPop(0), m_Time(GetTickCount64()), m_isDeBug(false)
 	{
 	}
 	~CGameMgr() { Release(); }
@@ -76,5 +76,8 @@ public:
 	bool UpGrade_Compelate[UG_END] = { false };
 	ULONGLONG m_Time;
 	static CGameMgr* m_pInstance;
+
+
+	bool m_isDeBug;
 };
 

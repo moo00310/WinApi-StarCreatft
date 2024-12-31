@@ -45,13 +45,23 @@ public:
 	void Render(HDC hDC) override;
 	void Release() override;
 
+public:
 	void GetEditInfo(int _id)
 	{ 
 		m_iOption = _id;
 	}
 
+	void GetEditMod(EditType _mod)
+	{
+		m_eEditType = _mod;
+	}
+
+private:
+	void ChangeMouse();
+
 private:
 	EditType m_eEditType;
 	int m_iOption;
+	int _iX;
 };
 

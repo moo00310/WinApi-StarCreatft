@@ -3,6 +3,7 @@
 #include "CObj.h"
 #include "CUI.h"
 #include "CMemoryPoolMgr.h"
+#include "CResource.h"
 
 template<typename T>
 class CAbstractFactory
@@ -67,5 +68,15 @@ public:
 		pObj->Initialize();
 		return pObj;
 	}
+
+	static CResource* CreateResource(float _fX, float _fY, int num)
+	{
+		CResource* pResource = new T;
+		pResource->SetPos(_fX, _fY);
+		pResource->SetOption(num);
+
+		return pResource;
+	}
+	
 };
 

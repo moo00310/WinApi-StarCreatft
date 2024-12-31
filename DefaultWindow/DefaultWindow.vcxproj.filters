@@ -244,12 +244,6 @@
     <Filter Include="03. Design\ResourceMgr\01.Resource">
       <UniqueIdentifier>{1238eddc-8ccf-478d-a477-68a7aee5c991}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Design\ResourceMgr\01.Resource\Mineral">
-      <UniqueIdentifier>{6097a89b-b7a8-40f4-846a-d45004a463e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. Design\ResourceMgr\01.Resource\Gas">
-      <UniqueIdentifier>{cc60e016-281c-4f50-9a5d-2815c3718417}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Design\ResourceMgr\01.Resource\Resource">
       <UniqueIdentifier>{2762f911-35e7-403b-a5d3-c5854c289fc5}</UniqueIdentifier>
     </Filter>
@@ -492,9 +486,6 @@
     <ClInclude Include="CResource.h">
       <Filter>03. Design\ResourceMgr\01.Resource\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="CMineral.h">
-      <Filter>03. Design\ResourceMgr\01.Resource\Mineral</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -694,9 +685,6 @@
     </ClCompile>
     <ClCompile Include="CResource.cpp">
       <Filter>03. Design\ResourceMgr\01.Resource\Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="CMineral.cpp">
-      <Filter>03. Design\ResourceMgr\01.Resource\Mineral</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

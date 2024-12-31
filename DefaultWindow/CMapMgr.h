@@ -4,7 +4,7 @@
 class CMapMgr
 {
 private:
-	CMapMgr() : m_dwTime(GetTickCount64()) {}
+	CMapMgr() : m_dwTime(GetTickCount64()){}
 	~CMapMgr() {}
 
 public:

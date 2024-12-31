@@ -52,7 +52,7 @@ void CMouse::Move_Frame()
     EditMouse
 --------------------*/
 
-EditMouse::EditMouse() : m_iOption(0) , m_eEditType(ET_END)
+EditMouse::EditMouse() : m_iOption(0) , m_eEditType(ET_END), _iX(0)
 {
 }
 
@@ -80,11 +80,10 @@ int EditMouse::Update()
     m_tInfo.fX = (float)ptMouse.x;
     m_tInfo.fY = (float)ptMouse.y;
 
+    ChangeMouse();
     __super::Update_Rect();
 
     ShowCursor(FALSE);
-
-
     return OBJ_NOEVENT;
 }
 
@@ -98,12 +97,12 @@ void EditMouse::Render(HDC hDC)
     HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
 
     GdiTransparentBlt(hDC,			// 복사 받을 DC
-        m_tRect.left,	// 복사 받을 위치 좌표 X, Y	
-        m_tRect.top,
+        (int)(m_tRect.left/32) * 32.f,	// 복사 받을 위치 좌표 X, Y	
+        (int)(m_tRect.top/32) * 32.f,
         (int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
         (int)m_tInfo.fCY,
         hMemDC,						// 복사할 이미지 DC	
-        (int)m_tInfo.fCX * m_iOption, // 비트맵 출력 시작 좌표(Left, top)
+        _iX * m_iOption, // 비트맵 출력 시작 좌표(Left, top)
         0,
         (int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
         (int)m_tInfo.fCY,
@@ -115,3 +114,33 @@ void EditMouse::Release()
 {
 
 }
+
+void EditMouse::ChangeMouse()
+{
+    if (m_eEditType == ET_TILE)
+    {
+        _iX = 32;
+        m_pImgKey = L"Tilesquare";
+        m_tInfo.fCX = 32.f;
+        m_tInfo.fCY = 32.f;
+    }
+
+    if (m_eEditType == ET_Resourece)
+    {
+        _iX = 64;
+        m_pImgKey = L"Resource";
+        if (m_iOption >= 2)
+        {
+            m_tInfo.fCX = 128.f;
+            m_tInfo.fCY = 64.f;
+        }
+        else
+        {
+            m_tInfo.fCX = 64.f;
+            m_tInfo.fCY = 64.f;
+        }
+    }
+
+}
+
+

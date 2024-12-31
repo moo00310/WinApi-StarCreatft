@@ -165,7 +165,6 @@
     <ClInclude Include="CMarine.h" />
     <ClInclude Include="CMedic.h" />
     <ClInclude Include="CMemoryPoolMgr.h" />
-    <ClInclude Include="CMineral.h" />
     <ClInclude Include="CMonster.h" />
     <ClInclude Include="CMouse.h" />
     <ClInclude Include="CMouseMgr.h" />
@@ -246,7 +245,6 @@
     <ClCompile Include="CMarine.cpp" />
     <ClCompile Include="CMedic.cpp" />
     <ClCompile Include="CMemoryPoolMgr.cpp" />
-    <ClCompile Include="CMineral.cpp" />
     <ClCompile Include="CMonster.cpp" />
     <ClCompile Include="CMouse.cpp" />
     <ClCompile Include="CMouseMgr.cpp" />

@@ -4,13 +4,13 @@
 #include "CBmpMgr.h"
 #include "CAbstractFactory.h"
 #include "CScrollMgr.h"
-#include "CTileMgr.h"
 #include "CMapMgr.h"
 #include "CGameMouse.h"
 #include "CUIMgr.h"
 #include "CSoundMgr.h"
 #include "CMouseMgr.h"
 #include "CGameMgr.h"
+#include "CResourceMgr.h"
 
 
 //// 테스트용
@@ -41,8 +41,7 @@ void CStage::Initialize()
 	Initalize_Bmp();
 	
 	//매니저 초기화
-	CTileMgr::Get_Instance()->Load_Tile(); // 로드 타일
-	CMapMgr::Get_Instance()->Initialize_Map(); 	// 타일 옵션 정보 불러오기 
+	CMapMgr::Get_Instance()->Initialize_Map(); 	// 타일& 리소스 옵션 정보 불러오기 
 	CUIMgr::Get_Instance()->Initalize(); 	// UI 매니저 초기화 
 	CGameMgr::Get_Instance()->Initialize();
 
@@ -86,6 +85,7 @@ void CStage::Late_Update()
 void CStage::Render(HDC hDC)
 {
 	CMapMgr::Get_Instance()->Render(hDC);
+	CResourceMgr::Get_Instance()->Render(hDC);
 	CObjMgr::Get_Instance()->Render(hDC);
 	CUIMgr::Get_Instance()->Render(hDC);
 	CGameMgr::Get_Instance()->Render(hDC);

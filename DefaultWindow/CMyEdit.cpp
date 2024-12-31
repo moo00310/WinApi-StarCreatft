@@ -6,8 +6,12 @@
 #include "CScrollMgr.h"
 #include "CMouse.h"
 #include "CMapMgr.h"
+#include "CResource.h"
+#include "CAbstractFactory.h"
+#include "CResourceMgr.h"
 
-CMyEdit::CMyEdit(): m_TileID(0), m_TileOption(0), m_pMouse(nullptr), m_eEditType(ET_END)
+
+CMyEdit::CMyEdit(): m_Option(0), m_pMouse(nullptr), m_eEditType(ET_END)
 , m_ObjectTile_iCX(0), m_ObjectTile_iCY(0)
 {
 }
@@ -30,8 +34,11 @@ void CMyEdit::Initialize()
 int CMyEdit::Update()
 {
 	CTileMgr::Get_Instance()->Update();
+	CResourceMgr::Get_Instance()->Update();
+
 	m_pMouse->Update();
-	dynamic_cast<EditMouse*>(m_pMouse)->GetEditInfo(m_TileOption);
+	dynamic_cast<EditMouse*>(m_pMouse)->GetEditInfo(m_Option);
+	dynamic_cast<EditMouse*>(m_pMouse)->GetEditMod(m_eEditType);
 	return 0;
 }
 
@@ -46,6 +53,7 @@ void CMyEdit::Render(HDC hDC)
 {
 	CMapMgr::Get_Instance()->Render(hDC);
 	CTileMgr::Get_Instance()->Render(hDC);
+	CResourceMgr::Get_Instance()->Render(hDC);
 	m_pMouse->Render(hDC);
 
 	float fScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
@@ -92,19 +100,45 @@ void CMyEdit::Key_Input()
 		CScrollMgr::Get_Instance()->Set_ScrollY(-5.f);
 	}
 
-
-	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LBUTTON))
+	// 모드 변경
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_F1))
 	{
-		POINT	ptMouse{};
-		GetCursorPos(&ptMouse);
-		ScreenToClient(g_hWnd, &ptMouse);
+		m_eEditType = ET_TILE;
+	}
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_F2))
+	{
+		m_eEditType = ET_Resourece;
+	}
 
-		ptMouse.x -= (int)CScrollMgr::Get_Instance()->Get_ScrollX();
-		ptMouse.y -= (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+	switch (m_eEditType)
+	{
+	case ET_TILE:
+		if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LBUTTON))
+		{
+			POINT	ptMouse{};
+			GetCursorPos(&ptMouse);
+			ScreenToClient(g_hWnd, &ptMouse);
 
+			ptMouse.x -= (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+			ptMouse.y -= (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+			CTileMgr::Get_Instance()->Picking_Tile(ptMouse, m_Option);
+		}
+		break;
+	case ET_Resourece:
+		if (CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
+		{
+			POINT	ptMouse{};
+			GetCursorPos(&ptMouse);
+			ScreenToClient(g_hWnd, &ptMouse);
 
-		CTileMgr::Get_Instance()->Picking_Tile(ptMouse, m_TileOption);
+			ptMouse.x -= (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+			ptMouse.y -= (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+			CResourceMgr::Get_Instance()->Push_Resource(CAbstractFactory<CResource>::CreateResource((float)ptMouse.x, (float)ptMouse.y, m_Option));
 
+		}
+		break;
+	default:
+		break;
 	}
 
 	// 타일 변경
@@ -115,12 +149,14 @@ void CMyEdit::Key_Input()
 	if (CKeyMgr::Get_Instance()->Key_Down('S'))
 	{
 		CTileMgr::Get_Instance()->Save_Tile();
+		CResourceMgr::Get_Instance()->Save_Resorce();
 		return;
 	}
 
 	if (CKeyMgr::Get_Instance()->Key_Down('L'))
 	{
 		CTileMgr::Get_Instance()->Load_Tile();
+		CResourceMgr::Get_Instance()->Load_Resorce();
 		return;
 	}
 }
@@ -130,21 +166,21 @@ void CMyEdit::TileChange()
 	if (CKeyMgr::Get_Instance()->Key_Down('1'))
 	{
 		// 이동가능
-		m_TileOption = 0;
+		m_Option = 0;
 	}
 	if (CKeyMgr::Get_Instance()->Key_Down('2'))
 	{
 		//  언덕
-		m_TileOption = 1;
+		m_Option = 1;
 	}
 	if (CKeyMgr::Get_Instance()->Key_Down('3'))
 	{
 		// 이동불가
-		m_TileOption = 2;
+		m_Option = 2;
 	}
 	if (CKeyMgr::Get_Instance()->Key_Down('4'))
 	{
 		// 가스
-		m_TileOption = 3;
+		m_Option = 3;
 	}
 }

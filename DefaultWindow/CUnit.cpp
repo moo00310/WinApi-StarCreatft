@@ -53,16 +53,16 @@ void CUnit::Update_State()
 void CUnit::Astar(Pos _tTarget_Index)
 {
 	Pos start = { (int)m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
-	if (start.x >= 74 || start.y >= 74) return;
+	if (start.x > 128 || start.y > 128) return;
 
 	// OpenList
 	priority_queue<PQNode, vector<PQNode>, greater<PQNode>> pq;
 
 	// close[y][x] -> (y, x)에 방문을 했는지 여부
-	vector<vector<bool>> closed(75, vector<bool>(75, false));
+	vector<vector<bool>> closed(128, vector<bool>(128, false));
 
 	// best[y][x] -> 지금까지 (y, x)에 대한 가장 좋은 비용 (작을 수록 좋음)
-	vector<vector<int>> best(75, vector<int>(75, INT_MAX));
+	vector<vector<int>> best(128, vector<int>(128, INT_MAX));
 
 	// 부모 추적 용도
 	map<Pos, Pos> parent;
@@ -91,7 +91,7 @@ void CUnit::Astar(Pos _tTarget_Index)
 		// 더 빠른 경로로 인해서 이미 방문(closed)된 경우 스킵
 		// [선택]
 		if (closed[node.pos.y][node.pos.x])
-			continue;
+			continue; 
 		if (best[node.pos.y][node.pos.x] < node.f)
 			continue;
 
@@ -108,7 +108,7 @@ void CUnit::Astar(Pos _tTarget_Index)
 
 			if (nextPos.x < 0 || nextPos.y < 0)
 				continue;
-			if (nextPos.x > 74 || nextPos.y > 74)
+			if (nextPos.x > 128 || nextPos.y > 128)
 				continue;
 
 			// 갈 수 있는 지역은 맞는지 확인
@@ -154,7 +154,7 @@ void CUnit::Astar(Pos _tTarget_Index)
 
 bool CUnit::CanGo(Pos pos)
 {
-	if (pos.y > 127 || pos.x > 127) return false;
+	if (pos.y > 128 || pos.x > 128) return false;
 	if (CMapMgr::Get_Instance()->GetTileType(pos) <= 1)
 		return true;
 	else
@@ -316,9 +316,6 @@ void CUnit::Move_toNext()
 	const float EPSILON = m_tStat.m_fSpeed * 10.0f;
 	if (fabsf(_fNow.x - _fPos.x) < EPSILON && fabsf(_fNow.y - _fPos.y) < EPSILON)
 	{
-		// 맵 타일 옵션 변경
-		CMapMgr::Get_Instance()->SetTileType(_pos, 2);
-		CMapMgr::Get_Instance()->SetTileType(_pre, 0);
 		++m_iPathIndex;
 	}
 	else

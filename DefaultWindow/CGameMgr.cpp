@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "CGameMgr.h"
 #include "CBmpMgr.h"
+#include "CKeyMgr.h"
+#include "CScrollMgr.h"
+#include "CMapMgr.h"
 
 CGameMgr* CGameMgr::m_pInstance = nullptr;
 
@@ -29,6 +32,15 @@ void CGameMgr::Update()
 		m_iMineral += 10;
 		m_iGas += 10;
 		m_Time = GetTickCount64();
+	}
+
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F1))
+	{
+		m_isDeBug = true;
+	}
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F2))
+	{
+		m_isDeBug = false;
 	}
 }
 
@@ -61,8 +73,47 @@ void CGameMgr::Render(HDC hDC)
 		100,
 		SRCCOPY);
 
-
 	TextPrint(hDC);
+
+	if (m_isDeBug)
+	{
+		//그리드 그리기
+		float fScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
+		float fScrollY = CScrollMgr::Get_Instance()->Get_ScrollY();
+		for (int i = 0; i < 128; ++i)
+		{
+			MoveToEx(hDC, int(i * 32 + fScrollX), int(0 + fScrollY), nullptr);
+			LineTo(hDC, int(i * 32 + fScrollX), int(128 * 32 + fScrollY));
+		}
+		for (int i = 0; i < 128; ++i)
+		{
+			MoveToEx(hDC, int(0 + fScrollX), int(i * 32 + fScrollY), nullptr);
+			LineTo(hDC, int(128 * 32 + fScrollX), int(i * 32 + fScrollY));
+		}
+
+		// 화면에 보이는 타일의 인덱스 범위 계산
+		int startX = max(0, int(-fScrollX / TILECX));
+		int startY = max(0, int(-fScrollY / TILECY));
+		int endX = min(128, startX + WINCX / TILECX + 2);
+		int endY = min(128, startY + WINCY / TILECY + 2);
+
+		for (int i = startY; i < endY; ++i) {
+			for (int j = startX; j < endX; ++j) {
+				Pos temp = { i, j };
+
+				// 타일 정보 가져오기
+				wchar_t m_wcHp[32] = L"";
+				swprintf_s(m_wcHp, 32, L"%d ", CMapMgr::Get_Instance()->GetTileType(temp));
+
+				// 화면 좌표 계산 (스크롤 오프셋 적용)
+				int screenX = j * TILECX + fScrollX;
+				int screenY = i * TILECY + fScrollY;
+
+				// 텍스트 출력
+				TextOut(hDC, screenX + TILECX / 2, screenY + TILECY / 2, m_wcHp, (int)wcslen(m_wcHp));
+			}
+		}
+	}
 }
 
 void CGameMgr::Release()

@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "CResourceMgr.h"
+#include "CAbstractFactory.h"
+
+CResourceMgr* CResourceMgr::m_pInstance = nullptr;
 
 void CResourceMgr::Update()
 {
@@ -24,7 +27,7 @@ void CResourceMgr::Release()
 	m_vecResource.shrink_to_fit();
 }
 
-void CResourceMgr::Save_Tile()
+void CResourceMgr::Save_Resorce()
 {
 	HANDLE hFile = CreateFile(L"../Data/Resource.dat", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
@@ -32,18 +35,22 @@ void CResourceMgr::Save_Tile()
 		return;
 
 	DWORD	dwByte(0);
+	int		iOption(0);
 
 	for (auto& resource : m_vecResource)
 	{
+		iOption = resource->GetOption();
+
 		WriteFile(hFile, resource->Get_Info_Pointer(), sizeof(INFO), &dwByte, NULL);
+		WriteFile(hFile, &iOption, sizeof(int), &dwByte, NULL);
 	}
 
 	CloseHandle(hFile);
-	MessageBox(g_hWnd, L"Tile Save", L"성공", MB_OK);
+	MessageBox(g_hWnd, L"Resource Save", L"성공", MB_OK);
 
 }
 
-void CResourceMgr::Load_Tile()
+void CResourceMgr::Load_Resorce()
 {
 	HANDLE hFile = CreateFile(L"../Data/Resource.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
@@ -52,18 +59,19 @@ void CResourceMgr::Load_Tile()
 
 	DWORD	dwByte(0);
 	INFO	tResource{};
+	int		iOption(0);
 
 	Release();
 
 	while (true)
 	{
 		bool a = ReadFile(hFile, &tResource, sizeof(INFO), &dwByte, NULL);
-
+		a = ReadFile(hFile, &iOption, sizeof(int), &dwByte, NULL);
 		if (0 == dwByte)
 			break;
 
-		//CResource* pResource = CAbstractFactory<CTile>::Create(tTile.fX, tTile.fY);
-		//m_vecResource.push_back(pResource);
+		CResource* pResource = CAbstractFactory<CResource>::CreateResource((int)tResource.fX, (int)tResource.fY, iOption);
+		m_vecResource.push_back(pResource);
 	}
 
 	CloseHandle(hFile);
