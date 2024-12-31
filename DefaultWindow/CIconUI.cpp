@@ -493,17 +493,40 @@ void CIconUI::Ghost()
 		m_Button_Icon[4].first = 0;
 	m_Button_Icon[4].second = IC_Hold;
 
-
 	m_Button_Icon[5].first = 99;
 	m_Button_Icon[5].second = 99;
 
-	m_Button_Icon[6].first = 0;
+	if (CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Ghost_Cloak))
+	{
+		if (CKeyMgr::Get_Instance()->GetKeyState('C'))
+			m_Button_Icon[6].first = 1;
+		else
+			m_Button_Icon[6].first = 0;
+	}
+	else
+		m_Button_Icon[6].first = 4;
 	m_Button_Icon[6].second = IC_Ghost_Cloak;
 
-	m_Button_Icon[7].first = 0;
+	if (CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Ghost_LockDown))
+	{
+		if (CKeyMgr::Get_Instance()->GetKeyState('L'))
+			m_Button_Icon[7].first = 1;
+		else
+			m_Button_Icon[7].first = 0;
+	}
+	else
+		m_Button_Icon[7].first = 4;
 	m_Button_Icon[7].second = IC_Ghost_LockDown;
 
-	m_Button_Icon[8].first = 0;
+	if (CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Cmd_Nuke))
+	{
+		if (CKeyMgr::Get_Instance()->GetKeyState('N'))
+			m_Button_Icon[8].first = 1;
+		else
+			m_Button_Icon[8].first = 0;
+	}
+	else
+		m_Button_Icon[8].first = 4;
 	m_Button_Icon[8].second = IC_Ghost_Nuke;
 }
 
@@ -545,11 +568,16 @@ void CIconUI::Tank()
 
 	m_Button_Icon[7].first = 99;
 	m_Button_Icon[7].second = 99;
-
-	if (CKeyMgr::Get_Instance()->GetKeyState('E'))
-		m_Button_Icon[8].first = 1;
+	
+	if (CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Tank_SiegeMod))
+	{
+		if (CKeyMgr::Get_Instance()->GetKeyState('E'))
+			m_Button_Icon[8].first = 1;
+		else
+			m_Button_Icon[8].first = 0;
+	}
 	else
-		m_Button_Icon[8].first = 0;
+		m_Button_Icon[8].first = 4;
 	m_Button_Icon[8].second = IC_Siegemod;
 }
 

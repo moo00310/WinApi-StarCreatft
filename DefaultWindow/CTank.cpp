@@ -9,6 +9,7 @@
 #include "CBulletEffect.h"
 #include "CCollisionMgr.h"
 #include "CKeyMgr.h"
+#include "CGameMgr.h"
 
 void CTank::Initialize()
 {
@@ -539,6 +540,7 @@ void CTank::KeyInput()
 	// 시즈모드
 	if (CKeyMgr::Get_Instance()->Key_Down('E'))
 	{
+		if (!CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Tank_SiegeMod)) return;
 		m_bSiegeMode_Anime = true;
 	}
 }

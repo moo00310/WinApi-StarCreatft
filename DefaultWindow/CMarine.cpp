@@ -55,6 +55,8 @@ int CMarine::Update()
 	KeyInput();
 	Update_State();
 
+	if (CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Marine_SightUp)) 
+		m_tStat.m_iRange = 96;
 
 	__super::Update_Rect();
     return OBJ_NOEVENT;
