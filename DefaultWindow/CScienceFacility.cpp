@@ -154,9 +154,9 @@ void CScienceFacility::KeyInput()
     if (CKeyMgr::Get_Instance()->Key_Down('C'))
     {
         if (m_bIsAddOn) return;
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_ScienceSecret))
+            m_listSpawn.push_back(OT_ScienceSecret);
 
-        m_listSpawn.push_back(OT_ScienceSecret);
-        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CCovertOps>::Create(m_tInfo.fX + 90, m_tInfo.fY + 20));
         m_bIsAddOn = true;
     }
 }

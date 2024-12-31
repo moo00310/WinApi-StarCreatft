@@ -43,7 +43,7 @@ private:
 	void CovertOps();
 	void cmdNuke();
 
-
+	bool ChekList_OBJ(OBJ_TYPE _id);
 
 private:
 	int IconCX;
@@ -54,7 +54,7 @@ private:
 	ATIMESTATE m_UnitState;
 
 	pair<int, int> m_Button_Icon[9];
-
+	list<OBJ_TYPE>* m_listSpawn;
 public:
 	
 };

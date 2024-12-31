@@ -9,7 +9,7 @@
 #include "CScv.h"
 #include "CFactory.h"
 
-CIconUI::CIconUI() : IconCX(0), IconCY(0), m_buildState(BS_END), m_UnitState(STATE_END), m_InputState(IP_END)
+CIconUI::CIconUI() : IconCX(0), IconCY(0), m_buildState(BS_END), m_UnitState(STATE_END), m_InputState(IP_END), m_listSpawn(nullptr)
 {
 }
 
@@ -42,7 +42,7 @@ int CIconUI::Update()
 		Change_Button();
 	}
 
-	if (m_pUintlist->size() >= 1)
+	if (m_pUintlist->size() > 1)
 	{
 		//여려 마리 일때 어캐할건지
 	}
@@ -164,7 +164,10 @@ void CIconUI::Change_Button()
 		m_InputState = static_cast<CUnit*>(m_pUintlist->front())->GetInput();
 	}
 	else if (m_eCurState < OT_Build_End)
+	{
 		m_buildState = static_cast<CBuild*>(m_pUintlist->front())->Get_State();
+		m_listSpawn = static_cast<CBuild*>(m_pUintlist->front())->Get_SpawnList();
+	}
 	else
 		return;
 
@@ -860,38 +863,87 @@ void CIconUI::Archerdemy()
 	}
 	else
 	{
-		if (CKeyMgr::Get_Instance()->GetKeyState('E'))
-			m_Button_Icon[0].first = 1;
-		else
-			m_Button_Icon[0].first = 0;
-		m_Button_Icon[0].second = IC_MarineRichUp;
 
-		if (CKeyMgr::Get_Instance()->GetKeyState('T'))
-			m_Button_Icon[1].first = 1;
+		if (ChekList_OBJ(OT_Marine_SightUp) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Marine_SightUp))
+		{
+			m_Button_Icon[0].first = 99;
+			m_Button_Icon[0].second = 99;
+		}
 		else
-			m_Button_Icon[1].first = 0;
-		m_Button_Icon[1].second = IC_MarineSteamPack;
-					  
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('E'))
+				m_Button_Icon[0].first = 1;
+			else
+				m_Button_Icon[0].first = 0;
+			m_Button_Icon[0].second = IC_MarineRichUp;
+		}
+
+
+		if (ChekList_OBJ(OT_Marine_Streampack) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Marine_Streampack))
+		{
+			m_Button_Icon[1].first = 99;
+			m_Button_Icon[1].second = 99;
+		}
+		else
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('T'))
+				m_Button_Icon[1].first = 1;
+			else
+				m_Button_Icon[1].first = 0;
+			m_Button_Icon[1].second = IC_MarineSteamPack;
+		}
+
+		
 		m_Button_Icon[2].first = 99;
 		m_Button_Icon[2].second = 99;
 
-		if (CKeyMgr::Get_Instance()->GetKeyState('Z'))
-			m_Button_Icon[3].first = 1;
+		if (ChekList_OBJ(OT_Medic_Magic1) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Medic_Magic1))
+		{
+			m_Button_Icon[3].first = 99;
+			m_Button_Icon[3].second = 99;
+		}
 		else
-			m_Button_Icon[3].first = 0;
-		m_Button_Icon[3].second = IC_MedicMegic_1;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('Z'))
+				m_Button_Icon[3].first = 1;
+			else
+				m_Button_Icon[3].first = 0;
+			m_Button_Icon[3].second = IC_MedicMegic_1;
+		}
 
-		if (CKeyMgr::Get_Instance()->GetKeyState('X'))
-			m_Button_Icon[4].first = 1;
-		else
-			m_Button_Icon[4].first = 0;
-		m_Button_Icon[4].second = IC_MedicMegic_2;
 
-		if (CKeyMgr::Get_Instance()->GetKeyState('C'))
-			m_Button_Icon[5].first = 1;
+		if (ChekList_OBJ(OT_Medic_Magic2) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Medic_Magic2))
+		{
+			m_Button_Icon[4].first = 99;
+			m_Button_Icon[4].second = 99;
+		}
 		else
-			m_Button_Icon[5].first = 0;
-		m_Button_Icon[5].second = IC_MedicMana;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('X'))
+				m_Button_Icon[4].first = 1;
+			else
+				m_Button_Icon[4].first = 0;
+			m_Button_Icon[4].second = IC_MedicMegic_2;
+		}
+
+		if (ChekList_OBJ(OT_Medic_Mana) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Medic_Mana))
+		{
+			m_Button_Icon[5].first = 99;
+			m_Button_Icon[5].second = 99;
+		}
+		else
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('C'))
+				m_Button_Icon[5].first = 1;
+			else
+				m_Button_Icon[5].first = 0;
+			m_Button_Icon[5].second = IC_MedicMana;
+		}
 
 		m_Button_Icon[6].first = 99;
 		m_Button_Icon[6].second = 99;
@@ -1093,32 +1145,69 @@ void CIconUI::Armory()
 	}
 	else
 	{
-		if (CKeyMgr::Get_Instance()->GetKeyState('W'))
-			m_Button_Icon[0].first = 1;
+		if (ChekList_OBJ(OT_Mecha_AtkUp) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Mecha_AtkUp))
+		{
+			m_Button_Icon[0].first = 99;
+			m_Button_Icon[0].second = 99;
+		}
 		else
-			m_Button_Icon[0].first = 0;
-		m_Button_Icon[0].second = IC_Mecha_AtkUp;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('W'))
+				m_Button_Icon[0].first = 1;
+			else
+				m_Button_Icon[0].first = 0;
+			m_Button_Icon[0].second = IC_Mecha_AtkUp;
+		}
 
-		if (CKeyMgr::Get_Instance()->GetKeyState('S'))
-			m_Button_Icon[1].first = 1;
+		if (ChekList_OBJ(OT_Sky_AtkUp) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Sky_AtkUp))
+		{
+			m_Button_Icon[1].first = 99;
+			m_Button_Icon[1].second = 99;
+		}
 		else
-			m_Button_Icon[1].first = 0;
-		m_Button_Icon[1].second = IC_Sky_AtkUp;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('S'))
+				m_Button_Icon[1].first = 1;
+			else
+				m_Button_Icon[1].first = 0;
+			m_Button_Icon[1].second = IC_Sky_AtkUp;
+		}
+
 
 		m_Button_Icon[2].first = 99;
 		m_Button_Icon[2].second = 99;
 
-		if (CKeyMgr::Get_Instance()->GetKeyState('P'))
-			m_Button_Icon[3].first = 1;
+		if (ChekList_OBJ(OT_Mecha_DefUp) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Mecha_DefUp))
+		{
+			m_Button_Icon[3].first = 99;
+			m_Button_Icon[3].second = 99;
+		}
 		else
-			m_Button_Icon[3].first = 0;
-		m_Button_Icon[3].second = IC_Mecha_DefUp;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('P'))
+				m_Button_Icon[3].first = 1;
+			else
+				m_Button_Icon[3].first = 0;
+			m_Button_Icon[3].second = IC_Mecha_DefUp;
+		}
 
-		if (CKeyMgr::Get_Instance()->GetKeyState('H'))
-			m_Button_Icon[4].first = 1;
+		if (ChekList_OBJ(OT_Sky_DefUp) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Sky_DefUp))
+		{
+			m_Button_Icon[4].first = 99;
+			m_Button_Icon[4].second = 99;
+		}
 		else
-			m_Button_Icon[4].first = 0;
-		m_Button_Icon[4].second = IC_Sky_DefUp;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('H'))
+				m_Button_Icon[4].first = 1;
+			else
+				m_Button_Icon[4].first = 0;
+			m_Button_Icon[4].second = IC_Sky_DefUp;
+		}
 
 		m_Button_Icon[5].first = 99;
 		m_Button_Icon[5].second = 99;
@@ -1167,23 +1256,51 @@ void CIconUI::Siencefacilly()
 	}
 	else
 	{
-		if (CKeyMgr::Get_Instance()->GetKeyState('E'))
-			m_Button_Icon[0].first = 1;
+		if (ChekList_OBJ(OT_Vessle_Emp) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Vessle_Emp))
+		{
+			m_Button_Icon[0].first = 99;
+			m_Button_Icon[0].second = 99;
+		}
 		else
-			m_Button_Icon[0].first = 0;
-		m_Button_Icon[0].second = IC_Vasse_Emp;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('E'))
+				m_Button_Icon[0].first = 1;
+			else
+				m_Button_Icon[0].first = 0;
+			m_Button_Icon[0].second = IC_Vasse_Emp;
+		}
 
-		if (CKeyMgr::Get_Instance()->GetKeyState('I'))
-			m_Button_Icon[1].first = 1;
+		if (ChekList_OBJ(OT_Vessle_Irradiate) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Vessle_Irradiate))
+		{
+			m_Button_Icon[1].first = 99;
+			m_Button_Icon[1].second = 99;
+		}
 		else
-			m_Button_Icon[1].first = 0;
-		m_Button_Icon[1].second = IC_Vasse_Eraady;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('I'))
+				m_Button_Icon[1].first = 1;
+			else
+				m_Button_Icon[1].first = 0;
+			m_Button_Icon[1].second = IC_Vasse_Eraady;
+		}
 
-		if (CKeyMgr::Get_Instance()->GetKeyState('T'))
-			m_Button_Icon[2].first = 1;
+		if (ChekList_OBJ(OT_Vessle_Mana) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Vessle_Mana))
+		{
+			m_Button_Icon[2].first = 99;
+			m_Button_Icon[2].second = 99;
+		}
 		else
-			m_Button_Icon[2].first = 0;
-		m_Button_Icon[2].second = IC_Vasse_Mana;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('T'))
+				m_Button_Icon[2].first = 1;
+			else
+				m_Button_Icon[2].first = 0;
+			m_Button_Icon[2].second = IC_Vasse_Mana;
+		}
+
 
 		m_Button_Icon[3].first = 99;
 		m_Button_Icon[3].second = 99;
@@ -1241,29 +1358,69 @@ void CIconUI::FactoryAddon()
 	}
 	else
 	{
-		if (CKeyMgr::Get_Instance()->GetKeyState('I'))
-			m_Button_Icon[0].first = 1;
-		else
-			m_Button_Icon[0].first = 0;
-		m_Button_Icon[0].second = IC_Vulture_SpeedUp;
 
-		if (CKeyMgr::Get_Instance()->GetKeyState('M'))
-			m_Button_Icon[1].first = 1;
+		if (ChekList_OBJ(OT_Vulture_Speed) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Vulture_Speed))
+		{
+			m_Button_Icon[0].first = 99;
+			m_Button_Icon[0].second = 99;
+		}
 		else
-			m_Button_Icon[1].first = 0;
-		m_Button_Icon[1].second = IC_Vulture_MineUp;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('I'))
+				m_Button_Icon[0].first = 1;
+			else
+				m_Button_Icon[0].first = 0;
+			m_Button_Icon[0].second = IC_Vulture_SpeedUp;
+		}
+		
+		if (ChekList_OBJ(OT_Vulture_mine) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Vulture_mine))
+		{
+			m_Button_Icon[1].first = 99;
+			m_Button_Icon[1].second = 99;
+		}
+		else
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('M'))
+				m_Button_Icon[1].first = 1;
+			else
+				m_Button_Icon[1].first = 0;
+			m_Button_Icon[1].second = IC_Vulture_MineUp;
+		}
+		
+		if (ChekList_OBJ(OT_Tank_SiegeMod) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Tank_SiegeMod))
+		{
+			m_Button_Icon[2].first = 99;
+			m_Button_Icon[2].second = 99;
+		}
+		else
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('S'))
+				m_Button_Icon[2].first = 1;
+			else
+				m_Button_Icon[2].first = 0;
+			m_Button_Icon[2].second = IC_Tank_SiegeUp;
 
-		if (CKeyMgr::Get_Instance()->GetKeyState('S'))
-			m_Button_Icon[2].first = 1;
-		else
-			m_Button_Icon[2].first = 0;
-		m_Button_Icon[2].second = IC_Tank_SiegeUp;
+		}
 
-		if (CKeyMgr::Get_Instance()->GetKeyState('C'))
-			m_Button_Icon[3].first = 1;
+		if (ChekList_OBJ(OT_Gholiat_SightUp) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Gholiat_SightUp))
+		{
+			m_Button_Icon[3].first = 99;
+			m_Button_Icon[3].second = 99;
+		}
 		else
-			m_Button_Icon[3].first = 0;
-		m_Button_Icon[3].second = IC_Goliath_SightUp;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('C'))
+				m_Button_Icon[3].first = 1;
+			else
+				m_Button_Icon[3].first = 0;
+			m_Button_Icon[3].second = IC_Goliath_SightUp;
+		}
+		
+		
 
 		m_Button_Icon[4].first = 99;
 		m_Button_Icon[4].second = 99;
@@ -1315,18 +1472,37 @@ void CIconUI::StarportAddon()
 	}
 	else
 	{
-		if (CKeyMgr::Get_Instance()->GetKeyState('C'))
-			m_Button_Icon[0].first = 1;
+		if (ChekList_OBJ(OT_Wirse_Cloak) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Wirse_Cloak))
+		{
+			m_Button_Icon[0].first = 99;
+			m_Button_Icon[0].second = 99;
+		}
 		else
-			m_Button_Icon[0].first = 0;
-		m_Button_Icon[0].second = IC_Wirse_Cloak;
-
-		if (CKeyMgr::Get_Instance()->GetKeyState('A'))
-			m_Button_Icon[1].first = 1;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('C'))
+				m_Button_Icon[0].first = 1;
+			else
+				m_Button_Icon[0].first = 0;
+			m_Button_Icon[0].second = IC_Wirse_Cloak;
+		}
+		
+		if (ChekList_OBJ(OT_Wires_Mana) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Wires_Mana))
+		{
+			m_Button_Icon[1].first = 99;
+			m_Button_Icon[1].second = 99;
+		}
 		else
-			m_Button_Icon[1].first = 0;
-		m_Button_Icon[1].second = IC_Wirse_Mana;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('A'))
+				m_Button_Icon[1].first = 1;
+			else
+				m_Button_Icon[1].first = 0;
+			m_Button_Icon[1].second = IC_Wirse_Mana;
 
+		}
+		
 		m_Button_Icon[2].first = 99;
 		m_Button_Icon[2].second = 99; 
 
@@ -1383,32 +1559,69 @@ void CIconUI::CovertOps()
 	}
 	else
 	{
-		if (CKeyMgr::Get_Instance()->GetKeyState('L'))
-			m_Button_Icon[0].first = 1;
+		if (ChekList_OBJ(OT_Ghost_LockDown) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Ghost_LockDown))
+		{
+			m_Button_Icon[0].first = 99;
+			m_Button_Icon[0].second = 99;
+		}
 		else
-			m_Button_Icon[0].first = 0;
-		m_Button_Icon[0].second = IC_Ghost_LockDownUp;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('L'))
+				m_Button_Icon[0].first = 1;
+			else
+				m_Button_Icon[0].first = 0;
+			m_Button_Icon[0].second = IC_Ghost_LockDownUp;
+		}
+		
 
-		if (CKeyMgr::Get_Instance()->GetKeyState('C'))
-			m_Button_Icon[1].first = 1;
+		if (ChekList_OBJ(OT_Ghost_Cloak) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Ghost_Cloak))
+		{
+			m_Button_Icon[1].first = 99;
+			m_Button_Icon[1].second = 99;
+		}
 		else
-			m_Button_Icon[1].first = 0;
-		m_Button_Icon[1].second = IC_Ghost_CloakUp;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('C'))
+				m_Button_Icon[1].first = 1;
+			else
+				m_Button_Icon[1].first = 0;
+			m_Button_Icon[1].second = IC_Ghost_CloakUp;
+		}
 
 		m_Button_Icon[2].first = 99;
 		m_Button_Icon[2].second = 99;
 
-		if (CKeyMgr::Get_Instance()->GetKeyState('O'))
-			m_Button_Icon[3].first = 1;
+		if (ChekList_OBJ(OT_Ghost_SightUp) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Ghost_SightUp))
+		{
+			m_Button_Icon[3].first = 99;
+			m_Button_Icon[3].second = 99;
+		}
 		else
-			m_Button_Icon[3].first = 0;
-		m_Button_Icon[3].second = IC_Ghost_SightUp;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('O'))
+				m_Button_Icon[3].first = 1;
+			else
+				m_Button_Icon[3].first = 0;
+			m_Button_Icon[3].second = IC_Ghost_SightUp;
+		}
 
-		if (CKeyMgr::Get_Instance()->GetKeyState('M'))
-			m_Button_Icon[4].first = 1;
+		if (ChekList_OBJ(OT_Ghost_Mana) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Ghost_Mana))
+		{
+			m_Button_Icon[4].first = 99;
+			m_Button_Icon[4].second = 99;
+		}
 		else
-			m_Button_Icon[4].first = 0;
-		m_Button_Icon[4].second =IC_Ghost_Mana;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('M'))
+				m_Button_Icon[4].first = 1;
+			else
+				m_Button_Icon[4].first = 0;
+			m_Button_Icon[4].second = IC_Ghost_Mana;
+		}
 
 		m_Button_Icon[5].first = 99;
 		m_Button_Icon[5].second = 99;
@@ -1457,11 +1670,21 @@ void CIconUI::cmdNuke()
 	}
 	else
 	{
-		if (CKeyMgr::Get_Instance()->GetKeyState('N'))
-			m_Button_Icon[0].first = 1;
+		if (ChekList_OBJ(OT_Cmd_Nuke) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Cmd_Nuke))
+		{
+			m_Button_Icon[0].first = 99;
+			m_Button_Icon[0].second = 99;
+		}
 		else
-			m_Button_Icon[0].first = 0;
-		m_Button_Icon[0].second = IC_Cmd_NukeUp;
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('N'))
+				m_Button_Icon[0].first = 1;
+			else
+				m_Button_Icon[0].first = 0;
+			m_Button_Icon[0].second = IC_Cmd_NukeUp;
+		}
+		
 
 		m_Button_Icon[1].first = 99;
 		m_Button_Icon[1].second = 99;
@@ -1487,4 +1710,15 @@ void CIconUI::cmdNuke()
 		m_Button_Icon[8].first = 99;
 		m_Button_Icon[8].second = 99;
 	}
+}
+
+bool CIconUI::ChekList_OBJ(OBJ_TYPE _id)
+{
+
+	for (auto ID : *m_listSpawn)
+	{
+		if (ID == _id)
+			return true;
+	}
+	return false;
 }

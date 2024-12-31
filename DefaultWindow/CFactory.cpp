@@ -157,11 +157,12 @@ void CFactory::KeyInput()
     if (CKeyMgr::Get_Instance()->Key_Down('C'))
     {
         if (m_bIsAddOn) return;
-        if (m_bBuildAddon) return;
-        m_listSpawn.push_back(OT_Addon);
+        if (ChekList_OBJ(OT_Addon)) return;
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Addon))
+            m_listSpawn.push_back(OT_Addon);
+
         m_pAddOn = CAbstractFactory<CAddon>::Create(m_tInfo.fX + 90, m_tInfo.fY + 20);
         CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, m_pAddOn);
-        m_bBuildAddon = true;
     }
 
 }

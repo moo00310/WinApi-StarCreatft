@@ -10,6 +10,7 @@
 #include "CMedic.h"
 #include "CGhost.h"
 #include "CTank.h"
+#include "CCovertOps.h"
 
 void CBuild::Move_Frame()
 {
@@ -80,6 +81,11 @@ void CBuild::Spawn_Uint_Index(OBJ_TYPE _id)
 		break;
 	case OT_Unit_End:
 		break;
+
+	case OT_ScienceSecret:
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CCovertOps>::Create(m_tInfo.fX + 90, m_tInfo.fY + 20));
+		break;
+
 	case OT_Marine_SightUp:
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Marine_SightUp, true);
 		break;
