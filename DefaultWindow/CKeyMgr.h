@@ -15,6 +15,8 @@ public:
 	void		Update();
 
 public:
+	bool GetKeyState(int _iKey) { return m_bKeyState[_iKey]; }
+public:
 	static CKeyMgr* Get_Instance()
 	{
 		if (nullptr == m_pInstance)

@@ -136,7 +136,7 @@ void CCommedCenter::KeyInput()
     }
 
     // 뉴클리어 건설
-    if (CKeyMgr::Get_Instance()->Key_Down('C'))
+    if (CKeyMgr::Get_Instance()->Key_Down('N'))
     {
         if (m_bIsAddOn) return;
 
