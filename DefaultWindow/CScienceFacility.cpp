@@ -6,6 +6,7 @@
 #include "CKeyMgr.h"
 #include "CAbstractFactory.h"
 #include "CCovertOps.h"
+#include "CGameMgr.h"
 
 void CScienceFacility::Initialize()
 {
@@ -124,6 +125,21 @@ void CScienceFacility::KeyInput()
     if (m_eCurState_Build == BS_MAKE ||
         m_eCurState_Build == BS_TEMP) return;
 
+    if (CKeyMgr::Get_Instance()->Key_Down('E'))
+    {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Vessle_Emp))
+            m_listSpawn.push_back(OT_Vessle_Emp);
+    }
+    if (CKeyMgr::Get_Instance()->Key_Down('I'))
+    {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Vessle_Irradiate))
+            m_listSpawn.push_back(OT_Vessle_Irradiate);
+    }
+    if (CKeyMgr::Get_Instance()->Key_Down('T'))
+    {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Vessle_Mana))
+            m_listSpawn.push_back(OT_Vessle_Mana);
+    }
 
     // ºñ¹Ð ¹¹½Ã±â
     if (CKeyMgr::Get_Instance()->Key_Down('C'))

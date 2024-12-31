@@ -4,6 +4,7 @@
 #include "CObjMgr.h"
 #include "CBmpMgr.h"
 #include "CKeyMgr.h"
+#include "CGameMgr.h"
 
 void CAddon::Initialize()
 {
@@ -124,10 +125,32 @@ void CAddon::KeyInput()
         m_eCurState_Build == BS_TEMP ||
         m_eCurState_Build == BS_LINK) return;
 
+    // 国贸 加诀
+    if (CKeyMgr::Get_Instance()->Key_Down('I'))
+    {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Vulture_Speed))
+            m_listSpawn.push_back(OT_Vulture_Speed);
+    }
 
-    // 矫胶 诀弊饭捞靛
+    // 国贸 加诀
+    if (CKeyMgr::Get_Instance()->Key_Down('M'))
+    {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Vulture_mine))
+            m_listSpawn.push_back(OT_Vulture_mine);
+    }
+
+    // 国贸 加诀
+    if (CKeyMgr::Get_Instance()->Key_Down('S'))
+    {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Tank_SiegeMod))
+            m_listSpawn.push_back(OT_Tank_SiegeMod);
+    }
+
+    // 榜府狙 荤芭府诀
     if (CKeyMgr::Get_Instance()->Key_Down('C'))
     {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Gholiat_SightUp))
+            m_listSpawn.push_back(OT_Gholiat_SightUp);
     }
 }
 

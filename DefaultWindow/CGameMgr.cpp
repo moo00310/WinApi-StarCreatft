@@ -6,16 +6,16 @@ CGameMgr* CGameMgr::m_pInstance = nullptr;
 
 void CGameMgr::Initialize()
 {
-	m_iMineral = 900;
-	m_iGas = 900;
+	m_iMineral = 99999;
+	m_iGas = 99999;
 	m_iPop = 0;
 	m_iMaxPop = 200;
-	TechnicArray[TECH_Braack] = 0;
-	TechnicArray[TECH_Academy] = 0;
-	TechnicArray[TECH_Factory] = 0;
-	TechnicArray[TECH_Armory] = 0;
-	TechnicArray[TECH_Starport] = 0;
-	TechnicArray[TECH_CovertOps] = 0;
+	TechnicArray[TECH_Braack] = 1;
+	TechnicArray[TECH_Academy] = 1;
+	TechnicArray[TECH_Factory] = 1;
+	TechnicArray[TECH_Armory] = 1;
+	TechnicArray[TECH_Starport] = 1;
+	TechnicArray[TECH_CovertOps] = 1;
 }
 
 void CGameMgr::Update()

@@ -84,6 +84,8 @@ void CBuild::Spawn_Uint_Index(OBJ_TYPE _id)
 	default:
 		break;
 	}
+
+	
 }
 
 void CBuild::Block_Map()

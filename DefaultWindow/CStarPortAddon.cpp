@@ -4,6 +4,7 @@
 #include "CObjMgr.h"
 #include "CBmpMgr.h"
 #include "CKeyMgr.h"
+#include "CGameMgr.h"
 
 void CStarPortAddon::Initialize()
 {
@@ -122,10 +123,18 @@ void CStarPortAddon::KeyInput()
         m_eCurState_Build == BS_TEMP ||
         m_eCurState_Build == BS_LINK) return;
 
-
-    // 관제탑 업글
+    // 레이스 클록킹
     if (CKeyMgr::Get_Instance()->Key_Down('C'))
     {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Wirse_Cloak))
+            m_listSpawn.push_back(OT_Wirse_Cloak);
+    }
+
+    // 레이스 마나업
+    if (CKeyMgr::Get_Instance()->Key_Down('A'))
+    {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Wires_Mana))
+            m_listSpawn.push_back(OT_Wires_Mana);
     }
 }
 

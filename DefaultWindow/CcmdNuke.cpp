@@ -3,6 +3,7 @@
 #include "CMapMgr.h"
 #include "CBmpMgr.h"
 #include "CKeyMgr.h"
+#include "CGameMgr.h"
 
 void CcmdNuke::Initialize()
 {
@@ -122,8 +123,10 @@ void CcmdNuke::KeyInput()
 
 
     // ÇÙ »ý»ê
-    if (CKeyMgr::Get_Instance()->Key_Down('C'))
+    if (CKeyMgr::Get_Instance()->Key_Down('N'))
     {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Cmd_Nuke))
+            m_listSpawn.push_back(OT_Cmd_Nuke);
     }
 }
 

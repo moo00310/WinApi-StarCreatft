@@ -122,9 +122,31 @@ void CArmory::KeyInput()
     if (m_eCurState_Build == BS_MAKE ||
         m_eCurState_Build == BS_TEMP) return;
 
-    //  r공격력 방어력 업그레이드
-    if (CKeyMgr::Get_Instance()->Key_Down('T'))
+    //  공격력 방어력 업그레이드
+    if (CKeyMgr::Get_Instance()->Key_Down('W'))
     {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Mecha_AtkUp))
+            m_listSpawn.push_back(OT_Mecha_AtkUp);
+    }
+    //  공격력 방어력 업그레이드
+    if (CKeyMgr::Get_Instance()->Key_Down('P'))
+    {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Sky_AtkUp))
+            m_listSpawn.push_back(OT_Sky_AtkUp);
+    }
+
+    //  공격력 방어력 업그레이드
+    if (CKeyMgr::Get_Instance()->Key_Down('S'))
+    {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Mecha_DefUp))
+            m_listSpawn.push_back(OT_Mecha_DefUp);
+    }
+
+    //  공격력 방어력 업그레이드
+    if (CKeyMgr::Get_Instance()->Key_Down('H'))
+    {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Sky_DefUp))
+            m_listSpawn.push_back(OT_Sky_DefUp);
     }
 }
 

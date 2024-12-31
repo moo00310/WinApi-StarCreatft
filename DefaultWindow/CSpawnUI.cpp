@@ -29,7 +29,7 @@ int CSpawnUI::Update()
 
 	m_eID = m_pUintlist->front()->Get_ObjID();
 
-	if (m_eID == OT_Suffly || m_eID == OT_StarportAddOn || m_eID == OT_Addon  || m_eID == OT_Refinery)
+	if (m_eID == OT_Suffly || m_eID == OT_Refinery)
 	{
 		m_bRender = false;
 		return 0;
@@ -197,6 +197,109 @@ void CSpawnUI::Change_SpawnIcon(OBJ_TYPE _type)
 		IndexX = 2;
 		IndexY = 35;
 		break;
+
+
+	case OT_Marine_SightUp:
+		IndexX = 2;
+		IndexY = IC_MarineRichUp;
+		break;
+	case OT_Marine_Streampack:
+		IndexX = 2;
+		IndexY = IC_MarineSteamPack;
+		break;
+	case OT_Medic_Magic1:
+		IndexX = 2;
+		IndexY = IC_MedicMegic_1;
+		break;
+	case OT_Medic_Magic2:
+		IndexX = 2;
+		IndexY = IC_MedicMegic_2;
+		break;
+	case OT_Medic_Mana:
+		IndexX = 2;
+		IndexY = IC_MedicMana;
+		break;
+	case OT_Vulture_Speed:
+		IndexX = 2;
+		IndexY = IC_Vulture_SpeedUp;
+		break;
+	case OT_Vulture_mine:
+		IndexX = 2;
+		IndexY = IC_Vulture_MineUp;
+		break;
+	case OT_Tank_SiegeMod:
+		IndexX = 2;
+		IndexY = IC_Tank_SiegeUp;
+		break;
+	case OT_Gholiat_SightUp:
+		IndexX = 2;
+		IndexY = IC_Goliath_SightUp;
+		break;
+	case OT_Mecha_AtkUp:
+		IndexX = 2;
+		IndexY = IC_Mecha_AtkUp;
+		break;
+	case OT_Sky_AtkUp:
+		IndexX = 2;
+		IndexY = IC_Sky_AtkUp;
+		break;
+	case OT_Mecha_DefUp:
+		IndexX = 2;
+		IndexY = IC_Mecha_DefUp;
+		break;
+	case OT_Sky_DefUp:
+		IndexX = 2;
+		IndexY = IC_Sky_DefUp;
+		break;
+	case OT_Wirse_Cloak:
+		IndexX = 2;
+		IndexY = IC_Wirse_Cloak;
+		break;
+	case OT_Wires_Mana:
+		IndexX = 2;
+		IndexY = IC_Wirse_Mana;
+		break;
+	case OT_Vessle_Emp:
+		IndexX = 2;
+		IndexY = IC_Vasse_Emp;
+		break;
+	case OT_Vessle_Irradiate:
+		IndexX = 2;
+		IndexY = IC_Vasse_Eraady;
+		break;
+	case OT_Vessle_Mana:
+		IndexX = 2;
+		IndexY = IC_Vasse_Mana;
+		break;
+	case OT_Ghost_LockDown:
+		IndexX = 2;
+		IndexY = IC_Ghost_LockDownUp;
+		break;
+	case OT_Ghost_Cloak:
+		IndexX = 2;
+		IndexY = IC_Ghost_CloakUp;
+		break;
+	case OT_Ghost_SightUp:
+		IndexX = 2;
+		IndexY = IC_Ghost_SightUp;
+		break;
+	case OT_Ghost_Mana:
+		IndexX = 2;
+		IndexY = IC_Ghost_Mana;
+		break;
+	case OT_Cmd_Nuke:
+		IndexX = 2;
+		IndexY = IC_Cmd_NukeUp;
+		break;
+	case OT_END:
+		break;
+	default:
+		break;
+	}
+
+	switch (_type)
+	{
+	
 
 
 	default:

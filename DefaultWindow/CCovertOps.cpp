@@ -125,9 +125,32 @@ void CCovertOps::KeyInput()
         m_eCurState_Build == BS_LINK) return;
 
 
-    // 고스트 업글
+    // 락다운 업글
+    if (CKeyMgr::Get_Instance()->Key_Down('L'))
+    {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Ghost_LockDown))
+            m_listSpawn.push_back(OT_Ghost_LockDown);
+    }
+
+    // 클록킹
     if (CKeyMgr::Get_Instance()->Key_Down('C'))
     {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Ghost_Cloak))
+            m_listSpawn.push_back(OT_Ghost_Cloak);
+    }
+
+    // 시야 업
+    if (CKeyMgr::Get_Instance()->Key_Down('O'))
+    {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Ghost_SightUp))
+            m_listSpawn.push_back(OT_Ghost_SightUp);
+    }
+
+    // 마나 업
+    if (CKeyMgr::Get_Instance()->Key_Down('M'))
+    {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Ghost_Mana))
+            m_listSpawn.push_back(OT_Ghost_Mana);
     }
 }
 

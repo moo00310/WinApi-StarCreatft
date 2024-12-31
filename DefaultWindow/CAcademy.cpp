@@ -121,12 +121,41 @@ void CAcademy::KeyInput()
     if (m_eCurState_Build == BS_MAKE ||
         m_eCurState_Build == BS_TEMP) return;
 
+
+    // 마린 사거리업
+    if (CKeyMgr::Get_Instance()->Key_Down('E'))
+    {
+        //이미 업그레이드 되어있으면 리턴
+
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Marine_SightUp))
+            m_listSpawn.push_back(OT_Marine_SightUp);
+    }
+
     // 스팀팩 업그레이드
     if (CKeyMgr::Get_Instance()->Key_Down('T'))
     {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Marine_Streampack))
+            m_listSpawn.push_back(OT_Marine_Streampack);
     }
 
-
+    // 메딕 마법 1
+    if (CKeyMgr::Get_Instance()->Key_Down('Z'))
+    {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Medic_Magic1))
+            m_listSpawn.push_back(OT_Medic_Magic1);
+    }
+    // 메딕 마법 2
+    if (CKeyMgr::Get_Instance()->Key_Down('X'))
+    {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Medic_Magic2))
+            m_listSpawn.push_back(OT_Medic_Magic2);
+    }
+    // 메딕 마나
+    if (CKeyMgr::Get_Instance()->Key_Down('C'))
+    {
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_Medic_Mana))
+            m_listSpawn.push_back(OT_Medic_Mana);
+    }
 }
 
 void CAcademy::Change_Motion()
@@ -180,9 +209,9 @@ void CAcademy::Change_Motion()
             m_tFrame.dwTime = GetTickCount64();
             break;
         case BS_RUN:
-            m_tFrame.iFrameStart = 2;
-            m_tFrame.iFrameEnd = 3;
-            m_tFrame.iCurCount = 2;
+            m_tFrame.iFrameStart = 1;
+            m_tFrame.iFrameEnd = 2;
+            m_tFrame.iCurCount = 1;
             m_tFrame.dwSpeed = 200;
             m_tFrame.dwTime = GetTickCount64();
             break;

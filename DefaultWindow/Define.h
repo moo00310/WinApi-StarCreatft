@@ -65,22 +65,7 @@ enum ATIMESTATE { STATE_IDLE ,STATE_MOVE, STATE_ATTACK, STATE_SHOOT, STATE_DEAD,
 enum BuildSTATE { BS_TEMP, BS_MAKE, BS_LINK, BS_IDLE, BS_RUN, BS_FLY, BS_END };
 
 enum INPUTSTATE { IP_MOVE, IP_ATTACK, IP_HOLD, IP_STOP, IP_PATROL, IP_BUILD, IP_HEAL, IP_Chase, IP_END };
-enum CURSERSTATE { MS_IDLE, MS_OBJ, MS_ATTACK, MS_MOVE, MS_DRAG, MS_SCROLL_R, MS_SCROLL_U, MS_SCROLL_L, MS_SCROLL_D,
-
-
-};
-
-enum TILE_GROUP { 
-	TG_GROUND, 
-	TG_HILL, 
- };
-
-
-const int TILE_ID_RANGES[][2] = {
-	{0, 13},    // GROUND
-	{14, 27},   // HILL
-};
-
+enum CURSERSTATE { MS_IDLE, MS_OBJ, MS_ATTACK, MS_MOVE, MS_DRAG, MS_SCROLL_R, MS_SCROLL_U, MS_SCROLL_L, MS_SCROLL_D,};
 
 typedef struct tagInfo
 {
@@ -303,14 +288,21 @@ inline fPOINT Nomalization(const Pos _dir)
 	
 	return point;
 }
-
-// 유닛과 건물
+/*-------------------------------------------
+*		// 유닛과 건물
+----------------------------------------------*/
 enum OBJ_TYPE
 {
 	OT_Scv, OT_Marine, OT_Medic, OT_Ghost, OT_Tank, OT_SiegeTank, OT_Science_Vessel, OT_Unit_End,
 	OT_Commend, OT_Suffly, OT_Refinery, OT_Barrck, OT_Academy ,OT_Factory, OT_Addon, OT_Armory, OT_Starport, OT_StarportAddOn,
 	OT_ScienceFacility, OT_ScienceSecret, OT_CmdNuke, OT_Build_End,
-	
+	OT_Marine_SightUp, OT_Marine_Streampack, OT_Medic_Magic1, OT_Medic_Magic2, OT_Medic_Mana,
+	OT_Vulture_Speed, OT_Vulture_mine, OT_Tank_SiegeMod, OT_Gholiat_SightUp,
+	OT_Mecha_AtkUp, OT_Sky_AtkUp, OT_Mecha_DefUp, OT_Sky_DefUp,
+	OT_Wirse_Cloak, OT_Wires_Mana,
+	OT_Vessle_Emp, OT_Vessle_Irradiate, OT_Vessle_Mana,
+	OT_Ghost_LockDown, OT_Ghost_Cloak, OT_Ghost_SightUp, OT_Ghost_Mana,
+	OT_Cmd_Nuke,
 	OT_END
 };
 
@@ -351,7 +343,38 @@ const map<OBJ_TYPE, std::tuple<int, int, int, int>> ObjCost =
 	{OT_StarportAddOn,     {50,  50, 0, 40 * Frame}},
 	{OT_ScienceFacility,   {100, 150, 0, 60 * Frame}},
 	{OT_ScienceSecret,     {50,  50, 0, 40 * Frame}},
-	{OT_CmdNuke,           {100, 100, 0, 80 * Frame}}
+	{OT_CmdNuke,           {100, 100, 0, 80 * Frame}},
+
+	// 업그레이드 
+	{OT_Marine_SightUp,		{150, 150, 0,100*Frame}},
+	{OT_Marine_Streampack,	{100, 100, 0, 80*Frame}},
+	{OT_Medic_Magic1,		{100, 100, 0, 80*Frame}},
+	{OT_Medic_Magic2,		{100, 100, 0, 120*Frame}},
+	{OT_Medic_Mana,			{150, 150, 0, 166*Frame}},
+
+	{OT_Vulture_Speed,		{100, 100, 0, 100 * Frame}},
+	{OT_Vulture_mine,		{100, 100, 0, 80 * Frame}},
+	{OT_Tank_SiegeMod,		{150, 150, 0, 80 * Frame}},
+	{OT_Gholiat_SightUp,	{100, 100, 0, 133 * Frame}},
+
+	{OT_Mecha_AtkUp,		{100, 100, 0, 266 * Frame}},
+	{OT_Sky_AtkUp,			{100, 100, 0, 266 * Frame}},
+	{OT_Mecha_DefUp,		{100, 100, 0, 266 * Frame}},
+	{OT_Sky_DefUp,			{150, 150, 0, 266 * Frame}},
+
+	{OT_Wirse_Cloak,		{150, 150, 0, 100 * Frame}},
+	{OT_Wires_Mana,			{200, 200, 0, 166 * Frame}},
+
+	{OT_Vessle_Emp,			{200, 200, 0, 120 * Frame}},
+	{OT_Vessle_Irradiate,	{200, 200, 0, 80 * Frame}},
+	{OT_Vessle_Mana,		{150, 150, 0, 166 * Frame}},
+
+	{OT_Ghost_LockDown,		{200, 200, 0, 100 * Frame}},
+	{OT_Ghost_Cloak,		{100, 100, 0, 80 * Frame}},
+	{OT_Ghost_SightUp,		{100, 100, 0, 166 * Frame}},
+	{OT_Ghost_Mana,			{150, 150, 0, 166 * Frame}},
+
+	{OT_Cmd_Nuke,			{100, 100, 0, 80 * Frame}},
 };
 
 const fPOINT BuildTemplate_Size = { 160, 128 }; 
@@ -366,4 +389,104 @@ enum Tech
 	TECH_Starport,
 	TECH_CovertOps,
 	TECH_END
+};
+
+enum ICON
+{
+	IC_Move,
+	IC_Stop,
+	IC_Attack,
+	IC_Patrol,
+	IC_Hold,
+	IC_Cancel,
+	IC_Return,
+	IC_Gater,
+	IC_Refair,
+	IC_Build,
+	IC_AdBUild,
+	//--------
+	IC_Scv,
+	//-------
+	IC_Marine,
+	IC_firebat,
+	IC_Ghost,
+	//-------
+	IC_Vulture,
+	IC_Tank,
+	IC_Goliath,
+	//--------
+	IC_Wirse,
+	IC_Dropship,
+	IC_BattleCulsor,
+	IC_Vassle,
+	//--------------
+	IC_Commend,
+	IC_Suffly,
+	IC_Refinery,
+	IC_Barrack,
+	IC_Enginer,
+	IC_Terret,
+	IC_Archerdemy,
+	IC_Bungker,
+	//---------
+	IC_Factory,
+	IC_Starport,
+	IC_Siencefacilly,
+	IC_Armory,
+	//-------------
+	IC_Scan_Addon,
+	IC_Nuke_Addon,
+	IC_CoOvp_Addon,
+	IC_BattleAddon,
+	IC_StarportAddon,
+	IC_FactoryAddon,
+	//--------------
+	IC_Siegemod,
+	IC_Tankmod,
+	//-------------
+	IC_Medic,
+	IC_Vakily,
+	//----------------
+	IC_MarineRichUp,
+	IC_MarineSteamPack,
+	IC_MedicMegic_1,
+	IC_MedicMegic_2,
+	IC_MedicMana,
+	//--------------
+	IC_Boinic_AtkUp,
+	IC_Boinic_DefUp,
+	//-------------
+	IC_Mecha_AtkUp,
+	IC_Sky_AtkUp,
+	IC_Mecha_DefUp,
+	IC_Sky_DefUp,
+	//-------------
+	IC_Vasse_Emp,
+	IC_Vasse_Eraady,
+	IC_Vasse_Mana,
+	//--------------
+	IC_Wirse_Cloak,
+	IC_Wirse_Decloak,
+	IC_Wirse_Mana,
+	//---------------
+	IC_Vulture_SpeedUp,
+	IC_Vulture_MineUp,
+	IC_Tank_SiegeUp,
+	IC_Goliath_SightUp,
+	//----------------
+	IC_Battle_AmatoUp,
+	IC_Battle_ManaUp,
+	//---------------
+	IC_Cmd_NukeUp,
+	IC_Ghost_LockDownUp,
+	IC_Ghost_CloakUp,
+	IC_Ghost_SightUp,
+	IC_Ghost_Mana,
+	IC_Cmp_Scan,
+	//-------------------
+	IC_Ghost_Cloak,
+	IC_Ghost_LockDown,
+	IC_Ghost_Nuke,
+	//------
+	IC_Battle_Amato
 };

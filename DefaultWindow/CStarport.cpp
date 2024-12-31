@@ -25,11 +25,11 @@ void CStarport::Initialize()
     m_tStat = { 1300.f, 1.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
 
-   // m_iMyBuildTIme = get<3>(ObjCost.at(OT_Starport));
-    m_iMyBuildTIme = 60;
+     m_iMyBuildTIme = get<3>(ObjCost.at(OT_Starport));
+
 
     __super::Update_Rect();
-    Block_Map();
+    Block_Map();    
 }
 
 int CStarport::Update()
