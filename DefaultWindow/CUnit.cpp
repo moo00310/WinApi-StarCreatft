@@ -114,6 +114,11 @@ void CUnit::Astar(Pos _tTarget_Index)
 			// 갈 수 있는 지역은 맞는지 확인
 			if (CanGo(nextPos) == false)
 				continue;
+
+			// 벽을 낀 대각선 이동 방지
+			if (CanMove(node.pos, dir) == false)
+				continue;
+
 			// [선택] 이미 방문한 곳이면 스킵
 			if (closed[nextPos.y][nextPos.x])
 				continue;
@@ -159,6 +164,36 @@ bool CUnit::CanGo(Pos pos)
 		return true;
 	else
 		return false;
+}
+
+bool CUnit::CanMove(Pos _pos, int _dir)
+{
+	if (_dir == 0 || _dir == 4 || _dir == 8 || _dir == 12)
+		return true;
+	else if (_dir == 2 || _dir == 6 || _dir == 10 || _dir == 14)
+	{
+		int left = _dir - 2;
+		int right = _dir + 2;
+
+		if (right > 15) right = 0;
+
+		if (CanGo(_pos + MoveFront[left]) && CanGo(_pos + MoveFront[right]))
+			return true;
+		else
+			return false;
+	}
+	else
+	{
+		int left = _dir - 1;
+		int right = _dir + 1;
+
+		if (right > 15) right = 0;
+		if (CanGo(_pos + MoveFront[left]) && CanGo(_pos + MoveFront[right]))
+			return true;
+		else
+			return false;
+	}
+
 }
 
 float CUnit::GetLadanAngle(float player_x, float player_y, float monster_x, float monster_y)
