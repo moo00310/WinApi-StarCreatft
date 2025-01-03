@@ -1,12 +1,11 @@
 #pragma once
 #include "CUnit.h"
-#include "Define.h"
 
-class CMarine: public CUnit
+class E_Marine : public CUnit
 {
 public:
-	CMarine();
-	~CMarine();
+	E_Marine():m_dwTime(GetTickCount64()){}
+	~E_Marine() {}
 
 	void Initialize() override;
 	int Update() override;
@@ -17,10 +16,6 @@ public:
 	void KeyInput() override;
 	void AttackToEnemy(CObj* _Enemey) override;
 
-	void StreamPackCoolDown();
-
-	bool m_bIsSteamPack;
-	ULONGLONG m_CoolDown;
-
+	ULONGLONG m_dwTime;
 };
 

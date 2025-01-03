@@ -20,15 +20,12 @@ public:
 		return pObj;
 	}
 
-	static CObj* Create(float _fX, float _fY, float _fAngle = 0.f)
+	static CObj* Create(float _fX, float _fY)
 	{
 		CObj* pObj = new T;
 		pObj->Set_Pos(_fX, _fY);
 		pObj->Initialize();
-		
-		if(0.f != _fAngle)
-			pObj->Set_Angle(_fAngle);
-
+	
 		return pObj;
 	}
 

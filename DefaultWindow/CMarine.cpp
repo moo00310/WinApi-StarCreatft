@@ -11,6 +11,8 @@
 #include "CBulletEffect.h"
 #include "CGameMgr.h"
 
+#include "CCollisionMgr.h"
+
 CMarine::CMarine(): m_bIsSteamPack(false), m_CoolDown(0)
 {
 }
@@ -182,6 +184,13 @@ void CMarine::KeyInput()
 
 void CMarine::AttackToEnemy(CObj* _Enemey)
 {
+	m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, _Enemey->Get_Info().fX, _Enemey->Get_Info().fY);
+
+	if (m_eCurState == STATE_SHOOT)
+		m_eCurState = STATE_SHOOT;
+	else
+		m_eCurState = STATE_ATTACK;
+
 	if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64() &&
 		m_tFrame.iCurCount == m_iAttackFrame)
 	{
@@ -208,3 +217,4 @@ void CMarine::StreamPackCoolDown()
 	}
 
 }
+

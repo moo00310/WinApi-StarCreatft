@@ -63,7 +63,7 @@ int CGameMouse::Update()
     Change_Cursor();
 
     // ¸¶¿ì½º Àá±À
-    LockMouse();
+    //LockMouse();
    
     __super::Update_Rect();
     return OBJ_NOEVENT;
@@ -81,8 +81,8 @@ void CGameMouse::Render(HDC hDC)
     {
         HDC		hBuildDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey_build);
         GdiTransparentBlt(hDC,		
-            (int)(m_tRect.left/32.f) * 32.f,	
-            (int)(m_tRect.top/32.f) * 32.f,
+            (int)(m_tRect.left/32.f) * 32,	
+            (int)(m_tRect.top/32.f) * 32,
             (int)m_tInfo.fCX,			
             (int)m_tInfo.fCY,
             hBuildDC,
@@ -276,6 +276,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
                         {
                             if (pUnit->GetInput() == IP_BUILD) return;
                             pUnit->Astar(temp);
+                            pUnit->SetAGroundPos(temp);
                             pUnit->SetInput(IP_ATTACK);
                         }
                     }

@@ -116,8 +116,8 @@ CObj* CCollisionMgr::Collision_RangeChack(CObj* _pPlayer, list<CObj*> _pMonster,
 bool CCollisionMgr::Collision_Range_Bool(CObj* _pPlayer, CObj* _unit, float _dis)
 {
 
-	float fWidth = fabsf(_unit->Get_Scroll_Info().fX - _pPlayer->Get_Scroll_Info().fX);
-	float fHeight = fabsf(_unit->Get_Scroll_Info().fY - _pPlayer->Get_Scroll_Info().fY);
+	float fWidth = fabsf(_unit->Get_Info().fX - _pPlayer->Get_Info().fX);
+	float fHeight = fabsf(_unit->Get_Info().fY - _pPlayer->Get_Info().fY);
 
 	float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);
 

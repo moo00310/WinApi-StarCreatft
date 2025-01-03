@@ -7,7 +7,9 @@ class CUnit : public CObj
 public:
 	CUnit() : m_pMonsterList(nullptr), m_iPathIndex(0), m_eInput(IP_ATTACK), m_iAttackFrame(0),
 	ull_WaitTime(0), m_eCurState(STATE_IDLE), m_ePreState(STATE_IDLE), preUint(nullptr)
-		{ }
+	{
+		ZeroMemory(&A_GroundPos, sizeof(Pos)); 
+	}
 	~CUnit() {}
 
 	virtual void Initialize() PURE;
@@ -32,6 +34,7 @@ public:
 	bool CanMove(Pos _pos, int _dir);
 	DIRECTION GetDirection(float player_x, float player_y, float monster_x, float monster_y);
 	float GetLadanAngle(float player_x, float player_y, float monster_x, float monster_y);
+	void SetAGroundPos(Pos _pos) { A_GroundPos = _pos; }
 
 protected:
 	//Unit_BeHavior
@@ -60,5 +63,6 @@ protected:
 	//Move
 	ULONGLONG	ull_WaitTime;
 	CObj* preUint;
+	Pos A_GroundPos;
 };
 

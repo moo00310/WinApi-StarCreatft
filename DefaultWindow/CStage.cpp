@@ -20,6 +20,7 @@
 #include "CMedic.h"
 #include "CGhost.h"
 #include "CTank.h"
+#include "E_Marine.h"
 
 float	g_fVolume(1.f);
 
@@ -49,16 +50,16 @@ void CStage::Initialize()
 	CMouseMgr::Get_Instance()->Add_Mouse(CAbstractFactory<CGameMouse>::Create());
 
 	// 적 마린 생산
-	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMarine>::Create(600,600));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMarine>::Create(600,610));
+	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(600,600));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(600,610));
 
 
-	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(300, 300));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(300, 310));
+	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(300, 300));
+	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(300, 310));
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(300, 300));
 	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMedic>::Create(300, 310));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::Create(300, 300));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CTank>::Create(400, 400));
+	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::Create(300, 300));
+	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CTank>::Create(400, 400));
 
 
 }
@@ -165,6 +166,9 @@ void CStage::Initalize_Bmp()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Ghost/GhostShot.bmp", L"GhostShot");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/TankAtt/TankHit.bmp", L"TankHit");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/TankAtt/Tank(100,108).bmp", L"SiegeTankHit");
+
+	//E_Unit
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/E_Unit/MarineBlue.bmp", L"MarineBlue");
 
 
 }

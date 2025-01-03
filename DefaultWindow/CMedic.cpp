@@ -197,8 +197,6 @@ void CMedic::Hold()
 	if ((unit = CCollisionMgr::Collision_RangeChack_Heal(this, *m_pUnitList, 98.f)) != nullptr)
 	{
 		// Èú
-		m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, unit->Get_Info().fX, unit->Get_Info().fY);
-		m_eCurState = STATE_ATTACK;
 		AttackToEnemy(unit);
 	}
 	else
@@ -229,8 +227,6 @@ void CMedic::HealUnit()
 			if (CCollisionMgr::Collision_Range_Bool(this, unit, 98.f))
 			{
 				// Èú
-				m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, unit->Get_Info().fX, unit->Get_Info().fY);
-				m_eCurState = STATE_ATTACK;
 				AttackToEnemy(unit);
 			}
 			else
@@ -249,6 +245,9 @@ void CMedic::HealUnit()
 
 void CMedic::AttackToEnemy(CObj* _Enemey)
 {
+	m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, _Enemey->Get_Info().fX, _Enemey->Get_Info().fY);
+	m_eCurState = STATE_ATTACK;
+
 	if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64() &&
 		m_tFrame.iCurCount == m_iAttackFrame)
 	{

@@ -198,6 +198,12 @@ void CTank::MoveBody_Frame()
 
 void CTank::AttackToEnemy(CObj* _Enemey)
 {
+	m_eAttackDir = GetDirection(m_tInfo.fX, m_tInfo.fY, _Enemey->Get_Info().fX, _Enemey->Get_Info().fY);
+	if (m_eCurState == STATE_SHOOT)
+		m_eCurState = STATE_SHOOT;
+	else
+		m_eCurState = STATE_ATTACK;
+
 	if (!m_bSiegeMode)
 	{
 		if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64() &&
@@ -287,12 +293,6 @@ void CTank::Attack()
 			}
 			else
 			{
-				m_eAttackDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
-				if (m_eCurState == STATE_SHOOT)
-					m_eCurState = STATE_SHOOT;
-				else
-					m_eCurState = STATE_ATTACK;
-				
 				AttackToEnemy(Enemy); // 실제 데미지 주는 코드
 			}
 
@@ -315,8 +315,6 @@ void CTank::Hold()
 		}
 		else
 		{
-			m_eAttackDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
-			m_eCurState = STATE_ATTACK;
 			AttackToEnemy(Enemy); // 실제 데미지 주는 코드
 		}
 	}
@@ -328,8 +326,6 @@ void CTank::Hold()
 		}
 		else
 		{
-			m_eAttackDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
-			m_eCurState = STATE_ATTACK;
 			AttackToEnemy(Enemy); // 실제 데미지 주는 코드
 		}
 	}
@@ -566,11 +562,6 @@ void CTank::ChaseUnit()
 			if (CCollisionMgr::Collision_Range_Bool(this, unit, m_tStat.m_iRange))
 			{
 				// 공격
-				m_eAttackDir = GetDirection(m_tInfo.fX, m_tInfo.fY, unit->Get_Info().fX, unit->Get_Info().fY);
-				if (m_eCurState == STATE_SHOOT)
-					m_eCurState = STATE_SHOOT;
-				else
-					m_eCurState = STATE_ATTACK;
 				AttackToEnemy(unit);
 			}
 			else

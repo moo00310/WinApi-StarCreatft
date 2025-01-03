@@ -257,59 +257,54 @@ void CUnit::Stop()
 
 void CUnit::Attack()
 {
-	if (m_iPathIndex < _path.size())
-	{
-		CObj* Enemy = nullptr;
-		Pos _now = { (int)(m_tInfo.fY / TILECY) , (int)(m_tInfo.fX / TILECX) };
-		Pos _pos = _path[m_iPathIndex];
+	CObj* unit(nullptr);
 
-		if (_now == _pos)
-			++m_iPathIndex;
+	if ((unit = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pMonsterList, m_tStat.m_iRange + 64.f)) != nullptr)
+	{
+		if (CCollisionMgr::Collision_Range_Bool(this, unit, m_tStat.m_iRange)) // 충돌 범위 내
+		{
+			AttackToEnemy(unit);
+		}
 		else
 		{
-
-			if ((Enemy = CCollisionMgr::Collision_RangeChack(this, *m_pMonsterList, m_tStat.m_iRange)) == nullptr)
+			if (preUint != unit)
 			{
-				// 방향 설정
-				Pos dir = (_pos - _now);
-				for (int i = 0; i < DIR_END; i++)
+				Astar(CCollisionMgr::Collision_RangePos(this, unit, m_tStat.m_iRange - 32.f));
+				preUint = unit;
+			}
+
+			if (m_iPathIndex < _path.size())
+			{
+				Move_toNext();
+			}
+			else if (m_iPathIndex == _path.size())
+			{
+				if (CCollisionMgr::Collision_Range_Bool(this, unit, m_tStat.m_iRange)) // 충돌 범위 내
 				{
-					if (dir == MoveFront[i])
-					{
-						m_eDir = (DIRECTION)i;
-						break;
-					}
+					AttackToEnemy(unit);
 				}
 
-				// 단위 벡터로 수정?
-				float x(0.f), y(0.f);
-				float length = sqrtf(float(dir.x * dir.x + dir.y * dir.y));
-				if (length != 0)
-				{
-					x = dir.x / length;
-					y = dir.y / length;
-				}
+			}
+		}
 
-				// 이동
-				m_eCurState = STATE_MOVE;
-				m_tInfo.fX += m_tStat.m_fSpeed * x;
-				m_tInfo.fY += m_tStat.m_fSpeed * y;
+	}
+	else
+	{
+		if (m_iPathIndex < _path.size())
+		{
+			Move_toNext();
+		}
+		else if (m_iPathIndex == _path.size())
+		{
+		
+			if (preUint != nullptr)
+			{
+				Astar(A_GroundPos); // 새로운 목표 위치로 이동
+				preUint = nullptr;
 			}
 			else
-			{
-				m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
-				if (m_eCurState == STATE_SHOOT) 
-					m_eCurState = STATE_SHOOT;
-				else 
-					m_eCurState = STATE_ATTACK;
-				AttackToEnemy(Enemy);
-			}
-
+				m_eCurState = STATE_IDLE;
 		}
-	}
-	else if (m_iPathIndex == _path.size())
-	{
-		m_eInput = IP_STOP;
 	}
 		
 }
@@ -323,11 +318,6 @@ void CUnit::Hold()
 	}
 	else
 	{
-		m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, Enemy->Get_Info().fX, Enemy->Get_Info().fY);
-		if (m_eCurState == STATE_SHOOT)
-			m_eCurState = STATE_SHOOT;
-		else
-			m_eCurState = STATE_ATTACK;
 		AttackToEnemy(Enemy);
 	}
 }
@@ -349,7 +339,7 @@ void CUnit::Move_toNext()
 	}
 
 	const float EPSILON = m_tStat.m_fSpeed * 10.0f;
-	if (fabsf(_fNow.x - _fPos.x) < EPSILON && fabsf(_fNow.y - _fPos.y) < EPSILON)
+	if (_now == _pos)
 	{
 		++m_iPathIndex;
 	}
@@ -403,11 +393,6 @@ void CUnit::ChaseUnit()
 			if (CCollisionMgr::Collision_Range_Bool(this, unit, m_tStat.m_iRange))
 			{
 				// 공격
-				m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, unit->Get_Info().fX, unit->Get_Info().fY);
-				if (m_eCurState == STATE_SHOOT)
-					m_eCurState = STATE_SHOOT;
-				else
-					m_eCurState = STATE_ATTACK;
 				AttackToEnemy(unit);
 			}
 			else

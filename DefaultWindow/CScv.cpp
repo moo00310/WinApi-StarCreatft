@@ -301,6 +301,12 @@ void CScv::Update_State()
 
 void CScv::AttackToEnemy(CObj* _Enemey)
 {
+	m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, _Enemey->Get_Info().fX, _Enemey->Get_Info().fY);
+	if (m_eCurState == STATE_SHOOT)
+		m_eCurState = STATE_SHOOT;
+	else
+		m_eCurState = STATE_ATTACK;
+
 	if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64() &&
 		m_tFrame.iCurCount == m_iAttackFrame)
 	{

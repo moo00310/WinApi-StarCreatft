@@ -247,6 +247,12 @@
     <Filter Include="03. Design\ResourceMgr\01.Resource\Resource">
       <UniqueIdentifier>{2762f911-35e7-403b-a5d3-c5854c289fc5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\01.Unit\05.Enemy">
+      <UniqueIdentifier>{bff35e4e-b9fd-4547-a614-da01f283914f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Unit\05.Enemy\01.E_Marine">
+      <UniqueIdentifier>{e0a27827-8cf6-4d87-a61c-ba5cd96dd701}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -486,6 +492,9 @@
     <ClInclude Include="CResource.h">
       <Filter>03. Design\ResourceMgr\01.Resource\Resource</Filter>
     </ClInclude>
+    <ClInclude Include="E_Marine.h">
+      <Filter>01. Obj\01.Unit\05.Enemy\01.E_Marine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -685,6 +694,9 @@
     </ClCompile>
     <ClCompile Include="CResource.cpp">
       <Filter>03. Design\ResourceMgr\01.Resource\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="E_Marine.cpp">
+      <Filter>01. Obj\01.Unit\05.Enemy\01.E_Marine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
