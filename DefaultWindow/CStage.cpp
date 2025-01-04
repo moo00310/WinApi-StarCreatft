@@ -30,7 +30,20 @@
 #include "CGhost.h"
 #include "CTank.h"
 #include "E_Marine.h"
+
 #include "E_CommendCenter.h"
+#include "E_Suffly.h"
+#include "E_Refinery.h"
+#include "E_Armory.h"
+#include "E_Barrack.h"
+
+#include "E_Academy.h"
+
+
+#include "E_Factory.h"
+#include "E_Starport.h"
+
+
 
 float	g_fVolume(1.f);
 
@@ -71,14 +84,14 @@ void CStage::Initialize()
 	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(300, 300));
 	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMedic>::Create(300, 310));
 	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::Create(300, 300));
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CTank>::Create(400, 400));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CTank>::Create(400, 400));
 
 	// 적 마린 생산
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(600,600));
 	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(4000,610));
 
 	// 적 건물 생산
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_CommendCenter>::CreateBuild(600, 600));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Academy>::CreateBuild(400, 600));
 	
 	
 	
@@ -191,9 +204,14 @@ void CStage::Initalize_Bmp()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/E_Unit/MarineBlue.bmp", L"MarineBlue");
 
 	//E_Build
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/CommandCenter_Blue.bmp", L"CommandCenter_Blue");
-
-	
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Enemy/CommandCenter_Blue.bmp", L"CommandCenter_Blue");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Enemy/Academy_Blue.bmp", L"Academy_Blue");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Enemy/Armory_Blue.bmp", L"Armory_Blue");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Enemy/Barracks_Blue.bmp", L"Barracks_Blue");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Enemy/Factory_Blue.bmp", L"Factory_Blue");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Enemy/Refinery_Blue.bmp", L"Refinery_Blue");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Enemy/Starport_Blue.bmp", L"Starport_Blue");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Enemy/SupplyDepot_Blue.bmp", L"SupplyDepot_Blue");
 
 
 }

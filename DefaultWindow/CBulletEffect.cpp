@@ -389,7 +389,7 @@ void CSiegeTankHit::Initialize()
 int CSiegeTankHit::Update()
 {
 	m_iCount++;
-	//테스트s
+	//테스트
 	if (m_iCount < 5)
 	{
 		m_iDeadImg = 0;

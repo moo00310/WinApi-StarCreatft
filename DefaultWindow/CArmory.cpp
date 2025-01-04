@@ -9,7 +9,6 @@ void CArmory::Initialize()
 {
     m_Map = CMapMgr::Get_Instance()->GetMap();
 
-  
     m_tInfo.fCX = 160.f;
     m_tInfo.fCY = 128.f;
 

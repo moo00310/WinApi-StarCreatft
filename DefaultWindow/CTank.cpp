@@ -54,7 +54,7 @@ int CTank::Update()
 	__super::Update_Rect();
 	return OBJ_NOEVENT;
 }
-
+//if (m_bSiegeMode) return;
 
 void CTank::Late_Update()
 {
@@ -227,85 +227,11 @@ void CTank::AttackToEnemy(CObj* _Enemey)
 	{
 		if (m_AttackTime + _Enemey->Get_Stat()->Colldown + 2000 < GetTickCount64())
 		{
-			DEFENCEID Dfence_id = _Enemey->Get_Stat()->m_eDfenceID;
-			ATTACKID Attack_id = m_tStat.m_eAttackID;
-			float Damge = fabsf((_Enemey->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * m_tStat.m_iAttack)));
-
 			CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CSiegeTankHit>::CreateFX(_Enemey->Get_Info().fX, _Enemey->Get_Info().fY));
-			//_Enemey->Add_Stat_hp(-(Damge + 200));
-
 			m_AttackTime = GetTickCount64();
 		}
 	}
 	
-}
-
-void CTank::Move()
-{
-	if (m_bSiegeMode) return;
-	if (m_iPathIndex < _path.size())
-	{
-		Move_toNext();
-	}
-	else if (m_iPathIndex == _path.size())
-	{
-		m_eInput = IP_Chase;
-	}
-}
-
-void CTank::Attack()
-{
-	if (m_bSiegeMode) return;
-	if (m_iPathIndex < _path.size())
-	{
-		CObj* Enemy = nullptr;
-		Pos _now = { (int)(m_tInfo.fY / TILECY) , (int)(m_tInfo.fX / TILECX) };
-		Pos _pos = _path[m_iPathIndex];
-
-		if (_now == _pos)
-			++m_iPathIndex;
-		else
-		{
-
-			if ((Enemy = CCollisionMgr::Collision_RangeChack(this, *m_pMonsterList, m_tStat.m_iRange)) == nullptr)
-			{
-				// 방향 설정
-				Pos dir = (_pos - _now);
-				for (int i = 0; i < DIR_END; i++)
-				{
-					if (dir == MoveFront[i])
-					{
-						m_eDir = (DIRECTION)i;
-						//m_eAttackDir = (DIRECTION)i;
-						break;
-					}
-				}
-
-				// 단위 벡터로 수정?
-				float x(0.f), y(0.f);
-				float length = sqrtf(float(dir.x * dir.x + dir.y * dir.y));
-				if (length != 0)
-				{
-					x = dir.x / length;
-					y = dir.y / length;
-				}
-
-				// 이동
-				m_eCurState = STATE_MOVE;
-				m_tInfo.fX += m_tStat.m_fSpeed * x;
-				m_tInfo.fY += m_tStat.m_fSpeed * y;
-			}
-			else
-			{
-				AttackToEnemy(Enemy); // 실제 데미지 주는 코드
-			}
-
-		}
-	}
-	else if (m_iPathIndex == _path.size())
-	{
-		m_eInput = IP_STOP;
-	}
 }
 
 void CTank::Hold()
@@ -313,7 +239,7 @@ void CTank::Hold()
 	CObj* Enemy = nullptr;
 	if (!m_bSiegeMode)
 	{
-		if ((Enemy = CCollisionMgr::Collision_RangeChack(this, *m_pMonsterList, m_tStat.m_iRange)) == nullptr)
+		if ((Enemy = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pMonsterList, *m_pBuildList_E, m_tStat.m_iRange)) == nullptr)
 		{
 			m_eCurState = STATE_IDLE;
 		}
@@ -324,7 +250,7 @@ void CTank::Hold()
 	}
 	else
 	{
-		if ((Enemy = CCollisionMgr::Collision_RangeChack(this, *m_pMonsterList, m_tStat.m_iRange + 250.f)) == nullptr)
+		if ((Enemy = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pMonsterList, *m_pBuildList_E, m_tStat.m_iRange + 250.f)) == nullptr)
 		{
 			m_eCurState = STATE_IDLE;
 		}
@@ -352,17 +278,13 @@ void CTank::Move_toNext()
 		return;
 	}
 
-	const float EPSILON = m_tStat.m_fSpeed * 10.0f;
-	if (fabsf(_fNow.x - _fPos.x) < EPSILON && fabsf(_fNow.y - _fPos.y) < EPSILON)
+	if (_now == _pos)
 	{
-		// 맵 타일 옵션 변경
-		CMapMgr::Get_Instance()->SetTileType(_pos, 2);
-		CMapMgr::Get_Instance()->SetTileType(_pre, 0);
 		++m_iPathIndex;
 	}
 	else
 	{
-		Pos dir = (_pos - _pre);
+		Pos dir = (_pos - _now);
 		for (int i = 0; i < DIR_END; i++)
 		{
 			if (dir == MoveFront[i])
@@ -545,39 +467,34 @@ void CTank::KeyInput()
 	}
 }
 
-void CTank::ChaseUnit()
+void CTank::Update_State()
 {
-	CObj* unit(nullptr);
-
-	if ((unit = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pMonsterList, *m_pBuildList_E, m_tStat.m_iRange + 64.f)) != nullptr)
+	switch (m_eInput)
 	{
-		if (preUint != unit)
+	case IP_MOVE:
+		if (m_bSiegeMode)
 		{
-			Astar(CCollisionMgr::Collision_RangePos(this, unit, m_tStat.m_iRange - 32.f));
-			preUint = unit;
+			m_eInput = IP_HOLD;
+			return;
 		}
-
-		if (m_iPathIndex < _path.size())
-		{
-			Move_toNext();
-		}
-		else if (m_iPathIndex == _path.size())
-		{
-			if (CCollisionMgr::Collision_Range_Bool(this, unit, m_tStat.m_iRange))
-			{
-				// 공격
-				AttackToEnemy(unit);
-			}
-			else
-			{
-				m_eCurState = STATE_IDLE;
-				preUint = nullptr;
-			}
-		}
-	}
-	else
-	{
-		m_eCurState = STATE_IDLE;
-		return;
+		Move();
+		break;
+	case IP_ATTACK:
+		if (m_bSiegeMode) return;
+		Attack();
+		break;
+	case IP_HOLD:
+		Hold();
+		break;
+	case IP_STOP:
+		Stop();
+		break;
+	case IP_Chase:
+		ChaseUnit();
+		break;
+	case IP_END:
+		break;
+	default:
+		break;
 	}
 }

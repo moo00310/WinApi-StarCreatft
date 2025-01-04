@@ -17,11 +17,10 @@ public:
 	void Release() override;
 	void Change_Motion() override;
 	void KeyInput() override;
-	void ChaseUnit() override;
+
+	void Update_State() override;
 
 	void AttackToEnemy(CObj* _Enemey) override;
-	virtual void Move();
-	virtual void Attack();
 	virtual void Hold();
 	virtual void Move_toNext();
 

@@ -259,6 +259,27 @@
     <Filter Include="01. Obj\02.Build\99.Enemy\01.E_CommendCenter">
       <UniqueIdentifier>{f5cd57ac-079d-4705-9e79-0597d14d7af4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\02.Build\99.Enemy\02.E_Suffly">
+      <UniqueIdentifier>{5e4b10f6-98cf-4b06-ad99-37ebc649ff3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\99.Enemy\03.E_Refinery">
+      <UniqueIdentifier>{ed310fb0-1e3b-406b-a9ff-276df6b8d43d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\99.Enemy\04.E_Barrack">
+      <UniqueIdentifier>{45e5c49d-74c4-4606-a2a6-a9f91595ea1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\99.Enemy\05.E_Academy">
+      <UniqueIdentifier>{ff231e9d-36d5-499d-b41b-e02c7c9c18db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\99.Enemy\06.E_Factory">
+      <UniqueIdentifier>{313f5569-914c-4203-85bb-fa62a02f6956}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\99.Enemy\07.E_Armory">
+      <UniqueIdentifier>{53f1c4e9-43ac-40fa-a474-7e532b7f4f80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\99.Enemy\08.E_Starport">
+      <UniqueIdentifier>{55c28e99-fd4d-4a25-a290-a2409d2b17d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -504,6 +525,27 @@
     <ClInclude Include="E_CommendCenter.h">
       <Filter>01. Obj\02.Build\99.Enemy\01.E_CommendCenter</Filter>
     </ClInclude>
+    <ClInclude Include="E_Suffly.h">
+      <Filter>01. Obj\02.Build\99.Enemy\02.E_Suffly</Filter>
+    </ClInclude>
+    <ClInclude Include="E_Refinery.h">
+      <Filter>01. Obj\02.Build\99.Enemy\03.E_Refinery</Filter>
+    </ClInclude>
+    <ClInclude Include="E_Barrack.h">
+      <Filter>01. Obj\02.Build\99.Enemy\04.E_Barrack</Filter>
+    </ClInclude>
+    <ClInclude Include="E_Academy.h">
+      <Filter>01. Obj\02.Build\99.Enemy\05.E_Academy</Filter>
+    </ClInclude>
+    <ClInclude Include="E_Factory.h">
+      <Filter>01. Obj\02.Build\99.Enemy\06.E_Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="E_Armory.h">
+      <Filter>01. Obj\02.Build\99.Enemy\07.E_Armory</Filter>
+    </ClInclude>
+    <ClInclude Include="E_Starport.h">
+      <Filter>01. Obj\02.Build\99.Enemy\08.E_Starport</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -709,6 +751,27 @@
     </ClCompile>
     <ClCompile Include="E_CommendCenter.cpp">
       <Filter>01. Obj\02.Build\99.Enemy\01.E_CommendCenter</Filter>
+    </ClCompile>
+    <ClCompile Include="E_Suffly.cpp">
+      <Filter>01. Obj\02.Build\99.Enemy\02.E_Suffly</Filter>
+    </ClCompile>
+    <ClCompile Include="E_Refinery.cpp">
+      <Filter>01. Obj\02.Build\99.Enemy\03.E_Refinery</Filter>
+    </ClCompile>
+    <ClCompile Include="E_Barrack.cpp">
+      <Filter>01. Obj\02.Build\99.Enemy\04.E_Barrack</Filter>
+    </ClCompile>
+    <ClCompile Include="E_Academy.cpp">
+      <Filter>01. Obj\02.Build\99.Enemy\05.E_Academy</Filter>
+    </ClCompile>
+    <ClCompile Include="E_Factory.cpp">
+      <Filter>01. Obj\02.Build\99.Enemy\06.E_Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="E_Armory.cpp">
+      <Filter>01. Obj\02.Build\99.Enemy\07.E_Armory</Filter>
+    </ClCompile>
+    <ClCompile Include="E_Starport.cpp">
+      <Filter>01. Obj\02.Build\99.Enemy\08.E_Starport</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
