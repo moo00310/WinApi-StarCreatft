@@ -30,6 +30,7 @@
 #include "CGhost.h"
 #include "CTank.h"
 #include "E_Marine.h"
+#include "E_CommendCenter.h"
 
 float	g_fVolume(1.f);
 
@@ -66,16 +67,21 @@ void CStage::Initialize()
 			//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(250 + 25*i, 320));
 		}
 	}
-	
-	// 적 마린 생산
-	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(600,600));
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(4000,610));
-
-	
+	// 아군 유닛 생산
 	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(300, 300));
 	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMedic>::Create(300, 310));
 	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::Create(300, 300));
 	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CTank>::Create(400, 400));
+
+	// 적 마린 생산
+	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(600,600));
+	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(4000,610));
+
+	// 적 건물 생산
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_CommendCenter>::CreateBuild(600, 600));
+	
+	
+	
 }
 
 int CStage::Update()
@@ -183,6 +189,11 @@ void CStage::Initalize_Bmp()
 
 	//E_Unit
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/E_Unit/MarineBlue.bmp", L"MarineBlue");
+
+	//E_Build
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/CommandCenter_Blue.bmp", L"CommandCenter_Blue");
+
+	
 
 
 }

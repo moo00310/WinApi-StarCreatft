@@ -247,11 +247,17 @@
     <Filter Include="03. Design\ResourceMgr\01.Resource\Resource">
       <UniqueIdentifier>{2762f911-35e7-403b-a5d3-c5854c289fc5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\01.Unit\05.Enemy">
+    <Filter Include="01. Obj\01.Unit\99.Enemy">
       <UniqueIdentifier>{bff35e4e-b9fd-4547-a614-da01f283914f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\01.Unit\05.Enemy\01.E_Marine">
+    <Filter Include="01. Obj\01.Unit\99.Enemy\01.E_Marine">
       <UniqueIdentifier>{e0a27827-8cf6-4d87-a61c-ba5cd96dd701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\99.Enemy">
+      <UniqueIdentifier>{d1198412-794c-4c34-9994-b25a68e2d13e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Build\99.Enemy\01.E_CommendCenter">
+      <UniqueIdentifier>{f5cd57ac-079d-4705-9e79-0597d14d7af4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -493,7 +499,10 @@
       <Filter>03. Design\ResourceMgr\01.Resource\Resource</Filter>
     </ClInclude>
     <ClInclude Include="E_Marine.h">
-      <Filter>01. Obj\01.Unit\05.Enemy\01.E_Marine</Filter>
+      <Filter>01. Obj\01.Unit\99.Enemy\01.E_Marine</Filter>
+    </ClInclude>
+    <ClInclude Include="E_CommendCenter.h">
+      <Filter>01. Obj\02.Build\99.Enemy\01.E_CommendCenter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -696,7 +705,10 @@
       <Filter>03. Design\ResourceMgr\01.Resource\Resource</Filter>
     </ClCompile>
     <ClCompile Include="E_Marine.cpp">
-      <Filter>01. Obj\01.Unit\05.Enemy\01.E_Marine</Filter>
+      <Filter>01. Obj\01.Unit\99.Enemy\01.E_Marine</Filter>
+    </ClCompile>
+    <ClCompile Include="E_CommendCenter.cpp">
+      <Filter>01. Obj\02.Build\99.Enemy\01.E_CommendCenter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
