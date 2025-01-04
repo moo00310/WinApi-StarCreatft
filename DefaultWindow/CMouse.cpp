@@ -97,8 +97,8 @@ void EditMouse::Render(HDC hDC)
     HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
 
     GdiTransparentBlt(hDC,			// 복사 받을 DC
-        (int)(m_tRect.left/32) * 32.f,	// 복사 받을 위치 좌표 X, Y	
-        (int)(m_tRect.top/32) * 32.f,
+        (int)(m_tRect.left/32) * 32,	// 복사 받을 위치 좌표 X, Y	
+        (int)(m_tRect.top/32) * 32,
         (int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
         (int)m_tInfo.fCY,
         hMemDC,						// 복사할 이미지 DC	

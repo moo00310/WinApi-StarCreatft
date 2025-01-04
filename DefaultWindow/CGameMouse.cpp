@@ -345,7 +345,7 @@ void CGameMouse::ScrollMove(POINT mouse)
 {
     if (mouse.x >=  WINCX - 20)
     {
-        CScrollMgr::Get_Instance()->Set_ScrollX(-3.f);
+        CScrollMgr::Get_Instance()->Set_ScrollX(-5.f);
         m_eCurState = MS_SCROLL_R;
     }
     else if (m_eCurState == MS_SCROLL_R)
@@ -355,7 +355,7 @@ void CGameMouse::ScrollMove(POINT mouse)
 
     if (mouse.x <= 20)
     {
-        CScrollMgr::Get_Instance()->Set_ScrollX(3.f);
+        CScrollMgr::Get_Instance()->Set_ScrollX(5.f);
         m_eCurState = MS_SCROLL_L;
     }
     else if (m_eCurState == MS_SCROLL_L)
@@ -365,7 +365,7 @@ void CGameMouse::ScrollMove(POINT mouse)
 
     if (mouse.y >= WINCY -20)
     {
-        CScrollMgr::Get_Instance()->Set_ScrollY(-3.f);
+        CScrollMgr::Get_Instance()->Set_ScrollY(-5.f);
        m_eCurState = MS_SCROLL_D;
     }
     else if (m_eCurState == MS_SCROLL_D)
@@ -374,7 +374,7 @@ void CGameMouse::ScrollMove(POINT mouse)
     }
     if (mouse.y <= 20)
     {
-        CScrollMgr::Get_Instance()->Set_ScrollY(3.f);
+        CScrollMgr::Get_Instance()->Set_ScrollY(5.f);
         m_eCurState = MS_SCROLL_U;
     }
     else if (m_eCurState == MS_SCROLL_U)

@@ -345,7 +345,7 @@ void CUnit::Move_toNext()
 	}
 	else
 	{
-		Pos dir = (_pos - _pre);
+		Pos dir = (_pos - _now);
 		for (int i = 0; i < DIR_END; i++)
 		{
 			if (dir == MoveFront[i])
