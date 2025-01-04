@@ -20,10 +20,11 @@ void E_Marine::Initialize()
 	// 리스트 할당
 	m_pMonsterList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
 	m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_MONSTER);
+	m_pBuildList_E = CObjMgr::Get_Instance()->Get_ObjList(OBJ_BUILD);
 
 	m_pImgKey = L"MarineBlue";
 	m_eObjID = OT_Marine;
-	m_tStat = { 40.f, 40.f, 6, 0, 64, 1.8f, 625 , DF_SAMLL, AT_NORMAL };
+	m_tStat = { 40.f, 40.f, 6, 0, 128, 1.8f, 625 , DF_SAMLL, AT_NORMAL };
 
 	m_iAttackFrame = 14;
 

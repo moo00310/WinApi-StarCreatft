@@ -6,7 +6,7 @@ class CUnit : public CObj
 {
 public:
 	CUnit() : m_pMonsterList(nullptr), m_iPathIndex(0), m_eInput(IP_ATTACK), m_iAttackFrame(0),
-	ull_WaitTime(0), m_eCurState(STATE_IDLE), m_ePreState(STATE_IDLE), preUint(nullptr)
+	ull_WaitTime(0), m_eCurState(STATE_IDLE), m_ePreState(STATE_IDLE), preUint(nullptr), m_pBuildList_E(nullptr)
 	{
 		ZeroMemory(&A_GroundPos, sizeof(Pos)); 
 	}
@@ -59,6 +59,7 @@ protected:
 	
 	//Attack
 	list<CObj*>* m_pMonsterList;
+	list<CObj*>* m_pBuildList_E;
 
 	//Move
 	ULONGLONG	ull_WaitTime;

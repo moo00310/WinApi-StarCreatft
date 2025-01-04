@@ -172,6 +172,12 @@ void CBarrck::Change_Motion()
        switch (m_eCurState_Build)
        {
        case BS_IDLE:
+           if (m_pImgKey != L"Barrck")
+           {
+               m_pImgKey = L"Barrck";
+               m_bTemplate = false;
+               m_tStat.m_iHp = m_tStat.m_iMaxHp;
+           }
            m_tFrame.iFrameStart = 1;
            m_tFrame.iFrameEnd = 1;
            m_tFrame.iCurCount = 1;

@@ -9,10 +9,10 @@
 #include "CBulletEffect.h"
 #include "CKeyMgr.h"
 #include "CMouseMgr.h"
+#include "CGameMgr.h"
 
-#include "CAbstractFactory.h"
-#include "CBarrck.h"
 #include "CCommedCenter.h"
+#include "CBarrck.h"
 #include "CSuffly.h"
 #include "CRefinery.h"
 #include "CFactory.h"
@@ -20,7 +20,7 @@
 #include "CAcademy.h"
 #include "CArmory.h"
 #include "CScienceFacility.h"
-#include "CGameMgr.h"
+
 
 void CScv::Initialize()
 {
@@ -30,6 +30,7 @@ void CScv::Initialize()
 	// 리스트 할당
 	m_pMonsterList = CObjMgr::Get_Instance()->Get_MonsterList();
 	m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
+	m_pBuildList_E = CObjMgr::Get_Instance()->Get_ObjList(OBJ_BUILD_E);
 
 
 	m_pImgKey = L"Scv";
@@ -42,6 +43,8 @@ void CScv::Initialize()
 	m_tInfo.fCX = 72.f;
 	m_tInfo.fCY = 72.f;
 
+	A_GroundPos.x = (int)m_tInfo.fX / 32;
+	A_GroundPos.y = (int)m_tInfo.fY / 32;
 }
 
 int CScv::Update()

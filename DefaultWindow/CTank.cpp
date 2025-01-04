@@ -19,6 +19,7 @@ void CTank::Initialize()
 	// 리스트 할당
 	m_pMonsterList = CObjMgr::Get_Instance()->Get_MonsterList();
 	m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
+	m_pBuildList_E = CObjMgr::Get_Instance()->Get_ObjList(OBJ_BUILD_E);
 
 	m_eObjID = OT_Tank;
 	m_tStat = { 150.f, 150.f, 30, 1, 224, 1.8f, 625 , DF_LAGE, AT_EXPLOSIVE };
@@ -28,6 +29,9 @@ void CTank::Initialize()
 	m_eRender = RENDER_GAMEOBJECT;
 	m_tInfo.fCX = 128.f;
 	m_tInfo.fCY = 128.f;
+
+	A_GroundPos.x = (int)m_tInfo.fX / 32;
+	A_GroundPos.y = (int)m_tInfo.fY / 32;
 }
 
 int CTank::Update()
@@ -545,7 +549,7 @@ void CTank::ChaseUnit()
 {
 	CObj* unit(nullptr);
 
-	if ((unit = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pMonsterList, m_tStat.m_iRange + 64.f)) != nullptr)
+	if ((unit = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pMonsterList, *m_pBuildList_E, m_tStat.m_iRange + 64.f)) != nullptr)
 	{
 		if (preUint != unit)
 		{

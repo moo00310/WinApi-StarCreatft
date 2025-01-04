@@ -259,7 +259,7 @@ void CUnit::Attack()
 {
 	CObj* unit(nullptr);
 
-	if ((unit = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pMonsterList, m_tStat.m_iRange + 64.f)) != nullptr)
+	if ((unit = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pMonsterList, *m_pBuildList_E, m_tStat.m_iRange + 64.f)) != nullptr)
 	{
 		if (CCollisionMgr::Collision_Range_Bool(this, unit, m_tStat.m_iRange)) // 충돌 범위 내
 		{
@@ -376,7 +376,7 @@ void CUnit::ChaseUnit()
 {
 	CObj* unit(nullptr);
 
-	if ((unit = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pMonsterList, m_tStat.m_iRange + 64.f)) != nullptr)
+	if ((unit = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pMonsterList, *m_pBuildList_E, m_tStat.m_iRange + 64.f)) != nullptr)
 	{
 		if (preUint != unit)
 		{

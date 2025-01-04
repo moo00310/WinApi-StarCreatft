@@ -296,15 +296,5 @@ void CSpawnUI::Change_SpawnIcon(OBJ_TYPE _type)
 	default:
 		break;
 	}
-
-	switch (_type)
-	{
-	
-
-
-	default:
-		break;
-	}
-
 }
 

@@ -20,7 +20,7 @@ public:
 	static void Collision_Rect_Mouse_RECT(RECT rect, list<CObj*> _Src, list<CObj*>* select);
 
 	static CObj* Collision_RangeChack_Heal(CObj* _pPlayer, list<CObj*> _unit, float _dis);
-	static CObj* Collision_RangeChack_Attack(CObj* _pPlayer, list<CObj*> _unit, float _dis);
+	static CObj* Collision_RangeChack_Attack(CObj* _pPlayer, list<CObj*> _unit, list<CObj*>_build, float _dis);
 
 	static Pos Collision_RangePos(CObj* _pPlayer, CObj* _unit, float _dis);
 };

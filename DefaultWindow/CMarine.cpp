@@ -30,16 +30,20 @@ void CMarine::Initialize()
 	// 리스트 할당
 	m_pMonsterList = CObjMgr::Get_Instance()->Get_MonsterList();
 	m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
+	m_pBuildList_E = CObjMgr::Get_Instance()->Get_ObjList(OBJ_BUILD_E);
 
     m_pImgKey = L"Marine";
 	m_eObjID = OT_Marine;
-    m_tStat = { 40.f, 40.f, 6, 0, 64, 1.8f, 625 , DF_SAMLL, AT_NORMAL };
+    m_tStat = { 40.f, 40.f, 6, 0, 128, 1.8f, 625 , DF_SAMLL, AT_NORMAL };
 
 	m_iAttackFrame = 14;
 
 	m_eRender = RENDER_GAMEOBJECT;
 	m_tInfo.fCX = 50.f;
 	m_tInfo.fCY = 50.f;
+
+	A_GroundPos.x = (int)m_tInfo.fX / 32;
+	A_GroundPos.y = (int)m_tInfo.fY / 32;
 }
 
 int CMarine::Update()
@@ -59,7 +63,7 @@ int CMarine::Update()
 	Update_State();
 
 	if (CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Marine_SightUp)) 
-		m_tStat.m_iRange = 96;
+		m_tStat.m_iRange = 150;
 
 	__super::Update_Rect();
     return OBJ_NOEVENT;

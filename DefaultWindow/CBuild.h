@@ -21,6 +21,7 @@ public:
 public:
 	list<OBJ_TYPE>* Get_SpawnList() { return &m_listSpawn; }
 	BuildSTATE Get_State() { return m_eCurState_Build; }
+	void Set_State(BuildSTATE state) { m_eCurState_Build = state; }
 	float GetProgress() { return m_fProgress; }
 
 

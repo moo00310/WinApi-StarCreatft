@@ -70,7 +70,7 @@ void CResourceMgr::Load_Resorce()
 		if (0 == dwByte)
 			break;
 
-		CResource* pResource = CAbstractFactory<CResource>::CreateResource((int)tResource.fX, (int)tResource.fY, iOption);
+		CResource* pResource = CAbstractFactory<CResource>::CreateResource(tResource.fX, tResource.fY, iOption);
 		m_vecResource.push_back(pResource);
 	}
 

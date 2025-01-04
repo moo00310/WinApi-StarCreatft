@@ -34,6 +34,9 @@ void CMedic::Initialize()
 	m_eRender = RENDER_GAMEOBJECT;
 	m_tInfo.fCX = 64.f;
 	m_tInfo.fCY = 64.f;
+
+	A_GroundPos.x = (int)m_tInfo.fX / 32;
+	A_GroundPos.y = (int)m_tInfo.fY / 32;
 }
 
 int CMedic::Update()
