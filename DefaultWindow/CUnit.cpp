@@ -338,21 +338,19 @@ void CUnit::Move_toNext()
 {
 	Pos _now = { (int)m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
 	Pos _pos = _path[m_iPathIndex];
-	Pos _pre = _path[max(m_iPathIndex - 1, 0)];
-
-	fPOINT _fNow = { m_tInfo.fX, m_tInfo.fY };
-	fPOINT _fPos = { _path[m_iPathIndex].x * TILECY + 16.f ,_path[m_iPathIndex].y * TILECY + 16.f };
 
 	if (m_iPathIndex == 0)
 	{
-		CMapMgr::Get_Instance()->SetTileType(_pos, 0);
 		m_iPathIndex = 1;
+		CMapMgr::Get_Instance()->SetTileType(_now, 1);
 		return;
 	}
 
 	const float EPSILON = m_tStat.m_fSpeed * 10.0f;
 	if (_now == _pos)
 	{
+		CMapMgr::Get_Instance()->SetTileType(_now, 1);
+		CMapMgr::Get_Instance()->SetTileType(_path[m_iPathIndex-1], 0);
 		++m_iPathIndex;
 	}
 	else

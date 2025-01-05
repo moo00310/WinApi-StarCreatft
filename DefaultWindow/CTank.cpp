@@ -269,13 +269,15 @@ void CTank::Move_toNext()
 
 	if (m_iPathIndex == 0)
 	{
-		CMapMgr::Get_Instance()->SetTileType(_pos, 0);
+		CMapMgr::Get_Instance()->SetTileType(_now, 1);
 		m_iPathIndex = 1;
 		return;
 	}
 
 	if (_now == _pos)
 	{
+		CMapMgr::Get_Instance()->SetTileType(_now, 1);
+		CMapMgr::Get_Instance()->SetTileType(_path[m_iPathIndex - 1], 0);
 		++m_iPathIndex;
 	}
 	else
