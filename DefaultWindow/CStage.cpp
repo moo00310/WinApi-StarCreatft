@@ -36,12 +36,12 @@
 #include "E_Refinery.h"
 #include "E_Armory.h"
 #include "E_Barrack.h"
-
 #include "E_Academy.h"
-
-
 #include "E_Factory.h"
 #include "E_Starport.h"
+
+
+#include "E_Medic.h"
 
 
 
@@ -88,6 +88,7 @@ void CStage::Initialize()
 
 	// 적 마린 생산
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(600,600));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Medic>::Create(600,610));
 	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(4000,610));
 
 	// 적 건물 생산
@@ -202,6 +203,10 @@ void CStage::Initalize_Bmp()
 
 	//E_Unit
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/E_Unit/MarineBlue.bmp", L"MarineBlue");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Medic/Medic_Blue.bmp", L"Medic_Blue");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Ghost/Ghost_Blue.bmp", L"Ghost_Blue");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Tank/TankBody_Blue.bmp", L"TankBody_Blue");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Tank/TankHead_Blue.bmp", L"TankHead_Blue");
 
 	//E_Build
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Enemy/CommandCenter_Blue.bmp", L"CommandCenter_Blue");

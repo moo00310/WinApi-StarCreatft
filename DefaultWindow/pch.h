@@ -17,6 +17,7 @@
 #include <queue>
 #include <set>
 #include <tuple>
+#include <array>
 
 #include <iostream>
 

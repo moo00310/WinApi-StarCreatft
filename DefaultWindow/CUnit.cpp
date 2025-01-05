@@ -283,6 +283,10 @@ void CUnit::Attack()
 				{
 					AttackToEnemy(unit);
 				}
+				else
+				{
+					return;
+				}
 
 			}
 		}

@@ -255,6 +255,8 @@ CObj* CCollisionMgr::Collision_RangeChack_Attack(CObj* _pPlayer, list<CObj*> _un
 			return unit;
 	}
 
+	if(_pPlayer->Get_ObjID() == OT_Medic) return nullptr;
+
 	for (auto unit : _build)
 	{
 		float fWidth = fabsf(unit->Get_Scroll_Info().fX - _pPlayer->Get_Scroll_Info().fX);

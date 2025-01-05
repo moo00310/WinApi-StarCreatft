@@ -1,6 +1,7 @@
 #pragma once
-
 #include "Define.h"
+
+#define MAX_SFX_CHANNEL 12
 
 class CSoundMgr
 {
@@ -30,11 +31,13 @@ public:
 	void Release(); 
 
 public:
-	void PlaySound(const TCHAR* pSoundKey, CHANNELID eID, float fVolume, bool isIgnore);
-	void PlayBGM(const TCHAR* pSoundKey, float fVolume);
-	void StopSound(CHANNELID eID);
-	void StopAll();
-	void SetChannelVolume(CHANNELID eID, float fVolume);
+	int PlaySFX(const TCHAR* pSoundKey, const float& fVolume); // 빈 채널을 찾아서 사운드를 재생하고, 배치된 채널인덱스를 반환한다.
+	void PlayBGM(const TCHAR* pSoundKey, const float& fVolume);
+
+	void Stop_BGM();
+	void Stop_SFX(const int& _ChannelIndex = -1); // 디폴트 매개변수가 불릴경우에는, 모든 SFX를 정지한다.
+
+	void SetVolume(const SOUND_ID& _ID, const float& fVolume); // 아이디의 볼륨을 전체 조정 일단 보류
 
 private:
 	void LoadSoundFile(); 
@@ -46,7 +49,8 @@ private:
 	map<TCHAR*, FMOD_SOUND*> m_mapSound; 
 	
 	// FMOD_CHANNEL : 재생하고 있는 사운드를 관리할 객체 
-	FMOD_CHANNEL* m_pChannelArr[SOUND_END];
+	array<FMOD_CHANNEL*, MAX_SFX_CHANNEL> m_arrSFXChannnel;
+	FMOD_CHANNEL* m_pBGMChannel;
 
 	// 사운드 ,채널 객체 및 장치를 관리하는 객체 
 	FMOD_SYSTEM* m_pSystem; 

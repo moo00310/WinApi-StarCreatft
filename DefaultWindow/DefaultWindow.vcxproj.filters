@@ -280,6 +280,15 @@
     <Filter Include="01. Obj\02.Build\99.Enemy\08.E_Starport">
       <UniqueIdentifier>{55c28e99-fd4d-4a25-a290-a2409d2b17d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\01.Unit\99.Enemy\02.E_Medic">
+      <UniqueIdentifier>{56f20369-9695-439f-a47b-5ec217c0d901}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Unit\99.Enemy\03.E_Ghost">
+      <UniqueIdentifier>{eea6ca4c-f4b2-4234-9913-98e29e32a4f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Unit\99.Enemy\04.E_Tank">
+      <UniqueIdentifier>{dab4d386-9953-4aaf-aaad-d58874ccd150}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -546,6 +555,9 @@
     <ClInclude Include="E_Starport.h">
       <Filter>01. Obj\02.Build\99.Enemy\08.E_Starport</Filter>
     </ClInclude>
+    <ClInclude Include="E_Medic.h">
+      <Filter>01. Obj\01.Unit\99.Enemy\02.E_Medic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -772,6 +784,9 @@
     </ClCompile>
     <ClCompile Include="E_Starport.cpp">
       <Filter>01. Obj\02.Build\99.Enemy\08.E_Starport</Filter>
+    </ClCompile>
+    <ClCompile Include="E_Medic.cpp">
+      <Filter>01. Obj\01.Unit\99.Enemy\02.E_Medic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

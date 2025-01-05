@@ -51,8 +51,8 @@ int CMarine::Update()
 	if (m_bDead || m_tStat.m_iHp <= 0)
 	{
 		// Á×À½ ÀÌÆåÆ®
-		CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
-		CSoundMgr::Get_Instance()->PlaySound(L"Marine_Dead_1.mp3", SOUND_EFFECT, 0.5f, true);
+		CSoundMgr::Get_Instance()->Stop_SFX(SOUND_SFX);
+		CSoundMgr::Get_Instance()->PlaySFX(L"Marine_Dead_1.mp3", 0.5f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT,CAbstractFactory<CMarineDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
 
 
