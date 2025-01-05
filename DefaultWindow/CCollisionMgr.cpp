@@ -172,10 +172,15 @@ bool CCollisionMgr::Collision_RangeChack_bool(CObj* _pPlayer, list<CObj*> _Src, 
 CObj* CCollisionMgr::Collision_Rect_Mouse(RECT rect, list<CObj*> _Unit, list<CObj*> _Build , list<CObj*> _EUnit, list<CObj*> _EBuild)
 {
 	RECT rc{};
+	RECT small_rc = rect;
+	small_rc.left += 23;
+	small_rc.top += 23;
+	small_rc.right -= 23;
+	small_rc.bottom -= 23;
 
 	for (auto& _unit : _Unit)
 	{
-		if (IntersectRect(&rc, &rect, _unit->Get_Scroll_Rect()))
+		if (IntersectRect(&rc, &small_rc, _unit->Get_Scroll_Rect()))
 		{
 			return _unit;
 		}
@@ -183,7 +188,7 @@ CObj* CCollisionMgr::Collision_Rect_Mouse(RECT rect, list<CObj*> _Unit, list<COb
 
 	for (auto& _build : _Build)
 	{
-		if (IntersectRect(&rc, &rect, _build->Get_Scroll_Rect()))
+		if (IntersectRect(&rc, &small_rc, _build->Get_Scroll_Rect()))
 		{
 			return _build;
 		}
@@ -191,7 +196,7 @@ CObj* CCollisionMgr::Collision_Rect_Mouse(RECT rect, list<CObj*> _Unit, list<COb
 
 	for (auto& _Eunit : _EUnit)
 	{
-		if (IntersectRect(&rc, &rect, _Eunit->Get_Scroll_Rect()))
+		if (IntersectRect(&rc, &small_rc, _Eunit->Get_Scroll_Rect()))
 		{
 			return _Eunit;
 		}
@@ -199,7 +204,7 @@ CObj* CCollisionMgr::Collision_Rect_Mouse(RECT rect, list<CObj*> _Unit, list<COb
 
 	for (auto& _Ebuild : _EBuild)
 	{
-		if (IntersectRect(&rc, &rect, _Ebuild->Get_Scroll_Rect()))
+		if (IntersectRect(&rc, &small_rc, _Ebuild->Get_Scroll_Rect()))
 		{
 			return _Ebuild;
 		}
