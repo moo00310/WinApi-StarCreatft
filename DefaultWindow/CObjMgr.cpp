@@ -134,6 +134,11 @@ void CObjMgr::Release()
 		for_each(m_ObjList[i].begin(), m_ObjList[i].end(), Safe_Delete<CObj*>);
 		m_ObjList[i].clear();
 	}
+	for_each(m_ObjList[OBJ_EFFECT].begin(), m_ObjList[OBJ_EFFECT].end(), [](CObj* _Fx)
+		{
+			CMemoryPoolMgr::Get_Instance()->deallocate(_Fx);
+		}
+	);
 }
 
 void CObjMgr::Delete_ID(OBJID eID)
