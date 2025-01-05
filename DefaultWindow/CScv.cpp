@@ -10,6 +10,7 @@
 #include "CKeyMgr.h"
 #include "CMouseMgr.h"
 #include "CGameMgr.h"
+#include "CSoundMgr.h"
 
 #include "CCommedCenter.h"
 #include "CBarrck.h"
@@ -435,6 +436,7 @@ void CScv::BuildAime()
 	}
 	else if (m_iBuildCount > (m_iMyBuildTIme * 0.2f) * 5.f)
 	{
+		CSoundMgr::Get_Instance()->PlaySFX(L"tscupd00.wav",0.8f);
 		m_iBuildCount = 0;
 		if(m_eBuildType == OT_Commend)
 			CGameMgr::Get_Instance()->Add_MaxPop(10);

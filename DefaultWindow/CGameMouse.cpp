@@ -9,6 +9,7 @@
 #include "CMapMgr.h"
 #include "CScv.h"
 #include "CGameMgr.h"
+#include "CSoundMgr.h"
 
 
 /*---------------
@@ -182,7 +183,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
             }
             else
             {
-                // 경고 메시지
+                CSoundMgr::Get_Instance()->PlaySFX(L"tscerr01.wav", 0.8f);
             } 
         }
 

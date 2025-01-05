@@ -11,6 +11,7 @@
 #include "CGhost.h"
 #include "CTank.h"
 #include "CCovertOps.h"
+#include "CSoundMgr.h"
 
 void CBuild::Move_Frame()
 {
@@ -63,6 +64,7 @@ void CBuild::Spawn_Uint_Index(OBJ_TYPE _id)
 	switch (_id)
 	{
 	case OT_Scv:
+		CSoundMgr::Get_Instance()->PlaySFX(L"tscrdy00.wav", 0.8f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(temp));
 		break;
 	case OT_Marine:
