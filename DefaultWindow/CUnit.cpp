@@ -285,6 +285,7 @@ void CUnit::Attack()
 				}
 				else
 				{
+					Astar(CCollisionMgr::Collision_RangePos(this, unit, m_tStat.m_iRange - 32.f));
 					return;
 				}
 

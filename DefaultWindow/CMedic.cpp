@@ -163,7 +163,7 @@ void CMedic::Update_State()
 		Move();
 		break;
 	case IP_ATTACK:
-		Move();
+		Attack();
 		break;
 	case IP_HOLD:
 		Hold();
@@ -194,6 +194,66 @@ void CMedic::Move()
 
 }
 
+void CMedic::Attack()
+{
+	CObj* unit(nullptr);
+
+	if ((unit = CCollisionMgr::Collision_RangeChack_Heal(this, *m_pUnitList, m_tStat.m_iRange + 64.f)) != nullptr)
+	{
+		if (unit == this) return;
+
+		if (CCollisionMgr::Collision_Range_Bool(this, unit, m_tStat.m_iRange)) // 충돌 범위 내
+		{
+			AttackToEnemy(unit);
+		}
+		else
+		{
+			if (preUint != unit)
+			{
+				Astar(CCollisionMgr::Collision_RangePos(this, unit, m_tStat.m_iRange - 32.f));
+				preUint = unit;
+			}
+
+			if (m_iPathIndex < _path.size())
+			{
+				Move_toNext();
+			}
+			else if (m_iPathIndex == _path.size())
+			{
+				if (CCollisionMgr::Collision_Range_Bool(this, unit, m_tStat.m_iRange)) // 충돌 범위 내
+				{
+					AttackToEnemy(unit);
+				}
+				else
+				{
+					Astar(CCollisionMgr::Collision_RangePos(this, unit, m_tStat.m_iRange - 32.f));
+					return;
+				}
+
+			}
+		}
+
+	}
+	else
+	{
+		if (m_iPathIndex < _path.size())
+		{
+			Move_toNext();
+		}
+		else if (m_iPathIndex == _path.size())
+		{
+
+			if (preUint != nullptr)
+			{
+				Astar(A_GroundPos); // 새로운 목표 위치로 이동
+				preUint = nullptr;
+			}
+			else
+				m_eCurState = STATE_IDLE;
+		}
+	}
+}
+
 void CMedic::Hold()
 {
 	CObj* unit(nullptr);
@@ -215,6 +275,7 @@ void CMedic::HealUnit()
 
 	if ((unit = CCollisionMgr::Collision_RangeChack_Heal(this, *m_pUnitList, 256.f)) != nullptr)
 	{
+		if (unit == this) return;
 		if (preUint != unit)
 		{
 			Astar(CCollisionMgr::Collision_RangePos(this, unit, 32.f));

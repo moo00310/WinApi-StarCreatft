@@ -16,6 +16,7 @@ public:
 	void AttackToEnemy(CObj* _Enemey) override;
 
 	void Move() override;
+	void Attack() override;
 	void Hold() override;
 	void Update_State() override;
 

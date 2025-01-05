@@ -240,8 +240,10 @@ void E_Medic::Attack()
 {
 	CObj* unit(nullptr);
 
-	if ((unit = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pUnitList, *m_pBuildList_E, m_tStat.m_iRange + 64.f)) != nullptr)
+	if ((unit = CCollisionMgr::Collision_RangeChack_Heal(this, *m_pUnitList, m_tStat.m_iRange + 64.f)) != nullptr)
 	{
+		if (unit == this) return;
+
 		if (CCollisionMgr::Collision_Range_Bool(this, unit, m_tStat.m_iRange)) // 충돌 범위 내
 		{
 			AttackToEnemy(unit);
@@ -266,6 +268,7 @@ void E_Medic::Attack()
 				}
 				else
 				{
+					Astar(CCollisionMgr::Collision_RangePos(this, unit, m_tStat.m_iRange - 32.f));
 					return;
 				}
 
