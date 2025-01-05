@@ -23,6 +23,8 @@ void E_Factory::Initialize()
 
     m_iMyBuildTIme = get<3>(ObjCost.at(OT_Factory));
 
+    m_bIsEnemy = true;
+
     __super::Update_Rect();
     Block_Map();
 }
@@ -59,7 +61,7 @@ void E_Factory::Render(HDC hDC)
 
     if (m_bSelect)
     {
-        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_7");
+        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_7_E");
         GdiTransparentBlt(hDC,
             m_tRect.left + iScrollX,
             m_tRect.top + iScrollY + 30,

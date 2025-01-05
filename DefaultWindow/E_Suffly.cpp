@@ -19,6 +19,8 @@ void E_Suffly::Initialize()
     m_tStat = { 500.f, 500.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
 
+    m_bIsEnemy = true;
+
     __super::Update_Rect();
     Block_Map();
 }
@@ -54,7 +56,7 @@ void E_Suffly::Render(HDC hDC)
 
     if (m_bSelect)
     {
-        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_5");
+        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_5_E");
         GdiTransparentBlt(hDC,			// 복사 받을 DC
             m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
             m_tRect.top + iScrollY + 25,

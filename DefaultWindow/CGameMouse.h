@@ -23,8 +23,6 @@ public:
 	void ClearDrag();
 
 private:
-	void Initailize_Img();
-
 	// 일반 모드
 	void MouseInput(POINT ptMouse);
 	void ScrollMove(POINT mouse);
@@ -43,6 +41,8 @@ private:
 	int m_indexY;
 	list<CObj*>* m_UnitList;
 	list<CObj*>* m_BuildList;
+	list<CObj*>* m_UnitList_E;
+	list<CObj*>* m_BuildList_E;
 	list<CObj*>* m_Select_UnitList;
 
 	bool isDrag;

@@ -64,7 +64,8 @@ void CSpawnUI::Late_Update()
 
 void CSpawnUI::Render(HDC hdc)
 {
-    if (m_bRender)
+	if (m_pUintlist->empty()) return;
+    if (m_bRender && !m_pUintlist->front()->GetIsEnemy())
     {
 		/*--------------
 		  1-2-3-4-5 템플릿 출력

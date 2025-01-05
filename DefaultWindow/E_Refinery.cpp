@@ -17,6 +17,7 @@ void E_Refinery::Initialize()
     m_eCurState_Build = BS_IDLE;
     m_iMyBuildTIme = get<3>(ObjCost.at(OT_Refinery));
 
+    m_bIsEnemy = true;
 }
 
 int E_Refinery::Update()
@@ -45,7 +46,7 @@ void E_Refinery::Render(HDC hDC)
 
     if (m_bSelect)
     {
-        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_8");
+        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_8_E");
         GdiTransparentBlt(hDC,			// 복사 받을 DC
             m_tRect.left + iScrollX + 20,	// 복사 받을 위치 좌표 X, Y	
             m_tRect.top + iScrollY + 20,

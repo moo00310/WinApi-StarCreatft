@@ -20,6 +20,8 @@ void E_CommendCenter::Initialize()
     m_tStat = { 1500.f, 1500.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
 
+    m_bIsEnemy = true;
+
     __super::Update_Rect();
     Block_Map();
 }
@@ -57,7 +59,7 @@ void E_CommendCenter::Render(HDC hDC)
     HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
 
     // 선택
-    HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_8");
+    HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_8_E");
     if (m_bSelect)
     {
         GdiTransparentBlt(hDC,			// 복사 받을 DC

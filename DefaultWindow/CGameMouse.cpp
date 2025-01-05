@@ -17,7 +17,7 @@
 
 CGameMouse::CGameMouse() : m_eCurState(MS_IDLE), m_ePreState(MS_IDLE), m_indexY(0), m_UnitList(nullptr),
 m_Select_UnitList(nullptr), isDrag(false), m_BuildList(nullptr), isBuildMod(false), m_eBuildType(OT_END),
-m_pImgKey_build(nullptr), m_iBuild_Index(0)
+m_pImgKey_build(nullptr), m_iBuild_Index(0), m_UnitList_E(nullptr), m_BuildList_E(nullptr)
 {
     ZeroMemory(&ptMouse, sizeof(POINT));
     ZeroMemory(&m_DragStart, sizeof(POINT));
@@ -33,7 +33,6 @@ CGameMouse::~CGameMouse()
 void CGameMouse::Initialize()
 {
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Mouse/Cursor.bmp", L"Cursor");
-    Initailize_Img();
 
     m_tInfo.fCX = 50.f;
     m_tInfo.fCY = 50.f;
@@ -42,6 +41,10 @@ void CGameMouse::Initialize()
 
     m_UnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
     m_BuildList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_BUILD);
+
+    m_UnitList_E = CObjMgr::Get_Instance()->Get_ObjList(OBJ_MONSTER);
+    m_BuildList_E = CObjMgr::Get_Instance()->Get_ObjList(OBJ_BUILD_E);
+
     m_Select_UnitList = CObjMgr::Get_Instance()->Get_Select_List();
 }
 
@@ -198,7 +201,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
             m_eCurState = MS_MOVE;
             if (m_Select_UnitList->size() == 1)
             {
-                if (m_Select_UnitList->front() != nullptr)
+                if (m_Select_UnitList->front() != nullptr && !m_Select_UnitList->front()->GetIsEnemy())
                 {
                     if (auto* pUnit = dynamic_cast<CUnit*>(m_Select_UnitList->front()))
                     {
@@ -270,7 +273,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
 
             for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
                 {
-                    if (unit != nullptr)
+                    if (unit != nullptr && !m_Select_UnitList->front()->GetIsEnemy())
                     {
                         if (auto* pUnit = dynamic_cast<CUnit*>(unit))
                         {
@@ -315,7 +318,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
         {
             for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
                 {
-                    if (unit != nullptr)
+                    if (unit != nullptr && !m_Select_UnitList->front()->GetIsEnemy())
                     {
                         if (auto* pUnit = dynamic_cast<CUnit*>(unit))
                         {
@@ -329,7 +332,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
         {
             for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
                 {
-                    if (unit != nullptr)
+                    if (unit != nullptr && !m_Select_UnitList->front()->GetIsEnemy())
                     {
                         if (auto* pUnit = dynamic_cast<CUnit*>(unit))
                         {
@@ -389,10 +392,14 @@ void CGameMouse::ColObject()
     if (isBuildMod) return;
 
     CObj* Obj(nullptr);
-    // 전체 유닛과  건물이 마우스랑 충돌했는지 검사
-    if ((Obj = CCollisionMgr::Collision_Rect_Mouse(m_tRect, *m_UnitList, *m_BuildList)) != nullptr)
+    // 마우스랑 충돌했는지 검사
+    if ((Obj = CCollisionMgr::Collision_Rect_Mouse(m_tRect, *m_UnitList, *m_BuildList, * m_UnitList_E, *m_BuildList_E)) != nullptr)
     {
-        m_eCurState = MS_OBJ;
+        if (Obj->GetIsEnemy())
+            m_eCurState = MS_OBJ_E;
+        else
+            m_eCurState = MS_OBJ;
+
         if (CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
         {
             ClearList();
@@ -430,6 +437,14 @@ void CGameMouse::Change_Cursor()
             m_indexY = 2;
             m_tFrame.dwSpeed = 200;
             m_tFrame.dwTime = GetTickCount64();
+            break;
+
+        case MS_OBJ_E:
+            m_tFrame.iFrameStart = 0;
+            m_tFrame.iFrameEnd = 13;
+            m_tFrame.iCurCount = 0;
+            m_indexY = 4;
+            m_tFrame.dwSpeed = 200;
             break;
 
         case MS_ATTACK:
@@ -511,21 +526,6 @@ void CGameMouse::ColDrag()
 
     RECT rc = { (LONG)left, (LONG)top, (LONG)right, (LONG)bottom };
     CCollisionMgr::Collision_Rect_Mouse_RECT(rc,*m_UnitList, m_Select_UnitList);
-}
-
-
-
-void CGameMouse::Initailize_Img()
-{
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/CommandCenter.bmp", L"CommandCenter");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/SupplyDepot.bmp", L"SupplyDepot");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Refinery.bmp", L"Refinery");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Barracks.bmp", L"Barrck");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Academy.bmp", L"Academy");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Factory.bmp", L"Factory");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Armory.bmp", L"Armory");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Starport.bmp", L"Starport");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/ScienceFacility.bmp", L"ScienceFacility");
 }
 
 
@@ -641,21 +641,41 @@ bool CGameMouse::AbleBuild()
 
     Pos pos = {  (m_tRect.top  - iScrollY) / 32,(m_tRect.left - iScrollX) / 32 };
 
-    for (int i = 0; i < m_tInfo.fCY / 32; i++)
+    if (m_eBuildType == OT_Refinery)
     {
-        for (int j = 0; j < m_tInfo.fCX / 32; j++)
+        for (int i = 0; i < m_tInfo.fCY / 32; i++)
         {
-            int num;
-            Pos temp = { i,j };
-            if ((num = CMapMgr::Get_Instance()->GetTileType(pos + temp)) > 1)
+            for (int j = 0; j < m_tInfo.fCX / 32; j++)
             {
-                cout << num << endl;
-                return false;
+                Pos temp = { i,j };
+
+                if (CMapMgr::Get_Instance()->GetTileType(pos + temp) == 3)
+                {
+                    return false;
+                }
+
             }
-               
         }
     }
+    else
+    {
+        for (int i = 0; i < m_tInfo.fCY / 32; i++)
+        {
+            for (int j = 0; j < m_tInfo.fCX / 32; j++)
+            {
+                Pos temp = { i,j };
 
+                if (CMapMgr::Get_Instance()->GetTileType(pos + temp) > 1)
+                {
+                    return false;
+                }
+
+            }
+        }
+
+    }
+
+    
     return true;
 }
 

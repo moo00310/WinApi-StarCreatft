@@ -33,6 +33,7 @@ public:
 	}
 
 	const RENDERID Get_GroupID() const { return m_eRender; }
+	bool GetIsEnemy() { return m_bIsEnemy; }
 
 	void		Set_PosX(float _fX) { m_tInfo.fX += _fX; }
 	void		Set_PosY(float _fY) { m_tInfo.fY += _fY; }
@@ -80,6 +81,7 @@ protected:
 	STAT	m_tStat;
 	ULONGLONG m_AttackTime;
 	bool m_bSelect;
+	bool m_bIsEnemy;
 
 	OBJ_TYPE m_eObjID;
 

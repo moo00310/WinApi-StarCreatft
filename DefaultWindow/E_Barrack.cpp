@@ -22,6 +22,8 @@ void E_Barrack::Initialize()
 
     m_iMyBuildTIme = get<3>(ObjCost.at(OT_Barrck));
 
+    m_bIsEnemy = true;
+
     __super::Update_Rect();
     Block_Map();
 }
@@ -60,7 +62,7 @@ void E_Barrack::Render(HDC hDC)
 
     if (m_bSelect)
     {
-        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_8");
+        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_8_E");
         GdiTransparentBlt(hDC,			// 복사 받을 DC
             m_tRect.left + iScrollX + 20,	// 복사 받을 위치 좌표 X, Y	
             m_tRect.top + iScrollY + 20,

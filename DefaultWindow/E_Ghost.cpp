@@ -27,6 +27,8 @@ void E_Ghost::Initialize()
 	m_tInfo.fCX = 64.f;
 	m_tInfo.fCY = 64.f;
 
+	m_bIsEnemy = true;
+
 	// 해당 좌표로 공격
 	A_GroundPos = { 10,10 };
 	Astar(A_GroundPos);
@@ -63,7 +65,7 @@ void E_Ghost::Render(HDC hDC)
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
 	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
-	HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_0");
+	HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_0_E");
 
 	if (m_bSelect)
 	{

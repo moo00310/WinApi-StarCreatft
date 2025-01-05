@@ -27,6 +27,8 @@ void E_Tank::Initialize()
 	m_tInfo.fCX = 128.f;
 	m_tInfo.fCY = 128.f;
 
+	m_bIsEnemy = true;
+
 	// 해당 좌표로 공격
 	A_GroundPos = { 10,10 };
 	Astar(A_GroundPos);
@@ -71,7 +73,7 @@ void E_Tank::Render(HDC hDC)
 
 	HDC		hBodyDC = CBmpMgr::Get_Instance()->Find_Image(L"TankBody_Blue");
 	HDC		hHeadDC = CBmpMgr::Get_Instance()->Find_Image(L"TankHead_Blue");
-	HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_4");
+	HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_4_E");
 
 	if (m_bSelect)
 	{

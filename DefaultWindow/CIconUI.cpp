@@ -35,8 +35,6 @@ int CIconUI::Update()
 
 	if (m_pUintlist->size() == 1)
 	{
-		// 해당 오브젝트의 아이디를 가져와야하고, 그 오브젝트의 상태도 가져 와야함 
-
 		m_eCurState = m_pUintlist->front()->Get_ObjID();
 		m_bRender = true;
 		Change_Button();
@@ -158,6 +156,39 @@ void CIconUI::Release()
 
 void CIconUI::Change_Button()
 {
+	if (m_pUintlist->front()->GetIsEnemy())
+	{
+		m_Button_Icon[0].first = 99;
+		m_Button_Icon[0].second = 99;
+
+		m_Button_Icon[1].first = 99;
+		m_Button_Icon[1].second = 99;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 99;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 99;
+		m_Button_Icon[8].second = 99;
+
+		return;
+	}
+
+
 	if (m_eCurState < OT_Unit_End)
 	{
 		m_UnitState = static_cast<CUnit*>(m_pUintlist->front())->GetAinmeState();

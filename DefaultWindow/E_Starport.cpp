@@ -21,8 +21,7 @@ void E_Starport::Initialize()
     m_tStat = { 1300.f, 1300.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
 
-    m_iMyBuildTIme = get<3>(ObjCost.at(OT_Starport));
-
+    m_bIsEnemy = true;
 
     __super::Update_Rect();
     Block_Map();
@@ -61,7 +60,7 @@ void E_Starport::Render(HDC hDC)
 
     if (m_bSelect)
     {
-        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_7");
+        HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_7_E");
         GdiTransparentBlt(hDC,
             m_tRect.left + iScrollX,
             m_tRect.top + iScrollY + 30,

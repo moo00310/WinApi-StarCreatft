@@ -177,6 +177,15 @@ void CStage::Initalize_Bmp()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_7(128.128).bmp", L"Select_7");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_8(148.148).bmp", L"Select_8");
 
+	//Enemy_Select
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Enemy/Select_0(32.32)_E.bmp", L"Select_0_E");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Enemy/Select_1(40.40)_E.bmp", L"Select_1_E");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Enemy/Select_3(64.64)_E.bmp", L"Select_3_E");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Enemy/Select_4(80.80)_E.bmp", L"Select_4_E");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Enemy/Select_5(96.96)_E.bmp", L"Select_5_E");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Enemy/Select_7(128.128)_E.bmp", L"Select_7_E");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Enemy/Select_8(148.148)_E.bmp", L"Select_8_E");
+
 	// Build_Temp
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/BuildTemplate.bmp", L"BuildTemplate");
 
