@@ -643,19 +643,19 @@ bool CGameMouse::AbleBuild()
 
     if (m_eBuildType == OT_Refinery)
     {
-        for (int i = 0; i < m_tInfo.fCY / 32; i++)
+        for (int i = 1; i < 3; i++)
         {
-            for (int j = 0; j < m_tInfo.fCX / 32; j++)
+            for (int j = 1; j < 5; j++)
             {
                 Pos temp = { i,j };
 
-                if (CMapMgr::Get_Instance()->GetTileType(pos + temp) == 3)
+                if (CMapMgr::Get_Instance()->GetTileType(pos + temp) != 3)
                 {
                     return false;
                 }
-
             }
         }
+        return true;
     }
     else
     {

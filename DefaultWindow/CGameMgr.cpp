@@ -4,15 +4,16 @@
 #include "CKeyMgr.h"
 #include "CScrollMgr.h"
 #include "CMapMgr.h"
+#include "CSoundMgr.h"
 
 CGameMgr* CGameMgr::m_pInstance = nullptr;
 
 void CGameMgr::Initialize()
 {
-	m_iMineral = 99999;
-	m_iGas = 99999;
+	m_iMineral = 1000;
+	m_iGas = 1000;
 	m_iPop = 0;
-	m_iMaxPop = 200;
+	m_iMaxPop = 100;
 
 	for (int i = 0; i < TECH_END; i++)
 	{
@@ -139,16 +140,19 @@ bool CGameMgr::isBuying(OBJ_TYPE _Type)
 		if (m_iMineral < _mineral)
 		{
 			//미네랄이 부족합니다.
+			CSoundMgr::Get_Instance()->PlaySFX(L"taderr00.wav", 0.8);
+			
 			return false;
 		}
 		else if (m_iGas < _gas)
 		{
-			//미네랄이 부족합니다.
+			CSoundMgr::Get_Instance()->PlaySFX(L"taderr01.wav", 0.8);
+
 			return false;
 		}
 		else
 		{
-			// 서플라이가 부족합니다
+			CSoundMgr::Get_Instance()->PlaySFX(L"taderr02.wav", 0.8);
 			return false;
 		}
 	}

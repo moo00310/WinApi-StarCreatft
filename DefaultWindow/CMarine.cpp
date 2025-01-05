@@ -10,7 +10,7 @@
 #include "CSoundMgr.h"
 #include "CBulletEffect.h"
 #include "CGameMgr.h"
-
+#include "CSoundMgr.h"
 #include "CCollisionMgr.h"
 
 CMarine::CMarine(): m_bIsSteamPack(false), m_CoolDown(0)
@@ -216,6 +216,7 @@ void CMarine::StreamPackCoolDown()
 	
 	if (m_CoolDown + 3000 < GetTickCount64())
 	{
+		//CSoundMgr::Get_Instance()->PlaySFX();
 		m_tFrame.dwSpeed = 100;
 		m_bIsSteamPack = false;
 		m_tStat.m_fSpeed = 1.8f;
