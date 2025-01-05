@@ -243,13 +243,40 @@ Pos CCollisionMgr::Collision_RangePos(CObj* _pPlayer, CObj* _unit, float _dis)
 	return pos;
 }
 
+void CCollisionMgr::Collision_Explosion(CObj* _pEx, list<CObj*> _unit, list<CObj*> _build)
+{
+	RECT rc{};
+
+	for (auto& unit : _unit)
+	{
+		if (IntersectRect(&rc, _pEx->Get_Rect(), unit->Get_Rect()))
+		{
+			unit->Add_Stat_hp(-50);
+		}
+	}
+
+	for (auto& build : _build)
+	{
+		if (IntersectRect(&rc, _pEx->Get_Rect(), build->Get_Rect()))
+		{
+			build->Add_Stat_hp(-50);
+		}
+	}
+	
+	return;
+}
+
 CObj* CCollisionMgr::Collision_RangeChack_Attack(CObj* _pPlayer, list<CObj*> _unit, list<CObj*>_build, float _dis)
 {
+
 	for (auto unit : _unit)
 	{
 		float fWidth = fabsf(unit->Get_Scroll_Info().fX - _pPlayer->Get_Scroll_Info().fX);
 		float fHeight = fabsf(unit->Get_Scroll_Info().fY - _pPlayer->Get_Scroll_Info().fY);
 		float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);
+
+		if (_pPlayer->Get_ObjID() == OT_SiegeTank && fDistance < 80.f)
+			continue;
 
 		if (fDistance <= _dis)
 			return unit;

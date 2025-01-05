@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CBulletEffect.h"
 #include "CBmpMgr.h"
+#include "CCollisionMgr.h"
+#include "CObjMgr.h"
 
 /*-------------------
 *  SCV АјАн
@@ -378,7 +380,8 @@ void CTankHit::Render(HDC hDC)
 
 void CSiegeTankHit::Initialize()
 {
-	
+	E_list = CObjMgr::Get_Instance()->Get_ObjList(OBJ_MONSTER);
+	E_build_list = CObjMgr::Get_Instance()->Get_ObjList(OBJ_BUILD_E);
 	m_pImgKey = L"SiegeTankHit";
 	m_tInfo.fCX = 100.f;
 	m_tInfo.fCY = 108.f;
@@ -417,6 +420,11 @@ int CSiegeTankHit::Update()
 	else if (m_iCount < 35)
 	{
 		m_iDeadImg = 6;
+		if (!m_bIsDamage)
+		{
+			CCollisionMgr::Collision_Explosion(this, *E_list, *E_build_list);
+			m_bIsDamage = true;
+		}
 	}
 	else if (m_iCount < 40)
 	{
