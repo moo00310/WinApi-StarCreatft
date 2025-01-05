@@ -1,14 +1,13 @@
 #pragma once
 #include "CUnit.h"
-class CTank : public CUnit
+class E_Tank : public CUnit
 {
 public:
-	CTank(): m_eAttackDir(DIR_RIGHT), m_iBodyID(0), dwMoveTime(GetTickCount64()), m_bSiegeMode(false), SiegeCount(0),
-	m_bSiegeMode_Anime(false)
+	E_Tank() : m_eAttackDir(DIR_RIGHT), m_iBodyID(0), m_bSiegeMode(false), m_bSiegeMode_Anime(false)
 	{
 		ZeroMemory(&m_tBodyFram, sizeof(FRAME));
 	}
-	~CTank() {}
+	~E_Tank() {}
 public:
 	void Initialize() override;
 	int Update() override;
@@ -17,12 +16,12 @@ public:
 	void Release() override;
 	void Change_Motion() override;
 	void KeyInput() override;
-
-	void Update_State() override;
-
 	void AttackToEnemy(CObj* _Enemey) override;
-	virtual void Hold() override;
-	virtual void Move_toNext() override;
+
+private:
+	void Hold() override;
+	void Move_toNext() override;
+	void Update_State() override;
 
 private:
 	void MoveBody_Frame();
@@ -32,8 +31,6 @@ private:
 	void Frame_Init_Body(int start, int end, int time);
 
 private:
-	int SiegeCount;
-	ULONGLONG dwMoveTime;
 	int m_iBodyID;
 	bool m_bSiegeMode;
 	bool m_bSiegeMode_Anime;

@@ -558,6 +558,12 @@
     <ClInclude Include="E_Medic.h">
       <Filter>01. Obj\01.Unit\99.Enemy\02.E_Medic</Filter>
     </ClInclude>
+    <ClInclude Include="E_Ghost.h">
+      <Filter>01. Obj\01.Unit\99.Enemy\03.E_Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="E_Tank.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -787,6 +793,12 @@
     </ClCompile>
     <ClCompile Include="E_Medic.cpp">
       <Filter>01. Obj\01.Unit\99.Enemy\02.E_Medic</Filter>
+    </ClCompile>
+    <ClCompile Include="E_Ghost.cpp">
+      <Filter>01. Obj\01.Unit\99.Enemy\03.E_Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="E_Tank.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

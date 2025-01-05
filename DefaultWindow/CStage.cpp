@@ -29,7 +29,6 @@
 #include "CMedic.h"
 #include "CGhost.h"
 #include "CTank.h"
-#include "E_Marine.h"
 
 #include "E_CommendCenter.h"
 #include "E_Suffly.h"
@@ -41,7 +40,10 @@
 #include "E_Starport.h"
 
 
+#include "E_Marine.h"
 #include "E_Medic.h"
+#include "E_Ghost.h"
+#include "E_Tank.h"
 
 
 
@@ -86,8 +88,8 @@ void CStage::Initialize()
 	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::Create(300, 300));
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CTank>::Create(400, 400));
 
-	// 利 付赴 积魂
-	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(600,600));
+	// 利  积魂
+	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::Create(600,600));
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Medic>::Create(600,610));
 	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(4000,610));
 

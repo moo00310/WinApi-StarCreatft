@@ -1,25 +1,22 @@
 #include "pch.h"
-#include "CTank.h"
+#include "E_Tank.h"
 #include "CMapMgr.h"
-#include "CObjMgr.h"
 #include "CBmpMgr.h"
-#include "CSoundMgr.h"
+#include "CObjMgr.h"
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
 #include "CBulletEffect.h"
 #include "CCollisionMgr.h"
-#include "CKeyMgr.h"
-#include "CGameMgr.h"
 
-void CTank::Initialize()
+void E_Tank::Initialize()
 {
 	// 맵의 주소를 받아옴
 	m_Map = CMapMgr::Get_Instance()->GetMap();
 
 	// 리스트 할당
-	m_pMonsterList = CObjMgr::Get_Instance()->Get_MonsterList();
-	m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
-	m_pBuildList_E = CObjMgr::Get_Instance()->Get_ObjList(OBJ_BUILD_E);
+	m_pMonsterList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_PLAYER);
+	m_pUnitList = CObjMgr::Get_Instance()->Get_ObjList(OBJ_MONSTER);
+	m_pBuildList_E = CObjMgr::Get_Instance()->Get_ObjList(OBJ_BUILD);
 
 	m_eObjID = OT_Tank;
 	m_tStat = { 150.f, 150.f, 30, 1, 224, 1.8f, 625 , DF_LAGE, AT_EXPLOSIVE };
@@ -30,11 +27,13 @@ void CTank::Initialize()
 	m_tInfo.fCX = 128.f;
 	m_tInfo.fCY = 128.f;
 
-	A_GroundPos.x = (int)m_tInfo.fX / 32;
-	A_GroundPos.y = (int)m_tInfo.fY / 32;
+	// 해당 좌표로 공격
+	A_GroundPos = { 10,10 };
+	Astar(A_GroundPos);
+	m_eInput = IP_ATTACK;
 }
 
-int CTank::Update()
+int E_Tank::Update()
 {
 	if (m_bDead || m_tStat.m_iHp <= 0)
 	{
@@ -54,11 +53,9 @@ int CTank::Update()
 	__super::Update_Rect();
 	return OBJ_NOEVENT;
 }
-//if (m_bSiegeMode) return;
 
-void CTank::Late_Update()
+void E_Tank::Late_Update()
 {
-	
 	Change_Motion();
 
 	if (m_bSiegeMode_Anime) return;
@@ -67,13 +64,13 @@ void CTank::Late_Update()
 	MoveBody_Frame();
 }
 
-void CTank::Render(HDC hDC)
+void E_Tank::Render(HDC hDC)
 {
 	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
-	HDC		hBodyDC = CBmpMgr::Get_Instance()->Find_Image(L"TankBody");
-	HDC		hHeadDC = CBmpMgr::Get_Instance()->Find_Image(L"TankHead");
+	HDC		hBodyDC = CBmpMgr::Get_Instance()->Find_Image(L"TankBody_Blue");
+	HDC		hHeadDC = CBmpMgr::Get_Instance()->Find_Image(L"TankHead_Blue");
 	HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_4");
 
 	if (m_bSelect)
@@ -105,7 +102,7 @@ void CTank::Render(HDC hDC)
 
 	GdiTransparentBlt(hDC,			// 복사 받을 DC
 		m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
-		m_tRect.top + iScrollY -5,
+		m_tRect.top + iScrollY - 5,
 		(int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
 		(int)m_tInfo.fCY,
 		hHeadDC,						// 복사할 이미지 DC	
@@ -117,11 +114,11 @@ void CTank::Render(HDC hDC)
 
 }
 
-void CTank::Release()
+void E_Tank::Release()
 {
 }
 
-void CTank::Change_Motion()
+void E_Tank::Change_Motion()
 {
 	if (m_ePreState != m_eCurState)
 	{
@@ -171,7 +168,7 @@ void CTank::Change_Motion()
 				m_tBodyFram.iCurCount = 3;
 				m_eDir = (DIRECTION)5;
 				Frame_Init_Head(2, 2, 200);
-				
+
 
 			}
 			break;
@@ -181,26 +178,12 @@ void CTank::Change_Motion()
 	}
 }
 
-void CTank::MoveBody_Frame()
+void E_Tank::KeyInput()
 {
-	if (m_tBodyFram.dwTime + m_tBodyFram.dwSpeed < GetTickCount64())
-	{
-		++m_tBodyFram.iCurCount;
-
-		if (m_eCurState == STATE_ATTACK && m_tBodyFram.iCurCount > m_tBodyFram.iFrameEnd)
-		{
-			m_eCurState = STATE_SHOOT;
-			m_tBodyFram.iCurCount = m_tBodyFram.iFrameStart;
-		}
-		else if (m_tBodyFram.iCurCount > m_tBodyFram.iFrameEnd)
-			m_tBodyFram.iCurCount = m_tBodyFram.iFrameStart;
-
-
-		m_tBodyFram.dwTime = GetTickCount64();
-	}
+	return;
 }
 
-void CTank::AttackToEnemy(CObj* _Enemey)
+void E_Tank::AttackToEnemy(CObj* _Enemey)
 {
 	m_eAttackDir = GetDirection(m_tInfo.fX, m_tInfo.fY, _Enemey->Get_Info().fX, _Enemey->Get_Info().fY);
 	if (m_eCurState == STATE_SHOOT)
@@ -231,10 +214,10 @@ void CTank::AttackToEnemy(CObj* _Enemey)
 			m_AttackTime = GetTickCount64();
 		}
 	}
-	
+
 }
 
-void CTank::Hold()
+void E_Tank::Hold()
 {
 	CObj* Enemy = nullptr;
 	if (!m_bSiegeMode)
@@ -259,10 +242,9 @@ void CTank::Hold()
 			AttackToEnemy(Enemy); // 실제 데미지 주는 코드
 		}
 	}
-
 }
 
-void CTank::Move_toNext()
+void E_Tank::Move_toNext()
 {
 	Pos _now = { (int)m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
 	Pos _pos = _path[m_iPathIndex];
@@ -309,161 +291,7 @@ void CTank::Move_toNext()
 
 }
 
-void CTank::SiegeMode()
-{
-	if (!m_bSiegeMode_Anime) return;
-	if (m_bSiegeMode) return;
-
-	m_eInput = IP_STOP;
-	m_tBodyFram.iCurCount = 3;
-	m_tFrame.iCurCount = 3;
-
-	if (SiegeCount < 5)
-	{
-		m_eDir = (DIRECTION)0;
-		m_eAttackDir = (DIRECTION)0;
-	}
-	else if (SiegeCount < 20)
-	{
-		m_eDir = (DIRECTION)1;
-		m_eAttackDir = (DIRECTION)0;
-	}
-	else if (SiegeCount < 40)
-	{
-		m_eDir = (DIRECTION)2;
-		m_eAttackDir = (DIRECTION)0;
-	}
-	else if (SiegeCount < 60)
-	{
-		m_eDir = (DIRECTION)3;
-		m_eAttackDir = (DIRECTION)0;
-	}
-	else if (SiegeCount < 80)
-	{
-		m_eDir = (DIRECTION)4;
-		m_eAttackDir = (DIRECTION)0;
-	}
-	else if (SiegeCount < 100)
-	{
-		m_eDir = (DIRECTION)5;
-		m_eAttackDir = (DIRECTION)0;
-	}
-	else if (SiegeCount < 120)
-	{
-		m_eAttackDir = (DIRECTION)1;
-	}
-	else if (SiegeCount < 140)
-	{
-		m_eAttackDir = (DIRECTION)2;
-	}
-	else if (SiegeCount < 160)
-	{
-		m_eAttackDir = (DIRECTION)3;
-	}
-	else if (SiegeCount > 160)
-	{
-		m_eAttackDir = (DIRECTION)4;
-		SiegeCount = 0;
-		m_eObjID = OT_SiegeTank;
-		m_bSiegeMode = true;
-		m_bSiegeMode_Anime = false;
-		m_eInput = IP_HOLD;
-	}
-
-	SiegeCount++;
-}
-
-void CTank::UnSiegeMode()
-{
-	if (!m_bSiegeMode_Anime) return;
-	if (!m_bSiegeMode) return;
-
-	m_eInput = IP_STOP;
-	m_tBodyFram.iCurCount = 3;
-	m_tFrame.iCurCount = 3;
-
-	if (SiegeCount < 5)
-	{
-		m_eAttackDir = (DIRECTION)4;
-	}
-	else if (SiegeCount < 20)
-	{
-		m_eAttackDir = (DIRECTION)3;
-	}
-	else if (SiegeCount < 40)
-	{
-		m_eAttackDir = (DIRECTION)2;
-	}
-	else if (SiegeCount < 60)
-	{
-		m_eAttackDir = (DIRECTION)1;
-	}
-	else if (SiegeCount < 80)
-	{
-		m_eDir = (DIRECTION)5;
-		m_eAttackDir = (DIRECTION)0;
-	}
-	else if (SiegeCount < 100)
-	{
-		m_eDir = (DIRECTION)4;
-	}
-	else if (SiegeCount < 120)
-	{
-		m_eDir = (DIRECTION)3;
-	}
-	else if (SiegeCount < 140)
-	{
-		m_eDir = (DIRECTION)2;
-	}
-	else if (SiegeCount < 160)
-	{
-		m_eDir = (DIRECTION)1;
-	}
-	else if (SiegeCount > 160)
-	{
-		m_eDir = (DIRECTION)0;
-		m_eAttackDir = (DIRECTION)0;
-		SiegeCount = 0;
-		m_eObjID = OT_Tank;
-		m_bSiegeMode = false;
-		m_bSiegeMode_Anime = false;
-		m_eInput = IP_HOLD;
-	}
-
-	SiegeCount++;
-}
-
-void CTank::Frame_Init_Body(int start, int end, int time)
-{
-	m_tBodyFram.iFrameStart = start;
-	m_tBodyFram.iFrameEnd = end;
-	m_tBodyFram.iCurCount = start;
-	m_tBodyFram.dwSpeed = time;
-	m_tBodyFram.dwTime = GetTickCount64();
-}
-
-void CTank::Frame_Init_Head(int start, int end, int time)
-{
-	m_tFrame.iFrameStart = start;
-	m_tFrame.iFrameEnd = end;
-	m_tFrame.iCurCount = start;
-	m_tFrame.dwSpeed = time;
-	m_tFrame.dwTime = GetTickCount64();
-}
-
-void CTank::KeyInput()
-{
-	if (!m_bSelect) return;
-
-	// 시즈모드
-	if (CKeyMgr::Get_Instance()->Key_Down('E'))
-	{
-		if (!CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Tank_SiegeMod)) return;
-		m_bSiegeMode_Anime = true;
-	}
-}
-
-void CTank::Update_State()
+void E_Tank::Update_State()
 {
 	switch (m_eInput)
 	{
@@ -493,4 +321,68 @@ void CTank::Update_State()
 	default:
 		break;
 	}
+}
+
+void E_Tank::MoveBody_Frame()
+{
+	if (m_tBodyFram.dwTime + m_tBodyFram.dwSpeed < GetTickCount64())
+	{
+		++m_tBodyFram.iCurCount;
+
+		if (m_eCurState == STATE_ATTACK && m_tBodyFram.iCurCount > m_tBodyFram.iFrameEnd)
+		{
+			m_eCurState = STATE_SHOOT;
+			m_tBodyFram.iCurCount = m_tBodyFram.iFrameStart;
+		}
+		else if (m_tBodyFram.iCurCount > m_tBodyFram.iFrameEnd)
+			m_tBodyFram.iCurCount = m_tBodyFram.iFrameStart;
+
+
+		m_tBodyFram.dwTime = GetTickCount64();
+	}
+}
+
+void E_Tank::SiegeMode()
+{
+	if (!m_bSiegeMode_Anime) return;
+	if (m_bSiegeMode) return;
+
+	m_eAttackDir = (DIRECTION)4;
+	m_eObjID = OT_SiegeTank;
+	m_bSiegeMode = true;
+	m_bSiegeMode_Anime = false;
+	m_eInput = IP_HOLD;
+
+	
+}
+
+void E_Tank::UnSiegeMode()
+{
+	if (!m_bSiegeMode_Anime) return;
+	if (!m_bSiegeMode) return;
+
+	m_eDir = (DIRECTION)0;
+	m_eAttackDir = (DIRECTION)0;
+	m_eObjID = OT_Tank;
+	m_bSiegeMode = false;
+	m_bSiegeMode_Anime = false;
+	m_eInput = IP_HOLD;
+}
+
+void E_Tank::Frame_Init_Head(int start, int end, int time)
+{
+	m_tFrame.iFrameStart = start;
+	m_tFrame.iFrameEnd = end;
+	m_tFrame.iCurCount = start;
+	m_tFrame.dwSpeed = time;
+	m_tFrame.dwTime = GetTickCount64();
+}
+
+void E_Tank::Frame_Init_Body(int start, int end, int time)
+{
+	m_tBodyFram.iFrameStart = start;
+	m_tBodyFram.iFrameEnd = end;
+	m_tBodyFram.iCurCount = start;
+	m_tBodyFram.dwSpeed = time;
+	m_tBodyFram.dwTime = GetTickCount64();
 }
