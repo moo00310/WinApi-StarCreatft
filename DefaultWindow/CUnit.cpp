@@ -263,6 +263,7 @@ void CUnit::Attack()
 	{
 		if (CCollisionMgr::Collision_Range_Bool(this, unit, m_tStat.m_iRange)) // 충돌 범위 내
 		{
+			CCollisionMgr::Collision_RectEx(this, *m_pUnitList);
 			AttackToEnemy(unit);
 		}
 		else
@@ -281,6 +282,7 @@ void CUnit::Attack()
 			{
 				if (CCollisionMgr::Collision_Range_Bool(this, unit, m_tStat.m_iRange)) // 충돌 범위 내
 				{
+					CCollisionMgr::Collision_RectEx(this, *m_pUnitList);
 					AttackToEnemy(unit);
 				}
 				else
@@ -308,7 +310,12 @@ void CUnit::Attack()
 				preUint = nullptr;
 			}
 			else
+			{
+
+				CCollisionMgr::Collision_RectEx(this, *m_pUnitList);
 				m_eCurState = STATE_IDLE;
+			}
+				
 		}
 	}
 		

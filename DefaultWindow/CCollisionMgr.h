@@ -9,7 +9,7 @@ public:
 	static void	Collision_Circle(list<CObj*> _Dst, list<CObj*> _Src);
 	static bool	Check_Circle(CObj* _Dst, CObj* _Src);
 
-	static void	Collision_RectEx(list<CObj*> _Dst, list<CObj*> _Src);
+	static void	Collision_RectEx(CObj* _Dst, list<CObj*> _Src);
 	static bool	Check_Rect(CObj* _Dst, CObj* _Src, float* pX, float* pY);
 	///////////////////////////////////////////////////////////////////////////
 
@@ -25,5 +25,6 @@ public:
 	static Pos Collision_RangePos(CObj* _pPlayer, CObj* _unit, float _dis);
 
 	static void Collision_Explosion(CObj* _pEx, list<CObj*> _unit, list<CObj*> _build);
+	static bool Collision_Unit_body(CObj* _my, list<CObj*> _unit);
 };
 

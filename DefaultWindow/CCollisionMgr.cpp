@@ -32,44 +32,43 @@ bool CCollisionMgr::Check_Circle(CObj* _Dst, CObj* _Src)
 	return fRadius >= fDiagonal;
 }
 
-void CCollisionMgr::Collision_RectEx(list<CObj*> _Dst, list<CObj*> _Src)
+void CCollisionMgr::Collision_RectEx(CObj* _Dst, list<CObj*> _Src)
 {
 	float	fX(0.f), fY(0.f);
 
-	for (auto& Dst : _Dst)
+	for (auto& Src : _Src)
 	{
-		for (auto& Src : _Src)
+		if (_Dst == Src) continue;
+
+		if (Check_Rect(_Dst, Src, &fX, &fY))
 		{
-			if (Check_Rect(Dst, Src, &fX, &fY))
+			// 상 하 충돌
+			if (fX > fY)
 			{
-				// 상 하 충돌
-				if (fX > fY)
+				// 상 충돌
+				if (_Dst->Get_Info().fY < Src->Get_Info().fY)
 				{
-					// 상 충돌
-					if (Dst->Get_Info().fY < Src->Get_Info().fY)
-					{
-						Dst->Set_PosY(-fY);
-					}
-					// 하 충돌
-					else
-					{
-						Dst->Set_PosY(+fY);
-					}
+					_Dst->Set_PosY(-fY);
 				}
-				
-				// 좌 우 충돌
+				// 하 충돌
 				else
 				{
-					// 좌 충돌
-					if (Dst->Get_Info().fX < Src->Get_Info().fX)
-					{
-						Dst->Set_PosX(-fX);
-					}
-					// 우 충돌
-					else
-					{
-						Dst->Set_PosX(fX);
-					}
+					_Dst->Set_PosY(+fY);
+				}
+			}
+
+			// 좌 우 충돌
+			else
+			{
+				// 좌 충돌
+				if (_Dst->Get_Info().fX < Src->Get_Info().fX)
+				{
+					_Dst->Set_PosX(-fX);
+				}
+				// 우 충돌
+				else
+				{
+					_Dst->Set_PosX(fX);
 				}
 			}
 		}
@@ -82,8 +81,8 @@ bool CCollisionMgr::Check_Rect(CObj* _Dst, CObj* _Src, float* pX, float* pY)
 	float		fX = abs(_Dst->Get_Info().fX - _Src->Get_Info().fX);
 	float		fY = abs(_Dst->Get_Info().fY - _Src->Get_Info().fY);
 
-	float		fRadiusX = (_Dst->Get_Info().fCX + _Src->Get_Info().fCX) * 0.5f;
-	float		fRadiusY = (_Dst->Get_Info().fCY + _Src->Get_Info().fCY) * 0.5f;
+	float		fRadiusX = (16 + 16) * 0.5f;
+	float		fRadiusY = (16 + 16) * 0.5f;
 
 	if ((fRadiusX >= fX) && (fRadiusY >= fY))
 	{
@@ -262,6 +261,21 @@ Pos CCollisionMgr::Collision_RangePos(CObj* _pPlayer, CObj* _unit, float _dis)
 	Pos pos{(int)(y / 32), (int)(x / 32) };
 
 	return pos;
+}
+
+bool CCollisionMgr::Collision_Unit_body(CObj* _my, list<CObj*> _unit)
+{
+	RECT rc{};
+
+	for (auto& unit : _unit)
+	{
+		if (IntersectRect(&rc, _my->Get_Rect(), unit->Get_Rect()))
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void CCollisionMgr::Collision_Explosion(CObj* _pEx, list<CObj*> _unit, list<CObj*> _build)

@@ -20,7 +20,7 @@ void CGameMgr::Initialize()
 	}
 
 	for (int i = 0; i < UG_END; ++i) {
-		UpGrade_Compelate[i] = true;
+		UpGrade_Compelate[i] = false;
 	}
 }
 
