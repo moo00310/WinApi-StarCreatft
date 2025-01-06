@@ -6,6 +6,7 @@
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
 #include "CCollisionMgr.h"
+#include "CSoundMgr.h"
 
 CMedic::CMedic() 
 {
@@ -44,9 +45,8 @@ int CMedic::Update()
 	if (m_bDead || m_tStat.m_iHp <= 0)
 	{
 		// Á×À½ ÀÌÆåÆ®
+		CSoundMgr::Get_Instance()->PlaySFX(L"MedicDead.mp3", 0.5f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CMedicDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
-		//CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
-		//CSoundMgr::Get_Instance()->PlaySound(L"Marine_Dead_1.mp3", SOUND_EFFECT, 0.5f, true);
 
 		return OBJ_DEAD;
 	}

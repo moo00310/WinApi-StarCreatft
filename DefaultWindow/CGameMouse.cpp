@@ -547,14 +547,21 @@ void CGameMouse::MoveSound(OBJ_TYPE type)
         break;
     case OT_Marine:
         if(intRand == 0)
-            CSoundMgr::Get_Instance()->WaitPlaySFX(L"marineMove1.mp3", 0.8f, 29);
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"MedicMove1.mp3", 0.8f, 29);
         else if (intRand == 1)
-            CSoundMgr::Get_Instance()->WaitPlaySFX(L"marineMove2.mp3", 0.8f, 29);
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"MedicMove2.mp3", 0.8f, 29);
         else
-            CSoundMgr::Get_Instance()->WaitPlaySFX(L"MarineMove3.mp3", 0.8f, 29);
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"MedicMove3.mp3", 0.8f, 29);
         break;
     case OT_Medic: 
+        if (intRand == 0)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"MedicMove1.mp3", 0.8f, 29);
+        else if (intRand == 1)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"MedicMove2.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"MedicMove3.mp3", 0.8f, 29);
         break;
+
     case OT_Ghost:
         break;
     case OT_Tank:
@@ -602,6 +609,12 @@ void CGameMouse::SelectSound(OBJ_TYPE type)
             CSoundMgr::Get_Instance()->WaitPlaySFX(L"marine_select_3.mp3", 0.8f, 29);
         break;
     case OT_Medic:
+        if (intRand == 0)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"MedicSelcet1.mp3", 0.8f, 29);
+        else if (intRand == 1)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"MedicSelcet2.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"MedicSelcet3.mp3", 0.8f, 29);
         break;
     case OT_Ghost:
         break;
