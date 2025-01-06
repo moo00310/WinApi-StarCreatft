@@ -10,7 +10,7 @@
 #include "CScv.h"
 #include "CGameMgr.h"
 #include "CSoundMgr.h"
-
+#include "CGhost.h"
 
 /*---------------
     GameMouse
@@ -18,7 +18,7 @@
 
 CGameMouse::CGameMouse() : m_eCurState(MS_IDLE), m_ePreState(MS_IDLE), m_indexY(0), m_UnitList(nullptr),
 m_Select_UnitList(nullptr), isDrag(false), m_BuildList(nullptr), isBuildMod(false), m_eBuildType(OT_END),
-m_pImgKey_build(nullptr), m_iBuild_Index(0), m_UnitList_E(nullptr), m_BuildList_E(nullptr)
+m_pImgKey_build(nullptr), m_iBuild_Index(0), m_UnitList_E(nullptr), m_BuildList_E(nullptr), NukeMode(false)
 {
     ZeroMemory(&ptMouse, sizeof(POINT));
     ZeroMemory(&m_DragStart, sizeof(POINT));
@@ -161,7 +161,6 @@ void CGameMouse::ClearDrag()
 
 void CGameMouse::MouseInput(POINT ptMouse)
 {
-    ///////////////////////////////////
     Pos temp = { (int)(ptMouse.y - CScrollMgr::Get_Instance()->Get_ScrollY()) / TILECY , int(ptMouse.x - CScrollMgr::Get_Instance()->Get_ScrollX()) / TILECY };
 
     if (isBuildMod)
@@ -184,7 +183,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
             else
             {
                 CSoundMgr::Get_Instance()->PlaySFX(L"tscerr01.wav", 0.8f);
-            } 
+            }
         }
 
         // 우클릭으로 취소
@@ -194,156 +193,155 @@ void CGameMouse::MouseInput(POINT ptMouse)
             ClearList();
         }
     }
-    else
+
+    if (NukeMode)
     {
-        ///// 우클릭 : MOVE 
+        m_eCurState = MS_ATTACK;
+
+        if (CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
+        {
+            if (auto* pUnit = dynamic_cast<CGhost*>(m_Select_UnitList->front()))
+            {
+                pUnit->Astar(CCollisionMgr::Collision_RangePos(pUnit, temp, 320.f));
+                pUnit->SetInput(IP_NUKE);
+                pUnit->SetNukePos(temp);
+            }
+        }
+        if (CKeyMgr::Get_Instance()->Key_Up(VK_LBUTTON))
+        {
+            m_eCurState = MS_IDLE;
+            NukeMode = false;
+        }
+
+        // 우클릭으로 취소
         if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
         {
-            m_eCurState = MS_MOVE;
-            if (m_Select_UnitList->size() == 1)
+            NukeMode = false;
+            ClearList();
+        }
+    }
+
+    if (isBuildMod) return;
+    if (NukeMode) return;
+
+    ///// 우클릭 : MOVE 
+    if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
+    {
+        m_eCurState = MS_MOVE;
+        if (m_Select_UnitList->size() == 1)
+        {
+            if (m_Select_UnitList->front() != nullptr && !m_Select_UnitList->front()->GetIsEnemy())
             {
-                if (m_Select_UnitList->front() != nullptr && !m_Select_UnitList->front()->GetIsEnemy())
+                if (auto* pUnit = dynamic_cast<CUnit*>(m_Select_UnitList->front()))
                 {
-                    if (auto* pUnit = dynamic_cast<CUnit*>(m_Select_UnitList->front()))
+                    if (pUnit->GetInput() == IP_BUILD) return;
+                    pUnit->Astar(temp);
+                    MoveSound(m_Select_UnitList->front()->Get_ObjID());
+                    pUnit->SetInput(IP_MOVE);
+                }
+            }
+        }
+        else if (m_Select_UnitList->size() > 1)
+        {
+            Pos IndexArraay[12] = {};
+            int array(0);
+
+            for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+                {
+                    Pos nextPos = temp + MoveFront[array];
+
+                    if (auto* pUnit = dynamic_cast<CUnit*>(unit))
+                    {
+                        if (pUnit->GetInput() == IP_BUILD) return;
+                        pUnit->Astar(nextPos);
+                        pUnit->SetInput(IP_MOVE);
+                        array++;
+                    }
+
+                });
+
+        }
+    }
+    if (CKeyMgr::Get_Instance()->Key_Up(VK_RBUTTON))
+    {
+        m_eCurState = MS_IDLE;
+    }
+
+    //// A - 좌클릭 : 어택 땅
+    if (m_eCurState == MS_ATTACK && CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
+    {
+        m_eCurState = MS_IDLE;
+
+        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+            {
+                if (unit != nullptr && !m_Select_UnitList->front()->GetIsEnemy())
+                {
+                    if (auto* pUnit = dynamic_cast<CUnit*>(unit))
                     {
                         if (pUnit->GetInput() == IP_BUILD) return;
                         pUnit->Astar(temp);
-                        MoveSound(m_Select_UnitList->front()->Get_ObjID());
-                        pUnit->SetInput(IP_MOVE);
+                        pUnit->SetAGroundPos(temp);
+                        MoveSound(pUnit->Get_ObjID());
+                        pUnit->SetInput(IP_ATTACK);
                     }
                 }
-            }
-            else if (m_Select_UnitList->size() > 1)
+            });
+    }
+
+    // 땅 좌클릭
+    if (m_eCurState == MS_IDLE && CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
+    {
+        ClearList();
+        m_DragStart.x = ptMouse.x;
+        m_DragStart.y = ptMouse.y;
+        isDrag = true;
+    }
+    if (isDrag == true && CKeyMgr::Get_Instance()->Key_Pressing(VK_LBUTTON))
+    {
+        m_eCurState = MS_DRAG;
+        m_DragEnd.x = ptMouse.x;
+        m_DragEnd.y = ptMouse.y;
+    }
+
+    if (isDrag == true && CKeyMgr::Get_Instance()->Key_Up(VK_LBUTTON))
+    {
+        isDrag = false;
+        ColDrag();
+        ClearDrag();
+        m_eCurState = MS_IDLE;
+    }
+
+    if (CKeyMgr::Get_Instance()->Key_Down('A'))
+    {
+        m_eCurState = MS_ATTACK;
+    }
+
+    if (CKeyMgr::Get_Instance()->Key_Down('S'))
+    {
+        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
             {
-                Pos IndexArraay[12] = {};
-                int array(0);
-//#pragma region 가장 가까운 놈 기준 부대이동
-//                // 마우스랑 가장 가까운 유닛 찾기
-//                Pos BestIndex = CCollisionMgr::Collision_Neares_Unit_pos(temp, *m_Select_UnitList);
-//
-//                // 가장 베스트 인덱스에서 빼기
-//                for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
-//                    {
-//                        Pos pos = { (int)unit->Get_Scroll_Info().fY / 32, (int)unit->Get_Scroll_Info().fX / 32 };
-//                        IndexArraay[array] = BestIndex - pos;
-//                        array++;
-//                    });
-//
-//
-//                // 마우스 포인트 위치에서 각각 정해진 위치로 이동
-//                array = 0;
-//                for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
-//                    {
-//
-//                        if (auto* pUnit = dynamic_cast<CUnit*>(unit))
-//                        {
-//                            pUnit->Astar(temp - IndexArraay[array]);
-//                            pUnit->SetInput(IP_MOVE);
-//                            array++;
-//                        }
-//
-//                    });
-//#pragma endregion
-// 
-                // 마우스 포인트 위치에서 각각 정해진 위치로 이동
-                
-                for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
-                    {
-                        Pos nextPos = temp + MoveFront[array];
-
-                        if (auto* pUnit = dynamic_cast<CUnit*>(unit))
-                        {
-                            if (pUnit->GetInput() == IP_BUILD) return;
-                            pUnit->Astar(nextPos);
-                            pUnit->SetInput(IP_MOVE);
-                            array++;
-                        }
-
-                    });
-               
-            }
-        }
-        if (CKeyMgr::Get_Instance()->Key_Up(VK_RBUTTON))
-        {
-            m_eCurState = MS_IDLE;
-        }
-
-        //// A - 좌클릭 : 어택 땅
-        if (m_eCurState == MS_ATTACK && CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
-        {
-            m_eCurState = MS_IDLE;
-
-            for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+                if (unit != nullptr && !m_Select_UnitList->front()->GetIsEnemy())
                 {
-                    if (unit != nullptr && !m_Select_UnitList->front()->GetIsEnemy())
+                    if (auto* pUnit = dynamic_cast<CUnit*>(unit))
                     {
-                        if (auto* pUnit = dynamic_cast<CUnit*>(unit))
-                        {
-                            if (pUnit->GetInput() == IP_BUILD) return;
-                            pUnit->Astar(temp);
-                            pUnit->SetAGroundPos(temp);
-                            MoveSound(pUnit->Get_ObjID());
-                            pUnit->SetInput(IP_ATTACK);
-                        }
+                        pUnit->SetInput(IP_STOP);
                     }
-                });
-        }
+                }
+            });
+    }
 
-        // 땅 좌클릭
-        if (m_eCurState == MS_IDLE && CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
-        {
-            ClearList();
-            m_DragStart.x = ptMouse.x;
-            m_DragStart.y = ptMouse.y;
-            isDrag = true;
-        }
-        if (isDrag == true && CKeyMgr::Get_Instance()->Key_Pressing(VK_LBUTTON))
-        {
-            m_eCurState = MS_DRAG;
-            m_DragEnd.x = ptMouse.x;
-            m_DragEnd.y = ptMouse.y;
-        }
-
-        if (isDrag == true && CKeyMgr::Get_Instance()->Key_Up(VK_LBUTTON))
-        {
-            isDrag = false;
-            ColDrag();
-            ClearDrag();
-            m_eCurState = MS_IDLE;
-        }
-
-        if (CKeyMgr::Get_Instance()->Key_Down('A'))
-        {
-            m_eCurState = MS_ATTACK;
-        }
-
-        if (CKeyMgr::Get_Instance()->Key_Down('S'))
-        {
-            for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+    if (CKeyMgr::Get_Instance()->Key_Down('H'))
+    {
+        for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
+            {
+                if (unit != nullptr && !m_Select_UnitList->front()->GetIsEnemy())
                 {
-                    if (unit != nullptr && !m_Select_UnitList->front()->GetIsEnemy())
+                    if (auto* pUnit = dynamic_cast<CUnit*>(unit))
                     {
-                        if (auto* pUnit = dynamic_cast<CUnit*>(unit))
-                        {
-                            pUnit->SetInput(IP_STOP);
-                        }
+                        pUnit->SetInput(IP_HOLD);
                     }
-                });
-        }
-
-        if (CKeyMgr::Get_Instance()->Key_Down('H'))
-        {
-            for_each(m_Select_UnitList->begin(), m_Select_UnitList->end(), [&](CObj* unit)
-                {
-                    if (unit != nullptr && !m_Select_UnitList->front()->GetIsEnemy())
-                    {
-                        if (auto* pUnit = dynamic_cast<CUnit*>(unit))
-                        {
-                            pUnit->SetInput(IP_HOLD);
-                        }
-                    }
-                });
-        }
+                }
+            });
     }
 }
 
@@ -700,7 +698,6 @@ void CGameMouse::SelectSound(OBJ_TYPE type)
         break;
     }
 }
-
 
 void CGameMouse::DrawBulid()
 {

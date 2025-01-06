@@ -81,14 +81,16 @@ void CStage::Initialize()
 	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CCommedCenter>::CreateBuild(300, 245));
 	for (int i = 0; i < 4; i++)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(250 + 25*i, 320));
+		//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(250 + 25*i, 320));
 	}
 
 	// 아군 유닛 생산
-	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(300, 300));
+	/*CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(300, 300));
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMedic>::Create(300, 310));
+
+	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CTank>::Create(400, 400));*/
+
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::Create(300, 300));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CTank>::Create(400, 400));
 
 	//// 적 건물 생산
 	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Academy>::CreateBuild(400, 600));
@@ -224,6 +226,10 @@ void CStage::Initalize_Bmp()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Ghost/GhostShot.bmp", L"GhostShot");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/TankAtt/TankHit.bmp", L"TankHit");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/TankAtt/Tank(100,108).bmp", L"SiegeTankHit");
+	
+	//Nuke
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/NukeMissile/Nuke(48,40).bmp", L"NukeMissile");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Nuke/Nuke_0_25(252.225).bmp", L"NukeBoom");
 
 	//E_Unit
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/E_Unit/MarineBlue.bmp", L"MarineBlue");

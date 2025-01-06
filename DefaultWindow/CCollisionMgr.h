@@ -23,8 +23,9 @@ public:
 	static CObj* Collision_RangeChack_Attack(CObj* _pPlayer, list<CObj*> _unit, list<CObj*>_build, float _dis);
 
 	static Pos Collision_RangePos(CObj* _pPlayer, CObj* _unit, float _dis);
+	static Pos Collision_RangePos(CObj* _pPlayer, Pos pos, float _dis);
 
-	static void Collision_Explosion(CObj* _pEx, list<CObj*> _unit, list<CObj*> _build);
+	static void Collision_Explosion(CObj* _pEx, list<CObj*> _unit, list<CObj*> _build, int Damage);
 	static bool Collision_Unit_body(CObj* _my, list<CObj*> _unit);
 };
 

@@ -7,6 +7,9 @@
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
 #include "CBulletEffect.h"
+#include "CKeyMgr.h"
+#include "CGameMgr.h"
+#include "CMouseMgr.h"
 
 void CGhost::Initialize()
 {
@@ -39,11 +42,10 @@ int CGhost::Update()
 		// Á×À½ ÀÌÆåÆ®
 		CSoundMgr::Get_Instance()->PlaySFX(L"Ghost_Dead .mp3", 0.8f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CGhostDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
-
-
 		return OBJ_DEAD;
 	}
 
+	KeyInput();
 	Update_State();
 
 	__super::Update_Rect();
@@ -126,9 +128,9 @@ void CGhost::Change_Motion()
 			break;
 
 		case STATE_ATTACK:
-			m_tFrame.iFrameStart = 9;
+			m_tFrame.iFrameStart = 10;
 			m_tFrame.iFrameEnd = 10;
-			m_tFrame.iCurCount = 9;
+			m_tFrame.iCurCount = 10;
 			m_tFrame.dwSpeed = 50;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
@@ -148,6 +150,14 @@ void CGhost::Change_Motion()
 
 void CGhost::KeyInput()
 {
+	if (!m_bSelect) return;
+
+	if (CKeyMgr::Get_Instance()->Key_Down('N'))
+	{
+		if (!CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Cmd_Nuke)) return;
+
+		CMouseMgr::Get_Instance()->Get_Mouse()->SetNukeMod();
+	}
 }
 
 void CGhost::AttackToEnemy(CObj* _Enemey)
@@ -171,5 +181,53 @@ void CGhost::AttackToEnemy(CObj* _Enemey)
 		m_isAttack = true;
 
 		m_AttackTime = GetTickCount64();
+	}
+}
+
+void CGhost::Update_State()
+{
+	switch (m_eInput)
+	{
+	case IP_MOVE:
+		Move();
+		break;
+	case IP_ATTACK:
+		Attack();
+		break;
+	case IP_HOLD:
+		Hold();
+		break;
+	case IP_STOP:
+		Stop();
+		break;
+	case IP_NUKE:
+		Nuke();
+		break;
+	case IP_END:
+		break;
+	default:
+		break;
+	}
+}
+
+void CGhost::Nuke()
+{
+	if (m_iPathIndex < _path.size())
+	{
+		Move_toNext();
+	}
+	else if (m_iPathIndex == _path.size())
+	{
+		m_eCurState = STATE_ATTACK;	
+
+		if (CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Cmd_Nuke))
+		{
+			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, m_Nuketarget.x * 32.f, m_Nuketarget.y * 32.f);
+			CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CNukeMissile>::CreateFX(m_Nuketarget.x * 32.f, m_Nuketarget.y * 32.f));
+			CSoundMgr::Get_Instance()->PlaySFX(L"GhostNukeStart.mp3", 0.8f);
+			CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Cmd_Nuke, false);
+		}
+		
+
 	}
 }

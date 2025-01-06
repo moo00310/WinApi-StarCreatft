@@ -75,3 +75,32 @@ public:
 
 
 };
+
+class CNukeMissile : public CBulletEffect
+{
+public:
+	CNukeMissile() : BoomY(0) {}
+	~CNukeMissile() {}
+public:
+	void Initialize() override;
+	int Update() override;
+	void Render(HDC hDC) override;
+
+	int BoomY;
+};
+
+class CNukeMissileBoom : public CBulletEffect
+{
+public:
+	CNukeMissileBoom() : m_bIsDamage(false), E_list(nullptr), E_build_list(nullptr)
+	{}
+	~CNukeMissileBoom() {}
+public:
+	void Initialize() override;
+	int Update() override;
+	void Render(HDC hDC) override;
+
+	int m_bIsDamage;
+	list<CObj*>* E_list;
+	list<CObj*>* E_build_list;
+};

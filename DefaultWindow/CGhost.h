@@ -16,9 +16,14 @@ public:
 	void KeyInput() override;
 
 	void AttackToEnemy(CObj* _Enemey) override;
+	void Update_State() override;
+
+	void Nuke();
+	void SetNukePos(Pos pos) { m_Nuketarget = pos; }
 
 private:
 	ULONGLONG AttackCoolTime;
 	int m_isAttack;
+	Pos m_Nuketarget;
 };
 

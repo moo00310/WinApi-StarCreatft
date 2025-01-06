@@ -278,7 +278,7 @@ bool CCollisionMgr::Collision_Unit_body(CObj* _my, list<CObj*> _unit)
 	return false;
 }
 
-void CCollisionMgr::Collision_Explosion(CObj* _pEx, list<CObj*> _unit, list<CObj*> _build)
+void CCollisionMgr::Collision_Explosion(CObj* _pEx, list<CObj*> _unit, list<CObj*> _build, int Damage)
 {
 	RECT rc{};
 
@@ -286,7 +286,7 @@ void CCollisionMgr::Collision_Explosion(CObj* _pEx, list<CObj*> _unit, list<CObj
 	{
 		if (IntersectRect(&rc, _pEx->Get_Rect(), unit->Get_Rect()))
 		{
-			unit->Add_Stat_hp(-50);
+			unit->Add_Stat_hp(-Damage);
 		}
 	}
 
@@ -294,7 +294,7 @@ void CCollisionMgr::Collision_Explosion(CObj* _pEx, list<CObj*> _unit, list<CObj
 	{
 		if (IntersectRect(&rc, _pEx->Get_Rect(), build->Get_Rect()))
 		{
-			build->Add_Stat_hp(-50);
+			build->Add_Stat_hp(-Damage);
 		}
 	}
 	
@@ -331,4 +331,20 @@ CObj* CCollisionMgr::Collision_RangeChack_Attack(CObj* _pPlayer, list<CObj*> _un
 
 
 	return nullptr;
+}
+
+
+Pos CCollisionMgr::Collision_RangePos(CObj* _pPlayer, Pos pos, float _dis)
+{
+	float fWidth = pos.x *32 - _pPlayer->Get_Info().fX;
+	float fHeight = pos.y *32- _pPlayer->Get_Info().fY;
+
+	float distance = sqrtf(fWidth * fWidth + fHeight * fHeight);
+
+	float x = pos.x * 32 + (_dis * -1 * fWidth / distance);
+	float y = pos.y * 32 + (_dis * -1 * fHeight / distance);
+
+	Pos temp{ (int)(y / 32), (int)(x / 32) };
+
+	return temp;
 }

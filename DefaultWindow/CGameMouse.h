@@ -19,6 +19,9 @@ public:
 	void SetBuild_Img(OBJ_TYPE _type) { m_eBuildType = _type; isBuildMod = true; }
 
 public:
+	// ÇÙ ¸ðµå
+	void SetNukeMod() { NukeMode = true; }
+
 	void ClearList();
 	void ClearDrag();
 
@@ -31,7 +34,6 @@ private:
 	void ColDrag();
 	void MoveSound(OBJ_TYPE type);
 	void SelectSound(OBJ_TYPE type);
-
 
 	//ºôµå ¸ðµå
 	void DrawBulid();
@@ -58,6 +60,8 @@ private:
 
 	int m_iBuild_Index;
 	COLOR m_tColor;
+
+	bool NukeMode;
 
 };
 
