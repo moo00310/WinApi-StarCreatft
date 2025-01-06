@@ -22,5 +22,8 @@ public:
 	bool m_bIsSteamPack;
 	ULONGLONG m_CoolDown;
 
+	int StemapackSound;
+	int AttackChanel;
+
 };
 

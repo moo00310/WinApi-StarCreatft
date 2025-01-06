@@ -3,6 +3,7 @@
 #include "CBmpMgr.h"
 #include "CAbstractFactory.h"
 #include "CObjMgr.h"
+#include "CSoundMgr.h"
 
 CMyMenu::CMyMenu():m_pMouse(nullptr)
 {
@@ -15,6 +16,8 @@ CMyMenu::~CMyMenu()
 
 void CMyMenu::Initialize()
 {
+    CSoundMgr::Get_Instance()->PlayBGM(L"title.mp3", 0.5f);
+
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MenuBack.bmp", L"MenuBack");
 
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MainMenu/SinglePlay/single0_34(320.116).bmp", L"single");

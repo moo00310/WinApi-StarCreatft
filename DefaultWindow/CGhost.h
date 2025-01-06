@@ -4,7 +4,7 @@
 class CGhost : public CUnit
 {
 public:
-	CGhost() {}
+	CGhost(): AttackCoolTime(0), m_isAttack(false) {}
 	~CGhost() {}
 public:
 	void Initialize() override;
@@ -16,5 +16,9 @@ public:
 	void KeyInput() override;
 
 	void AttackToEnemy(CObj* _Enemey) override;
+
+private:
+	ULONGLONG AttackCoolTime;
+	int m_isAttack;
 };
 

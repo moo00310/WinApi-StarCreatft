@@ -1,7 +1,7 @@
 #pragma once
 #include "Define.h"
 
-#define MAX_SFX_CHANNEL 12
+#define MAX_SFX_CHANNEL 31
 
 class CSoundMgr
 {
@@ -32,6 +32,7 @@ public:
 
 public:
 	int PlaySFX(const TCHAR* pSoundKey, const float& fVolume); // 빈 채널을 찾아서 사운드를 재생하고, 배치된 채널인덱스를 반환한다.
+	void WaitPlaySFX(const TCHAR* pSoundKey, const float& fVolume, const int& _ChannelIndex); // 사운드가 끝날때까지 대기 후 출력
 	void PlayBGM(const TCHAR* pSoundKey, const float& fVolume);
 
 	void Stop_BGM();

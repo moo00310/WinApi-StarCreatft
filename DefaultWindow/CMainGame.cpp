@@ -29,6 +29,8 @@ CMainGame::~CMainGame()
 
 void CMainGame::Initialize()
 {
+	srand(static_cast<unsigned>(time(nullptr)));
+
 	m_hDC = GetDC(g_hWnd);
 	CSoundMgr::Get_Instance()->Initialize();
 

@@ -29,6 +29,9 @@ private:
 	void ColObject();
 	void Change_Cursor();
 	void ColDrag();
+	void MoveSound(OBJ_TYPE type);
+	void SelectSound(OBJ_TYPE type);
+
 
 	//ºôµå ¸ðµå
 	void DrawBulid();

@@ -17,6 +17,8 @@ public:
 	void Render(HDC hDC) override;
 	void Release() override;
 
+	void KeyInput();
+
 	void Initalize_Bmp();
 };
 

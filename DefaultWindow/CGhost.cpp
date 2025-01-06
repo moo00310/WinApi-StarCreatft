@@ -54,6 +54,12 @@ void CGhost::Late_Update()
 {
 	Change_Motion();
 	CUnit::Move_Frame();
+
+	if (AttackCoolTime + 1700 < GetTickCount64())
+	{
+		m_isAttack = false;
+		AttackCoolTime = GetTickCount64();
+	}
 }
 
 void CGhost::Render(HDC hDC)
@@ -153,7 +159,7 @@ void CGhost::AttackToEnemy(CObj* _Enemey)
 		m_eCurState = STATE_ATTACK;
 
 	if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64() &&
-		m_tFrame.iCurCount == m_iAttackFrame)
+		m_tFrame.iCurCount == m_iAttackFrame && !m_isAttack)
 	{
 		DEFENCEID Dfence_id = _Enemey->Get_Stat()->m_eDfenceID;
 		ATTACKID Attack_id = m_tStat.m_eAttackID;
@@ -161,6 +167,7 @@ void CGhost::AttackToEnemy(CObj* _Enemey)
 
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CGhostHit>::CreateFX(_Enemey->Get_Info().fX, _Enemey->Get_Info().fY));
 		_Enemey->Add_Stat_hp(-Damge);
+		m_isAttack = true;
 
 		m_AttackTime = GetTickCount64();
 	}

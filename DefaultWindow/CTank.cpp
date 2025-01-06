@@ -10,6 +10,7 @@
 #include "CCollisionMgr.h"
 #include "CKeyMgr.h"
 #include "CGameMgr.h"
+#include "CSoundMgr.h"
 
 void CTank::Initialize()
 {
@@ -22,7 +23,7 @@ void CTank::Initialize()
 	m_pBuildList_E = CObjMgr::Get_Instance()->Get_ObjList(OBJ_BUILD_E);
 
 	m_eObjID = OT_Tank;
-	m_tStat = { 1500.f, 1500.f, 30, 1, 224, 1.8f, 625 , DF_LAGE, AT_EXPLOSIVE };
+	m_tStat = { 1500.f, 1500.f, 30, 1, 224, 1.8f, 1000 , DF_LAGE, AT_EXPLOSIVE };
 
 	m_iAttackFrame = 1;
 
@@ -65,6 +66,12 @@ void CTank::Late_Update()
 	if (m_bSiegeMode) return;
 	CUnit::Move_Frame();
 	MoveBody_Frame();
+
+	if (dwAttackCoolTime + 1700 < GetTickCount64())
+	{
+		m_isAttack = false;
+		dwAttackCoolTime = GetTickCount64();
+	}
 }
 
 void CTank::Render(HDC hDC)
@@ -150,7 +157,7 @@ void CTank::Change_Motion()
 			if (!m_bSiegeMode)
 			{
 				Frame_Init_Body(0, 0, 200);
-				Frame_Init_Head(0, 0, 200);
+				Frame_Init_Head(0, 0, 100);
 			}
 			else
 			{
@@ -171,8 +178,6 @@ void CTank::Change_Motion()
 				m_tBodyFram.iCurCount = 3;
 				m_eDir = (DIRECTION)5;
 				Frame_Init_Head(2, 2, 200);
-				
-
 			}
 			break;
 		}
@@ -210,23 +215,28 @@ void CTank::AttackToEnemy(CObj* _Enemey)
 
 	if (!m_bSiegeMode)
 	{
-		if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64() &&
-			m_tFrame.iCurCount == m_iAttackFrame)
+		if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64())
 		{
-			DEFENCEID Dfence_id = _Enemey->Get_Stat()->m_eDfenceID;
-			ATTACKID Attack_id = m_tStat.m_eAttackID;
-			float Damge = fabsf((_Enemey->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * m_tStat.m_iAttack)));
+			if (m_tFrame.iCurCount == m_iAttackFrame && !m_isAttack)
+			{
+				DEFENCEID Dfence_id = _Enemey->Get_Stat()->m_eDfenceID;
+				ATTACKID Attack_id = m_tStat.m_eAttackID;
+				float Damge = fabsf((_Enemey->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * m_tStat.m_iAttack)));
 
-			CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CTankHit>::CreateFX(_Enemey->Get_Info().fX, _Enemey->Get_Info().fY));
-			_Enemey->Add_Stat_hp(-Damge);
+				CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CTankHit>::CreateFX(_Enemey->Get_Info().fX, _Enemey->Get_Info().fY));
+				CSoundMgr::Get_Instance()->PlaySFX(L"TankAttack1.mp3", 0.8f);
+				_Enemey->Add_Stat_hp(-Damge);
+				m_isAttack = true;
 
-			m_AttackTime = GetTickCount64();
+				m_AttackTime = GetTickCount64();
+			}	
 		}
 	}
 	else
 	{
 		if (m_AttackTime + _Enemey->Get_Stat()->Colldown + 2000 < GetTickCount64())
 		{
+			CSoundMgr::Get_Instance()->PlaySFX(L"TankSiegeAttak.mp3", 0.8f);
 			CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CSiegeTankHit>::CreateFX(_Enemey->Get_Info().fX, _Enemey->Get_Info().fY));
 			m_AttackTime = GetTickCount64();
 		}
@@ -461,6 +471,12 @@ void CTank::KeyInput()
 	if (CKeyMgr::Get_Instance()->Key_Down('E'))
 	{
 		if (!CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Tank_SiegeMod)) return;
+
+		if(m_bSiegeMode)
+			CSoundMgr::Get_Instance()->PlaySFX(L"TankUnsiegemode.mp3", 0.8f);
+		else
+			CSoundMgr::Get_Instance()->PlaySFX(L"TankSiegiemod.mp3", 0.8f);
+
 		m_bSiegeMode_Anime = true;
 	}
 }

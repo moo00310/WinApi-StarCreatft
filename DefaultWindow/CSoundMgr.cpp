@@ -4,24 +4,24 @@
 CSoundMgr* CSoundMgr::m_pInstance = nullptr;
 CSoundMgr::CSoundMgr() : m_pBGMChannel(nullptr)
 {
-	m_pSystem = nullptr; 
+	m_pSystem = nullptr;
 }
 
 
 CSoundMgr::~CSoundMgr()
 {
-	Release(); 
+	Release();
 }
 
 void CSoundMgr::Initialize()
 {
 	// 사운드를 담당하는 대표객체를 생성하는 함수
-	FMOD_System_Create(&m_pSystem,131609U);
-	
+	FMOD_System_Create(&m_pSystem, 131609U);
+
 	// 1. 시스템 포인터, 2. 사용할 가상채널 수 , 초기화 방식) 
 	FMOD_System_Init(m_pSystem, 32, FMOD_INIT_NORMAL, NULL);
 
-	LoadSoundFile(); 
+	LoadSoundFile();
 }
 void CSoundMgr::Release()
 {
@@ -30,13 +30,43 @@ void CSoundMgr::Release()
 		delete[] Mypair.first;
 		FMOD_Sound_Release(Mypair.second);
 	}
-	m_mapSound.clear(); 
+	m_mapSound.clear();
 
 	FMOD_System_Release(m_pSystem);
 	FMOD_System_Close(m_pSystem);
 }
 
 int CSoundMgr::PlaySFX(const TCHAR* pSoundKey, const float& fVolume)
+{
+	auto iter = find_if(m_mapSound.begin(), m_mapSound.end(),
+		[&](auto& iter)->bool
+		{
+			return !lstrcmp(pSoundKey, iter.first);
+		});
+
+	if (iter == m_mapSound.end())
+		return -1; // 실패시 -1 반환
+
+	FMOD_BOOL bPlay = FALSE;
+	int i = 0;
+
+	for (; i < MAX_SFX_CHANNEL; i++) // MAX_SFX_CHANNEL만큼의 SFX를 동시 재생 가능
+	{
+		if (m_arrSFXChannnel[i] == nullptr ||
+			(FMOD_Channel_IsPlaying(m_arrSFXChannnel[i], &bPlay), !bPlay))
+		{
+			FMOD_Channel_Stop(m_arrSFXChannnel[i]); // 정리 후 재생
+			FMOD_System_PlaySound(m_pSystem, iter->second, 0, FALSE, &m_arrSFXChannnel[i]);
+			FMOD_Channel_SetVolume(m_arrSFXChannnel[i], fVolume);
+			break;
+		}
+	}
+
+	FMOD_System_Update(m_pSystem); // 업데이트 호출
+	return (i < MAX_SFX_CHANNEL) ? i : -1; // 실패 시 -1 반환
+}
+
+void CSoundMgr::WaitPlaySFX(const TCHAR* pSoundKey, const float& fVolume, const int& _ChannelIndex)
 {
 	map<TCHAR*, FMOD_SOUND*>::iterator iter;
 
@@ -48,23 +78,18 @@ int CSoundMgr::PlaySFX(const TCHAR* pSoundKey, const float& fVolume)
 		});
 
 	if (iter == m_mapSound.end())
-		return -1; // 실패시 -1 반환
+		return;
 
 	FMOD_BOOL bPlay = FALSE;
-	int i = 0; 
-	for (; i < MAX_SFX_CHANNEL; i++) // MAX_SFX_CHANNEL만큼의 SFX를 동시 재생 가능
+
+	if (FMOD_Channel_IsPlaying(m_arrSFXChannnel[_ChannelIndex], &bPlay))
 	{
-		FMOD_Channel_IsPlaying(m_arrSFXChannnel[i], &bPlay); // 지금 채널이 비어있는지 확인
-		if (!bPlay) // 비어있으면 여기서 실행
-		{
-			FMOD_System_PlaySound(m_pSystem, iter->second, 0, FALSE, &m_arrSFXChannnel[i]);
-			FMOD_Channel_SetVolume(m_arrSFXChannnel[i], fVolume);
-			break;;
-		}
+		FMOD_System_PlaySound(m_pSystem, iter->second, 0, FALSE, &m_arrSFXChannnel[_ChannelIndex]);
 	}
 
+	FMOD_Channel_SetVolume(m_arrSFXChannnel[_ChannelIndex], fVolume);
+
 	FMOD_System_Update(m_pSystem);
-	return i; // 배치된 채널 인덱스를 반환한다.
 }
 
 void CSoundMgr::PlayBGM(const TCHAR* pSoundKey, const float& fVolume)
@@ -116,34 +141,34 @@ void CSoundMgr::SetVolume(const SOUND_ID& _ID, const float& fVolume)
 void CSoundMgr::LoadSoundFile()
 {
 	// _finddata_t : <io.h>에서 제공하며 파일 정보를 저장하는 구조체
-	_finddata_t fd = {0};
+	_finddata_t fd = { 0 };
 
 	// _findfirst : <io.h>에서 제공하며 사용자가 설정한 경로 내에서 가장 첫 번째 파일을 찾는 함수
 	long long handle = _findfirst("../StarCraft/Sound/*.*", &fd);
 
 	if (handle == -1)
-		return; 
+		return;
 
-	int iResult = 0; 
+	int iResult = 0;
 
-	char szCurPath[128] = "../StarCraft/Sound/";	 // 상대 경로
-	char szFullPath[128] = ""; 
+	char szCurPath[128] = "../StarCraft/Sound/";
+	char szFullPath[128] = "";
 
 	while (iResult != -1)
 	{
-		strcpy_s(szFullPath, szCurPath); 
-		
+		strcpy_s(szFullPath, szCurPath);
+
 		// "../Sound/" + "Success.wav"
 		strcat_s(szFullPath, fd.name);
 		// "../Sound/Success.wav"
 
-		FMOD_SOUND* pSound = nullptr; 
+		FMOD_SOUND* pSound = nullptr;
 
 		FMOD_RESULT eRes = FMOD_System_CreateSound(m_pSystem, szFullPath, FMOD_DEFAULT, 0, &pSound);
 
 		if (eRes == FMOD_OK)
 		{
-			int iLength = strlen(fd.name) + 1; 
+			int iLength = strlen(fd.name) + 1;
 
 			TCHAR* pSoundKey = new TCHAR[iLength];
 			ZeroMemory(pSoundKey, sizeof(TCHAR) * iLength);

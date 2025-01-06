@@ -208,6 +208,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
                     {
                         if (pUnit->GetInput() == IP_BUILD) return;
                         pUnit->Astar(temp);
+                        MoveSound(m_Select_UnitList->front()->Get_ObjID());
                         pUnit->SetInput(IP_MOVE);
                     }
                 }
@@ -405,6 +406,7 @@ void CGameMouse::ColObject()
         {
             ClearList();
             Obj->Set_Select(true);
+            SelectSound(Obj->Get_ObjID());
             CObjMgr::Get_Instance()->Add_SelectList(Obj);
         }
            
@@ -527,6 +529,108 @@ void CGameMouse::ColDrag()
 
     RECT rc = { (LONG)left, (LONG)top, (LONG)right, (LONG)bottom };
     CCollisionMgr::Collision_Rect_Mouse_RECT(rc,*m_UnitList, m_Select_UnitList);
+}
+
+void CGameMouse::MoveSound(OBJ_TYPE type)
+{
+    int intRand = rand() % 3;
+
+    switch (type)
+    {
+    case OT_Scv:
+        if (intRand == 0)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"tscyes00.mp3", 0.8f, 29);
+        else if (intRand == 1)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"tscyes01.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"tscyes02.mp3", 0.8f, 29);
+        break;
+    case OT_Marine:
+        if(intRand == 0)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"marineMove1.mp3", 0.8f, 29);
+        else if (intRand == 1)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"marineMove2.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"MarineMove3.mp3", 0.8f, 29);
+        break;
+    case OT_Medic: 
+        break;
+    case OT_Ghost:
+        break;
+    case OT_Tank:
+        if (intRand == 0)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankMove1.mp3", 0.8f, 29);
+        else if (intRand == 1)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankMove2.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankMove3.mp3", 0.8f, 29);
+        break;
+    case OT_SiegeTank:
+        break;
+    case OT_Science_Vessel:
+        break;
+    case OT_Unit_End:
+        break;
+    case OT_END:
+        break;
+    default:
+        break;
+    }
+
+}
+
+void CGameMouse::SelectSound(OBJ_TYPE type)
+{
+    int intRand = rand() % 3;
+
+    switch (type)
+    {
+    case OT_Scv:
+        if (intRand == 0)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"tscwht00.mp3", 0.8f, 29);
+        else if (intRand == 1)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"tscwht01.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"tscwht02.mp3", 0.8f, 29);
+        break;
+    case OT_Marine:
+        if (intRand == 0)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"marine_select_1.mp3", 0.8f, 29);
+        else if (intRand == 1)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"marine_select_2.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"marine_select_3.mp3", 0.8f, 29);
+        break;
+    case OT_Medic:
+        break;
+    case OT_Ghost:
+        break;
+    case OT_Tank:
+        if (intRand == 0)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankSelect1.mp3", 0.8f, 29);
+        else if (intRand == 1)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankSelect2.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankSelect3.mp3", 0.8f, 29);
+        break;
+    case OT_SiegeTank:
+        if (intRand == 0)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankSelect4.mp3", 0.8f, 29);
+        else if (intRand == 1)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankSelect2.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankSelect1.mp3", 0.8f, 29);
+        break;
+    case OT_Science_Vessel:
+        break;
+    case OT_Unit_End:
+        break;
+    case OT_END:
+        break;
+    default:
+        break;
+    }
+
 }
 
 

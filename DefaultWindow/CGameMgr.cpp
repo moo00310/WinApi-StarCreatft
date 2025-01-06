@@ -21,7 +21,7 @@ void CGameMgr::Initialize()
 	}
 
 	for (int i = 0; i < UG_END; ++i) {
-		UpGrade_Compelate[i] = false;
+		UpGrade_Compelate[i] = true;
 	}
 }
 
@@ -29,8 +29,8 @@ void CGameMgr::Update()
 {
 	if (m_Time + 4000 < GetTickCount64())
 	{
-		m_iMineral += 10;
-		m_iGas += 10;
+		m_iMineral += 100;
+		m_iGas += 100;
 		m_Time = GetTickCount64();
 	}
 

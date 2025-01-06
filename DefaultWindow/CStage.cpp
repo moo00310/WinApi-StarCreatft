@@ -21,6 +21,7 @@
 #include "CAcademy.h"
 #include "CArmory.h"
 #include "CScienceFacility.h"
+#include "CKeyMgr.h"
 
 
 //// 테스트용
@@ -60,8 +61,9 @@ CStage::~CStage()
 
 void CStage::Initialize()
 {
+	CSoundMgr::Get_Instance()->Stop_BGM();
 	//BGM
-	//CSoundMgr::Get_Instance()->PlayBGM(L"BGM_terran_2.mp3", 0.6f); 
+	CSoundMgr::Get_Instance()->PlayBGM(L"BGM_terran_2.mp3", 0.6f); 
 
 	//IMG
 	Initalize_Bmp();
@@ -75,33 +77,22 @@ void CStage::Initialize()
 	CMouseMgr::Get_Instance()->Add_Mouse(CAbstractFactory<CGameMouse>::Create());
 
 	// 기초 건물 및 SCV 생산
-	{
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CCommedCenter>::CreateBuild(300, 245));
-		for (int i = 0; i < 4; i++)
-		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(250 + 25*i, 320));
-		}
-	}
-	// 아군 유닛 생산
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(300, 300));
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMedic>::Create(300, 310));
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::Create(300, 300));
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CTank>::Create(400, 400));
 
-	//// 적  생산
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::Create(600,600));
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Medic>::Create(600,610));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CCommedCenter>::CreateBuild(300, 245));
+	for (int i = 0; i < 4; i++)
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(250 + 25*i, 320));
+	}
+
+	// 아군 유닛 생산
+	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(300, 300));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMedic>::Create(300, 310));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::Create(300, 300));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CTank>::Create(400, 400));
 
 	//// 적 건물 생산
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Academy>::CreateBuild(400, 600));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Academy>::CreateBuild(400, 600));
 	
-	
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(610, 610));
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(610, 610));
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(610, 610));
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(610, 610));
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(610, 610));
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(610, 610));
 }
 
 int CStage::Update()
@@ -110,6 +101,8 @@ int CStage::Update()
 	CUIMgr::Get_Instance()->Update();
 	CGameMgr::Get_Instance()->Update();
 	CMouseMgr::Get_Instance()->Update();
+
+	KeyInput();
 
 	return 0;
 }
@@ -139,6 +132,22 @@ void CStage::Release()
 	CObjMgr::Get_Instance()->Delete_ID(OBJ_BUILD);
 	CObjMgr::Get_Instance()->Delete_ID(OBJ_MONSTER);
 
+}
+
+void CStage::KeyInput()
+{
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F3))
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(2000 + 10 * i, 2000));
+
+		}
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Medic>::Create(2000, 2000));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Medic>::Create(2000, 2000));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Ghost>::Create(2000, 2000));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::Create(2000, 2000));
+	}
 }
 
 void CStage::Initalize_Bmp()

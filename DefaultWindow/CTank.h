@@ -4,7 +4,7 @@ class CTank : public CUnit
 {
 public:
 	CTank(): m_eAttackDir(DIR_RIGHT), m_iBodyID(0), dwMoveTime(GetTickCount64()), m_bSiegeMode(false), SiegeCount(0),
-	m_bSiegeMode_Anime(false)
+	m_bSiegeMode_Anime(false), m_isAttack(false), dwAttackCoolTime(0)
 	{
 		ZeroMemory(&m_tBodyFram, sizeof(FRAME));
 	}
@@ -39,5 +39,8 @@ private:
 	bool m_bSiegeMode_Anime;
 	DIRECTION m_eAttackDir;
 	FRAME m_tBodyFram;
+
+	bool m_isAttack;
+	ULONGLONG dwAttackCoolTime;
 };
 

@@ -23,5 +23,7 @@ public:
 
 	int m_iCount;
 	const TCHAR* m_Name;
+
+	bool isMouseOver;
 };
 

@@ -3,8 +3,9 @@
 #include "CBmpMgr.h"
 #include "CSceneMgr.h"
 #include "CKeyMgr.h"
+#include "CSoundMgr.h"
 
-CMyButton::CMyButton() : m_iCount(0), m_Name(nullptr)
+CMyButton::CMyButton() : m_iCount(0), m_Name(nullptr), isMouseOver(false)
 {
 	ZeroMemory(&m_tButton, sizeof(INFO));
 	ZeroMemory(&m_tButtonRect, sizeof(INFO));
@@ -82,8 +83,16 @@ void CMyButton::Late_Update()
 
 	if (PtInRect(&m_tRect, ptMouse))
 	{
+		if (!isMouseOver)
+		{
+			CSoundMgr::Get_Instance()->WaitPlaySFX(L"mouseover.wav", 0.8f, 29);
+			isMouseOver = true;
+		}
+			
 		if (CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
 		{
+			CSoundMgr::Get_Instance()->PlaySFX(L"mousedown2.wav", 0.8f);
+
 			if (!lstrcmp(L"single", m_pImgKey))
 				CSceneMgr::Get_Instance()->Set_Scene(SC_STAGE);
 
@@ -100,6 +109,7 @@ void CMyButton::Late_Update()
 	else
 	{
 		m_iCount = 0;
+		isMouseOver = false;
 	}
 }
 
