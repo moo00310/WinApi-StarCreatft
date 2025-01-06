@@ -282,6 +282,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
                             if (pUnit->GetInput() == IP_BUILD) return;
                             pUnit->Astar(temp);
                             pUnit->SetAGroundPos(temp);
+                            MoveSound(pUnit->Get_ObjID());
                             pUnit->SetInput(IP_ATTACK);
                         }
                     }
@@ -563,6 +564,12 @@ void CGameMouse::MoveSound(OBJ_TYPE type)
         break;
 
     case OT_Ghost:
+        if (intRand == 0)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"GhostMove1.mp3", 0.8f, 29);
+        else if (intRand == 1)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"GhostMove2.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"GhostMove3.mp3", 0.8f, 29);
         break;
     case OT_Tank:
         if (intRand == 0)
@@ -573,6 +580,12 @@ void CGameMouse::MoveSound(OBJ_TYPE type)
             CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankMove3.mp3", 0.8f, 29);
         break;
     case OT_SiegeTank:
+        if (intRand == 0)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankMove1.mp3", 0.8f, 29);
+        else if (intRand == 1)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankMove2.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankMove3.mp3", 0.8f, 29);
         break;
     case OT_Science_Vessel:
         break;
@@ -617,6 +630,12 @@ void CGameMouse::SelectSound(OBJ_TYPE type)
             CSoundMgr::Get_Instance()->WaitPlaySFX(L"MedicSelcet3.mp3", 0.8f, 29);
         break;
     case OT_Ghost:
+        if (intRand == 0)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"GhostSelect1.mp3", 0.8f, 29);
+        else if (intRand == 1)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"GhostSelect2.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"GhostSelect3.mp3", 0.8f, 29);
         break;
     case OT_Tank:
         if (intRand == 0)
@@ -638,12 +657,39 @@ void CGameMouse::SelectSound(OBJ_TYPE type)
         break;
     case OT_Unit_End:
         break;
+    case OT_Commend:
+        break;
+    case OT_Suffly:
+        break;
+    case OT_Refinery:
+        break;
+    case OT_Barrck:
+        break;
+    case OT_Academy:
+        break;
+    case OT_Factory:
+        break;
+    case OT_Addon:
+        break;
+    case OT_Armory:
+        break;
+    case OT_Starport:
+        break;
+    case OT_StarportAddOn:
+        break;
+    case OT_ScienceFacility:
+        break;
+    case OT_ScienceSecret:
+        break;
+    case OT_CmdNuke:
+        break;
+    case OT_Build_End:
+        break;
     case OT_END:
         break;
     default:
         break;
     }
-
 }
 
 

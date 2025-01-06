@@ -6,6 +6,7 @@
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
 #include "CBulletEffect.h"
+#include "CSoundMgr.h"
 
 void E_Ghost::Initialize()
 {
@@ -40,9 +41,8 @@ int E_Ghost::Update()
 	if (m_bDead || m_tStat.m_iHp <= 0)
 	{
 		// Á×À½ ÀÌÆåÆ®
+		CSoundMgr::Get_Instance()->PlaySFX(L"Ghost_Dead .mp3", 0.8f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CGhostDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
-		//CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
-		//CSoundMgr::Get_Instance()->PlaySound(L"Marine_Dead_1.mp3", SOUND_EFFECT, 0.5f, true);
 
 		return OBJ_DEAD;
 	}

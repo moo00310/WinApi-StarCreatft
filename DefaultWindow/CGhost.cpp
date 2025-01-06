@@ -37,9 +37,9 @@ int CGhost::Update()
 	if (m_bDead || m_tStat.m_iHp <= 0)
 	{
 		// Á×À½ ÀÌÆåÆ®
+		CSoundMgr::Get_Instance()->PlaySFX(L"Ghost_Dead .mp3", 0.8f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CGhostDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
-		//CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
-		//CSoundMgr::Get_Instance()->PlaySound(L"Marine_Dead_1.mp3", SOUND_EFFECT, 0.5f, true);
+
 
 		return OBJ_DEAD;
 	}
@@ -166,6 +166,7 @@ void CGhost::AttackToEnemy(CObj* _Enemey)
 		float Damge = fabsf((_Enemey->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * m_tStat.m_iAttack)));
 
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CGhostHit>::CreateFX(_Enemey->Get_Info().fX, _Enemey->Get_Info().fY));
+		CSoundMgr::Get_Instance()->PlaySFX(L"GhostAttack.mp3", 0.8f);
 		_Enemey->Add_Stat_hp(-Damge);
 		m_isAttack = true;
 

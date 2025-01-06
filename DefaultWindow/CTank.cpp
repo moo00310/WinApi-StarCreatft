@@ -40,9 +40,8 @@ int CTank::Update()
 	if (m_bDead || m_tStat.m_iHp <= 0)
 	{
 		// Á×À½ ÀÌÆåÆ®
+		CSoundMgr::Get_Instance()->PlaySFX(L"TankDead.mp3", 0.8f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CSCVDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
-		//CSoundMgr::Get_Instance()->StopSound(SOUND_EFFECT);
-		//CSoundMgr::Get_Instance()->PlaySound(L"Marine_Dead_1.mp3", SOUND_EFFECT, 0.5f, true);
 
 		return OBJ_DEAD;
 	}

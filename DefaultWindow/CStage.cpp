@@ -63,7 +63,7 @@ void CStage::Initialize()
 {
 	CSoundMgr::Get_Instance()->Stop_BGM();
 	//BGM
-	CSoundMgr::Get_Instance()->PlayBGM(L"BGM_terran_2.mp3", 0.6f); 
+	CSoundMgr::Get_Instance()->PlayBGM(L"BGM_terran_2.mp3", 0.4f); 
 
 	//IMG
 	Initalize_Bmp();
