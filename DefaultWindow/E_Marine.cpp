@@ -201,6 +201,7 @@ void E_Marine::AttackToEnemy(CObj* _Enemey)
 		float Damge = fabsf((_Enemey->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * m_tStat.m_iAttack)));
 
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CMarineHit>::CreateFX(_Enemey->Get_Info().fX, _Enemey->Get_Info().fY));
+		CSoundMgr::Get_Instance()->WaitPlaySFX(L"MarineAttack.mp3", 0.8f, 30);
 		_Enemey->Add_Stat_hp(-Damge);
 
 		m_AttackTime = GetTickCount64();

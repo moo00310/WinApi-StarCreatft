@@ -7,6 +7,7 @@
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
 #include "CSoundMgr.h"
+#include "CGameMgr.h"
 
 void E_Starport::Initialize()
 {
@@ -25,7 +26,6 @@ void E_Starport::Initialize()
     m_eRender = RENDER_GAMEOBJECT;
 
     m_bIsEnemy = true;
-
     __super::Update_Rect();
     Block_Map();
 }
@@ -40,7 +40,6 @@ int E_Starport::Update()
         //이미지
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead_Wreck_Big>::CreateFX(m_tInfo.fX, m_tInfo.fY));
-
         FireRemove();
         UnBlock_Map(); // 바닥 이동 불가 해제
         return OBJ_DEAD;

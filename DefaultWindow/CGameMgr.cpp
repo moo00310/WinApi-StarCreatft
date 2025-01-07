@@ -5,6 +5,7 @@
 #include "CScrollMgr.h"
 #include "CMapMgr.h"
 #include "CSoundMgr.h"
+#include "CObjMgr.h"
 
 CGameMgr* CGameMgr::m_pInstance = nullptr;
 
@@ -23,16 +24,11 @@ void CGameMgr::Initialize()
 	for (int i = 0; i < UG_END; ++i) {
 		UpGrade_Compelate[i] = true;
 	}
+
 }
 
 void CGameMgr::Update()
 {
-	if (m_Time + 4000 < GetTickCount64())
-	{
-		m_iMineral += 10000;
-		m_iGas += 0;
-		m_Time = GetTickCount64();
-	}
 
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_F1))
 	{
@@ -114,6 +110,23 @@ void CGameMgr::Render(HDC hDC)
 			}
 		}
 	}
+
+
+	if (CObjMgr::Get_Instance()->Get_ObjList(OBJ_BUILD)->size() <= 0)
+	{
+		// 패배
+		wchar_t m_wcHp[32] = L"";
+		swprintf_s(m_wcHp, 32, L" 패배 ");
+		TextOut(hDC,300 , 400, m_wcHp, (int)wcslen(m_wcHp));
+	}
+
+	if (CObjMgr::Get_Instance()->Get_ObjList(OBJ_BUILD_E)->size() <= 0)
+	{
+		// 승리
+		wchar_t m_wcHp[32] = L"";
+		swprintf_s(m_wcHp, 32, L" 승리 ");
+		TextOut(hDC, 300, 400, m_wcHp, (int)wcslen(m_wcHp));
+	}
 }
 
 void CGameMgr::Release()
@@ -140,19 +153,19 @@ bool CGameMgr::isBuying(OBJ_TYPE _Type)
 		if (m_iMineral < _mineral)
 		{
 			//미네랄이 부족합니다.
-			CSoundMgr::Get_Instance()->PlaySFX(L"ErrMineral.mp3", 0.8);
+			CSoundMgr::Get_Instance()->PlaySFX(L"ErrMineral.mp3", 0.8f);
 			
 			return false;
 		}
 		else if (m_iGas < _gas)
 		{
-			CSoundMgr::Get_Instance()->PlaySFX(L"ErrGas.mp3", 0.8);
+			CSoundMgr::Get_Instance()->PlaySFX(L"ErrGas.mp3", 0.8f);
 
 			return false;
 		}
 		else
 		{
-			CSoundMgr::Get_Instance()->PlaySFX(L"ErrSupply.mp3", 0.8);
+			CSoundMgr::Get_Instance()->PlaySFX(L"ErrSupply.mp3", 0.8f);
 			return false;
 		}
 	}

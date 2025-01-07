@@ -4,6 +4,9 @@
 #include "CBmpMgr.h"
 #include "CKeyMgr.h"
 #include "CGameMgr.h"
+#include "CAbstractFactory.h"
+#include "CSoundMgr.h"
+#include "CBloodEffect.h"
 
 void CAcademy::Initialize()
 {
@@ -21,7 +24,6 @@ void CAcademy::Initialize()
     m_eRender = RENDER_GAMEOBJECT;
 
     m_iMyBuildTIme = get<3>(ObjCost.at(OT_Academy));
-    //m_iMyBuildTIme = 80;
 
     __super::Update_Rect();
     Block_Map();
@@ -31,10 +33,13 @@ int CAcademy::Update()
 {
     if (m_bDead || m_tStat.m_iHp <= 0)
     {
-        // 터지는이펙트 & 사운드
+        CSoundMgr::Get_Instance()->PlaySFX(L"BuildBoom.mp3", 0.1f);
+
+        //이미지
+        CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
+        CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead_Wreck_Big>::CreateFX(m_tInfo.fX, m_tInfo.fY));
 
         UnBlock_Map(); // 바닥 이동 불가 해제
-        CGameMgr::Get_Instance()->AddTechCount(TECH_Academy, -1);
         return OBJ_DEAD;
     }
 

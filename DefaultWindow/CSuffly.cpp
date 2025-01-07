@@ -3,6 +3,9 @@
 #include "CMapMgr.h"
 #include "CBmpMgr.h"
 #include "CGameMgr.h"
+#include "CAbstractFactory.h"
+#include "CSoundMgr.h"
+#include "CBloodEffect.h"
 
 void CSuffly::Initialize()
 {
@@ -20,7 +23,6 @@ void CSuffly::Initialize()
     m_eRender = RENDER_GAMEOBJECT;
 
     m_iMyBuildTIme = get<3>(ObjCost.at(OT_Suffly));
-    //m_iMyBuildTIme = 80;
 
     __super::Update_Rect();
     Block_Map();
@@ -30,7 +32,12 @@ int CSuffly::Update()
 {
     if (m_bDead || m_tStat.m_iHp <= 0)
     {
-        // 터지는이펙트 & 사운드
+        CSoundMgr::Get_Instance()->PlaySFX(L"BuildBoom.mp3", 0.1f);
+
+        //이미지
+        CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
+        CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead_Wreck_Small>::CreateFX(m_tInfo.fX, m_tInfo.fY));
+
 
         UnBlock_Map(); // 바닥 이동 불가 해제
         return OBJ_DEAD;

@@ -6,6 +6,7 @@
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
 #include "CSoundMgr.h"
+#include "CGameMgr.h"
 
 void E_Barrack::Initialize()
 {
@@ -18,13 +19,12 @@ void E_Barrack::Initialize()
     m_pImgKey = L"Barracks_Blue";
     m_iTemplateSize = TS_LAGE;
     m_bTemplate = false;
-    m_eCurState_Build = BS_IDLE;
+    m_eCurState_Build = BS_RUN;
     m_eObjID = OT_Barrck;
     m_tStat = { 1000.f, 1000.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
 
     m_iMyBuildTIme = get<3>(ObjCost.at(OT_Barrck));
-
     m_bIsEnemy = true;
 
     __super::Update_Rect();
@@ -41,7 +41,6 @@ int E_Barrack::Update()
        //이미지
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead_Wreck_Big>::CreateFX(m_tInfo.fX, m_tInfo.fY));
-
         FireRemove();
 
         UnBlock_Map(); // 바닥 이동 불가 해제

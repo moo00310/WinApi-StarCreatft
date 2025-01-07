@@ -6,6 +6,7 @@
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
 #include "CSoundMgr.h"
+#include "CGameMgr.h"
 
 void E_Factory::Initialize()
 {
@@ -25,7 +26,7 @@ void E_Factory::Initialize()
     m_eRender = RENDER_GAMEOBJECT;
 
     m_iMyBuildTIme = get<3>(ObjCost.at(OT_Factory));
-
+  
     m_bIsEnemy = true;
 
     __super::Update_Rect();
@@ -42,7 +43,6 @@ int E_Factory::Update()
        //이미지
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead_Wreck_Big>::CreateFX(m_tInfo.fX, m_tInfo.fY));
-
         FireRemove();
         UnBlock_Map(); // 바닥 이동 불가 해제
         return OBJ_DEAD;

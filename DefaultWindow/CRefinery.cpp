@@ -3,6 +3,9 @@
 #include "CMapMgr.h"
 #include "CBmpMgr.h"
 #include "CGameMgr.h"
+#include "CAbstractFactory.h"
+#include "CSoundMgr.h"
+#include "CBloodEffect.h"
 
 void CRefinery::Initialize()
 {
@@ -16,7 +19,6 @@ void CRefinery::Initialize()
     m_eRender = RENDER_GAMEOBJECT;
     m_eCurState_Build = BS_MAKE;
     m_iMyBuildTIme = get<3>(ObjCost.at(OT_Refinery));
-    //m_iMyBuildTIme = 80;
 
     __super::Update_Rect();
 }
@@ -25,7 +27,17 @@ int CRefinery::Update()
 {
     if (m_bDead || m_tStat.m_iHp <= 0)
     {
-        // 터지는이펙트 & 사운드
+        CSoundMgr::Get_Instance()->PlaySFX(L"BuildBoom.mp3", 0.1f);
+
+        //이미지
+        CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
+
+
+        if (m_Time + 1000 < GetTickCount64())
+        {
+            CGameMgr::Get_Instance()->Add_Gas(25);
+            m_Time = GetTickCount64();
+        }
 
         return OBJ_DEAD;
     }

@@ -3,7 +3,7 @@
 class CCommedCenter : public CBuild
 {
 public:
-	CCommedCenter(): m_bIsAddOn(false) {}
+	CCommedCenter(): m_bIsAddOn(false), m_Time(0){}
 	~CCommedCenter() {}
 
 public:
@@ -17,5 +17,6 @@ public:
 
 private:
 	bool m_bIsAddOn;
+	ULONGLONG m_Time;
 };
 

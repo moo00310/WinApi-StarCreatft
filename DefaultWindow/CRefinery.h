@@ -3,7 +3,7 @@
 class CRefinery : public CBuild
 {
 public:
-	CRefinery() {}
+	CRefinery():m_Time(0) {}
 	~CRefinery() {}
 public:
 	void Initialize() override;
@@ -13,5 +13,8 @@ public:
 	void Release() override;
 	void KeyInput() override;
 	void Change_Motion() override;
+
+private:
+	ULONGLONG m_Time;
 };
 

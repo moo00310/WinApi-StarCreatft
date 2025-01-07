@@ -21,6 +21,7 @@ public:
 	void Add_Gas(int _num) { m_iGas += _num; }
 	void Add_Pop(int _num) { m_iPop += _num; }
 
+
 	// 건물은 Initalize에서
 	void Add_MaxPop(int _num)
 	{ 
@@ -76,7 +77,6 @@ public:
 	bool UpGrade_Compelate[UG_END] = { false };
 	ULONGLONG m_Time;
 	static CGameMgr* m_pInstance;
-
 
 	bool m_isDeBug;
 };

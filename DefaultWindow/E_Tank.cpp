@@ -203,6 +203,7 @@ void E_Tank::AttackToEnemy(CObj* _Enemey)
 			float Damge = fabsf((_Enemey->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * m_tStat.m_iAttack)));
 
 			CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CTankHit>::CreateFX(_Enemey->Get_Info().fX, _Enemey->Get_Info().fY));
+			CSoundMgr::Get_Instance()->PlaySFX(L"TankAttack1.mp3", 0.8f);
 			_Enemey->Add_Stat_hp(-Damge);
 
 			m_AttackTime = GetTickCount64();
@@ -212,6 +213,7 @@ void E_Tank::AttackToEnemy(CObj* _Enemey)
 	{
 		if (m_AttackTime + _Enemey->Get_Stat()->Colldown + 2000 < GetTickCount64())
 		{
+			CSoundMgr::Get_Instance()->PlaySFX(L"TankSiegeAttak.mp3", 0.8f);
 			CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CSiegeTankHit>::CreateFX(_Enemey->Get_Info().fX, _Enemey->Get_Info().fY));
 			m_AttackTime = GetTickCount64();
 		}

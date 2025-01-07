@@ -6,6 +6,7 @@
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
 #include "CSoundMgr.h"
+#include "CGameMgr.h"
 
 void E_CommendCenter::Initialize()
 {
@@ -20,11 +21,10 @@ void E_CommendCenter::Initialize()
     m_bTemplate = false;
     m_eCurState_Build = BS_IDLE;
     m_eObjID = OT_Commend;
-    m_tStat = { 1500.f, 750.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
+    m_tStat = { 1500.f, 1500.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
 
     m_bIsEnemy = true;
-
     __super::Update_Rect();
     Block_Map();
 }

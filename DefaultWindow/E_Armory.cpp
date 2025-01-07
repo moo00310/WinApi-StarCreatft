@@ -6,6 +6,7 @@
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
 #include "CSoundMgr.h"
+#include "CGameMgr.h"
 
 void E_Armory::Initialize()
 {
@@ -17,11 +18,10 @@ void E_Armory::Initialize()
     m_pImgKey = L"Armory_Blue";
     m_iTemplateSize = TS_NORMAL;
     m_bTemplate = false;
-    m_eCurState_Build = BS_IDLE;
+    m_eCurState_Build = BS_RUN;
     m_eObjID = OT_Armory;
     m_tStat = { 750.f, 750.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
-
     m_bIsEnemy = true;
 
     __super::Update_Rect();
@@ -38,7 +38,6 @@ int E_Armory::Update()
         //이미지
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead_Wreck_Big>::CreateFX(m_tInfo.fX, m_tInfo.fY));
-
         FireRemove();
         UnBlock_Map(); // 바닥 이동 불가 해제
         return OBJ_DEAD;

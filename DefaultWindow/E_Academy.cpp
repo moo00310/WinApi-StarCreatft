@@ -18,11 +18,10 @@ void E_Academy::Initialize()
     m_pImgKey = L"Academy_Blue";
     m_iTemplateSize = TS_NORMAL;
     m_bTemplate = false;
-    m_eCurState_Build = BS_IDLE;
+    m_eCurState_Build = BS_RUN;
     m_eObjID = OT_Academy;
     m_tStat = { 600.f, 600.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
-
     m_bIsEnemy = true;
 
     __super::Update_Rect();

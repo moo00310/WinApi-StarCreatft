@@ -4,6 +4,9 @@
 #include "CBmpMgr.h"
 #include "CKeyMgr.h"
 #include "CGameMgr.h"
+#include "CBloodEffect.h"
+#include "CSoundMgr.h"
+#include "CAbstractFactory.h"
 
 void CcmdNuke::Initialize()
 {
@@ -31,7 +34,13 @@ int CcmdNuke::Update()
 {
     if (m_bDead || m_tStat.m_iHp <= 0)
     {
-        // 터지는이펙트 & 사운드
+        //사운드
+        CSoundMgr::Get_Instance()->PlaySFX(L"BuildBoom.mp3", 0.1f);
+
+        //이미지
+        CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
+        CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead_Wreck_Small>::CreateFX(m_tInfo.fX, m_tInfo.fY));
+
 
         UnBlock_Map(); // 바닥 이동 불가 해제
         return OBJ_DEAD;

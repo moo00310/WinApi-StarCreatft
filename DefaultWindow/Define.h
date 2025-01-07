@@ -54,6 +54,8 @@ enum DEFENCEID { DF_SAMLL, DF_MEDIUM, DF_LAGE, DF_END};
 enum ATTACKID { AT_NORMAL, AT_CONCUSSIVE, AT_EXPLOSIVE, AT_END};
 enum UI_TYPE {UI_MAIN, UI_WIRE, UI_ICON, UI_PORT, UI_MIMAP, UI_END};
 
+enum StructureType { ST_MY, ST_ENEMY, ST_END };
+
 const float DamageCalcu[AT_END][DF_END]
 {
 	{1.f,1.f,1.f},

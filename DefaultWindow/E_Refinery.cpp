@@ -19,7 +19,6 @@ void E_Refinery::Initialize()
     m_eRender = RENDER_GAMEOBJECT;
     m_eCurState_Build = BS_IDLE;
     m_iMyBuildTIme = get<3>(ObjCost.at(OT_Refinery));
-
     m_bIsEnemy = true;
 }
 
@@ -29,7 +28,6 @@ int E_Refinery::Update()
     {
         //사운드
         CSoundMgr::Get_Instance()->PlaySFX(L"BuildBoom.mp3", 0.1f);
-
         //이미지
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
         FireRemove();
