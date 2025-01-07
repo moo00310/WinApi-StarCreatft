@@ -33,7 +33,7 @@ private:
 	void Change_Cursor();
 	void ColDrag();
 	void MoveSound(OBJ_TYPE type);
-	void SelectSound(OBJ_TYPE type);
+	void SelectSound(CObj* _obj);
 
 	//ºôµå ¸ðµå
 	void DrawBulid();

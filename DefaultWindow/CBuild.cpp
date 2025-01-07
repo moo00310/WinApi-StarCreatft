@@ -228,7 +228,8 @@ void CBuild::FireRemove()
 {
 	for (int i = 0; i < 3; i++)
 	{
-		m_arrFire[i]->Set_Dead();
+		if(m_arrFire[i] != nullptr)
+			m_arrFire[i]->Set_Dead();
 	}
 }
 

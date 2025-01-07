@@ -406,7 +406,7 @@ void CGameMouse::ColObject()
         {
             ClearList();
             Obj->Set_Select(true);
-            SelectSound(Obj->Get_ObjID());
+            SelectSound(Obj);
             CObjMgr::Get_Instance()->Add_SelectList(Obj);
         }
            
@@ -598,11 +598,11 @@ void CGameMouse::MoveSound(OBJ_TYPE type)
 
 }
 
-void CGameMouse::SelectSound(OBJ_TYPE type)
+void CGameMouse::SelectSound(CObj* _obj)
 {
     int intRand = rand() % 3;
 
-    switch (type)
+    switch (_obj->Get_ObjID())
     {
     case OT_Scv:
         if (intRand == 0)
@@ -657,39 +657,74 @@ void CGameMouse::SelectSound(OBJ_TYPE type)
     case OT_Unit_End:
         break;
     case OT_Commend:
+        if(_obj->Get_Stat()->m_iHp < _obj->Get_Stat()->m_iMaxHp *0.5f)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildFire.mp3", 0.8f, 29);
         break;
     case OT_Suffly:
-        CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildSupply.mp3", 0.8f, 29);
+        if (_obj->Get_Stat()->m_iHp < _obj->Get_Stat()->m_iMaxHp * 0.5f)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildFire.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildSupply.mp3", 0.8f, 29);
         break;
     case OT_Refinery:
-        CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildRefinery.mp3", 0.8f, 29);
+        if (_obj->Get_Stat()->m_iHp < _obj->Get_Stat()->m_iMaxHp * 0.5f)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildFire.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildRefinery.mp3", 0.8f, 29);
         break;
     case OT_Barrck:
+        if (_obj->Get_Stat()->m_iHp < _obj->Get_Stat()->m_iMaxHp * 0.5f)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildFire.mp3", 0.8f, 29);
         break;
     case OT_Academy:
-        CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildAcademy.mp3", 0.6f, 29);
+        if (_obj->Get_Stat()->m_iHp < _obj->Get_Stat()->m_iMaxHp * 0.5f)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildFire.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildAcademy.mp3", 0.6f, 29);
         break;
     case OT_Factory:
+        if (_obj->Get_Stat()->m_iHp < _obj->Get_Stat()->m_iMaxHp * 0.5f)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildFire.mp3", 0.8f, 29);
         break;
     case OT_Addon:
-        CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildFactoryAddon.mp3", 0.8f, 29);
+        if (_obj->Get_Stat()->m_iHp < _obj->Get_Stat()->m_iMaxHp * 0.5f)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildFire.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildFactoryAddon.mp3", 0.8f, 29);
         break;
     case OT_Armory:
-        CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildAmory.mp3", 0.8f, 29);
+        if (_obj->Get_Stat()->m_iHp < _obj->Get_Stat()->m_iMaxHp * 0.5f)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildFire.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildAmory.mp3", 0.8f, 29);
         break;
     case OT_Starport:
+        if (_obj->Get_Stat()->m_iHp < _obj->Get_Stat()->m_iMaxHp * 0.5f)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildFire.mp3", 0.8f, 29);
         break;
     case OT_StarportAddOn:
-        CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildStarpotAddon.mp3", 0.8f, 29);
+        if (_obj->Get_Stat()->m_iHp < _obj->Get_Stat()->m_iMaxHp * 0.5f)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildFire.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildStarpotAddon.mp3", 0.8f, 29);
         break;
     case OT_ScienceFacility:
-        CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildScienceFacilty.mp3", 0.8f, 29);
+        if (_obj->Get_Stat()->m_iHp < _obj->Get_Stat()->m_iMaxHp * 0.5f)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildFire.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildScienceFacilty.mp3", 0.8f, 29);
         break;
     case OT_ScienceSecret:
-        CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildCovertOPs.mp3", 0.8f, 29);
+        if (_obj->Get_Stat()->m_iHp < _obj->Get_Stat()->m_iMaxHp * 0.5f)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildFire.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildCovertOPs.mp3", 0.8f, 29);
         break;
     case OT_CmdNuke:
-        CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildNuke.mp3", 0.8f, 29);
+        if (_obj->Get_Stat()->m_iHp < _obj->Get_Stat()->m_iMaxHp * 0.5f)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildFire.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BuildNuke.mp3", 0.8f, 29);
         break;
     case OT_Build_End:
         break;
