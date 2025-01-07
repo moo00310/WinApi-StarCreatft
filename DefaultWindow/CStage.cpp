@@ -63,7 +63,7 @@ void CStage::Initialize()
 {
 	CSoundMgr::Get_Instance()->Stop_BGM();
 	//BGM
-	CSoundMgr::Get_Instance()->PlayBGM(L"BGM_terran_2.mp3", 0.4f); 
+	CSoundMgr::Get_Instance()->PlayBGM(L"BGM_terran_2.mp3", 0.3f); 
 
 	//IMG
 	Initalize_Bmp();
@@ -93,7 +93,7 @@ void CStage::Initialize()
 	
 
 	//// 적 건물 생산
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Academy>::CreateBuild(400, 600));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_CommendCenter>::CreateBuild(400, 600));
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Academy>::CreateBuild(600, 600));
 	
 }
@@ -222,6 +222,7 @@ void CStage::Initalize_Bmp()
 
 	//Effect
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Bang/Bang(128.128).bmp", L"Bang_1");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Bang/Bang(252.200).bmp", L"Bang_3");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/SCV/SCVEffect.bmp", L"SCVEffect");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Marine/MarineGunSpark.bmp", L"MarineGunSpark");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Ghost/GhostShot.bmp", L"GhostShot");
@@ -249,5 +250,8 @@ void CStage::Initalize_Bmp()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Enemy/Starport_Blue.bmp", L"Starport_Blue");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Enemy/SupplyDepot_Blue.bmp", L"SupplyDepot_Blue");
 
+	//Build_Wreak
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Wreck/Wreck0(96.96).bmp", L"Wreck0");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Wreck/Wreck1(128.128).bmp", L"Wreck1");
 
 }

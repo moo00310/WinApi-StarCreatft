@@ -3,6 +3,9 @@
 #include "CMapMgr.h"
 #include "CBmpMgr.h"
 #include "CGameMgr.h"
+#include "CAbstractFactory.h"
+#include "CBloodEffect.h"
+#include "CSoundMgr.h"
 
 void E_Refinery::Initialize()
 {
@@ -24,7 +27,11 @@ int E_Refinery::Update()
 {
     if (m_bDead || m_tStat.m_iHp <= 0)
     {
-        // 터지는이펙트 & 사운드
+        //사운드
+        CSoundMgr::Get_Instance()->PlaySFX(L"BuildBoom.mp3", 0.1f);
+
+        //이미지
+        CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
 
         return OBJ_DEAD;
     }

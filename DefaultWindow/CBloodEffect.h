@@ -75,11 +75,23 @@ public:
 	void Render(HDC hDC) override;
 };
 
-class CBuildDead_Thrah : public CBloodEffect
+class CBuildDead_Wreck_Small : public CBloodEffect
 {
 public:
-	CBuildDead_Thrah() {};
-	~CBuildDead_Thrah() {};
+	CBuildDead_Wreck_Small() {};
+	~CBuildDead_Wreck_Small() {};
+
+public:
+	void Initialize() override;
+	int Update() override;
+	void Render(HDC hDC) override;
+};
+
+class CBuildDead_Wreck_Big : public CBloodEffect
+{
+public:
+	CBuildDead_Wreck_Big() {};
+	~CBuildDead_Wreck_Big() {};
 
 public:
 	void Initialize() override;

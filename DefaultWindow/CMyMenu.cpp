@@ -16,7 +16,7 @@ CMyMenu::~CMyMenu()
 
 void CMyMenu::Initialize()
 {
-    CSoundMgr::Get_Instance()->PlayBGM(L"title.mp3", 0.5f);
+    CSoundMgr::Get_Instance()->PlayBGM(L"title.mp3", 0.2f);
 
     CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MenuBack.bmp", L"MenuBack");
 

@@ -318,7 +318,7 @@ void CGhostDead::Render(HDC hDC)
 		(int)m_tInfo.fCY,
 		hMemDC,						// 복사할 이미지 DC	
 		(int)m_tInfo.fCX * m_iDeadImg, // 비트맵 출력 시작 좌표(Left, top)
-		(int)m_tInfo.fCY * 16,
+		0,
 		(int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
 		(int)m_tInfo.fCY,
 		RGB(0, 255, 0));		// 제거할 색상
@@ -331,31 +331,219 @@ void CGhostDead::Render(HDC hDC)
 ----------------------*/
 void CBuildDead::Initialize()
 {
+	m_pImgKey = L"Bang_3";
+	m_tInfo.fCX = 252.f;
+	m_tInfo.fCY = 200.f;
+
+	m_eRender = RENDER_EFFECT;
 }
 
 int CBuildDead::Update()
 {
-	return 0;
+	m_iCount++;
+	if (m_iCount < 5)
+	{
+		m_iDeadImg = 0;
+	}
+	else if (m_iCount < 10)
+	{
+		m_iDeadImg = 1;
+	}
+	else if (m_iCount < 15)
+	{
+		m_iDeadImg = 2;
+	}
+	else if (m_iCount < 20)
+	{
+		m_iDeadImg = 3;
+	}
+	else if (m_iCount < 25)
+	{
+		m_iDeadImg = 4;
+	}
+	else if (m_iCount < 30)
+	{
+		m_iDeadImg = 5;
+	}
+	else if (m_iCount < 35)
+	{
+		m_iDeadImg = 6;
+	}
+	else if (m_iCount < 40)
+	{
+		m_iDeadImg = 7;
+	}
+	else if (m_iCount < 45)
+	{
+		m_iDeadImg = 8;
+	}
+	else if (m_iCount < 50)
+	{
+		m_iDeadImg = 9;
+	}
+	else if (m_iCount < 55)
+	{
+		m_iDeadImg = 10;
+	}
+	else if (m_iCount < 60)
+	{
+		m_iDeadImg = 11;
+	}
+	else if (m_iCount < 65)
+	{
+		m_iDeadImg = 12;
+	}
+	else if (m_iCount < 70)
+	{
+		m_iDeadImg = 13;
+	}
+	else if (m_iCount > 75)
+	{
+		return OBJ_DEAD;
+	}
+
+	__super::Update_Rect();
+	return OBJ_NOEVENT;
 }
 
 void CBuildDead::Render(HDC hDC)
 {
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
+
+	GdiTransparentBlt(hDC,			// 복사 받을 DC
+		m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
+		m_tRect.top + iScrollY,
+		(int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
+		(int)m_tInfo.fCY,
+		hMemDC,						// 복사할 이미지 DC	
+		(int)m_tInfo.fCX * m_iDeadImg, // 비트맵 출력 시작 좌표(Left, top)
+		0,
+		(int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
+		(int)m_tInfo.fCY,
+		RGB(0, 0, 0));		// 제거할 색상
 }
 
 /*--------------------
-	 건물 잔해
+	 건물 잔해 작은거
+----------------------*/
+void CBuildDead_Wreck_Small::Initialize()
+{
+	m_pImgKey = L"Wreck0";
+	m_tInfo.fCX = 96.f;
+	m_tInfo.fCY = 96.f;
+
+	m_eRender = RENDER_EFFECT;
+}
+
+int CBuildDead_Wreck_Small::Update()
+{
+	m_iCount++;
+	if (m_iCount < 5)
+	{
+		m_iDeadImg = 0;
+	}
+	else if (m_iCount < 100)
+	{
+		m_iDeadImg = 1;
+	}
+	else if (m_iCount < 200)
+	{
+		m_iDeadImg = 2;
+	}
+	else if (m_iCount < 300)
+	{
+		m_iDeadImg = 3;
+	}
+	else if (m_iCount > 400)
+	{
+		return OBJ_DEAD;
+	}
+
+	__super::Update_Rect();
+	return OBJ_NOEVENT;
+}
+
+void CBuildDead_Wreck_Small::Render(HDC hDC)
+{
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
+
+	GdiTransparentBlt(hDC,			// 복사 받을 DC
+		m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
+		m_tRect.top + iScrollY,
+		(int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
+		(int)m_tInfo.fCY,
+		hMemDC,						// 복사할 이미지 DC	
+		(int)m_tInfo.fCX * m_iDeadImg, // 비트맵 출력 시작 좌표(Left, top)
+		0,
+		(int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
+		(int)m_tInfo.fCY,
+		RGB(0, 0, 0));		// 제거할 색상
+}
+
+
+/*--------------------
+	 건물 잔해 큰거
 ----------------------*/
 
-
-void CBuildDead_Thrah::Initialize()
+void CBuildDead_Wreck_Big::Initialize()
 {
+	m_pImgKey = L"Wreck1";
+	m_tInfo.fCX = 128.f;
+	m_tInfo.fCY = 128.f;
+
+	m_eRender = RENDER_EFFECT;
 }
 
-int CBuildDead_Thrah::Update()
+int CBuildDead_Wreck_Big::Update()
 {
-	return 0;
+	m_iCount++;
+	if (m_iCount < 5)
+	{
+		m_iDeadImg = 0;
+	}
+	else if (m_iCount < 100)
+	{
+		m_iDeadImg = 1;
+	}
+	else if (m_iCount < 200)
+	{
+		m_iDeadImg = 2;
+	}
+	else if (m_iCount < 300)
+	{
+		m_iDeadImg = 3;
+	}
+	else if (m_iCount > 400)
+	{
+		return OBJ_DEAD;
+	}
+
+	__super::Update_Rect();
+	return OBJ_NOEVENT;
 }
 
-void CBuildDead_Thrah::Render(HDC hDC)
+void CBuildDead_Wreck_Big::Render(HDC hDC)
 {
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
+
+	GdiTransparentBlt(hDC,			// 복사 받을 DC
+		m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
+		m_tRect.top + iScrollY,
+		(int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
+		(int)m_tInfo.fCY,
+		hMemDC,						// 복사할 이미지 DC	
+		(int)m_tInfo.fCX * m_iDeadImg, // 비트맵 출력 시작 좌표(Left, top)
+		0,
+		(int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
+		(int)m_tInfo.fCY,
+		RGB(0, 0, 0));		// 제거할 색상
 }
