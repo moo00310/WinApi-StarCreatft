@@ -29,15 +29,14 @@ void CGameMgr::Initialize()
 
 void CGameMgr::Update()
 {
-
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_F1))
+	/*if (CKeyMgr::Get_Instance()->Key_Down(VK_F1))
 	{
 		m_isDeBug = true;
 	}
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_F2))
 	{
 		m_isDeBug = false;
-	}
+	}*/
 }
 
 void CGameMgr::Late_Update()

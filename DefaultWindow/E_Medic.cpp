@@ -24,16 +24,12 @@ void E_Medic::Initialize()
 	m_tStat = { 60.f, 60.f, 0, 1, 64, 1.8f, 625 , DF_SAMLL, AT_NORMAL };
 
 	m_iAttackFrame = 10;
-
+	m_eInput = IP_HEAL;
 	m_eRender = RENDER_GAMEOBJECT;
 	m_tInfo.fCX = 64.f;
 	m_tInfo.fCY = 64.f;
 
 	m_bIsEnemy = true;
-
-	A_GroundPos = { 10,10 };
-	Astar(A_GroundPos);
-	m_eInput = IP_ATTACK;
 }
 
 int E_Medic::Update()

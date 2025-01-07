@@ -206,6 +206,14 @@ float CUnit::GetLadanAngle(float player_x, float player_y, float monster_x, floa
 	return atan2(dy, dx);  // 라디안
 }
 
+void CUnit::HomeAttack(float x, float y)
+{
+	// 해당 좌표로 공격
+	A_GroundPos = { (int)y/32,(int)x/32 };
+	Astar(A_GroundPos);
+	m_eInput = IP_ATTACK;
+}
+
 DIRECTION CUnit::GetDirection(float player_x, float player_y, float monster_x, float monster_y)
 {
 	float angle_deg = GetLadanAngle( player_x,  player_y,  monster_x,  monster_y) * (180 / PI);

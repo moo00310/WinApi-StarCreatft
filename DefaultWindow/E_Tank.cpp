@@ -23,17 +23,12 @@ void E_Tank::Initialize()
 	m_tStat = { 150.f, 150.f, 30, 1, 224, 1.8f, 625 , DF_LAGE, AT_EXPLOSIVE };
 
 	m_iAttackFrame = 1;
-
+	m_eInput = IP_Chase;
 	m_eRender = RENDER_GAMEOBJECT;
 	m_tInfo.fCX = 128.f;
 	m_tInfo.fCY = 128.f;
 
 	m_bIsEnemy = true;
-
-	// 해당 좌표로 공격
-	A_GroundPos = { 10,10 };
-	Astar(A_GroundPos);
-	m_eInput = IP_ATTACK;
 }
 
 int E_Tank::Update()
@@ -214,7 +209,7 @@ void E_Tank::AttackToEnemy(CObj* _Enemey)
 		if (m_AttackTime + _Enemey->Get_Stat()->Colldown + 2000 < GetTickCount64())
 		{
 			CSoundMgr::Get_Instance()->PlaySFX(L"TankSiegeAttak.mp3", 0.8f);
-			CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CSiegeTankHit>::CreateFX(_Enemey->Get_Info().fX, _Enemey->Get_Info().fY));
+			CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CSiegeTankHit_E>::CreateFX(_Enemey->Get_Info().fX, _Enemey->Get_Info().fY));
 			m_AttackTime = GetTickCount64();
 		}
 	}
@@ -351,13 +346,14 @@ void E_Tank::SiegeMode()
 	if (!m_bSiegeMode_Anime) return;
 	if (m_bSiegeMode) return;
 
+	m_tBodyFram.iCurCount = 3;
+	m_tFrame.iCurCount = 3;
+	m_eDir = (DIRECTION)5;
 	m_eAttackDir = (DIRECTION)4;
 	m_eObjID = OT_SiegeTank;
 	m_bSiegeMode = true;
 	m_bSiegeMode_Anime = false;
 	m_eInput = IP_HOLD;
-
-	
 }
 
 void E_Tank::UnSiegeMode()

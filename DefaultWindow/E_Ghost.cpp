@@ -23,17 +23,12 @@ void E_Ghost::Initialize()
 	m_tStat = { 45.f, 45.f, 10, 0, 224, 1.8f, 625 , DF_SAMLL, AT_CONCUSSIVE };
 
 	m_iAttackFrame = 12;
-
+	m_eInput = IP_Chase;
 	m_eRender = RENDER_GAMEOBJECT;
 	m_tInfo.fCX = 64.f;
 	m_tInfo.fCY = 64.f;
 
 	m_bIsEnemy = true;
-
-	// 해당 좌표로 공격
-	A_GroundPos = { 10,10 };
-	Astar(A_GroundPos);
-	m_eInput = IP_ATTACK;
 }
 
 int E_Ghost::Update()

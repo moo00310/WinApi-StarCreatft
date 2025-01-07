@@ -36,6 +36,9 @@ public:
 	float GetLadanAngle(float player_x, float player_y, float monster_x, float monster_y);
 	void SetAGroundPos(Pos _pos) { A_GroundPos = _pos; }
 
+
+	void HomeAttack(float x, float y);
+
 protected:
 	//Unit_BeHavior
 	virtual void Move();

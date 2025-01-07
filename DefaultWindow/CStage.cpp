@@ -77,75 +77,80 @@ void CStage::Initialize()
 	CScrollMgr::Get_Instance()->Initallize();
 
 	// 기초 건물 및 SCV 생산
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CCommedCenter>::CreateBuild(300, 245));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CCommedCenter>::CreateBuild(300.f, 245.f));
 	for (int i = 0; i < 4; i++)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(250.f + 25*i, 320));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(250.f + 25*i, 320.f));
 	}
 
-
 	//// 적 건물 생산
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_CommendCenter>::CreateBuild(3810, 260));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_CommendCenter>::CreateBuild(2840, 430));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Refinery>::CreateBuild(3780, 100));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Refinery>::CreateBuild(2840, 300));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_CommendCenter>::CreateBuild(3810.f, 260.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_CommendCenter>::CreateBuild(2840.f, 430.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Refinery>::CreateBuild(3780.f, 100.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Refinery>::CreateBuild(2840.f, 300.f));
 
 	for (int j = 0; j < 2; j++)
 	{
 		for (int i = 0; i < 6; i++)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(3940 +100*j, 500 + 60 * i));
+			CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(3940.f +100*j, 500.f + 60 * i));
 		}
 	}
 	for (int j = 0; j < 2; j++)
 	{
 		for (int i = 0; i < 3; i++)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(3130+100*i, 50+60*j));
+			CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(3130.f +100*i, 50.f + 60*j));
 		}
 	}
 
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Academy>::CreateBuild(3470 , 70));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Academy>::CreateBuild(3570 , 70));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Academy>::CreateBuild(3470.f, 70.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Academy>::CreateBuild(3570.f, 70.f));
 
 	for (int j = 0; j < 2; j++)
 	{
 		for (int i = 0; i < 2; i++)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Barrack>::CreateBuild(3450 + 120*i, 170 + 100*j));
+			CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Barrack>::CreateBuild(3450.f + 120*i, 170.f + 100*j));
 		}
 	}
 
 	for (int i = 0; i < 2; i++)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Armory>::CreateBuild(3840, 500 + 100*i));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Armory>::CreateBuild(3840.f, 500.f + 100*i));
 	}
 	for (int i = 0; i < 4; i++)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(3840, 660+60* i));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(3840.f, 660.f +60* i));
 	}
 
 
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3520, 550));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3520, 650));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3520, 750));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3520.f, 550.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3520.f, 650.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3520.f, 750.f));
 
 
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Starport>::CreateBuild(3710, 650));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Starport>::CreateBuild(3710, 750));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Starport>::CreateBuild(3710.f, 650.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Starport>::CreateBuild(3710.f, 750.f));
 
 
-
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Barrack>::CreateBuild(2860, 720));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(2950, 680));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Barrack>::CreateBuild(2860.f, 720.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(2950.f, 680.f));
 	
 
 	// 적 방어 유닛 생산
 	{
-		// 3200, 600 적 언덕 시즈탱크
-		// 2800 ,570 마린 메딕부대
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Tank>::CreateSiegeTank(3200.f, 600.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Tank>::CreateSiegeTank(2735, 583.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Tank>::CreateSiegeTank(3402, 644.f));
+
+
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Marine>::Create(3015, 610));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Marine>::Create(3015, 620));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Marine>::Create(3005, 640.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Marine>::Create(3045, 610.f));
+
 	}
-	//유닛 생산 3700, 370
 }
 
 int CStage::Update()
@@ -184,34 +189,74 @@ void CStage::Release()
 	CObjMgr::Get_Instance()->Delete_ID(OBJ_PLAYER);
 	CObjMgr::Get_Instance()->Delete_ID(OBJ_BUILD);
 	CObjMgr::Get_Instance()->Delete_ID(OBJ_MONSTER);
-
+	CObjMgr::Get_Instance()->Delete_ID(OBJ_BUILD_E);
 }
 
 void CStage::KeyInput()
 {
+	// SCV 정찰
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F1))
+	{
+
+	}
+
+	// 마린 메딕 러쉬 및 방어 부대
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F2))
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::CreateAttackEnemy(3000.f + 10 * i, 790.f, 320.f, 320.f));
+		}
+		for (int i = 0; i < 2; i++)
+		{
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Medic>::CreateAttackEnemy(3000.f + 10 * i, 800.f, 320.f, 320.f));
+		}
+	}
+
+	// 마린 메딕 고스트 탱크 러쉬
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_F3))
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3000.f + 10 * i, 790.f));
-
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::CreateAttackEnemy(3000.f + 10 * i, 790.f, 320.f, 320.f));
 		}
 		for (int i = 0; i < 3; i++)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Medic>::Create(3000.f + 10 * i, 800.f));
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Medic>::CreateAttackEnemy(3000.f + 10 * i, 800.f, 320.f, 320.f));
+		}
+		for (int i = 0; i < 2; i++)
+		{
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Ghost>::CreateAttackEnemy(3000.f + 10 * i, 810.f, 320.f, 320.f));
 		}
 		for (int i = 0; i < 3; i++)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Ghost>::Create(3000.f + 10 * i, 810.f));
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::CreateAttackEnemy(3000.f + 10 * i, 820.f, 320.f, 320.f));
 		}
-		for (int i = 0; i < 1; i++)
-		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::Create(3000.f + 10 * i, 820.f));
-		}
-			
-
-		// 3400, 100 (마린 부대)
 	}
+
+	// 방어 부대 소환
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F4))
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3600.f, 375.f +10 * i));
+		}
+		for (int i = 0; i < 2; i++)
+		{
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Medic>::Create(3600.f + 15 * i, 375.f));
+		}
+
+		for (int i = 0; i < 3; i++)
+		{
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3000.f, 480.f +10 * i));
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3000.f +10 * i, 480.f));
+		}
+	}
+
+
 }
 
 void CStage::Initalize_Bmp()

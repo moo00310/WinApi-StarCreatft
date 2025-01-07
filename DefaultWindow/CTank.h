@@ -23,10 +23,16 @@ public:
 	void AttackToEnemy(CObj* _Enemey) override;
 	virtual void Hold() override;
 	virtual void Move_toNext() override;
+	void DoSeigeMod() 
+	{
+		m_bSiegeMode_Anime = true; 
+		SiegeMode();
+	}
 
+	void SiegeMode();
 private:
 	void MoveBody_Frame();
-	void SiegeMode();
+
 	void UnSiegeMode();
 	void Frame_Init_Head(int start, int end, int time);
 	void Frame_Init_Body(int start, int end, int time);

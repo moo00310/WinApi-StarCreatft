@@ -25,7 +25,7 @@ void E_Marine::Initialize()
 	m_pImgKey = L"MarineBlue";
 	m_eObjID = OT_Marine;
 	m_tStat = { 40.f, 40.f, 6, 0, 128, 1.8f, 625 , DF_SAMLL, AT_NORMAL };
-
+	m_eInput = IP_Chase;
 	m_iAttackFrame = 14;
 
 	m_eRender = RENDER_GAMEOBJECT;
@@ -33,12 +33,6 @@ void E_Marine::Initialize()
 	m_tInfo.fCY = 50.f;
 
 	m_bIsEnemy = true;
-
-	// 해당 좌표로 공격
-	A_GroundPos = { 10,10 };
-	Astar(A_GroundPos);
-	m_eInput = IP_ATTACK;
-
 }
 
 int E_Marine::Update()

@@ -5,6 +5,8 @@
 #include "CUI.h"
 #include "CMemoryPoolMgr.h"
 #include "CResource.h"
+#include "CTank.h"
+#include "CUnit.h"
 
 template<typename T>
 class CAbstractFactory
@@ -27,6 +29,24 @@ public:
 		pObj->Set_Pos(_fX, _fY);
 		pObj->Initialize();
 	
+		return pObj;
+	}
+
+	static CObj* CreateAttackEnemy(float _fX, float _fY,  float atkX, float atkY)
+	{
+		CObj* pObj = new T;
+		pObj->Set_Pos(_fX, _fY);
+		pObj->Initialize();
+		static_cast<CUnit*>(pObj)->HomeAttack(atkX, atkY);
+		return pObj;
+	}
+
+	static CObj* CreateSiegeTank(float _fX, float _fY)
+	{
+		CObj* pObj = new T;
+		pObj->Set_Pos(_fX, _fY);
+		pObj->Initialize();
+		//static_cast<CTank*>(pObj)->DoSeigeMod();
 		return pObj;
 	}
 

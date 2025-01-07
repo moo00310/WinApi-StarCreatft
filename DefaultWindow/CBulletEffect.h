@@ -79,8 +79,22 @@ public:
 	int m_bIsDamage;
 	list<CObj*>* E_list;
 	list<CObj*>* E_build_list;
+};
 
+class CSiegeTankHit_E : public CBulletEffect
+{
+public:
+	CSiegeTankHit_E() :m_bIsDamage(false), E_list(nullptr), E_build_list(nullptr)
+	{}
+	~CSiegeTankHit_E() {}
+public:
+	void Initialize() override;
+	int Update() override;
+	void Render(HDC hDC) override;
 
+	int m_bIsDamage;
+	list<CObj*>* E_list;
+	list<CObj*>* E_build_list;
 };
 
 class CNukeMissile : public CBulletEffect
