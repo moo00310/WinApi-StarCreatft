@@ -38,6 +38,10 @@ void CSceneMgr::Set_Scene(SCENEID eID)
 		case SC_STAGE:
 			m_pScene = new CStage;
 			break;
+
+		case SC_ENDING:
+			m_pScene = new CEnding;
+			break;
 		}
 
 		m_pScene->Initialize();

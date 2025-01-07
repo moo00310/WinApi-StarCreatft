@@ -4,7 +4,7 @@
 class CGameMgr
 {
 public:
-	CGameMgr(): m_iMineral(0), m_iGas(0), m_iPop(0), m_iMaxPop(0), m_Time(GetTickCount64()), m_isDeBug(false)
+	CGameMgr(): m_iMineral(0), m_iGas(0), m_iPop(0), m_iMaxPop(0), m_Time(GetTickCount64()), m_isDeBug(false), m_isWin(false), m_isSound(false)
 	{
 	}
 	~CGameMgr() { Release(); }
@@ -79,5 +79,7 @@ public:
 	static CGameMgr* m_pInstance;
 
 	bool m_isDeBug;
+	bool m_isWin;
+	bool m_isSound;
 };
 

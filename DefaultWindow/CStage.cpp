@@ -74,83 +74,17 @@ void CStage::Initialize()
 	// 마우스 생산
 	CMouseMgr::Get_Instance()->Add_Mouse(CAbstractFactory<CGameMouse>::Create());
 
-	CScrollMgr::Get_Instance()->Initallize();
+	//MyObjSpwan();
+	//EnemyObjSpwan();
 
-	// 기초 건물 및 SCV 생산
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CCommedCenter>::CreateBuild(300.f, 245.f));
-	for (int i = 0; i < 4; i++)
+	// 승리 테스트
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(250.f + 25*i, 320.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(600.f, 600.f));
+
+		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(300.f, 300.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(310.f, 310.f));
 	}
-
-	//// 적 건물 생산
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_CommendCenter>::CreateBuild(3810.f, 260.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_CommendCenter>::CreateBuild(2840.f, 430.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Refinery>::CreateBuild(3780.f, 100.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Refinery>::CreateBuild(2840.f, 300.f));
-
-	for (int j = 0; j < 2; j++)
-	{
-		for (int i = 0; i < 6; i++)
-		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(3940.f +100*j, 500.f + 60 * i));
-		}
-	}
-	for (int j = 0; j < 2; j++)
-	{
-		for (int i = 0; i < 3; i++)
-		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(3130.f +100*i, 50.f + 60*j));
-		}
-	}
-
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Academy>::CreateBuild(3470.f, 70.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Academy>::CreateBuild(3570.f, 70.f));
-
-	for (int j = 0; j < 2; j++)
-	{
-		for (int i = 0; i < 2; i++)
-		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Barrack>::CreateBuild(3450.f + 120*i, 170.f + 100*j));
-		}
-	}
-
-	for (int i = 0; i < 2; i++)
-	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Armory>::CreateBuild(3840.f, 500.f + 100*i));
-	}
-	for (int i = 0; i < 4; i++)
-	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(3840.f, 660.f +60* i));
-	}
-
-
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3520.f, 550.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3520.f, 650.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3520.f, 750.f));
-
-
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Starport>::CreateBuild(3710.f, 650.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Starport>::CreateBuild(3710.f, 750.f));
-
-
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Barrack>::CreateBuild(2860.f, 720.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(2950.f, 680.f));
 	
-
-	// 적 방어 유닛 생산
-	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Tank>::CreateSiegeTank(3200.f, 600.f));
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Tank>::CreateSiegeTank(2735, 583.f));
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Tank>::CreateSiegeTank(3402, 644.f));
-
-
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Marine>::Create(3015, 610));
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Marine>::Create(3015, 620));
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Marine>::Create(3005, 640.f));
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Marine>::Create(3045, 610.f));
-
-	}
 }
 
 int CStage::Update()
@@ -190,6 +124,88 @@ void CStage::Release()
 	CObjMgr::Get_Instance()->Delete_ID(OBJ_BUILD);
 	CObjMgr::Get_Instance()->Delete_ID(OBJ_MONSTER);
 	CObjMgr::Get_Instance()->Delete_ID(OBJ_BUILD_E);
+}
+
+void CStage::MyObjSpwan()
+{
+	// 기초 건물 및 SCV 생산
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CCommedCenter>::CreateBuild(300.f, 245.f));
+	for (int i = 0; i < 4; i++)
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(250.f + 25 * i, 320.f));
+	}
+}
+
+void CStage::EnemyObjSpwan()
+{
+	//// 적 건물 생산
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_CommendCenter>::CreateBuild(3810.f, 260.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_CommendCenter>::CreateBuild(2840.f, 430.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Refinery>::CreateBuild(3780.f, 100.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Refinery>::CreateBuild(2840.f, 300.f));
+
+	for (int j = 0; j < 2; j++)
+	{
+		for (int i = 0; i < 6; i++)
+		{
+			CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(3940.f + 100 * j, 500.f + 60 * i));
+		}
+	}
+	for (int j = 0; j < 2; j++)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(3130.f + 100 * i, 50.f + 60 * j));
+		}
+	}
+
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Academy>::CreateBuild(3470.f, 70.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Academy>::CreateBuild(3570.f, 70.f));
+
+	for (int j = 0; j < 2; j++)
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Barrack>::CreateBuild(3450.f + 120 * i, 170.f + 100 * j));
+		}
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Armory>::CreateBuild(3840.f, 500.f + 100 * i));
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(3840.f, 660.f + 60 * i));
+	}
+
+
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3520.f, 550.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3520.f, 650.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3520.f, 750.f));
+
+
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Starport>::CreateBuild(3710.f, 650.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Starport>::CreateBuild(3710.f, 750.f));
+
+
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Barrack>::CreateBuild(2860.f, 720.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(2950.f, 680.f));
+
+
+	// 적 방어 유닛 생산
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::CreateSiegeTank(3200.f, 600.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::CreateSiegeTank(2735, 583.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::CreateSiegeTank(3402, 644.f));
+
+
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3015, 610));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3015, 620));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3005, 640.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3045, 610.f));
+
+	}
 }
 
 void CStage::KeyInput()
@@ -364,4 +380,8 @@ void CStage::Initalize_Bmp()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Fire/0_fire_0_11(64,96).bmp", L"fire_0");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Fire/1_fire_0_11(64.96).bmp", L"fire_1");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Fire/2_fire_0_11(64.96).bmp", L"fire_2");
+
+	//WinText
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Win/WinText.bmp", L"WinText");
+
 }

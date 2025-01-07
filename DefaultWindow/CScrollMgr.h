@@ -35,12 +35,6 @@ public:
 		}
 	}
 
-	void Initallize()
-	{
-		m_fScrollX = 4000.f;
-		m_fScrollY = 4000.f;
-	}
-
 private:
 	static CScrollMgr* m_pInstance;
 

@@ -289,6 +289,9 @@
     <Filter Include="01. Obj\01.Unit\99.Enemy\04.E_Tank">
       <UniqueIdentifier>{dab4d386-9953-4aaf-aaad-d58874ccd150}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Scene\04. Ending">
+      <UniqueIdentifier>{af4fce7f-dd80-407a-bc6d-46894dc69334}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -564,6 +567,9 @@
     <ClInclude Include="E_Tank.h">
       <Filter>01. Obj\01.Unit\99.Enemy\04.E_Tank</Filter>
     </ClInclude>
+    <ClInclude Include="CEnding.h">
+      <Filter>02. Scene\04. Ending</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -799,6 +805,9 @@
     </ClCompile>
     <ClCompile Include="E_Tank.cpp">
       <Filter>01. Obj\01.Unit\99.Enemy\04.E_Tank</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnding.cpp">
+      <Filter>02. Scene\04. Ending</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

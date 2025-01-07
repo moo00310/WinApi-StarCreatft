@@ -5,6 +5,7 @@
 #include "CMyMenu.h"
 #include "CStage.h"
 #include "CMyEdit.h"
+#include "CEnding.h"
 
 class CSceneMgr
 {

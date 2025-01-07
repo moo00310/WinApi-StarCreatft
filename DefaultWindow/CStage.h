@@ -17,8 +17,10 @@ public:
 	void Render(HDC hDC) override;
 	void Release() override;
 
-	void KeyInput();
+	void MyObjSpwan();
+	void EnemyObjSpwan();
 
+	void KeyInput();
 	void Initalize_Bmp();
 };
 

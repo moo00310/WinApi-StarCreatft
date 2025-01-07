@@ -302,7 +302,7 @@ void CCollisionMgr::Collision_Explosion(CObj* _pEx, list<CObj*> _unit, list<CObj
 			ATTACKID Attack_id = AT_EXPLOSIVE;
 			float BoomDamge = fabsf((build->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * Damage)));
 
-			build->Add_Stat_hp(-Damage);
+			build->Add_Stat_hp(-BoomDamge);
 		}
 	}
 	

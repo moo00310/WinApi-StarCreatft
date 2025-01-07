@@ -151,6 +151,7 @@
     <ClInclude Include="CCollisionMgr.h" />
     <ClInclude Include="CCommedCenter.h" />
     <ClInclude Include="CEffect.h" />
+    <ClInclude Include="CEnding.h" />
     <ClInclude Include="CFactory.h" />
     <ClInclude Include="CGameMgr.h" />
     <ClInclude Include="CGameMouse.h" />
@@ -243,6 +244,7 @@
     <ClCompile Include="CCollisionMgr.cpp" />
     <ClCompile Include="CCommedCenter.cpp" />
     <ClCompile Include="CEffect.cpp" />
+    <ClCompile Include="CEnding.cpp" />
     <ClCompile Include="CFactory.cpp" />
     <ClCompile Include="CGameMgr.cpp" />
     <ClCompile Include="CGameMouse.cpp" />
