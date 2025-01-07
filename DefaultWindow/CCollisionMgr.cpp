@@ -286,7 +286,11 @@ void CCollisionMgr::Collision_Explosion(CObj* _pEx, list<CObj*> _unit, list<CObj
 	{
 		if (IntersectRect(&rc, _pEx->Get_Rect(), unit->Get_Rect()))
 		{
-			unit->Add_Stat_hp(-Damage);
+			DEFENCEID Dfence_id = unit->Get_Stat()->m_eDfenceID;
+			ATTACKID Attack_id = AT_EXPLOSIVE;
+			float BoomDamge = fabsf((unit->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * Damage)));
+
+			unit->Add_Stat_hp(-BoomDamge);
 		}
 	}
 
@@ -294,6 +298,10 @@ void CCollisionMgr::Collision_Explosion(CObj* _pEx, list<CObj*> _unit, list<CObj
 	{
 		if (IntersectRect(&rc, _pEx->Get_Rect(), build->Get_Rect()))
 		{
+			DEFENCEID Dfence_id = build->Get_Stat()->m_eDfenceID;
+			ATTACKID Attack_id = AT_EXPLOSIVE;
+			float BoomDamge = fabsf((build->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * Damage)));
+
 			build->Add_Stat_hp(-Damage);
 		}
 	}

@@ -5,7 +5,7 @@
 #include "CUI.h"
 #include "CMemoryPoolMgr.h"
 #include "CResource.h"
-#include "CTank.h"
+#include "E_Tank.h"
 #include "CUnit.h"
 
 template<typename T>
@@ -46,7 +46,7 @@ public:
 		CObj* pObj = new T;
 		pObj->Set_Pos(_fX, _fY);
 		pObj->Initialize();
-		//static_cast<CTank*>(pObj)->DoSeigeMod();
+		static_cast<E_Tank*>(pObj)->DoSeigeMod();
 		return pObj;
 	}
 

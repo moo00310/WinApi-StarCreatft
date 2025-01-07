@@ -18,6 +18,12 @@ public:
 	void KeyInput() override;
 	void AttackToEnemy(CObj* _Enemey) override;
 
+	void DoSeigeMod()
+	{
+		m_bSiegeMode_Anime = true;
+		SiegeMode();
+	}
+
 private:
 	void Hold() override;
 	void Move_toNext() override;

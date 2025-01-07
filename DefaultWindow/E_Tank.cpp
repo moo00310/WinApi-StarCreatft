@@ -232,7 +232,7 @@ void E_Tank::Hold()
 	}
 	else
 	{
-		if ((Enemy = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pMonsterList, *m_pBuildList_E, m_tStat.m_iRange + 250.f)) == nullptr)
+		if ((Enemy = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pMonsterList, *m_pBuildList_E, m_tStat.m_iRange + 160.f)) == nullptr)
 		{
 			m_eCurState = STATE_IDLE;
 		}
