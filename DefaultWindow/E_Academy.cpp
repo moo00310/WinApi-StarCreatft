@@ -40,12 +40,12 @@ int E_Academy::Update()
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead_Wreck_Big>::CreateFX(m_tInfo.fX, m_tInfo.fY));
 
+        FireRemove();
         UnBlock_Map(); // 바닥 이동 불가 해제
         return OBJ_DEAD;
     }
 
-    //KeyInput();
-    //Spawn_Uint_CoolDown();
+    FireSpwan();
 
     __super::Update_Rect();
     return OBJ_NOEVENT;

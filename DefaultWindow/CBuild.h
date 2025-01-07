@@ -1,12 +1,16 @@
 #pragma once
 #include "CObj.h"
+class CBulletEffect;
 
 class CBuild : public CObj
 {
 public:
 	CBuild() :m_ePreState_Bulid(BS_END), m_eCurState_Build(BS_END), m_iMyBuildTIme(0), m_iBuildCount(0), m_bTemplate(false),
-		m_iTemplateSize(0), m_MaxSpwanTime(0), m_iSpwanTime(0), m_fProgress(0.f)
+		m_iTemplateSize(0), m_MaxSpwanTime(0), m_iSpwanTime(0), m_fProgress(0.f), spawnHp(0), isSpawn(false)
 	{
+		m_arrFire[0] = nullptr;
+		m_arrFire[1] = nullptr;
+		m_arrFire[2] = nullptr;
 	}
 	~CBuild() {}
 
@@ -31,6 +35,8 @@ protected:
 	void Block_Map();
 	void UnBlock_Map();
 	bool ChekList_OBJ(OBJ_TYPE _id);
+	void FireRemove();
+	void FireSpwan();
 
 protected:
 	BuildSTATE m_ePreState_Bulid;
@@ -48,7 +54,10 @@ protected:
 
 	float m_fProgress;
 
-	// CObj을(를) 통해 상속됨
+	CObj* m_arrFire[3];
+
+	float spawnHp;
+	bool isSpawn;
 
 };
 

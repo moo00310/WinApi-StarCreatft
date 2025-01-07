@@ -700,3 +700,154 @@ void CNukeMissileBoom::Render(HDC hDC)
 		(int)m_tInfo.fCY,
 		RGB(0, 0, 0));		// 제거할 색상
 }
+
+
+/*-------------------
+*  건물 불_0
+----------------------*/
+
+void CBuildFire_0::Initialize()
+{
+	m_pImgKey = L"fire_0";
+	m_tInfo.fCX = 64.f;
+	m_tInfo.fCY = 96.f;
+
+	m_eRender = RENDER_HIT_EFFECT;
+
+	m_tFrame.iFrameStart = 0;
+	m_tFrame.iFrameEnd = 11;
+	m_tFrame.iCurCount = 0;
+	m_tFrame.dwSpeed = 100;
+}
+
+int CBuildFire_0::Update()
+{
+	if (m_bDead)
+	{
+		return OBJ_DEAD;
+	}
+
+	__super::Update_Rect();
+	CEffect::Move_Frame();
+	return OBJ_NOEVENT;
+}
+
+void CBuildFire_0::Render(HDC hDC)
+{
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
+
+	GdiTransparentBlt(hDC,			// 복사 받을 DC
+		m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
+		m_tRect.top + iScrollY,
+		(int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
+		(int)m_tInfo.fCY,
+		hMemDC,						// 복사할 이미지 DC	
+		(int)m_tInfo.fCX * m_tFrame.iCurCount, // 비트맵 출력 시작 좌표(Left, top)
+		(int)m_tInfo.fCY * m_iFire,
+		(int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
+		(int)m_tInfo.fCY,
+		RGB(0, 0, 0));		// 제거할 색상
+}
+
+/*-------------------
+*  건물 불_1
+----------------------*/
+
+void CBuildFire_1::Initialize()
+{
+	m_pImgKey = L"fire_1";
+	m_tInfo.fCX = 64.f;
+	m_tInfo.fCY = 96.f;
+
+	m_eRender = RENDER_HIT_EFFECT;
+
+	m_tFrame.iFrameStart = 0;
+	m_tFrame.iFrameEnd = 11;
+	m_tFrame.iCurCount = 0;
+	m_tFrame.dwSpeed = 100;
+}
+
+int CBuildFire_1::Update()
+{
+	if (m_bDead)
+	{
+		return OBJ_DEAD;
+	}
+
+	__super::Update_Rect();
+	CEffect::Move_Frame();
+	return OBJ_NOEVENT;
+}
+
+void CBuildFire_1::Render(HDC hDC)
+{
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
+
+	GdiTransparentBlt(hDC,			// 복사 받을 DC
+		m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
+		m_tRect.top + iScrollY,
+		(int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
+		(int)m_tInfo.fCY,
+		hMemDC,						// 복사할 이미지 DC	
+		(int)m_tInfo.fCX * m_tFrame.iCurCount, // 비트맵 출력 시작 좌표(Left, top)
+		(int)m_tInfo.fCY * m_iFire,
+		(int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
+		(int)m_tInfo.fCY,
+		RGB(0, 0, 0));		// 제거할 색상
+}
+
+/*-------------------
+*  건물 불_2
+----------------------*/
+
+void CBuildFire_2::Initialize()
+{
+	m_pImgKey = L"fire_2";
+	m_tInfo.fCX = 64.f;
+	m_tInfo.fCY = 96.f;
+
+	m_eRender = RENDER_HIT_EFFECT;
+
+	m_tFrame.iFrameStart = 0;
+	m_tFrame.iFrameEnd = 11;
+	m_tFrame.iCurCount = 0;
+	m_tFrame.dwSpeed = 100;
+}
+
+int CBuildFire_2::Update()
+{
+	if (m_bDead)
+	{
+		return OBJ_DEAD;
+	}
+
+	__super::Update_Rect();
+	CEffect::Move_Frame();
+	return OBJ_NOEVENT;
+}
+
+void CBuildFire_2::Render(HDC hDC)
+{
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
+
+	GdiTransparentBlt(hDC,			// 복사 받을 DC
+		m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
+		m_tRect.top + iScrollY,
+		(int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
+		(int)m_tInfo.fCY,
+		hMemDC,						// 복사할 이미지 DC	
+		(int)m_tInfo.fCX * m_tFrame.iCurCount, // 비트맵 출력 시작 좌표(Left, top)
+		(int)m_tInfo.fCY * m_iFire,
+		(int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
+		(int)m_tInfo.fCY,
+		RGB(0, 0, 0));		// 제거할 색상
+}

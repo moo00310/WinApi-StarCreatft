@@ -20,7 +20,7 @@ void E_CommendCenter::Initialize()
     m_bTemplate = false;
     m_eCurState_Build = BS_IDLE;
     m_eObjID = OT_Commend;
-    m_tStat = { 1500.f, 1500.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
+    m_tStat = { 1500.f, 750.f, 0, 1, 0, 0.f, 80 , DF_LAGE, AT_END };
     m_eRender = RENDER_GAMEOBJECT;
 
     m_bIsEnemy = true;
@@ -40,12 +40,12 @@ int E_CommendCenter::Update()
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead_Wreck_Big>::CreateFX(m_tInfo.fX, m_tInfo.fY));
 
+        FireRemove();
         UnBlock_Map(); // 바닥 이동 불가 해제
         return OBJ_DEAD;
     }
 
-    //KeyInput();
-    //Spawn_Uint_CoolDown();     // 쿨타임 적용해서 유닛생성
+    FireSpwan();
 
     __super::Update_Rect();
     return OBJ_NOEVENT;

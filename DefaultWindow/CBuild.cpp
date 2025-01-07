@@ -12,6 +12,7 @@
 #include "CTank.h"
 #include "CCovertOps.h"
 #include "CSoundMgr.h"
+#include "CBulletEffect.h"
 
 void CBuild::Move_Frame()
 {
@@ -223,5 +224,66 @@ bool CBuild::ChekList_OBJ(OBJ_TYPE _id)
 	return false;
 }
 
+void CBuild::FireRemove()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		m_arrFire[i]->Set_Dead();
+	}
+}
 
+void CBuild::FireSpwan()
+{
+	if (m_eCurState_Build == BS_MAKE ||
+		m_eCurState_Build == BS_TEMP ||
+		m_eCurState_Build == BS_LINK) return;
+
+	spawnHp = m_tStat.m_iMaxHp * 0.5f;
+
+
+	CBulletEffect* temp = nullptr; 
+
+	if ((m_tStat.m_iHp < ((spawnHp) / 6) * 6) && m_arrFire[0] == nullptr)
+	{
+		CObj* fx = CAbstractFactory<CBuildFire_0>::CreateFX(m_tInfo.fX, m_tInfo.fY - 20);
+		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, fx);
+		m_arrFire[0] = fx;
+	}
+
+	if (m_arrFire[0] == nullptr) return;
+	temp = static_cast<CBulletEffect*>(m_arrFire[0]);
+	if ((m_tStat.m_iHp < ((spawnHp) / 6) * 5) && temp->GetFire() == 0)
+	{
+		temp->SetFire(1);
+	}
+
+	if ((m_tStat.m_iHp < ((spawnHp) / 6) * 4) && m_arrFire[1] == nullptr)
+	{
+		CObj* fx = CAbstractFactory<CBuildFire_1>::CreateFX(m_tInfo.fX+40, m_tInfo.fY - 20);
+		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, fx);
+		m_arrFire[1] = fx;
+	}
+
+	if (m_arrFire[1] == nullptr) return;
+	temp = static_cast<CBulletEffect*>(m_arrFire[1]);
+	if ((m_tStat.m_iHp < ((spawnHp) / 6) * 3) && temp->GetFire() == 0)
+	{
+		temp->SetFire(1);
+	}
+
+	if ((m_tStat.m_iHp < ((spawnHp) / 6) * 2) && m_arrFire[2] == nullptr)
+	{
+		CObj* fx = CAbstractFactory<CBuildFire_2>::CreateFX(m_tInfo.fX-40, m_tInfo.fY - 20);
+		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, fx);
+		m_arrFire[2] = fx;
+	}
+
+	if (m_arrFire[2] == nullptr) return;
+	temp = static_cast<CBulletEffect*>(m_arrFire[2]);
+	if ((m_tStat.m_iHp < ((spawnHp) / 6) * 1) && temp->GetFire() == 0)
+	{
+		temp->SetFire(1);
+	}
+
+}
 

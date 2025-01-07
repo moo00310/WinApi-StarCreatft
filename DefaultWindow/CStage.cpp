@@ -81,7 +81,7 @@ void CStage::Initialize()
 	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CCommedCenter>::CreateBuild(300, 245));
 	for (int i = 0; i < 4; i++)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(250 + 25*i, 320));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(250.f + 25*i, 320));
 	}
 
 	// 아군 유닛 생산
@@ -254,4 +254,8 @@ void CStage::Initalize_Bmp()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Wreck/Wreck0(96.96).bmp", L"Wreck0");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Wreck/Wreck1(128.128).bmp", L"Wreck1");
 
+	//Build_Fire
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Fire/0_fire_0_11(64,96).bmp", L"fire_0");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Fire/1_fire_0_11(64.96).bmp", L"fire_1");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Fire/2_fire_0_11(64.96).bmp", L"fire_2");
 }

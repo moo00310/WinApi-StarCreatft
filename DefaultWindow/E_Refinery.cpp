@@ -32,9 +32,10 @@ int E_Refinery::Update()
 
         //ÀÌ¹ÌÁö
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
-
+        FireRemove();
         return OBJ_DEAD;
     }
+    FireSpwan();
 
     __super::Update_Rect();
     return OBJ_NOEVENT;
