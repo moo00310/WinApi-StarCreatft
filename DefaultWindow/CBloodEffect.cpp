@@ -325,3 +325,37 @@ void CGhostDead::Render(HDC hDC)
 
 }
 
+
+/*--------------------
+	 °Ç¹° ÆøÆÈ
+----------------------*/
+void CBuildDead::Initialize()
+{
+}
+
+int CBuildDead::Update()
+{
+	return 0;
+}
+
+void CBuildDead::Render(HDC hDC)
+{
+}
+
+/*--------------------
+	 °Ç¹° ÀÜÇØ
+----------------------*/
+
+
+void CBuildDead_Thrah::Initialize()
+{
+}
+
+int CBuildDead_Thrah::Update()
+{
+	return 0;
+}
+
+void CBuildDead_Thrah::Render(HDC hDC)
+{
+}

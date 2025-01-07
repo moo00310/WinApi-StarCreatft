@@ -64,7 +64,7 @@ void CBuild::Spawn_Uint_Index(OBJ_TYPE _id)
 	switch (_id)
 	{
 	case OT_Scv:
-		CSoundMgr::Get_Instance()->PlaySFX(L"tscrdy00.wav", 0.8f);
+		CSoundMgr::Get_Instance()->PlaySFX(L"SCVBirth.mp3", 0.8f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(temp));
 		break;
 	case OT_Marine:
@@ -85,72 +85,95 @@ void CBuild::Spawn_Uint_Index(OBJ_TYPE _id)
 		break;
 
 	case OT_Marine_SightUp:
+		CSoundMgr::Get_Instance()->PlaySFX(L"ReserchComplate", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Marine_SightUp, true);
 		break;
 	case OT_Marine_Streampack:
+		CSoundMgr::Get_Instance()->PlaySFX(L"UpgradeComp.mp3", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Marine_Streampack, true);
 		break;
 	case OT_Medic_Magic1:
+		CSoundMgr::Get_Instance()->PlaySFX(L"ReserchComplate", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Medic_Magic1, true);
 		break;
 	case OT_Medic_Magic2:
+		CSoundMgr::Get_Instance()->PlaySFX(L"ReserchComplate", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Medic_Magic2, true);
 		break;
 	case OT_Medic_Mana:
+		CSoundMgr::Get_Instance()->PlaySFX(L"ReserchComplate", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Medic_Mana, true);
 		break;
 	case OT_Vulture_Speed:
+		CSoundMgr::Get_Instance()->PlaySFX(L"ReserchComplate", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Vulture_Speed, true);
 		break;
 	case OT_Vulture_mine:
+		CSoundMgr::Get_Instance()->PlaySFX(L"ReserchComplate", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Vulture_mine, true);
 		break;
 	case OT_Tank_SiegeMod:
+		CSoundMgr::Get_Instance()->PlaySFX(L"ReserchComplate", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Tank_SiegeMod, true);
 		break;
 	case OT_Gholiat_SightUp:
+		CSoundMgr::Get_Instance()->PlaySFX(L"UpgradeComp.mp3", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Gholiat_SightUp, true);
 		break;
 	case OT_Mecha_AtkUp:
+		CSoundMgr::Get_Instance()->PlaySFX(L"UpgradeComp.mp3", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Mecha_AtkUp, true);
 		break;
 	case OT_Sky_AtkUp:
+		CSoundMgr::Get_Instance()->PlaySFX(L"UpgradeComp.mp3", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Sky_AtkUp, true);
 		break;
 	case OT_Mecha_DefUp:
+		CSoundMgr::Get_Instance()->PlaySFX(L"UpgradeComp.mp3", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Mecha_DefUp, true);
 		break;
 	case OT_Sky_DefUp:
+		CSoundMgr::Get_Instance()->PlaySFX(L"UpgradeComp.mp3", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Sky_DefUp, true);
 		break;
 	case OT_Wirse_Cloak:
+		CSoundMgr::Get_Instance()->PlaySFX(L"ReserchComplate", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Wirse_Cloak, true);
 		break;
 	case OT_Wires_Mana:
+		CSoundMgr::Get_Instance()->PlaySFX(L"ReserchComplate", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Wires_Mana, true);
 		break;
 	case OT_Vessle_Emp:
+		CSoundMgr::Get_Instance()->PlaySFX(L"ReserchComplate", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Vessle_Emp, true);
 		break;
 	case OT_Vessle_Irradiate:
+		CSoundMgr::Get_Instance()->PlaySFX(L"ReserchComplate", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Vessle_Irradiate, true);
 		break;
 	case OT_Vessle_Mana:
+		CSoundMgr::Get_Instance()->PlaySFX(L"ReserchComplate", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Vessle_Mana, true);
 		break;
 	case OT_Ghost_LockDown:
+		CSoundMgr::Get_Instance()->PlaySFX(L"ReserchComplate", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Ghost_LockDown, true);
 		break;
 	case OT_Ghost_Cloak:
+		CSoundMgr::Get_Instance()->PlaySFX(L"ReserchComplate", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Ghost_Cloak, true);
 		break;
 	case OT_Ghost_SightUp:
+		CSoundMgr::Get_Instance()->PlaySFX(L"ReserchComplate", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Ghost_SightUp, true);
 		break;
 	case OT_Ghost_Mana:
+		CSoundMgr::Get_Instance()->PlaySFX(L"ReserchComplate", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Ghost_Mana, true);
 		break;
 	case OT_Cmd_Nuke:
+		CSoundMgr::Get_Instance()->PlaySFX(L"UpgradeComp.mp3", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Cmd_Nuke, true);
 		break;
 	case OT_END:

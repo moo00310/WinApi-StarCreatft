@@ -10,10 +10,10 @@ CGameMgr* CGameMgr::m_pInstance = nullptr;
 
 void CGameMgr::Initialize()
 {
-	m_iMineral = 1000;
-	m_iGas = 1000;
+	m_iMineral = 0;
+	m_iGas = 0;
 	m_iPop = 0;
-	m_iMaxPop = 100;
+	m_iMaxPop = 0;
 
 	for (int i = 0; i < TECH_END; i++)
 	{
@@ -29,8 +29,8 @@ void CGameMgr::Update()
 {
 	if (m_Time + 4000 < GetTickCount64())
 	{
-		m_iMineral += 100;
-		m_iGas += 100;
+		m_iMineral += 10000;
+		m_iGas += 0;
 		m_Time = GetTickCount64();
 	}
 
@@ -140,19 +140,19 @@ bool CGameMgr::isBuying(OBJ_TYPE _Type)
 		if (m_iMineral < _mineral)
 		{
 			//미네랄이 부족합니다.
-			CSoundMgr::Get_Instance()->PlaySFX(L"taderr00.wav", 0.8);
+			CSoundMgr::Get_Instance()->PlaySFX(L"ErrMineral.mp3", 0.8);
 			
 			return false;
 		}
 		else if (m_iGas < _gas)
 		{
-			CSoundMgr::Get_Instance()->PlaySFX(L"taderr01.wav", 0.8);
+			CSoundMgr::Get_Instance()->PlaySFX(L"ErrGas.mp3", 0.8);
 
 			return false;
 		}
 		else
 		{
-			CSoundMgr::Get_Instance()->PlaySFX(L"taderr02.wav", 0.8);
+			CSoundMgr::Get_Instance()->PlaySFX(L"ErrSupply.mp3", 0.8);
 			return false;
 		}
 	}

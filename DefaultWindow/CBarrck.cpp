@@ -5,6 +5,7 @@
 #include "CBmpMgr.h"
 #include "CKeyMgr.h"
 #include "CGameMgr.h"
+#include "CSoundMgr.h"
 
 CBarrck::CBarrck()
 {

@@ -67,7 +67,7 @@ int CGameMouse::Update()
     Change_Cursor();
 
     // ¸¶¿ì½º Àá±À
-    //LockMouse();
+    LockMouse();
    
     __super::Update_Rect();
     return OBJ_NOEVENT;
@@ -182,7 +182,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
             }
             else
             {
-                CSoundMgr::Get_Instance()->PlaySFX(L"tscerr01.wav", 0.8f);
+                CSoundMgr::Get_Instance()->PlaySFX(L"ScvCantBuild.mp3", 0.8f);
             }
         }
 
@@ -254,6 +254,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
                     {
                         if (pUnit->GetInput() == IP_BUILD) return;
                         pUnit->Astar(nextPos);
+                        MoveSound(m_Select_UnitList->front()->Get_ObjID());
                         pUnit->SetInput(IP_MOVE);
                         array++;
                     }
@@ -538,19 +539,19 @@ void CGameMouse::MoveSound(OBJ_TYPE type)
     {
     case OT_Scv:
         if (intRand == 0)
-            CSoundMgr::Get_Instance()->WaitPlaySFX(L"tscyes00.mp3", 0.8f, 29);
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvMove1.mp3", 0.8f, 29);
         else if (intRand == 1)
-            CSoundMgr::Get_Instance()->WaitPlaySFX(L"tscyes01.mp3", 0.8f, 29);
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvMove2.mp3", 0.8f, 29);
         else
-            CSoundMgr::Get_Instance()->WaitPlaySFX(L"tscyes02.mp3", 0.8f, 29);
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvMove3.mp3", 0.8f, 29);
         break;
     case OT_Marine:
         if(intRand == 0)
-            CSoundMgr::Get_Instance()->WaitPlaySFX(L"MedicMove1.mp3", 0.8f, 29);
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"marineMove1.mp3", 0.8f, 29);
         else if (intRand == 1)
-            CSoundMgr::Get_Instance()->WaitPlaySFX(L"MedicMove2.mp3", 0.8f, 29);
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"marineMove2.mp3", 0.8f, 29);
         else
-            CSoundMgr::Get_Instance()->WaitPlaySFX(L"MedicMove3.mp3", 0.8f, 29);
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"marineMove3.mp3", 0.8f, 29);
         break;
     case OT_Medic: 
         if (intRand == 0)
@@ -605,11 +606,11 @@ void CGameMouse::SelectSound(OBJ_TYPE type)
     {
     case OT_Scv:
         if (intRand == 0)
-            CSoundMgr::Get_Instance()->WaitPlaySFX(L"tscwht00.mp3", 0.8f, 29);
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvSelect1.mp3", 0.8f, 29);
         else if (intRand == 1)
-            CSoundMgr::Get_Instance()->WaitPlaySFX(L"tscwht01.mp3", 0.8f, 29);
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvSelect2.mp3", 0.8f, 29);
         else
-            CSoundMgr::Get_Instance()->WaitPlaySFX(L"tscwht02.mp3", 0.8f, 29);
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvSelect3.mp3", 0.8f, 29);
         break;
     case OT_Marine:
         if (intRand == 0)

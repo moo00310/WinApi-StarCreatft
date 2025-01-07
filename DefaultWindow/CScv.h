@@ -4,7 +4,7 @@ class CScv : public CUnit
 {
 public:
 	CScv():m_bBuildStructure(false), m_BuildAdvancedStructure(false), m_eBuildType(OT_END), isBuilding(false) ,
-	m_iMyBuildTIme(0), m_iBuildCount(0), m_preDir(DIR_END)
+	m_iMyBuildTIme(0), m_iBuildCount(0), m_preDir(DIR_END), m_AttackSound(0)
 	{
 		ZeroMemory(&m_pos, sizeof(Pos));
 	}
@@ -44,5 +44,6 @@ private:
 	int m_iBuildCount;
 
 	DIRECTION m_preDir;
+	ULONGLONG m_AttackSound;
 };
 

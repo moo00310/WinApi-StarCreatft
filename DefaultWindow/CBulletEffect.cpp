@@ -571,7 +571,7 @@ int CNukeMissileBoom::Update()
 		m_iDeadImg = 1;
 		if (!m_bIsDamage)
 		{
-			CCollisionMgr::Collision_Explosion(this, *E_list, *E_build_list, 300);
+			CCollisionMgr::Collision_Explosion(this, *E_list, *E_build_list, 1000);
 			CSoundMgr::Get_Instance()->PlaySFX(L"GhostNukeEnd.mp3", 1.0f);
 			m_bIsDamage = true;
 		}

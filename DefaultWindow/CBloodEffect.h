@@ -61,3 +61,28 @@ public:
 	int Update() override;
 	void Render(HDC hDC) override;
 };
+
+
+class CBuildDead : public CBloodEffect
+{
+public:
+	CBuildDead() {};
+	~CBuildDead() {};
+
+public:
+	void Initialize() override;
+	int Update() override;
+	void Render(HDC hDC) override;
+};
+
+class CBuildDead_Thrah : public CBloodEffect
+{
+public:
+	CBuildDead_Thrah() {};
+	~CBuildDead_Thrah() {};
+
+public:
+	void Initialize() override;
+	int Update() override;
+	void Render(HDC hDC) override;
+};

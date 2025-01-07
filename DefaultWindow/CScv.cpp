@@ -61,6 +61,28 @@ int CScv::Update()
 	Update_State();
 	KeyInput();
 
+	if (m_eCurState == STATE_ATTACK && m_AttackSound + GetTickCount64())
+	{
+		int irand = rand() % 4;
+
+		if (irand == 0)
+		{
+			CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvAttack1.mp3", 1.0f, 28);
+		}
+		else if (irand == 1)
+		{
+			CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvAttack2.mp3", 1.0f, 27);
+		}
+		else if(irand == 2)
+		{
+			CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvAttack3.mp3", 1.0f, 26);
+		}
+		else if (irand == 3)
+		{
+			CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvAttack5.mp3", 1.0f, 25);
+		}
+	}
+
 	__super::Update_Rect();
 	return OBJ_NOEVENT;
 }
@@ -435,7 +457,7 @@ void CScv::BuildAime()
 	}
 	else if (m_iBuildCount > (m_iMyBuildTIme * 0.2f) * 5.f)
 	{
-		CSoundMgr::Get_Instance()->PlaySFX(L"tscupd00.wav",0.8f);
+		CSoundMgr::Get_Instance()->PlaySFX(L"ScvFinish.mp3",0.8f);
 		m_iBuildCount = 0;
 		if(m_eBuildType == OT_Commend)
 			CGameMgr::Get_Instance()->Add_MaxPop(10);
