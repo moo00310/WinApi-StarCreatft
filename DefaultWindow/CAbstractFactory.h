@@ -78,6 +78,13 @@ public:
 		return pObj;
 	}
 
+	static CObj* CreateBattleAtk(CObj* my, CObj* _Enemy)
+	{
+		CObj* pObj = new T(my, _Enemy);
+		pObj->Initialize();
+		return pObj;
+	}
+
 	static CUI* CreateUI()
 	{
 		CUI* pUi = new T;

@@ -151,7 +151,7 @@ void E_Medic::AttackToEnemy(CObj* _Enemey)
 	m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, _Enemey->Get_Info().fX, _Enemey->Get_Info().fY);
 	m_eCurState = STATE_ATTACK;
 
-	if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64() &&
+	if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64() + 200 &&
 		m_tFrame.iCurCount == m_iAttackFrame)
 	{
 		_Enemey->Add_Stat_hp(10);

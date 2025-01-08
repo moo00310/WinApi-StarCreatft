@@ -198,8 +198,6 @@ bool CUnit::CanMove(Pos _pos, int _dir)
 
 float CUnit::GetLadanAngle(float player_x, float player_y, float monster_x, float monster_y)
 {
-	float angle(0.f);
-
 	float dx = monster_x - player_x;
 	float dy = monster_y - player_y;
 
@@ -394,7 +392,7 @@ void CUnit::ChaseUnit()
 {
 	CObj* unit(nullptr);
 
-	if ((unit = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pMonsterList, *m_pBuildList_E, m_tStat.m_iRange + 64.f)) != nullptr)
+	if ((unit = CCollisionMgr::Collision_RangeChack_Attack(this, *m_pMonsterList, *m_pBuildList_E, m_tStat.m_iRange + 96.f)) != nullptr)
 	{
 		if (preUint != unit)
 		{

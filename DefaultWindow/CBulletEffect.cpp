@@ -2,7 +2,6 @@
 #include "CBulletEffect.h"
 #include "CBmpMgr.h"
 #include "CCollisionMgr.h"
-#include "CObjMgr.h"
 #include "CAbstractFactory.h"
 #include "CSoundMgr.h"
 
@@ -962,3 +961,79 @@ void CBuildFire_2::Render(HDC hDC)
 }
 
 
+/*---------------------
+* 배클크루저 공격
+------------------------*/
+
+void CBattleAttack::Initialize()
+{
+	m_tInfo.fCX = 128.f;
+	m_tInfo.fCY = 128.f;
+
+	m_tInfo.fX = m_my->Get_Info().fX;
+	m_tInfo.fY = m_my->Get_Info().fY;
+	m_eDir = m_my->Get_Direction();
+
+	m_pImgKey = L"BattleAttack";
+	E_list = CObjMgr::Get_Instance()->Get_ObjList(OBJ_MONSTER);
+	E_build_list = CObjMgr::Get_Instance()->Get_ObjList(OBJ_BUILD_E);
+	m_bIsDamage = false;
+
+	CCollisionMgr::Collision_Range(&m_tInfo.fX, &m_tInfo.fY, 40.f, m_Enemy->Get_Info().fX, m_Enemy->Get_Info().fY);
+
+	//Ladian = 22.5f * (int)m_eDir * PI / 180.f;
+	m_eRender = RENDER_HIT_EFFECT;
+}
+
+int CBattleAttack::Update()
+{
+	auto it1 = find(E_list->begin(), E_list->end(), m_Enemy);
+	auto it2 = find(E_build_list->begin(), E_build_list->end(), m_Enemy);
+	if (it1 == E_list->end() && it2 == E_build_list->end())
+	{
+		return OBJ_DEAD;
+	}
+
+	float fWidth = m_Enemy->Get_Info().fX - m_tInfo.fX;
+	float fHeight = m_Enemy->Get_Info().fY - m_tInfo.fY;
+
+	float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);
+
+	Ladian = atan2(fHeight, fWidth);
+	m_tInfo.fX += 5.f * cosf(Ladian);
+	m_tInfo.fY += 5.f * sinf(Ladian);
+
+	if(fDistance < 5.0f)
+	{
+		DEFENCEID Dfence_id = m_Enemy->Get_Stat()->m_eDfenceID;
+		ATTACKID Attack_id = AT_NORMAL;
+		float AttackDamage = fabsf((m_Enemy->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * 25)));
+
+		m_Enemy->Add_Stat_hp(-AttackDamage);
+		return OBJ_DEAD;
+	}
+		
+	__super::Update_Rect();
+	return OBJ_NOEVENT;
+}
+
+void CBattleAttack::Render(HDC hDC)
+{
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
+
+	GdiTransparentBlt(hDC,			// 복사 받을 DC
+		m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
+		m_tRect.top + iScrollY,
+		(int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
+		(int)m_tInfo.fCY,
+		hMemDC,						// 복사할 이미지 DC	
+		0, // 비트맵 출력 시작 좌표(Left, top)
+		(int)m_tInfo.fCY * (int)m_eDir,
+		(int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
+		(int)m_tInfo.fCY,
+		RGB(0, 0, 0));		// 제거할 색상
+
+}

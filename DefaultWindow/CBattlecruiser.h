@@ -18,6 +18,7 @@ public:
 
 
 	bool CanGo(Pos pos) override;
+
 private:
 	ULONGLONG AttackCoolTime;
 	bool m_isAttack;

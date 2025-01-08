@@ -1,5 +1,7 @@
 #pragma once
 #include "CEffect.h"
+#include "CObjMgr.h"
+#include "CCollisionMgr.h"
 class CBulletEffect : public CEffect
 {
 public:
@@ -157,4 +159,24 @@ public:
 	void Initialize() override;
 	int Update() override;
 	void Render(HDC hDC) override;
+};
+
+class CBattleAttack : public CBulletEffect
+{
+public:
+	CBattleAttack(CObj* _my, CObj* _Enemy) : m_Enemy(_Enemy), m_my(_my), m_bIsDamage(false), E_build_list(nullptr), E_list(nullptr), Ladian(0)
+	{}
+	~CBattleAttack() {}
+
+public:
+	void Initialize();
+	int Update() override;
+	void Render(HDC hDC) override;
+
+	int m_bIsDamage;
+	CObj* m_Enemy;
+	CObj* m_my;
+	list<CObj*>* E_list;
+	list<CObj*>* E_build_list;
+	float Ladian;
 };

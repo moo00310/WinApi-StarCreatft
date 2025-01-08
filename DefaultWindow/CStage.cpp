@@ -78,14 +78,14 @@ void CStage::Initialize()
 	//MyObjSpwan();
 	//EnemyObjSpwan();
 
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<CBattlecruiser>::Create(600.f, 600.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CBattlecruiser>::Create(300.f, 300.f));
 
-	//// ½Â¸® Å×½ºÆ®
-	//{
-	//	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(600.f, 600.f));
-	//	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(300.f, 300.f));
-	//	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(310.f, 310.f));
-	//}
+	// ½Â¸® Å×½ºÆ®
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(600.f, 600.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(300.f, 300.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(310.f, 310.f));
+	}
 	
 }
 
@@ -360,6 +360,8 @@ void CStage::Initalize_Bmp()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Ghost/GhostShot.bmp", L"GhostShot");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/TankAtt/TankHit.bmp", L"TankHit");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/TankAtt/Tank(100,108).bmp", L"SiegeTankHit");
+
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/BattleAtk/BattleAttack.bmp", L"BattleAttack");
 	
 	//Nuke
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/NukeMissile/Nuke(48,40).bmp", L"NukeMissile");

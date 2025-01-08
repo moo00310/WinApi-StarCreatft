@@ -311,22 +311,32 @@ void CCollisionMgr::Collision_Explosion(CObj* _pEx, list<CObj*> _unit, list<CObj
 
 CObj* CCollisionMgr::Collision_RangeChack_Attack(CObj* _pPlayer, list<CObj*> _unit, list<CObj*>_build, float _dis)
 {
-
+	float minDistance(4096.f);
+	CObj* nearUnit(nullptr);
 	for (auto unit : _unit)
 	{
 		float fWidth = fabsf(unit->Get_Scroll_Info().fX - _pPlayer->Get_Scroll_Info().fX);
 		float fHeight = fabsf(unit->Get_Scroll_Info().fY - _pPlayer->Get_Scroll_Info().fY);
 		float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);
 
-		if (_pPlayer->Get_ObjID() == OT_SiegeTank && fDistance < 80.f)
+		if ((_pPlayer->Get_ObjID() == OT_SiegeTank && fDistance < 80.f) ||
+			(_pPlayer->Get_ObjID() == OT_Tank && unit->Get_ObjID() == OT_Battlecruiser) || 
+			(_pPlayer->Get_ObjID() == OT_SiegeTank && unit->Get_ObjID() == OT_Battlecruiser))
 			continue;
 
-		if (fDistance <= _dis)
-			return unit;
+		if (fDistance < _dis)
+		{
+			if (minDistance > fDistance)
+			{
+				nearUnit = unit;
+				minDistance = fDistance;
+			}
+		}
 	}
+	if (nearUnit != nullptr)
+		return nearUnit;
 
 	if(_pPlayer->Get_ObjID() == OT_Medic) return nullptr;
-
 	for (auto unit : _build)
 	{
 		float fWidth = fabsf(unit->Get_Scroll_Info().fX - _pPlayer->Get_Scroll_Info().fX);
@@ -336,7 +346,6 @@ CObj* CCollisionMgr::Collision_RangeChack_Attack(CObj* _pPlayer, list<CObj*> _un
 		if (fDistance <= _dis)
 			return unit;
 	}
-
 
 	return nullptr;
 }
@@ -355,4 +364,17 @@ Pos CCollisionMgr::Collision_RangePos(CObj* _pPlayer, Pos pos, float _dis)
 	Pos temp{ (int)(y / 32), (int)(x / 32) };
 
 	return temp;
+}
+
+void CCollisionMgr::Collision_Range(float* _x, float* _y, float _dis, float _TargetX, float _TargetY)
+{
+	float fWidth = _TargetX - *_x;
+	float fHeight = _TargetY - *_y;
+
+	float distance = sqrtf(fWidth * fWidth + fHeight * fHeight);
+	if (distance == 0) return;
+	*_x = *_x + (_dis * 1 * fWidth / distance);
+	*_y = *_y + (_dis * 1 * fHeight / distance);
+
+	return;
 }

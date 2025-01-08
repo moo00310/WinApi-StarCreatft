@@ -4,6 +4,9 @@
 #include "CMapMgr.h"
 #include "CSoundMgr.h"
 #include "CBmpMgr.h"
+#include "CCollisionMgr.h"
+#include "CBulletEffect.h"
+#include "CAbstractFactory.h"
 
 void CBattlecruiser::Initialize()
 {
@@ -17,7 +20,7 @@ void CBattlecruiser::Initialize()
 
 	m_pImgKey = L"Battlecruiser";
 	m_eObjID = OT_Battlecruiser;
-	m_tStat = { 500.f, 500.f, 25, 3, 192, 1.1f, 1300 , DF_LAGE, AT_NORMAL };
+	m_tStat = { 500.f, 500.f, 25, 3, 256, 1.1f, 1300 , DF_LAGE, AT_NORMAL };
 
 	m_iAttackFrame = 0;
 
@@ -64,28 +67,13 @@ void CBattlecruiser::Render(HDC hDC)
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
 	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
-	HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_7");
+	HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_5");
 	HDC		hShadeDC = CBmpMgr::Get_Instance()->Find_Image(L"BattleShade");
-
-	if (m_bSelect)
-	{
-		GdiTransparentBlt(hDC,			// 복사 받을 DC
-			m_tRect.left + iScrollX + 15,	// 복사 받을 위치 좌표 X, Y	
-			m_tRect.top + iScrollY + 25,
-			32,			// 복사 받을 이미지의 가로, 세로
-			32,
-			hFxDC,						// 복사할 이미지 DC	
-			0, // 비트맵 출력 시작 좌표(Left, top)
-			0,
-			32,										// 복사할 이미지의 가로, 세로
-			32,
-			RGB(255, 0, 255));		// 제거할 색상
-	}
 
 	//그림자
 	GdiTransparentBlt(hDC,			// 복사 받을 DC
-		m_tRect.left + iScrollX +10,	// 복사 받을 위치 좌표 X, Y	
-		m_tRect.top + iScrollY + 40,
+		m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
+		m_tRect.top + iScrollY + 30,
 		(int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
 		(int)m_tInfo.fCY,
 		hShadeDC,						// 복사할 이미지 DC	
@@ -95,8 +83,23 @@ void CBattlecruiser::Render(HDC hDC)
 		(int)m_tInfo.fCY,
 		RGB(0, 0, 0));
 
+	if (m_bSelect)
+	{
+		GdiTransparentBlt(hDC,			// 복사 받을 DC
+			m_tRect.left + iScrollX +10 ,	// 복사 받을 위치 좌표 X, Y	
+			m_tRect.top + iScrollY + 30,
+			96,			// 복사 받을 이미지의 가로, 세로
+			96,
+			hFxDC,						// 복사할 이미지 DC	
+			0, // 비트맵 출력 시작 좌표(Left, top)
+			0,
+			96,										// 복사할 이미지의 가로, 세로
+			96,
+			RGB(255, 0, 255));		// 제거할 색상
+	}
 
-	// 몸체ㅐ
+
+	// 몸체
 	GdiTransparentBlt(hDC,			// 복사 받을 DC
 		m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
 		m_tRect.top + iScrollY,
@@ -174,11 +177,10 @@ void CBattlecruiser::AttackToEnemy(CObj* _Enemey)
 	else
 		m_eCurState = STATE_ATTACK;
 
-	if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64() &&
-		m_tFrame.iCurCount == m_iAttackFrame && !m_isAttack)
+	if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64() && !m_isAttack)
 	{
-		
-
+		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBattleAttack>::CreateBattleAtk(this, _Enemey));
+		m_isAttack = true;
 		m_AttackTime = GetTickCount64();
 	}
 }

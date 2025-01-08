@@ -24,6 +24,7 @@ public:
 
 	static Pos Collision_RangePos(CObj* _pPlayer, CObj* _unit, float _dis);
 	static Pos Collision_RangePos(CObj* _pPlayer, Pos pos, float _dis);
+	static void Collision_Range(float* _x, float* _y, float _dis, float _TargetX, float _TargetY);
 
 	static void Collision_Explosion(CObj* _pEx, list<CObj*> _unit, list<CObj*> _build, int Damage);
 	static bool Collision_Unit_body(CObj* _my, list<CObj*> _unit);
