@@ -586,7 +586,7 @@ void CGameMouse::MoveSound(OBJ_TYPE type)
         else
             CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankMove3.mp3", 0.8f, 29);
         break;
-    case OT_Science_Vessel:
+    case OT_Battlecruiser:
         break;
     case OT_Unit_End:
         break;
@@ -652,7 +652,7 @@ void CGameMouse::SelectSound(CObj* _obj)
         else
             CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankSelect1.mp3", 0.8f, 29);
         break;
-    case OT_Science_Vessel:
+    case OT_Battlecruiser:
         break;
     case OT_Unit_End:
         break;

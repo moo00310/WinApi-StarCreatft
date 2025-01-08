@@ -116,8 +116,8 @@ int CWireSmallUI::UnitWire(OBJ_TYPE m_eID)
 	case OT_SiegeTank:
 		return 7;
 		break;
-	case OT_Science_Vessel:
-		return 10;
+	case OT_Battlecruiser:
+		return 11;
 		break;
 	}
 	return 999;

@@ -140,6 +140,7 @@
     <ClInclude Include="CAnimeButton.h" />
     <ClInclude Include="CArmory.h" />
     <ClInclude Include="CBarrck.h" />
+    <ClInclude Include="CBattlecruiser.h" />
     <ClInclude Include="CBloodEffect.h" />
     <ClInclude Include="CBuild.h" />
     <ClInclude Include="CAbstractFactory.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="CAnimeButton.cpp" />
     <ClCompile Include="CArmory.cpp" />
     <ClCompile Include="CBarrck.cpp" />
+    <ClCompile Include="CBattlecruiser.cpp" />
     <ClCompile Include="CBloodEffect.cpp" />
     <ClCompile Include="CBuild.cpp" />
     <ClCompile Include="CBmpMgr.cpp" />

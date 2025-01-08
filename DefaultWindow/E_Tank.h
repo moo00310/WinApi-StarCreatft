@@ -4,7 +4,7 @@ class E_Tank : public CUnit
 {
 public:
 	E_Tank() : m_eAttackDir(DIR_RIGHT), m_iBodyID(0), m_bSiegeMode(false),
-		m_bSiegeMode_Anime(false), m_isAttack(false)
+		m_bSiegeMode_Anime(false), m_isAttack(false), dwAttackCoolTime(0)
 	{
 		ZeroMemory(&m_tBodyFram, sizeof(FRAME));
 	}

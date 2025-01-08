@@ -108,7 +108,7 @@ void CUnit::Astar(Pos _tTarget_Index)
 
 			if (nextPos.x < 0 || nextPos.y < 0)
 				continue;
-			if (nextPos.x > 128 || nextPos.y > 128)
+			if (nextPos.x >= 128 || nextPos.y >= 128)
 				continue;
 
 			// 갈 수 있는 지역은 맞는지 확인

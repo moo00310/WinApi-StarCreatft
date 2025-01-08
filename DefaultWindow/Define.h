@@ -44,7 +44,7 @@ enum DIRECTION {
 
 enum OBJID { OBJ_PLAYER, OBJ_BUILD, OBJ_BUILD_E, OBJ_MONSTER, OBJ_EFFECT, OBJ_BUTTON, OBJ_MOUSE, OBJ_END };
 
-enum RENDERID { RENDER_BACKGROUND, RENDER_EFFECT, RENDER_GAMEOBJECT, RENDER_HIT_EFFECT, RENDER_UI ,RENDER_END };
+enum RENDERID { RENDER_BACKGROUND, RENDER_EFFECT, RENDER_GAMEOBJECT, RENDER_SKYOBJ, RENDER_HIT_EFFECT, RENDER_UI ,RENDER_END };
 
 enum SOUND_ID { SOUND_BGM, SOUND_SFX, SOUN_ALL, SOUND_END };
 enum SCENEID { SC_LOGO, SC_MENU, SC_EDIT, SC_STAGE, SC_ENDING, SC_END };
@@ -296,7 +296,7 @@ inline fPOINT Nomalization(const Pos _dir)
 ----------------------------------------------*/
 enum OBJ_TYPE
 {
-	OT_Scv, OT_Marine, OT_Medic, OT_Ghost, OT_Tank, OT_SiegeTank, OT_Science_Vessel, OT_Unit_End,
+	OT_Scv, OT_Marine, OT_Medic, OT_Ghost, OT_Tank, OT_SiegeTank, OT_Battlecruiser, OT_Unit_End,
 	OT_Commend, OT_Suffly, OT_Refinery, OT_Barrck, OT_Academy ,OT_Factory, OT_Addon, OT_Armory, OT_Starport, OT_StarportAddOn,
 	OT_ScienceFacility, OT_ScienceSecret, OT_CmdNuke, OT_Build_End,
 	OT_Marine_SightUp, OT_Marine_Streampack, OT_Medic_Magic1, OT_Medic_Magic2, OT_Medic_Mana,
@@ -331,7 +331,7 @@ const map<OBJ_TYPE, std::tuple<int, int, int, int>> ObjCost =
 	{OT_Medic,             {50, 25, 1, 30 * Frame}},
 	{OT_Ghost,             {25, 75, 1, 50 * Frame}},
 	{OT_Tank,              {150, 100, 2, 50 * Frame}},
-	{OT_Science_Vessel,    {100, 225, 2, 80 * Frame}},
+	{OT_Battlecruiser,    {400, 300, 6, 133 * Frame}},
 
 	// 건물 이름, {미네랄, 가스, 제공되는 인구수, 소요시간}
 	{OT_Commend,           {400,  0, 0, 120 * Frame}},

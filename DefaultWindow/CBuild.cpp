@@ -13,6 +13,7 @@
 #include "CCovertOps.h"
 #include "CSoundMgr.h"
 #include "CBulletEffect.h"
+#include "CBattlecruiser.h"
 
 void CBuild::Move_Frame()
 {
@@ -80,7 +81,8 @@ void CBuild::Spawn_Uint_Index(OBJ_TYPE _id)
 	case OT_Tank:
 		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CTank>::Create(temp));
 		break;
-	case OT_Science_Vessel:
+	case OT_Battlecruiser:
+		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CBattlecruiser>::Create(temp));
 		break;
 	case OT_Unit_End:
 		break;

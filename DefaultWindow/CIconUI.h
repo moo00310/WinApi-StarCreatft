@@ -26,6 +26,8 @@ private:
 	void Tank();
 	void SiegeTank();
 
+	void Battlecruiser();
+
 	//--------------------------------
 	void CommedCenter();
 	void Suffly();

@@ -90,7 +90,9 @@ void CPortUI::Change_Port()
 			m_pImgKey = L"Tank_port";
 			Anime_Port(0, 44);
 			break;
-		case OT_Science_Vessel:
+		case OT_Battlecruiser:
+			m_pImgKey = L"Battle_port";
+			Anime_Port(0, 74);
 			break;
 		case OT_Suffly:
 			m_pImgKey = L"Dea";

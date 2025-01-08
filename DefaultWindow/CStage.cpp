@@ -30,6 +30,7 @@
 #include "CMedic.h"
 #include "CGhost.h"
 #include "CTank.h"
+#include "CBattlecruiser.h"
 
 #include "E_CommendCenter.h"
 #include "E_Suffly.h"
@@ -74,8 +75,10 @@ void CStage::Initialize()
 	// 마우스 생산
 	CMouseMgr::Get_Instance()->Add_Mouse(CAbstractFactory<CGameMouse>::Create());
 
-	MyObjSpwan();
-	EnemyObjSpwan();
+	//MyObjSpwan();
+	//EnemyObjSpwan();
+
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<CBattlecruiser>::Create(600.f, 600.f));
 
 	//// 승리 테스트
 	//{
@@ -281,6 +284,9 @@ void CStage::Initalize_Bmp()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/MainUI.bmp", L"MainUI");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Icon/ButtonIcon.bmp", L"ButtonIcon");
 
+	// minimap
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/MiniMap.bmp", L"MiniMap");
+
 	//Port
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/SCV/SCV.bmp", L"Scv_port");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Marine/Marine.bmp", L"Marine_port");
@@ -288,6 +294,7 @@ void CStage::Initalize_Bmp()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Ghost/Ghost.bmp", L"Ghost_port");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/SeigeTank/Tank.bmp", L"Tank_port");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Advisor/Advosr.bmp", L"Advosr");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Battlecruiser/Battle_port.bmp", L"Battle_port");
 
 	//Wire
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Wire/BigWire.bmp", L"BigWire");
@@ -305,6 +312,9 @@ void CStage::Initalize_Bmp()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Ghost/Ghost.bmp", L"Ghost");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Tank/TankBody.bmp", L"TankBody");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Tank/TankHead.bmp", L"TankHead");
+
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Battlecruiser/Battlecruiser(120,120).bmp", L"Battlecruiser");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Battlecruiser/BattleShade.bmp", L"BattleShade");
 
 	//Select
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Select/Select_0(32.32).bmp", L"Select_0");
@@ -387,6 +397,4 @@ void CStage::Initalize_Bmp()
 	//Dea
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Dea.bmp", L"Dea");
 
-	//
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/MiniMap.bmp", L"MiniMap");
 }

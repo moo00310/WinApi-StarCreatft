@@ -139,10 +139,10 @@ void CWireUI::TextName(HDC hdc)
 		Text_X = 240;
 		UnitID = 7;
 		break;
-	case OT_Science_Vessel:
-		swprintf_s(m_wcHp, 32, L"테란 사이언스 베슬");
+	case OT_Battlecruiser:
+		swprintf_s(m_wcHp, 32, L"테란 배틀크루져");
 		Text_X = 240;
-		UnitID = 10;
+		UnitID = 11;
 		break;
 	case OT_Unit_End:
 		break;

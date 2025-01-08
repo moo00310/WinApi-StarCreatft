@@ -30,7 +30,7 @@ public:
 
 public:
 	void Astar(Pos _tTarget_Index);
-	bool CanGo(Pos pos);
+	virtual bool CanGo(Pos pos);
 	bool CanMove(Pos _pos, int _dir);
 	DIRECTION GetDirection(float player_x, float player_y, float monster_x, float monster_y);
 	float GetLadanAngle(float player_x, float player_y, float monster_x, float monster_y);

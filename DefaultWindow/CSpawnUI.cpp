@@ -175,9 +175,9 @@ void CSpawnUI::Change_SpawnIcon(OBJ_TYPE _type)
 		IndexX = 2;
 		IndexY = 16;
 		break;
-	case OT_Science_Vessel:
+	case OT_Battlecruiser:
 		IndexX = 2;
-		IndexY = 21;
+		IndexY = 20;
 		break;
 	case OT_Unit_End:
 		break;

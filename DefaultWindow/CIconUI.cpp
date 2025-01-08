@@ -222,7 +222,8 @@ void CIconUI::Change_Button()
 	case OT_SiegeTank:
 		SiegeTank();
 		break;
-	case OT_Science_Vessel:
+	case OT_Battlecruiser:
+		Battlecruiser();
 		break;
 	case OT_Unit_End:
 		break;
@@ -656,6 +657,49 @@ void CIconUI::SiegeTank()
 	else
 		m_Button_Icon[8].first = 0;
 	m_Button_Icon[8].second = IC_Tankmod;
+}
+
+void CIconUI::Battlecruiser()
+{
+	if (m_UnitState == STATE_MOVE)
+		m_Button_Icon[0].first = 1;
+	else
+		m_Button_Icon[0].first = 0;
+	m_Button_Icon[0].second = IC_Move;
+
+	if (m_UnitState == STATE_IDLE)
+		m_Button_Icon[1].first = 1;
+	else
+		m_Button_Icon[1].first = 0;
+	m_Button_Icon[1].second = IC_Stop;
+
+	if (m_UnitState == STATE_ATTACK || m_UnitState == STATE_SHOOT)
+		m_Button_Icon[2].first = 1;
+	else
+		m_Button_Icon[2].first = 0;
+	m_Button_Icon[2].second = IC_Attack;
+
+	m_Button_Icon[3].first = 0;
+	m_Button_Icon[3].second = IC_Patrol;
+
+	if (m_InputState == IP_HOLD)
+		m_Button_Icon[4].first = 1;
+	else
+		m_Button_Icon[4].first = 0;
+	m_Button_Icon[4].second = IC_Hold;
+
+
+	m_Button_Icon[5].first = 99;
+	m_Button_Icon[5].second = 99;
+
+	m_Button_Icon[6].first = 99;
+	m_Button_Icon[6].second = 99;
+
+	m_Button_Icon[7].first = 99;
+	m_Button_Icon[7].second = 99;
+
+	m_Button_Icon[9].first = 99;
+	m_Button_Icon[9].second = 99;
 }
 
 void CIconUI::CommedCenter()
