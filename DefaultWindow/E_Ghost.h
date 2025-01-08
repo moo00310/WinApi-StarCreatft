@@ -15,5 +15,9 @@ public:
 	void Change_Motion() override;
 	void KeyInput() override;
 	void AttackToEnemy(CObj* _Enemey) override;
+
+private:
+	ULONGLONG AttackCoolTime;
+	int m_isAttack;
 };
 

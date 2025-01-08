@@ -3,7 +3,8 @@
 class E_Tank : public CUnit
 {
 public:
-	E_Tank() : m_eAttackDir(DIR_RIGHT), m_iBodyID(0), m_bSiegeMode(false), m_bSiegeMode_Anime(false)
+	E_Tank() : m_eAttackDir(DIR_RIGHT), m_iBodyID(0), m_bSiegeMode(false),
+		m_bSiegeMode_Anime(false), m_isAttack(false)
 	{
 		ZeroMemory(&m_tBodyFram, sizeof(FRAME));
 	}
@@ -42,5 +43,7 @@ private:
 	bool m_bSiegeMode_Anime;
 	DIRECTION m_eAttackDir;
 	FRAME m_tBodyFram;
+	bool m_isAttack;
+	ULONGLONG dwAttackCoolTime;
 };
 

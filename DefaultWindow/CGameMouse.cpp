@@ -395,7 +395,7 @@ void CGameMouse::ColObject()
 
     CObj* Obj(nullptr);
     // 마우스랑 충돌했는지 검사
-    if ((Obj = CCollisionMgr::Collision_Rect_Mouse(m_tRect, *m_UnitList, *m_BuildList, * m_UnitList_E, *m_BuildList_E)) != nullptr)
+    if ((Obj = CCollisionMgr::Collision_Rect_Mouse(m_tRect, *m_UnitList, *m_BuildList, *m_UnitList_E, *m_BuildList_E)) != nullptr)
     {
         if (Obj->GetIsEnemy())
             m_eCurState = MS_OBJ_E;
@@ -411,7 +411,7 @@ void CGameMouse::ColObject()
         }
            
     }
-    else if (MS_OBJ == m_eCurState)
+    else if (MS_OBJ == m_eCurState || MS_OBJ_E == m_eCurState)
     {
         m_eCurState = MS_IDLE;
     }
