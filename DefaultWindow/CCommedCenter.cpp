@@ -29,7 +29,6 @@ void CCommedCenter::Initialize()
     m_eRender = RENDER_GAMEOBJECT;
 
     m_iMyBuildTIme = get<3>(ObjCost.at(OT_Commend));
-
     __super::Update_Rect();
     Block_Map();
 }
@@ -49,9 +48,10 @@ int CCommedCenter::Update()
         return OBJ_DEAD;
     }
 
-    if (m_Time + 1000 < GetTickCount64())
+
+    if (m_Time + 1000 < GetTickCount64() && (m_eCurState_Build == BS_IDLE || m_eCurState_Build == BS_RUN))
     {
-        CGameMgr::Get_Instance()->Add_Mineral(50);
+        CGameMgr::Get_Instance()->Add_Mineral(25);
         m_Time = GetTickCount64();
     }
 

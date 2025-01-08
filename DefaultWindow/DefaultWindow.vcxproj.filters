@@ -292,6 +292,9 @@
     <Filter Include="02. Scene\04. Ending">
       <UniqueIdentifier>{af4fce7f-dd80-407a-bc6d-46894dc69334}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\05.MiniMap">
+      <UniqueIdentifier>{38a669b9-2186-4f61-ad69-c8c3abde1042}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -570,6 +573,9 @@
     <ClInclude Include="CEnding.h">
       <Filter>02. Scene\04. Ending</Filter>
     </ClInclude>
+    <ClInclude Include="CMiniMap.h">
+      <Filter>04. UI\05.MiniMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -808,6 +814,9 @@
     </ClCompile>
     <ClCompile Include="CEnding.cpp">
       <Filter>02. Scene\04. Ending</Filter>
+    </ClCompile>
+    <ClCompile Include="CMiniMap.cpp">
+      <Filter>04. UI\05.MiniMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

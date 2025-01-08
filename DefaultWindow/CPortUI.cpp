@@ -92,8 +92,11 @@ void CPortUI::Change_Port()
 			break;
 		case OT_Science_Vessel:
 			break;
-		case OT_Commend:
 		case OT_Suffly:
+			m_pImgKey = L"Dea";
+			Anime_Port(0, 29);
+			break;
+		case OT_Commend:
 		case OT_Refinery:
 		case OT_Barrck:
 		case OT_Academy:

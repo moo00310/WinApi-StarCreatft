@@ -7,6 +7,7 @@
 #include "CSoundMgr.h"
 #include "CObjMgr.h"
 #include "CSceneMgr.h"
+#include "CScrollMgr.h"
 
 CGameMgr* CGameMgr::m_pInstance = nullptr;
 
@@ -15,11 +16,11 @@ void CGameMgr::Initialize()
 	m_iMineral = 0;
 	m_iGas = 0;
 	m_iPop = 0;
-	m_iMaxPop = 0;
+	m_iMaxPop = 10;
 
 	for (int i = 0; i < TECH_END; i++)
 	{
-		TechnicArray[i] = 1;
+		TechnicArray[i] = 0;
 	}
 
 	for (int i = 0; i < UG_END; ++i) {
@@ -31,7 +32,6 @@ void CGameMgr::Initialize()
 void CGameMgr::Update()
 {
 
-
 	// ¸Ê µð¹ö±×
 	/*if (CKeyMgr::Get_Instance()->Key_Down(VK_F1))
 	{
@@ -42,6 +42,14 @@ void CGameMgr::Update()
 		m_isDeBug = false;
 	}*/
 
+	if(CKeyMgr::Get_Instance()->Key_Pressing(VK_RIGHT))
+		CScrollMgr::Get_Instance()->Set_ScrollX(-10.f);
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LEFT))
+		CScrollMgr::Get_Instance()->Set_ScrollX(10.f);
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_UP))
+		CScrollMgr::Get_Instance()->Set_ScrollY(10.f);
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_DOWN))
+		CScrollMgr::Get_Instance()->Set_ScrollY(-10.f);
 }
 
 void CGameMgr::Late_Update()

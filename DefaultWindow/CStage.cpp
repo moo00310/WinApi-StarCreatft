@@ -74,16 +74,15 @@ void CStage::Initialize()
 	// 마우스 생산
 	CMouseMgr::Get_Instance()->Add_Mouse(CAbstractFactory<CGameMouse>::Create());
 
-	//MyObjSpwan();
-	//EnemyObjSpwan();
+	MyObjSpwan();
+	EnemyObjSpwan();
 
-	// 승리 테스트
-	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(600.f, 600.f));
-
-		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(300.f, 300.f));
-		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(310.f, 310.f));
-	}
+	//// 승리 테스트
+	//{
+	//	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(600.f, 600.f));
+	//	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(300.f, 300.f));
+	//	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(310.f, 310.f));
+	//}
 	
 }
 
@@ -201,7 +200,7 @@ void CStage::EnemyObjSpwan()
 
 
 		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3015, 610));
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3015, 620));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3035, 620));
 		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3005, 640.f));
 		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3045, 610.f));
 
@@ -221,17 +220,21 @@ void CStage::KeyInput()
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::CreateAttackEnemy(3000.f + 10 * i, 790.f, 320.f, 320.f));
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::CreateAttackEnemy(3600.f + 15 * i, 375.f, 320.f, 320.f));
 		}
 		for (int i = 0; i < 2; i++)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Medic>::CreateAttackEnemy(3000.f + 10 * i, 800.f, 320.f, 320.f));
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Medic>::CreateAttackEnemy(3600.f, 375.f + 10 * i, 320.f, 320.f));
 		}
 	}
 
 	// 마린 메딕 고스트 탱크 러쉬
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_F3))
 	{
+		for (int i = 0; i < 3; i++)
+		{
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::CreateAttackEnemy(3000.f + 10 * i, 820.f, 320.f, 320.f));
+		}
 		for (int i = 0; i < 8; i++)
 		{
 			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::CreateAttackEnemy(3000.f + 10 * i, 790.f, 320.f, 320.f));
@@ -244,10 +247,7 @@ void CStage::KeyInput()
 		{
 			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Ghost>::CreateAttackEnemy(3000.f + 10 * i, 810.f, 320.f, 320.f));
 		}
-		for (int i = 0; i < 3; i++)
-		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::CreateAttackEnemy(3000.f + 10 * i, 820.f, 320.f, 320.f));
-		}
+		
 	}
 
 	// 방어 부대 소환
@@ -384,4 +384,9 @@ void CStage::Initalize_Bmp()
 	//WinText
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Win/WinText.bmp", L"WinText");
 
+	//Dea
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/UI/Portrait/Dea.bmp", L"Dea");
+
+	//
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/MiniMap.bmp", L"MiniMap");
 }

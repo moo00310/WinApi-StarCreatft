@@ -17,6 +17,7 @@
 #define TILEWIDTH			128  //타일 개수
 #define TILEHIGHT			128
 
+#define Ratio	0.0390625
 
 extern HWND		g_hWnd;
 

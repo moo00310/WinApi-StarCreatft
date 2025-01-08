@@ -753,7 +753,7 @@ void CGameMouse::DrawBulid()
     case OT_Suffly:
         m_pImgKey_build = L"SupplyDepot";
         m_tInfo.fCX = 96.f;
-        m_tInfo.fCY = 128.f;
+        m_tInfo.fCY = 96.f;
         m_iBuild_Index = 1;
         m_tColor.R = 0;
         m_tColor.G = 255;

@@ -12,7 +12,7 @@ void CSuffly::Initialize()
     m_Map = CMapMgr::Get_Instance()->GetMap();
  
     m_tInfo.fCX = 96.f;
-    m_tInfo.fCY = 128.f;
+    m_tInfo.fCY = 96.f;
 
     m_pImgKey = L"BuildTemplate";
     m_iTemplateSize = TS_SMALL;

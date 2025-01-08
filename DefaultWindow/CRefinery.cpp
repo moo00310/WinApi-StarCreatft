@@ -32,14 +32,14 @@ int CRefinery::Update()
         //ÀÌ¹ÌÁö
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
 
-
-        if (m_Time + 1000 < GetTickCount64())
-        {
-            CGameMgr::Get_Instance()->Add_Gas(25);
-            m_Time = GetTickCount64();
-        }
-
         return OBJ_DEAD;
+    }
+
+
+    if (m_Time + 1000 < GetTickCount64() && (m_eCurState_Build == BS_IDLE || m_eCurState_Build == BS_RUN))
+    {
+        CGameMgr::Get_Instance()->Add_Gas(15);
+        m_Time = GetTickCount64();
     }
 
     __super::Update_Rect();
