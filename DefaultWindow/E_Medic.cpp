@@ -37,7 +37,7 @@ int E_Medic::Update()
 	if (m_bDead || m_tStat.m_iHp <= 0)
 	{
 		// Á×À½ ÀÌÆåÆ®
-		CSoundMgr::Get_Instance()->PlaySFX(L"MedicDead.mp3", 0.5f);
+		CSoundMgr::Get_Instance()->PlaySFX(L"MedicDead.mp3", 0.3f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CMedicDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
 		
 

@@ -194,6 +194,10 @@ void CSpawnUI::Change_SpawnIcon(OBJ_TYPE _type)
 		IndexX = 2;
 		IndexY = 36;
 		break;
+	case OT_PhysicsLab:
+		IndexX = 2;
+		IndexY = 37;
+		break;
 	case OT_CmdNuke:
 		IndexX = 2;
 		IndexY = 35;
@@ -291,6 +295,14 @@ void CSpawnUI::Change_SpawnIcon(OBJ_TYPE _type)
 	case OT_Cmd_Nuke:
 		IndexX = 2;
 		IndexY = IC_Cmd_NukeUp;
+		break;
+		case OT_Battle_YamTo :
+		IndexX = 2;
+		IndexY = IC_Battle_AmatoUp;
+		break;
+	case OT_Battle_Mana:
+		IndexX = 2;
+		IndexY = IC_Battle_ManaUp;
 		break;
 	case OT_END:
 		break;

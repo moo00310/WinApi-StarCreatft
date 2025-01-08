@@ -298,7 +298,7 @@ enum OBJ_TYPE
 {
 	OT_Scv, OT_Marine, OT_Medic, OT_Ghost, OT_Tank, OT_SiegeTank, OT_Battlecruiser, OT_Unit_End,
 	OT_Commend, OT_Suffly, OT_Refinery, OT_Barrck, OT_Academy ,OT_Factory, OT_Addon, OT_Armory, OT_Starport, OT_StarportAddOn,
-	OT_ScienceFacility, OT_ScienceSecret, OT_CmdNuke, OT_Build_End,
+	OT_ScienceFacility, OT_ScienceSecret, OT_PhysicsLab ,OT_CmdNuke, OT_Build_End,
 	OT_Marine_SightUp, OT_Marine_Streampack, OT_Medic_Magic1, OT_Medic_Magic2, OT_Medic_Mana,
 	OT_Vulture_Speed, OT_Vulture_mine, OT_Tank_SiegeMod, OT_Gholiat_SightUp,
 	OT_Mecha_AtkUp, OT_Sky_AtkUp, OT_Mecha_DefUp, OT_Sky_DefUp,
@@ -306,6 +306,7 @@ enum OBJ_TYPE
 	OT_Vessle_Emp, OT_Vessle_Irradiate, OT_Vessle_Mana,
 	OT_Ghost_LockDown, OT_Ghost_Cloak, OT_Ghost_SightUp, OT_Ghost_Mana,
 	OT_Cmd_Nuke,
+	OT_Battle_YamTo, OT_Battle_Mana,
 	OT_END
 };
 
@@ -345,6 +346,7 @@ const map<OBJ_TYPE, std::tuple<int, int, int, int>> ObjCost =
 	{OT_Starport,          {150, 100, 0, 70 * Frame}},
 	{OT_StarportAddOn,     {50,  50, 0, 40 * Frame}},
 	{OT_ScienceFacility,   {100, 150, 0, 60 * Frame}},
+	{OT_PhysicsLab,		   {50, 50, 0, 40 * Frame}},
 	{OT_ScienceSecret,     {50,  50, 0, 40 * Frame}},
 	{OT_CmdNuke,           {100, 100, 0, 80 * Frame}},
 
@@ -378,6 +380,9 @@ const map<OBJ_TYPE, std::tuple<int, int, int, int>> ObjCost =
 	{OT_Ghost_Mana,			{150, 150, 0, 166 * Frame}},
 
 	{OT_Cmd_Nuke,			{100, 100, 0, 80 * Frame}},
+
+	{OT_Battle_YamTo,		{100, 100, 0, 120 * Frame}},
+	{OT_Battle_Mana,		{150, 150, 0, 166 * Frame}},
 };
 
 const fPOINT BuildTemplate_Size = { 160, 128 }; 
@@ -390,7 +395,9 @@ enum Tech
 	TECH_Factory,
 	TECH_Armory,
 	TECH_Starport,
+	TECH_ScienceFacility,
 	TECH_CovertOps,
+	TECH_PhysicsLab,
 	TECH_END
 };
 
@@ -525,5 +532,8 @@ enum Upgrade
 	UG_Ghost_Mana,
 
 	UG_Cmd_Nuke,
+
+	UG_Battle_Yamato,
+	UG_Battle_Mana,
 	UG_END
 };

@@ -37,7 +37,7 @@ int CBattlecruiser::Update()
 	if (m_bDead || m_tStat.m_iHp <= 0)
 	{
 		// Á×À½ ÀÌÆåÆ®
-		//CSoundMgr::Get_Instance()->PlaySFX(L"Ghost_Dead .mp3", 0.8f);
+		CSoundMgr::Get_Instance()->PlaySFX(L"BatteleDeath.mp3", 0.3f);
 		//CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CGhostDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
 		return OBJ_DEAD;
 	}
@@ -179,6 +179,7 @@ void CBattlecruiser::AttackToEnemy(CObj* _Enemey)
 
 	if (m_AttackTime + _Enemey->Get_Stat()->Colldown < GetTickCount64() && !m_isAttack)
 	{
+		CSoundMgr::Get_Instance()->PlaySFX(L"BattleAttack.mp3", 0.8f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBattleAttack>::CreateBattleAtk(this, _Enemey));
 		m_isAttack = true;
 		m_AttackTime = GetTickCount64();

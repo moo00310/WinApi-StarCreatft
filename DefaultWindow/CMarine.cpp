@@ -52,7 +52,7 @@ int CMarine::Update()
 	{
 		// Á×À½ ÀÌÆåÆ®
 		CSoundMgr::Get_Instance()->Stop_SFX(StemapackSound);
-		CSoundMgr::Get_Instance()->PlaySFX(L"Marine_Dead_1.mp3", 0.5f);
+		CSoundMgr::Get_Instance()->PlaySFX(L"Marine_Dead_1.mp3", 0.3f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT,CAbstractFactory<CMarineDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
 
 		return OBJ_DEAD;

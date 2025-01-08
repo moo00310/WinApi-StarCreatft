@@ -587,6 +587,13 @@ void CGameMouse::MoveSound(OBJ_TYPE type)
             CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankMove3.mp3", 0.8f, 29);
         break;
     case OT_Battlecruiser:
+        if (intRand == 0)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BattleMove1.mp3", 0.8f, 29);
+        else if (intRand == 1)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BattleMove2.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BattleMove3.mp3", 0.8f, 29);
+        break;
         break;
     case OT_Unit_End:
         break;
@@ -653,6 +660,12 @@ void CGameMouse::SelectSound(CObj* _obj)
             CSoundMgr::Get_Instance()->WaitPlaySFX(L"TankSelect1.mp3", 0.8f, 29);
         break;
     case OT_Battlecruiser:
+        if (intRand == 0)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BattleSelect1.mp3", 0.8f, 29);
+        else if (intRand == 1)
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BattleSelect2.mp3", 0.8f, 29);
+        else
+            CSoundMgr::Get_Instance()->WaitPlaySFX(L"BattleSelect3.mp3", 0.8f, 29);
         break;
     case OT_Unit_End:
         break;

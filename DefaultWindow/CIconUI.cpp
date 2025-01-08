@@ -266,6 +266,9 @@ void CIconUI::Change_Button()
 	case OT_CmdNuke:
 		cmdNuke();
 		break;
+	case OT_PhysicsLab:
+		PhysicsLab();
+		break;
 	case OT_Build_End:
 		break;
 	case OT_END:
@@ -692,14 +695,22 @@ void CIconUI::Battlecruiser()
 	m_Button_Icon[5].first = 99;
 	m_Button_Icon[5].second = 99;
 
-	m_Button_Icon[6].first = 99;
-	m_Button_Icon[6].second = 99;
+	if (CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Battle_Yamato))
+	{
+		if (CKeyMgr::Get_Instance()->GetKeyState('Y'))
+			m_Button_Icon[6].first = 1;
+		else
+			m_Button_Icon[6].first = 0;
+	}
+	else
+		m_Button_Icon[6].first = 4;
+	m_Button_Icon[6].second = IC_Battle_Amato;
 
 	m_Button_Icon[7].first = 99;
 	m_Button_Icon[7].second = 99;
 
-	m_Button_Icon[9].first = 99;
-	m_Button_Icon[9].second = 99;
+	m_Button_Icon[8].first = 99;
+	m_Button_Icon[8].second = 99;
 }
 
 void CIconUI::CommedCenter()
@@ -1186,13 +1197,26 @@ void CIconUI::Starport()
 		m_Button_Icon[1].first = 4;
 		m_Button_Icon[1].second = IC_Dropship;
 
-		if (CKeyMgr::Get_Instance()->GetKeyState('V'))
-			m_Button_Icon[2].first = 1;
+		if(CGameMgr::Get_Instance()->GetTechCount(TECH_ScienceFacility) > 0)
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('V'))
+				m_Button_Icon[2].first = 1;
+			else
+				m_Button_Icon[2].first = 0;
+		}
 		else
 			m_Button_Icon[2].first = 4;
-		m_Button_Icon[2].second = IC_Vassle;
+			m_Button_Icon[2].second = IC_Vassle;
 
-		m_Button_Icon[3].first = 4;
+		if (CGameMgr::Get_Instance()->GetTechCount(TECH_PhysicsLab) > 0)
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('B'))
+				m_Button_Icon[3].first = 1;
+			else
+				m_Button_Icon[3].first = 0;
+		}
+		else
+			m_Button_Icon[3].first = 4;
 		m_Button_Icon[3].second = IC_BattleCulsor;
 
 		m_Button_Icon[4].first = 4;
@@ -1791,6 +1815,93 @@ void CIconUI::cmdNuke()
 
 		m_Button_Icon[1].first = 99;
 		m_Button_Icon[1].second = 99;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 99;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 99;
+		m_Button_Icon[8].second = 99;
+	}
+}
+
+void CIconUI::PhysicsLab()
+{
+	if (m_buildState == BS_TEMP || m_buildState == BS_MAKE || m_buildState == BS_LINK)
+	{
+		m_Button_Icon[0].first = 99;
+		m_Button_Icon[0].second = 99;
+
+		m_Button_Icon[1].first = 99;
+		m_Button_Icon[1].second = 99;
+
+		m_Button_Icon[2].first = 99;
+		m_Button_Icon[2].second = 99;
+
+		m_Button_Icon[3].first = 99;
+		m_Button_Icon[3].second = 99;
+
+		m_Button_Icon[4].first = 99;
+		m_Button_Icon[4].second = 99;
+
+		m_Button_Icon[5].first = 99;
+		m_Button_Icon[5].second = 99;
+
+		m_Button_Icon[6].first = 99;
+		m_Button_Icon[6].second = 99;
+
+		m_Button_Icon[7].first = 99;
+		m_Button_Icon[7].second = 99;
+
+		m_Button_Icon[8].first = 0;
+		m_Button_Icon[8].second = IC_Cancel;
+	}
+	else
+	{
+		if (ChekList_OBJ(OT_Battle_YamTo) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Battle_Yamato))
+		{
+			m_Button_Icon[0].first = 99;
+			m_Button_Icon[0].second = 99;
+		}
+		else
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('Y'))
+				m_Button_Icon[0].first = 1;
+			else
+				m_Button_Icon[0].first = 0;
+			m_Button_Icon[0].second = IC_Battle_AmatoUp;
+		}
+
+
+		if (ChekList_OBJ(OT_Battle_Mana) ||
+			CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Battle_Mana))
+		{
+			m_Button_Icon[1].first = 99;
+			m_Button_Icon[1].second = 99;
+		}
+		else
+		{
+			if (CKeyMgr::Get_Instance()->GetKeyState('C'))
+				m_Button_Icon[1].first = 1;
+			else
+				m_Button_Icon[1].first = 0;
+			m_Button_Icon[1].second = IC_Battle_ManaUp;
+		}
 
 		m_Button_Icon[2].first = 99;
 		m_Button_Icon[2].second = 99;

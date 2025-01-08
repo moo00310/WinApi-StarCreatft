@@ -67,19 +67,19 @@ int CScv::Update()
 
 		if (irand == 0)
 		{
-			CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvAttack1.mp3", 1.0f, 28);
+			CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvAttack1.mp3", 0.5f, 28);
 		}
 		else if (irand == 1)
 		{
-			CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvAttack2.mp3", 1.0f, 27);
+			CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvAttack2.mp3", 0.5f, 27);
 		}
 		else if(irand == 2)
 		{
-			CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvAttack3.mp3", 1.0f, 26);
+			CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvAttack3.mp3", 0.5f, 26);
 		}
 		else if (irand == 3)
 		{
-			CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvAttack5.mp3", 1.0f, 25);
+			CSoundMgr::Get_Instance()->WaitPlaySFX(L"ScvAttack5.mp3", 0.5f, 25);
 		}
 	}
 

@@ -206,6 +206,11 @@ void CWireUI::TextName(HDC hdc)
 		Text_X = 210;
 		UnitID = 29;
 		break;
+	case OT_PhysicsLab:
+		swprintf_s(m_wcHp, 32, L"테란 물리연구실");
+		Text_X = 210;
+		UnitID = 30;
+		break;
 	case OT_CmdNuke:
 		swprintf_s(m_wcHp, 32, L"테란 핵격납고");
 		Text_X = 220;

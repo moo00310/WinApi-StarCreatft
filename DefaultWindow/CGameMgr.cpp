@@ -13,9 +13,9 @@ CGameMgr* CGameMgr::m_pInstance = nullptr;
 
 void CGameMgr::Initialize()
 {
-	m_iMineral = 0;
-	m_iGas = 0;
-	m_iPop = 0;
+	m_iMineral = 9999;
+	m_iGas = 9999;
+	m_iPop = 4;
 	m_iMaxPop = 10;
 
 	for (int i = 0; i < TECH_END; i++)
@@ -24,7 +24,7 @@ void CGameMgr::Initialize()
 	}
 
 	for (int i = 0; i < UG_END; ++i) {
-		UpGrade_Compelate[i] = true;
+		UpGrade_Compelate[i] = false;
 	}
 
 }
@@ -56,7 +56,7 @@ void CGameMgr::Late_Update()
 {
 	if (m_isWin && CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
 	{
-		CSoundMgr::Get_Instance()->PlaySFX(L"mousedown2.wav", 0.8f);
+		CSoundMgr::Get_Instance()->PlaySFX(L"mousedown2.wav", 0.6f);
 		CSceneMgr::Get_Instance()->Set_Scene(SC_ENDING);
 	}
 }
@@ -198,19 +198,19 @@ bool CGameMgr::isBuying(OBJ_TYPE _Type)
 		if (m_iMineral < _mineral)
 		{
 			//미네랄이 부족합니다.
-			CSoundMgr::Get_Instance()->PlaySFX(L"ErrMineral.mp3", 0.8f);
+			CSoundMgr::Get_Instance()->PlaySFX(L"ErrMineral.mp3", 0.3f);
 			
 			return false;
 		}
 		else if (m_iGas < _gas)
 		{
-			CSoundMgr::Get_Instance()->PlaySFX(L"ErrGas.mp3", 0.8f);
+			CSoundMgr::Get_Instance()->PlaySFX(L"ErrGas.mp3", 0.3f);
 
 			return false;
 		}
 		else
 		{
-			CSoundMgr::Get_Instance()->PlaySFX(L"ErrSupply.mp3", 0.8f);
+			CSoundMgr::Get_Instance()->PlaySFX(L"ErrSupply.mp3", 0.3f);
 			return false;
 		}
 	}

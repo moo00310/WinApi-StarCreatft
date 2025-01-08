@@ -75,18 +75,12 @@ void CStage::Initialize()
 	// 마우스 생산
 	CMouseMgr::Get_Instance()->Add_Mouse(CAbstractFactory<CGameMouse>::Create());
 
-	//MyObjSpwan();
-	//EnemyObjSpwan();
-
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CBattlecruiser>::Create(300.f, 300.f));
-
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::CreateAttackEnemy(400.f, 400.f,320.f,320.f));
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::CreateAttackEnemy(400.f, 400.f,320.f,320.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::CreateAttackEnemy(400.f, 400.f,320.f,320.f));
+	MyObjSpwan();
+	EnemyObjSpwan();
 
 	//// 승리 테스트
 	//{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(600.f, 600.f));
+		//CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(600.f, 600.f));
 	//	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(300.f, 300.f));
 	//	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(310.f, 310.f));
 	//}
@@ -355,6 +349,7 @@ void CStage::Initalize_Bmp()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/Armory.bmp", L"Armory");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/ScienceFacility.bmp", L"ScienceFacility");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/ScienceSecret.bmp", L"ScienceSecret");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Build/SciencePhysics.bmp", L"SciencePhysics");
 
 	//Effect
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Bang/Bang(128.128).bmp", L"Bang_1");

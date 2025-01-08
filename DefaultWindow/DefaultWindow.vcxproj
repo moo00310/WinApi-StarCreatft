@@ -177,6 +177,7 @@
     <ClInclude Include="CMyMenu.h" />
     <ClInclude Include="CObj.h" />
     <ClInclude Include="CObjMgr.h" />
+    <ClInclude Include="CPhysicsLab.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPortUI.h" />
     <ClInclude Include="CRefinery.h" />
@@ -273,6 +274,7 @@
     <ClCompile Include="CObj.cpp" />
     <ClCompile Include="CObjMgr.cpp" />
     <ClCompile Include="CCovertOps.cpp" />
+    <ClCompile Include="CPhysicsLab.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CPortUI.cpp" />
     <ClCompile Include="CRefinery.cpp" />

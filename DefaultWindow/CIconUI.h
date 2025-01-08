@@ -44,6 +44,7 @@ private:
 	void StarportAddon();
 	void CovertOps();
 	void cmdNuke();
+	void PhysicsLab();
 
 	bool ChekList_OBJ(OBJ_TYPE _id);
 

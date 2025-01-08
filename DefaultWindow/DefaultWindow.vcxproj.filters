@@ -298,6 +298,9 @@
     <Filter Include="01. Obj\01.Unit\05.Battlecruiser">
       <UniqueIdentifier>{dee181e3-6eb5-4753-9a3f-dc847f3a9ae0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\02.Build\09.ScienceFacility\PhysicsLab">
+      <UniqueIdentifier>{25c5f20e-ceb3-4987-9e31-749d33b4b223}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -582,6 +585,9 @@
     <ClInclude Include="CBattlecruiser.h">
       <Filter>01. Obj\01.Unit\05.Battlecruiser</Filter>
     </ClInclude>
+    <ClInclude Include="CPhysicsLab.h">
+      <Filter>01. Obj\02.Build\09.ScienceFacility\PhysicsLab</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -826,6 +832,9 @@
     </ClCompile>
     <ClCompile Include="CBattlecruiser.cpp">
       <Filter>01. Obj\01.Unit\05.Battlecruiser</Filter>
+    </ClCompile>
+    <ClCompile Include="CPhysicsLab.cpp">
+      <Filter>01. Obj\02.Build\09.ScienceFacility\PhysicsLab</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

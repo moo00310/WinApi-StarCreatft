@@ -11,6 +11,7 @@
 #include "CAbstractFactory.h"
 #include "CSoundMgr.h"
 #include "CBloodEffect.h"
+#include "CPhysicsLab.h"
 
 void CScienceFacility::Initialize()
 {
@@ -31,6 +32,7 @@ void CScienceFacility::Initialize()
     m_eRender = RENDER_GAMEOBJECT;
 
     m_iMyBuildTIme = get<3>(ObjCost.at(OT_ScienceFacility));
+
     __super::Update_Rect();
     Block_Map();
 }
@@ -45,7 +47,7 @@ int CScienceFacility::Update()
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead_Wreck_Big>::CreateFX(m_tInfo.fX, m_tInfo.fY));
 
-
+        CGameMgr::Get_Instance()->AddTechCount(TECH_ScienceFacility, -1);
         UnBlock_Map(); // 바닥 이동 불가 해제
         return OBJ_DEAD;
     }
@@ -168,6 +170,17 @@ void CScienceFacility::KeyInput()
         CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CCovertOps>::Create(m_tInfo.fX + 90, m_tInfo.fY + 20));
         m_bIsAddOn = true;
     }
+
+    // 비밀 뭐시기
+    if (CKeyMgr::Get_Instance()->Key_Down('P'))
+    {
+        if (m_bIsAddOn) return;
+        if (m_listSpawn.size() < 5 && CGameMgr::Get_Instance()->isBuying(OT_PhysicsLab))
+            m_listSpawn.push_back(OT_PhysicsLab);
+
+        CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD, CAbstractFactory<CPhysicsLab>::Create(m_tInfo.fX + 90, m_tInfo.fY + 20));
+        m_bIsAddOn = true;
+    }
 }
 
 void CScienceFacility::Change_Motion()
@@ -185,6 +198,7 @@ void CScienceFacility::Change_Motion()
         else if (m_iBuildCount < (m_iMyBuildTIme / 5) * 4)
         {
             m_bTemplate = false;
+            CGameMgr::Get_Instance()->AddTechCount(TECH_ScienceFacility, 1);
             m_eCurState_Build = BS_MAKE;
         }
 

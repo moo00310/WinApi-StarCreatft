@@ -1000,10 +1000,10 @@ int CBattleAttack::Update()
 	float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);
 
 	Ladian = atan2(fHeight, fWidth);
-	m_tInfo.fX += 5.f * cosf(Ladian);
-	m_tInfo.fY += 5.f * sinf(Ladian);
+	m_tInfo.fX += 7.f * cosf(Ladian);
+	m_tInfo.fY += 7.f * sinf(Ladian);
 
-	if(fDistance < 5.0f)
+	if(fDistance < 7.0f)
 	{
 		DEFENCEID Dfence_id = m_Enemy->Get_Stat()->m_eDfenceID;
 		ATTACKID Attack_id = AT_NORMAL;

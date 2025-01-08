@@ -66,22 +66,27 @@ void CBuild::Spawn_Uint_Index(OBJ_TYPE _id)
 	switch (_id)
 	{
 	case OT_Scv:
-		CSoundMgr::Get_Instance()->PlaySFX(L"SCVBirth.mp3", 0.8f);
+		CSoundMgr::Get_Instance()->PlaySFX(L"SCVBirth.mp3", 0.5f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CScv>::Create(temp));
 		break;
 	case OT_Marine:
+		CSoundMgr::Get_Instance()->PlaySFX(L"marine_select_1.mp3", 0.5f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(temp));
 		break;
 	case OT_Medic:
+		CSoundMgr::Get_Instance()->PlaySFX(L"MedicSelcet1.mp3", 0.5f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMedic>::Create(temp));
 		break;
 	case OT_Ghost:
+		CSoundMgr::Get_Instance()->PlaySFX(L"GhostSelect1.mp3", 0.5f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::Create(temp));
 		break;
 	case OT_Tank:
+		CSoundMgr::Get_Instance()->PlaySFX(L"TankSelect1.mp3", 0.5f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CTank>::Create(temp));
 		break;
 	case OT_Battlecruiser:
+		CSoundMgr::Get_Instance()->PlaySFX(L"BattleBirth.mp3", 0.5f);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CBattlecruiser>::Create(temp));
 		break;
 	case OT_Unit_End:
@@ -178,6 +183,14 @@ void CBuild::Spawn_Uint_Index(OBJ_TYPE _id)
 	case OT_Cmd_Nuke:
 		CSoundMgr::Get_Instance()->PlaySFX(L"UpgradeComp.mp3", 0.8f);
 		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Cmd_Nuke, true);
+		break;
+	case OT_Battle_YamTo:
+		CSoundMgr::Get_Instance()->PlaySFX(L"UpgradeComp.mp3", 0.8f);
+		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Battle_Yamato, true);
+		break;
+	case OT_Battle_Mana:
+		CSoundMgr::Get_Instance()->PlaySFX(L"UpgradeComp.mp3", 0.8f);
+		CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Battle_Mana, true);
 		break;
 	case OT_END:
 		break;
