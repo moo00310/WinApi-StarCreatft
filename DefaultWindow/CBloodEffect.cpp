@@ -242,7 +242,7 @@ void CMedicDead::Render(HDC hDC)
 
 
 /*--------------------
-  메딕 사망 효과
+ 고스트 사망 효과
 ----------------------*/
 
 void CGhostDead::Initialize()
@@ -318,7 +318,7 @@ void CGhostDead::Render(HDC hDC)
 		(int)m_tInfo.fCY,
 		hMemDC,						// 복사할 이미지 DC	
 		(int)m_tInfo.fCX * m_iDeadImg, // 비트맵 출력 시작 좌표(Left, top)
-		0,
+		1024,
 		(int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
 		(int)m_tInfo.fCY,
 		RGB(0, 255, 0));		// 제거할 색상

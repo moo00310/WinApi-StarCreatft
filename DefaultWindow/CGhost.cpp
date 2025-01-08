@@ -131,7 +131,7 @@ void CGhost::Change_Motion()
 			m_tFrame.iFrameStart = 10;
 			m_tFrame.iFrameEnd = 10;
 			m_tFrame.iCurCount = 10;
-			m_tFrame.dwSpeed = 50;
+			m_tFrame.dwSpeed = 100;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 
@@ -202,6 +202,9 @@ void CGhost::Update_State()
 		break;
 	case IP_NUKE:
 		Nuke();
+		break;
+	case IP_Chase:
+		ChaseUnit();
 		break;
 	case IP_END:
 		break;

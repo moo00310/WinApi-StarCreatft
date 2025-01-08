@@ -29,6 +29,9 @@ void E_Ghost::Initialize()
 	m_tInfo.fCY = 64.f;
 
 	m_bIsEnemy = true;
+
+	A_GroundPos.x = (int)m_tInfo.fX / 32;
+	A_GroundPos.y = (int)m_tInfo.fY / 32;
 }
 
 int E_Ghost::Update()
@@ -43,6 +46,7 @@ int E_Ghost::Update()
 	}
 
 	Update_State();
+	Change_Motion();
 
 	__super::Update_Rect();
 	return OBJ_NOEVENT;
@@ -50,7 +54,6 @@ int E_Ghost::Update()
 
 void E_Ghost::Late_Update()
 {
-	Change_Motion();
 	CUnit::Move_Frame();
 
 	if (AttackCoolTime + 1700 < GetTickCount64())
@@ -127,7 +130,7 @@ void E_Ghost::Change_Motion()
 			m_tFrame.iFrameStart = 9;
 			m_tFrame.iFrameEnd = 10;
 			m_tFrame.iCurCount = 9;
-			m_tFrame.dwSpeed = 50;
+			m_tFrame.dwSpeed = 100;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 

@@ -317,6 +317,9 @@ void CScv::Update_State()
 	case IP_BUILD:
 		Build();
 		break; 
+	case IP_Chase:
+		ChaseUnit();
+		break;
 	case IP_END:
 		break;
 	default:
