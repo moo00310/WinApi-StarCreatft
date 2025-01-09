@@ -54,7 +54,7 @@ void CMainGame::Initialize()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/Mineral_Gas/Resource.bmp", L"Resource");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Back.bmp", L"Back");
 	CSceneMgr::Get_Instance()->Set_Scene(SC_LOGO);
-	CMemoryPoolMgr::Get_Instance(300, 300);
+	CMemoryPoolMgr::Get_Instance(500, 400);
 
 
 #pragma region 콘솔 디버그

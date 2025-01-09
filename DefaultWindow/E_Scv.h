@@ -1,0 +1,18 @@
+#pragma once
+#include "CUnit.h"
+class E_Scv :public CUnit
+{
+public:
+	E_Scv() {}
+	~E_Scv() {}
+
+	void Initialize() override;
+	int Update() override;
+	void Late_Update() override;
+	void Render(HDC hDC) override;
+	void Release() override;
+	void Change_Motion() override;
+	void KeyInput() override;
+	void AttackToEnemy(CObj* _Enemey) override;
+};
+

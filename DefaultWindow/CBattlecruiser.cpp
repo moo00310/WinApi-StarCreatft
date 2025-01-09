@@ -34,6 +34,21 @@ void CBattlecruiser::Initialize()
 
 	A_GroundPos.x = (int)m_tInfo.fX / 32;
 	A_GroundPos.y = (int)m_tInfo.fY / 32;
+
+
+	m_Shade = new Gdiplus::Image(L"../StarCraft/Unit/Battlecruiser/BattleShade.bmp");
+
+	Gdiplus::Color ExceptColor(255, 0, 0, 0);
+	Gdiplus::Color endExceptColor(255, 30, 30, 30);
+	m_imgAttr.SetColorKey(ExceptColor, endExceptColor, Gdiplus::ColorAdjustTypeBitmap);
+
+	m_ColorMatrix = {
+	1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // R
+	0.0f, 1.0f, 0.0f, 0.0f, 0.0f, // G
+	0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // B
+	0.0f, 0.0f, 0.0f, 0.8f, 0.0f, // A (알파값 0.5로 설정)
+	0.0f, 0.0f, 0.0f, 0.0f, 1.0f // 여기 값 바꾸면 프레임 박살남
+	};
 }
 
 int CBattlecruiser::Update()
@@ -74,18 +89,24 @@ void CBattlecruiser::Render(HDC hDC)
 	HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_5");
 	HDC		hShadeDC = CBmpMgr::Get_Instance()->Find_Image(L"BattleShade");
 
-	//그림자
-	GdiTransparentBlt(hDC,			// 복사 받을 DC
-		m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
-		m_tRect.top + iScrollY + 30,
-		(int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
-		(int)m_tInfo.fCY,
-		hShadeDC,						// 복사할 이미지 DC	
-		0, // 비트맵 출력 시작 좌표(Left, top)
+	using namespace Gdiplus;
+	Graphics graphics(hDC);
+	m_imgAttr.SetColorMatrix(&m_ColorMatrix, ColorMatrixFlagsDefault, ColorAdjustTypeBitmap);
+
+	graphics.DrawImage(
+		m_Shade,            // 화면에 랜더링할 이미지 데이터
+		Rect(            // 이미지 출력 위치와 크기를 저장하는 클래스
+			m_tRect.left + iScrollX,
+			m_tRect.top + iScrollY + 30,
+			(int)m_tInfo.fCX,        // 렌더링 받을 화면의 가로, 세로 범위
+			(int)m_tInfo.fCY
+		),
+		0,								// 비트맵 출력 시작 좌표(Left, top)
 		(int)m_tInfo.fCY * (int)m_eDir,
-		(int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
-		(int)m_tInfo.fCY,
-		RGB(0, 0, 0));
+		(int)m_tInfo.fCX,
+		(int)m_tInfo.fCY, UnitPixel,        // 좌표의 단위를 무엇으로 할지 (픽셀단위 임으로 UnitPixel)
+		&m_imgAttr        // 컬러 매트릭스를 포함하고 있는 ImageAttributes 객체의 주소
+	);
 
 	if (m_bSelect)
 	{
@@ -101,7 +122,6 @@ void CBattlecruiser::Render(HDC hDC)
 			96,
 			RGB(255, 0, 255));		// 제거할 색상
 	}
-
 
 	// 몸체
 	GdiTransparentBlt(hDC,			// 복사 받을 DC
@@ -228,6 +248,52 @@ bool CBattlecruiser::CanGo(Pos pos)
 		return true;
 	else
 		return false;
+}
+
+void CBattlecruiser::Move_toNext()
+{
+	Pos _now = { (int)m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
+	Pos _pos = _path[m_iPathIndex];
+
+	if (m_iPathIndex == 0)
+	{
+		m_iPathIndex = 1;
+		return;
+	}
+
+	const float EPSILON = m_tStat.m_fSpeed * 10.0f;
+	if (_now == _pos)
+	{
+		++m_iPathIndex;
+	}
+	else
+	{
+		Pos dir = (_pos - _now);
+		for (int i = 0; i < DIR_END; i++)
+		{
+			if (dir == MoveFront[i])
+			{
+				m_eDir = (DIRECTION)i;
+				break;
+			}
+		}
+
+		// 이동
+		if (CCollisionMgr::Collision_RangeChack_bool(this, *m_pUnitList, 50.f))
+		{
+			m_eCurState = STATE_IDLE;
+		}
+		else
+		{
+			// 단위 벡터로 수정?
+			fPOINT point = Nomalization(MoveFront[m_eDir]);
+
+			m_eCurState = STATE_MOVE;
+			m_tInfo.fX += m_tStat.m_fSpeed * point.x;
+			m_tInfo.fY += m_tStat.m_fSpeed * point.y;
+		}
+	}
+
 }
 
 void CBattlecruiser::Yamato()

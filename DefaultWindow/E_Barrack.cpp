@@ -27,6 +27,12 @@ void E_Barrack::Initialize()
     m_iMyBuildTIme = get<3>(ObjCost.at(OT_Barrck));
     m_bIsEnemy = true;
 
+    m_tFrame.iFrameStart = 2;
+    m_tFrame.iFrameEnd = 3;
+    m_tFrame.iCurCount = 2;
+    m_tFrame.dwSpeed = 200;
+    m_tFrame.dwTime = GetTickCount64();
+
     __super::Update_Rect();
     Block_Map();
 }
@@ -57,7 +63,6 @@ void E_Barrack::Late_Update()
 {
     Change_Motion();
 
-    if (m_bTemplate) return;
     CBuild::Move_Frame();
 }
 
@@ -116,9 +121,9 @@ void E_Barrack::Change_Motion()
         switch (m_eCurState_Build)
         {
         case BS_IDLE:
-            m_tFrame.iFrameStart = 1;
-            m_tFrame.iFrameEnd = 1;
-            m_tFrame.iCurCount = 1;
+            m_tFrame.iFrameStart = 2;
+            m_tFrame.iFrameEnd = 3;
+            m_tFrame.iCurCount = 2;
             m_tFrame.dwSpeed = 200;
             m_tFrame.dwTime = GetTickCount64();
             break;

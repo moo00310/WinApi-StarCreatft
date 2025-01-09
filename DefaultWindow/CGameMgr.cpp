@@ -13,18 +13,18 @@ CGameMgr* CGameMgr::m_pInstance = nullptr;
 
 void CGameMgr::Initialize()
 {
-	m_iMineral = 9999;
-	m_iGas = 9999;
+	m_iMineral = 0;
+	m_iGas = 0;
 	m_iPop = 4;
 	m_iMaxPop = 10;
 
 	for (int i = 0; i < TECH_END; i++)
 	{
-		TechnicArray[i] = 1;
+		TechnicArray[i] = 0;
 	}
 
 	for (int i = 0; i < UG_END; ++i) {
-		UpGrade_Compelate[i] = true;
+		UpGrade_Compelate[i] = false;
 	}
 
 }

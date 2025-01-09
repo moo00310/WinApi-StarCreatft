@@ -8,6 +8,7 @@
 #include "CKeyMgr.h"
 #include "CScv.h"
 #include "CFactory.h"
+#include "CGhost.h"
 
 CIconUI::CIconUI() : IconCX(0), IconCY(0), m_buildState(BS_END), m_UnitState(STATE_END), m_InputState(IP_END), m_listSpawn(nullptr)
 {
@@ -540,7 +541,11 @@ void CIconUI::Ghost()
 	}
 	else
 		m_Button_Icon[6].first = 4;
-	m_Button_Icon[6].second = IC_Ghost_Cloak;
+
+	if(static_cast<CGhost*>(m_pUintlist->front())->GetCloack())
+		m_Button_Icon[6].second = IC_Wirse_Decloak;
+	else
+		m_Button_Icon[6].second = IC_Ghost_Cloak;
 
 	if (CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Ghost_LockDown))
 	{

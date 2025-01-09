@@ -42,12 +42,6 @@ int CWireUI::Update()
 
 void CWireUI::Late_Update()
 {
-	if (CKeyMgr::Get_Instance()->Key_Down('R'))
-	{
-		if (m_pUintlist->empty()) return;
-
-		m_pUintlist->front()->Add_Stat_hp(-6);
-	}
 }
 
 void CWireUI::Render(HDC hdc)

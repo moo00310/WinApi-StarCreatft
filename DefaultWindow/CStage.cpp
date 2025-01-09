@@ -41,7 +41,7 @@
 #include "E_Factory.h"
 #include "E_Starport.h"
 
-
+#include "E_SCV.h"
 #include "E_Marine.h"
 #include "E_Medic.h"
 #include "E_Ghost.h"
@@ -62,7 +62,7 @@ void CStage::Initialize()
 {
 	CSoundMgr::Get_Instance()->Stop_BGM();
 	//BGM
-	CSoundMgr::Get_Instance()->PlayBGM(L"BGM_terran_2.mp3", 0.3f); 
+	CSoundMgr::Get_Instance()->PlayBGM(L"BGM_terran_3.mp3", 0.3f); 
 
 	//IMG
 	Initalize_Bmp();
@@ -75,16 +75,8 @@ void CStage::Initialize()
 	// 마우스 생산
 	CMouseMgr::Get_Instance()->Add_Mouse(CAbstractFactory<CGameMouse>::Create());
 
-	//MyObjSpwan();
-	//EnemyObjSpwan();
-
-	// 승리 테스트
-	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(600.f, 600.f));
-		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CBattlecruiser>::Create(300.f, 300.f));
-		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::Create(300.f, 300.f));
-	}
-	
+	MyObjSpwan();
+	EnemyObjSpwan();
 }
 
 int CStage::Update()
@@ -146,7 +138,7 @@ void CStage::EnemyObjSpwan()
 
 	for (int j = 0; j < 2; j++)
 	{
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(3940.f + 100 * j, 500.f + 60 * i));
 		}
@@ -166,7 +158,7 @@ void CStage::EnemyObjSpwan()
 	{
 		for (int i = 0; i < 2; i++)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Barrack>::CreateBuild(3450.f + 120 * i, 170.f + 100 * j));
+			CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Barrack>::CreateBuild(3450.f + 140 * i, 170.f + 100 * j));
 		}
 	}
 
@@ -174,30 +166,45 @@ void CStage::EnemyObjSpwan()
 	{
 		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Armory>::CreateBuild(3840.f, 500.f + 100 * i));
 	}
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(3840.f, 660.f + 60 * i));
 	}
 
 
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3520.f, 550.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3520.f, 650.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3520.f, 750.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3600.f, 520.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3600.f, 620.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Factory>::CreateBuild(3600.f, 720.f));
 
 
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Starport>::CreateBuild(3710.f, 550.f));
 	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Starport>::CreateBuild(3710.f, 650.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Starport>::CreateBuild(3710.f, 750.f));
 
 
 	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Barrack>::CreateBuild(2860.f, 720.f));
 	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(2950.f, 680.f));
 
+	//SCV
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Scv>::Create(2750.f, 352.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Scv>::Create(2738, 393.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Scv>::Create(2708, 446.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Scv>::Create(2708, 446.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Scv>::Create(2662, 423.f));
+
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Scv>::Create(3929, 213.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Scv>::Create(3942, 252.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Scv>::Create(3918, 366.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Scv>::Create(3810, 411.f));
+
+	}
 
 	// 적 방어 유닛 생산
 	{
 		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::CreateSiegeTank(3200.f, 600.f));
 		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::CreateSiegeTank(2735, 583.f));
 		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::CreateSiegeTank(3402, 644.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::CreateSiegeTank(3288, 630.f));
 
 
 		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3015, 610));
@@ -205,32 +212,28 @@ void CStage::EnemyObjSpwan()
 		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3005, 640.f));
 		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3045, 610.f));
 
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Medic>::Create(3045, 590.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(2866, 612.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::Create(2810, 600.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::Create(2890, 580.f));
+
 	}
 }
 
 void CStage::KeyInput()
 {
-	// SCV 정찰
+	// 마린 러쉬
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_F1))
 	{
-
-	}
-
-	// 마린 메딕 러쉬 및 방어 부대
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_F2))
-	{
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::CreateAttackEnemy(3600.f + 15 * i, 375.f, 320.f, 320.f));
 		}
-		for (int i = 0; i < 2; i++)
-		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Medic>::CreateAttackEnemy(3600.f, 375.f + 10 * i, 320.f, 320.f));
-		}
 	}
 
+
 	// 마린 메딕 고스트 탱크 러쉬
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_F3))
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F2))
 	{
 		for (int i = 0; i < 3; i++)
 		{
@@ -251,25 +254,29 @@ void CStage::KeyInput()
 		
 	}
 
-	// 방어 부대 소환
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_F4))
+	// 앞마당 방어 부대 소환
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F3))
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3600.f, 375.f +10 * i));
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::CreateAttackEnemy(3558.f, 378.f +10 * i,2841.f,917.f));
 		}
 		for (int i = 0; i < 2; i++)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Medic>::Create(3600.f + 15 * i, 375.f));
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Medic>::CreateAttackEnemy(3600.f + 15 * i, 375.f, 2841.f, 917.f));
 		}
 
 		for (int i = 0; i < 3; i++)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3000.f, 480.f +10 * i));
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::CreateAttackEnemy(3600.f, 480.f +10 * i, 2841.f, 917.f));
 		}
 		for (int i = 0; i < 3; i++)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::Create(3000.f +10 * i, 480.f));
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::CreateAttackEnemy(3600.f +10 * i, 480.f, 2841.f, 917.f));
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Tank>::CreateAttackEnemy(3600.f + 10 * i, 820.f, 2841.f, 917.f));
 		}
 	}
 
@@ -369,6 +376,7 @@ void CStage::Initalize_Bmp()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Nuke/Nuke_0_25(252.225).bmp", L"NukeBoom");
 
 	//E_Unit
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/SCV/SCV_E.bmp", L"Scv_E");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/E_Unit/MarineBlue.bmp", L"MarineBlue");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Medic/Medic_Blue.bmp", L"Medic_Blue");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Unit/Ghost/Ghost_Blue.bmp", L"Ghost_Blue");

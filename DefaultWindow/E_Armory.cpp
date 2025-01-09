@@ -112,9 +112,9 @@ void E_Armory::Change_Motion()
         switch (m_eCurState_Build)
         {
         case BS_IDLE:
-            m_tFrame.iFrameStart = 1;
-            m_tFrame.iFrameEnd = 1;
-            m_tFrame.iCurCount = 1;
+            m_tFrame.iFrameStart = 2;
+            m_tFrame.iFrameEnd = 4;
+            m_tFrame.iCurCount = 2;
             m_tFrame.dwSpeed = 200;
             m_tFrame.dwTime = GetTickCount64();
             break;

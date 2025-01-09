@@ -339,6 +339,45 @@ void CCollisionMgr::Collision_Explosion(CObj* _pEx, list<CObj*> _unit, list<CObj
 	return;
 }
 
+void CCollisionMgr::Collision_Explosion_Nuke(CObj* _pEx, list<CObj*> _unit, list<CObj*> _build, int Damage)
+{
+	for (auto& unit : _unit)
+	{
+		float fWidth = fabsf(unit->Get_Scroll_Info().fX - _pEx->Get_Scroll_Info().fX);
+		float fHeight = fabsf(unit->Get_Scroll_Info().fY - _pEx->Get_Scroll_Info().fY);
+
+		float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);
+
+		if (fDistance <= 500.f)
+		{
+			DEFENCEID Dfence_id = unit->Get_Stat()->m_eDfenceID;
+			ATTACKID Attack_id = AT_EXPLOSIVE;
+			float BoomDamge = fabsf((unit->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * Damage)));
+
+			unit->Add_Stat_hp(-BoomDamge);
+		}
+	}
+
+	for (auto& build : _build)
+	{
+		float fWidth = fabsf(build->Get_Scroll_Info().fX - _pEx->Get_Scroll_Info().fX);
+		float fHeight = fabsf(build->Get_Scroll_Info().fY - _pEx->Get_Scroll_Info().fY);
+
+		float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);
+
+		if (fDistance <= 500.f)
+		{
+			DEFENCEID Dfence_id = build->Get_Stat()->m_eDfenceID;
+			ATTACKID Attack_id = AT_EXPLOSIVE;
+			float BoomDamge = fabsf((build->Get_Stat()->m_iDefence) - ((DamageCalcu[Attack_id][Dfence_id] * Damage)));
+
+			build->Add_Stat_hp(-BoomDamge);
+		}
+	}
+
+	return;
+}
+
 CObj* CCollisionMgr::Collision_RangeChack_Attack(CObj* _pPlayer, list<CObj*> _unit, list<CObj*>_build, float _dis)
 {
 	float minDistance(4096.f);

@@ -175,7 +175,6 @@ void CPhysicsLab::Change_Motion()
         Add_Stat_hp(m_tStat.m_iMaxHp / m_iMyBuildTIme);
     }
 
-
     if (m_eCurState_Build == BS_MAKE)
     {
         m_pImgKey = L"SciencePhysics";

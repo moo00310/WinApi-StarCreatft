@@ -215,6 +215,7 @@
     <ClInclude Include="E_Marine.h" />
     <ClInclude Include="E_Medic.h" />
     <ClInclude Include="E_Refinery.h" />
+    <ClInclude Include="E_Scv.h" />
     <ClInclude Include="E_Starport.h" />
     <ClInclude Include="E_Suffly.h" />
     <ClInclude Include="E_Tank.h" />
@@ -310,6 +311,7 @@
     <ClCompile Include="E_Marine.cpp" />
     <ClCompile Include="E_Medic.cpp" />
     <ClCompile Include="E_Refinery.cpp" />
+    <ClCompile Include="E_Scv.cpp" />
     <ClCompile Include="E_Starport.cpp" />
     <ClCompile Include="E_Suffly.cpp" />
     <ClCompile Include="E_Tank.cpp" />

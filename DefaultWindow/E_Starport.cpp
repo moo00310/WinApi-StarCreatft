@@ -114,9 +114,9 @@ void E_Starport::Change_Motion()
         switch (m_eCurState_Build)
         {
         case BS_IDLE:
-            m_tFrame.iFrameStart = 1;
-            m_tFrame.iFrameEnd = 1;
-            m_tFrame.iCurCount = 1;
+            m_tFrame.iFrameStart = 5;
+            m_tFrame.iFrameEnd = 7;
+            m_tFrame.iCurCount = 5;
             m_tFrame.dwSpeed = 200;
             m_tFrame.dwTime = GetTickCount64();
             break;

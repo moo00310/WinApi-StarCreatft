@@ -30,13 +30,13 @@ int CPortUI::Update()
 		m_bRender = true;
 		Change_Port();
 	}
-
+	__super::Move_Frame();
 	return 0;
 }
 
 void CPortUI::Late_Update()
 {
-	__super::Move_Frame();
+	
 }
 
 void CPortUI::Render(HDC hdc)

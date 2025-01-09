@@ -30,5 +30,7 @@ public:
 
 	static void Collision_Explosion(CObj* _pEx, list<CObj*> _unit, list<CObj*> _build, int Damage);
 	static bool Collision_Unit_body(CObj* _my, list<CObj*> _unit);
+
+	static void Collision_Explosion_Nuke(CObj* _pEx, list<CObj*> _unit, list<CObj*> _build, int Damage);
 };
 
