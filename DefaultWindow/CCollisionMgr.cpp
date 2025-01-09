@@ -382,6 +382,7 @@ CObj* CCollisionMgr::Collision_RangeChack_Attack(CObj* _pPlayer, list<CObj*> _un
 
 Pos CCollisionMgr::Collision_RangePos(CObj* _pPlayer, Pos pos, float _dis)
 {
+	Pos temp = {};
 	float fWidth = pos.x *32 - _pPlayer->Get_Info().fX;
 	float fHeight = pos.y *32- _pPlayer->Get_Info().fY;
 
@@ -390,7 +391,7 @@ Pos CCollisionMgr::Collision_RangePos(CObj* _pPlayer, Pos pos, float _dis)
 	float x = pos.x * 32 + (_dis * -1 * fWidth / distance);
 	float y = pos.y * 32 + (_dis * -1 * fHeight / distance);
 
-	Pos temp{ (int)(y / 32), (int)(x / 32) };
+	temp = { (int)(y / 32), (int)(x / 32) };
 
 	return temp;
 }

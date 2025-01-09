@@ -238,22 +238,21 @@ void CBattlecruiser::Yamato()
 	}
 	else if (m_iPathIndex == _path.size())
 	{
-		m_eCurState = STATE_ATTACK;
-
+		m_eCurState = STATE_IDLE;
 
 		YamatoCount++;
+		m_eDir = GetDirectionBattle(m_tInfo.fX, m_tInfo.fY, YamatoEnemy->Get_Info().fX * 32.f, YamatoEnemy->Get_Info().fY * 32.f);
+
 		if (YamatoCount == 1)
 		{
-			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, YamatoEnemy->Get_Info().fX * 32.f, YamatoEnemy->Get_Info().fY * 32.f);
 			CSoundMgr::Get_Instance()->PlaySFX(L"BattleAmato.mp3", 0.5f);
 		}
 		else if (YamatoCount > 100)
 		{
-			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, YamatoEnemy->Get_Info().fX * 32.f, YamatoEnemy->Get_Info().fY * 32.f);
 			CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBattleYamato>::CreateBattleAtk(this, YamatoEnemy));
 			YamatoEnemy = nullptr;
 			YamatoCount = 0;
-			m_eInput = IP_HOLD;
+			m_eInput = IP_Chase;
 		}
 	}
 }

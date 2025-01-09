@@ -66,5 +66,6 @@ private:
 
 	bool NukeMode;
 	bool YamatoMode;
+	CObj* YamatoObj;
 };
 

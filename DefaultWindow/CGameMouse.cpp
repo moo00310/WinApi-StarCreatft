@@ -19,7 +19,7 @@
 
 CGameMouse::CGameMouse() : m_eCurState(MS_IDLE), m_ePreState(MS_IDLE), m_indexY(0), m_UnitList(nullptr),
 m_Select_UnitList(nullptr), isDrag(false), m_BuildList(nullptr), isBuildMod(false), m_eBuildType(OT_END),
-m_pImgKey_build(nullptr), m_iBuild_Index(0), m_UnitList_E(nullptr), m_BuildList_E(nullptr), NukeMode(false), YamatoMode(false)
+m_pImgKey_build(nullptr), m_iBuild_Index(0), m_UnitList_E(nullptr), m_BuildList_E(nullptr), NukeMode(false), YamatoMode(false), YamatoObj(nullptr)
 {
     ZeroMemory(&ptMouse, sizeof(POINT));
     ZeroMemory(&m_DragStart, sizeof(POINT));
@@ -226,16 +226,14 @@ void CGameMouse::MouseInput(POINT ptMouse)
     if (YamatoMode)
     {
         m_eCurState = MS_ATTACK;
-        CObj* Obj(nullptr);
-
-        if (((Obj = CCollisionMgr::Collision_Rect_Mouse(m_tRect, *m_UnitList, *m_BuildList, *m_UnitList_E, *m_BuildList_E)) != nullptr)
-            && CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON)) // 마우스랑 유닛 충돌
+        CObj* obj = CCollisionMgr::Collision_Rect_Mouse(m_tRect, *m_UnitList_E, *m_BuildList_E);
+        if (obj != YamatoObj&& CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON)) // 마우스랑 유닛 충돌
         {
             if (auto* pUnit = dynamic_cast<CBattlecruiser*>(m_Select_UnitList->front()))
             {
-                pUnit->Astar(CCollisionMgr::Collision_RangePos(pUnit, Obj, 320.f));
+                pUnit->Astar(CCollisionMgr::Collision_RangePos(pUnit, obj, 320.f));
                 pUnit->SetInput(IP_YAMTO);
-                pUnit->SetEnemy(Obj);
+                pUnit->SetEnemy(obj);
             }
         }
         if (CKeyMgr::Get_Instance()->Key_Up(VK_LBUTTON))
@@ -247,8 +245,10 @@ void CGameMouse::MouseInput(POINT ptMouse)
         // 우클릭으로 취소
         if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
         {
-            YamatoMode = false;
+            YamatoObj = nullptr;
             ClearList();
+            YamatoMode = false;
+         
         }
     }
 

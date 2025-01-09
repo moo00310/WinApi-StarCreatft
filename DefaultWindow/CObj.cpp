@@ -118,6 +118,37 @@ DIRECTION CObj::GetDirection(float player_x, float player_y, float monster_x, fl
 	}
 }
 
+DIRECTION CObj::GetDirectionBattle(float player_x, float player_y, float monster_x, float monster_y)
+{
+	float angle_deg = GetLadanAngle(player_x, player_y, monster_x, monster_y) * (180 / PI);
+
+	if (angle_deg < 0) {
+		angle_deg += 360;  // 음수를 0-360 범위로
+	}
+
+	int sector = static_cast<int>((angle_deg + 11.25) / 22.5) % 16;
+	switch (sector) {
+	case 0: return DIR_RIGHT;
+	case 15: return DIR_RIGHT_DOWN;
+	case 14: return DIR_RD;
+	case 13: return DIR_DOWN_RIGHT;
+	case 12: return DIR_DOWN;
+	case 11: return DIR_DOWN_LEFT;
+	case 10: return DIR_LD;
+	case 1: return DIR_LEFT_DOWN;
+	case 2: return DIR_LEFT;
+	case 3: return DIR_LEFT_UP;
+	case 4: return DIR_LU;
+	case 5: return DIR_UP_LEFT;
+	case 6: return DIR_UP;
+	case 7: return DIR_UP_RIGHT;
+	case 8: return DIR_RIGHT_UP;
+	case 9: return DIR_RU;
+	default: return DIR_END;  // 예외 처리
+	}
+}
+
+
 float CObj::GetLadanAngle(float player_x, float player_y, float monster_x, float monster_y)
 {
 	float dx = monster_x - player_x;
