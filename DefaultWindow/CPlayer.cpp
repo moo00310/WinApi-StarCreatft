@@ -73,7 +73,7 @@ void CPlayer::Render(HDC hDC)
 
 	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
 
-	Graphics graphics(hDC);
+	Gdiplus::Graphics graphics(hDC);
 
 	GdiTransparentBlt(hDC,			// 복사 받을 DC
 		m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	

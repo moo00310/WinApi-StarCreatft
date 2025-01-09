@@ -27,12 +27,28 @@ CMainGame::~CMainGame()
 	Release();
 }
 
+ULONG_PTR gdiplusToken;
+void InitGDIPlus()
+{
+	using namespace Gdiplus;
+	GdiplusStartupInput gdiplusStartupInput;
+	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+}
+
+void ShutdownGDIPlus()
+{
+	using namespace Gdiplus;
+	GdiplusShutdown(gdiplusToken);
+}
+
 void CMainGame::Initialize()
 {
 	srand(static_cast<unsigned>(time(nullptr)));
 
 	m_hDC = GetDC(g_hWnd);
 	CSoundMgr::Get_Instance()->Initialize();
+	InitGDIPlus();
+
 
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/FightSpirit.bmp", L"FightSpirit");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Map/Mineral_Gas/Resource.bmp", L"Resource");
@@ -133,4 +149,6 @@ void CMainGame::Release()
 	CGameMgr::Destroy_Instance();
 	CResourceMgr::Destroy_Instance();
 	ReleaseDC(g_hWnd, m_hDC);
+
+	ShutdownGDIPlus();
 }

@@ -15,19 +15,6 @@ WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 HWND g_hWnd;
 
-//GDI+
-ULONG_PTR gdiplusToken;
-void InitGDIPlus()
-{
-    GdiplusStartupInput gdiplusStartupInput;
-    GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
-}
-
-void ShutdownGDIPlus()
-{
-    GdiplusShutdown(gdiplusToken);
-}
-
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);   // 창의 외형적인 스타일을 지정하는 옵션 함수
 BOOL                InitInstance(HINSTANCE, int);           // 창 초기화 함수
@@ -43,9 +30,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
-
-    // GDI+ 초기화
-    InitGDIPlus();
 
 
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -90,9 +74,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             }
         }
     }
-
-
-    ShutdownGDIPlus();
 
     return (int)msg.wParam;
 }

@@ -115,8 +115,10 @@ public:
 class CNukeMissileBoom : public CBulletEffect
 {
 public:
-	CNukeMissileBoom() : m_bIsDamage(false), E_list(nullptr), E_build_list(nullptr)
-	{}
+	CNukeMissileBoom() : m_bIsDamage(false), E_list(nullptr), E_build_list(nullptr), m_NukeBoom(nullptr), m_ColorMatrix{},
+		m_imgAttr{}
+	{
+	}
 	~CNukeMissileBoom() {}
 public:
 	void Initialize() override;
@@ -126,6 +128,11 @@ public:
 	int m_bIsDamage;
 	list<CObj*>* E_list;
 	list<CObj*>* E_build_list;
+	float m_fTransitionAlpha;
+
+	Gdiplus::Image* m_NukeBoom;
+	Gdiplus::ColorMatrix m_ColorMatrix;
+	Gdiplus::ImageAttributes m_imgAttr;
 };
 
 class CBuildFire_0 : public CBulletEffect

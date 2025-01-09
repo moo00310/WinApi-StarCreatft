@@ -7,6 +7,7 @@
 #include "CCollisionMgr.h"
 #include "CBulletEffect.h"
 #include "CAbstractFactory.h"
+#include "CBloodEffect.h"
 
 void CBattlecruiser::Initialize()
 {
@@ -38,7 +39,7 @@ int CBattlecruiser::Update()
 	{
 		// Á×À½ ÀÌÆåÆ®
 		CSoundMgr::Get_Instance()->PlaySFX(L"BatteleDeath.mp3", 0.3f);
-		//CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CGhostDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBattleDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));
 		return OBJ_DEAD;
 	}
 

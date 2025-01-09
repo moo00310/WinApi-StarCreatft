@@ -25,7 +25,6 @@
 #include "ole2.h"
 #include "gdiplus.h"
 #pragma comment(lib,"gdiplus")
-using namespace Gdiplus;
 
 
 #include "fmod.h"

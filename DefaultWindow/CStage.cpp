@@ -75,15 +75,14 @@ void CStage::Initialize()
 	// 마우스 생산
 	CMouseMgr::Get_Instance()->Add_Mouse(CAbstractFactory<CGameMouse>::Create());
 
-	MyObjSpwan();
-	EnemyObjSpwan();
+	//MyObjSpwan();
+	//EnemyObjSpwan();
 
-	//// 승리 테스트
-	//{
-		//CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(600.f, 600.f));
-	//	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(300.f, 300.f));
-	//	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CMarine>::Create(310.f, 310.f));
-	//}
+	// 승리 테스트
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(600.f, 600.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CGhost>::Create(300.f, 300.f));
+	}
 	
 }
 
@@ -353,6 +352,7 @@ void CStage::Initalize_Bmp()
 
 	//Effect
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Bang/Bang(128.128).bmp", L"Bang_1");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Bang/Bang(200.200).bmp", L"Bang_2");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Bang/Bang(252.200).bmp", L"Bang_3");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/SCV/SCVEffect.bmp", L"SCVEffect");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../StarCraft/Effect/Marine/MarineGunSpark.bmp", L"MarineGunSpark");

@@ -20,11 +20,11 @@ void CGameMgr::Initialize()
 
 	for (int i = 0; i < TECH_END; i++)
 	{
-		TechnicArray[i] = 0;
+		TechnicArray[i] = 1;
 	}
 
 	for (int i = 0; i < UG_END; ++i) {
-		UpGrade_Compelate[i] = false;
+		UpGrade_Compelate[i] = true;
 	}
 
 }

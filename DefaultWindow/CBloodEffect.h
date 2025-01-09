@@ -62,6 +62,18 @@ public:
 	void Render(HDC hDC) override;
 };
 
+class CBattleDead : public CBloodEffect
+{
+public:
+	CBattleDead() {};
+	~CBattleDead() {};
+
+public:
+	void Initialize() override;
+	int Update() override;
+	void Render(HDC hDC) override;
+};
+
 
 class CBuildDead : public CBloodEffect
 {
