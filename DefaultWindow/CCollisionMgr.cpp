@@ -2,6 +2,7 @@
 #include "CCollisionMgr.h"
 #include "CGameMouse.h"
 #include "CUnit.h"
+#include "CGhost.h"
 
 void CCollisionMgr::Collision_Circle(list<CObj*> _Dst, list<CObj*> _Src)
 {
@@ -344,6 +345,12 @@ CObj* CCollisionMgr::Collision_RangeChack_Attack(CObj* _pPlayer, list<CObj*> _un
 	CObj* nearUnit(nullptr);
 	for (auto unit : _unit)
 	{
+		if (unit->Get_ObjID() == OT_Ghost && !unit->GetIsEnemy())
+		{
+			if (dynamic_cast<CGhost*>(unit)->GetCloack())
+				continue;
+		}
+
 		float fWidth = fabsf(unit->Get_Scroll_Info().fX - _pPlayer->Get_Scroll_Info().fX);
 		float fHeight = fabsf(unit->Get_Scroll_Info().fY - _pPlayer->Get_Scroll_Info().fY);
 		float fDistance = sqrtf(fWidth * fWidth + fHeight * fHeight);

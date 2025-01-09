@@ -26,6 +26,7 @@ void CGhost::Initialize()
 	m_tStat = { 45.f, 45.f, 10, 0, 224, 1.8f, 625 , DF_SAMLL, AT_CONCUSSIVE };
 
 	m_iAttackFrame = 12;
+	m_fCloack = 1.0f;
 
 	m_eRender = RENDER_GAMEOBJECT;
 	m_tInfo.fCX = 64.f;
@@ -33,6 +34,12 @@ void CGhost::Initialize()
 
 	A_GroundPos.x = (int)m_tInfo.fX / 32;
 	A_GroundPos.y = (int)m_tInfo.fY / 32;
+
+	m_Ghost = new Gdiplus::Image(L"../StarCraft/Unit/Ghost/Ghost.bmp");
+
+	Gdiplus::Color ExceptColor(255, 0, 255, 0);
+	m_imgAttr.SetColorKey(ExceptColor, ExceptColor, Gdiplus::ColorAdjustTypeBitmap);
+	
 }
 
 int CGhost::Update()
@@ -69,7 +76,6 @@ void CGhost::Render(HDC hDC)
 	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
-	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
 	HDC		hFxDC = CBmpMgr::Get_Instance()->Find_Image(L"Select_0");
 
 	if (m_bSelect)
@@ -87,17 +93,34 @@ void CGhost::Render(HDC hDC)
 			RGB(255, 0, 255));		// 제거할 색상
 	}
 
-	GdiTransparentBlt(hDC,			// 복사 받을 DC
-		m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
-		m_tRect.top + iScrollY,
-		(int)m_tInfo.fCX,			// 복사 받을 이미지의 가로, 세로
-		(int)m_tInfo.fCY,
-		hMemDC,						// 복사할 이미지 DC	
-		(int)m_tInfo.fCX * m_tFrame.iCurCount, // 비트맵 출력 시작 좌표(Left, top)
+	using namespace Gdiplus;
+	Graphics graphics(hDC);
+
+	m_ColorMatrix = {
+	1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // R
+	0.0f, 1.0f, 0.0f, 0.0f, 0.0f, // G
+	0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // B
+	0.0f, 0.0f, 0.0f, m_fCloack, 0.0f, // A (알파값 0.5로 설정)
+	0.0f, 0.0f, 0.0f, 0.0f, 1.0f // 여기 값 바꾸면 프레임 박살남
+	};
+
+	m_imgAttr.SetColorMatrix(&m_ColorMatrix, ColorMatrixFlagsDefault, ColorAdjustTypeBitmap);
+
+	graphics.DrawImage(
+		m_Ghost,            // 화면에 랜더링할 이미지 데이터
+		Rect(            // 이미지 출력 위치와 크기를 저장하는 클래스
+			m_tRect.left + iScrollX,
+			m_tRect.top + iScrollY,
+			(int)m_tInfo.fCX,        // 렌더링 받을 화면의 가로, 세로 범위
+			(int)m_tInfo.fCY
+		),
+		(int)m_tInfo.fCX * m_tFrame.iCurCount,  // 원본 이미지에서 렌더링 시작할 좌표 X,Y
 		(int)m_tInfo.fCY * (int)m_eDir,
-		(int)m_tInfo.fCX,										// 복사할 이미지의 가로, 세로
+		(int)m_tInfo.fCX,            // 원본 이미지에서 렌더링 할 가로, 세로 길이
 		(int)m_tInfo.fCY,
-		RGB(0, 255, 0));		// 제거할 색상
+		UnitPixel,        // 좌표의 단위를 무엇으로 할지 (픽셀단위 임으로 UnitPixel)
+		&m_imgAttr        // 컬러 매트릭스를 포함하고 있는 ImageAttributes 객체의 주소
+	);
 
 }
 
@@ -157,6 +180,24 @@ void CGhost::KeyInput()
 		if (!CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Cmd_Nuke)) return;
 
 		CMouseMgr::Get_Instance()->Get_Mouse()->SetNukeMod();
+	}
+
+
+	if (CKeyMgr::Get_Instance()->Key_Down('C'))
+	{
+		if (!CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Ghost_Cloak)) return;
+
+		if (!m_bIsCloack)
+		{
+			m_fCloack = 0.3f;
+			m_bIsCloack = true;
+		}
+		else
+		{
+			m_fCloack = 1.0f;
+			m_bIsCloack = false;
+		}
+			
 	}
 }
 
