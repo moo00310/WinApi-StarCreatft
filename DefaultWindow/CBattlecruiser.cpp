@@ -241,8 +241,7 @@ void CBattlecruiser::Yamato()
 		m_eCurState = STATE_IDLE;
 
 		YamatoCount++;
-		m_eDir = GetDirectionBattle(m_tInfo.fX, m_tInfo.fY, YamatoEnemy->Get_Info().fX * 32.f, YamatoEnemy->Get_Info().fY * 32.f);
-
+		m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, YamatoEnemy->Get_Info().fX , YamatoEnemy->Get_Info().fY);
 		if (YamatoCount == 1)
 		{
 			CSoundMgr::Get_Instance()->PlaySFX(L"BattleAmato.mp3", 0.5f);

@@ -133,17 +133,17 @@ DIRECTION CObj::GetDirectionBattle(float player_x, float player_y, float monster
 	case 14: return DIR_RD;
 	case 13: return DIR_DOWN_RIGHT;
 	case 12: return DIR_DOWN;
-	case 11: return DIR_DOWN_LEFT;
-	case 10: return DIR_LD;
-	case 1: return DIR_LEFT_DOWN;
-	case 2: return DIR_LEFT;
-	case 3: return DIR_LEFT_UP;
-	case 4: return DIR_LU;
-	case 5: return DIR_UP_LEFT;
-	case 6: return DIR_UP;
-	case 7: return DIR_UP_RIGHT;
-	case 8: return DIR_RIGHT_UP;
-	case 9: return DIR_RU;
+	case 5: return DIR_DOWN_LEFT;
+	case 6: return DIR_LD;
+	case 7: return DIR_LEFT_DOWN;
+	case 8: return DIR_LEFT;
+	case 9: return DIR_LEFT_UP;
+	case 10: return DIR_LU;
+	case 11: return DIR_UP_LEFT;
+	case 4: return DIR_UP;
+	case 3: return DIR_UP_RIGHT;
+	case 2: return DIR_RIGHT_UP;
+	case 1: return DIR_RU;
 	default: return DIR_END;  // 예외 처리
 	}
 }

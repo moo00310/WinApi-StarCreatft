@@ -231,7 +231,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
         {
             if (auto* pUnit = dynamic_cast<CBattlecruiser*>(m_Select_UnitList->front()))
             {
-                pUnit->Astar(CCollisionMgr::Collision_RangePos(pUnit, obj, 320.f));
+                pUnit->Astar(CCollisionMgr::Collision_RangePos(pUnit, obj, 96.f));
                 pUnit->SetInput(IP_YAMTO);
                 pUnit->SetEnemy(obj);
             }
