@@ -230,6 +230,35 @@ void CCollisionMgr::Collision_Rect_Mouse_RECT(RECT rect, list<CObj*> _Src, list<
 	}
 }
 
+CObj* CCollisionMgr::Collision_Rect_Mouse(RECT rect, list<CObj*> _EUnit, list<CObj*> _EBuild)
+{
+	RECT rc{};
+	RECT small_rc = rect;
+	small_rc.left += 23;
+	small_rc.top += 23;
+	small_rc.right -= 23;
+	small_rc.bottom -= 23;
+
+	for (auto& _Eunit : _EUnit)
+	{
+		if (IntersectRect(&rc, &small_rc, _Eunit->Get_Scroll_Rect()))
+		{
+			return _Eunit;
+		}
+	}
+
+	for (auto& _Ebuild : _EBuild)
+	{
+		if (IntersectRect(&rc, &small_rc, _Ebuild->Get_Scroll_Rect()))
+		{
+			return _Ebuild;
+		}
+	}
+
+	return nullptr;
+
+}
+
 CObj* CCollisionMgr::Collision_RangeChack_Heal(CObj* _pPlayer, list<CObj*> _unit, float _dis)
 {
 	for (auto unit : _unit)

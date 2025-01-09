@@ -57,6 +57,8 @@ public:
 
 public:
 	void		Update_Rect();
+	DIRECTION GetDirection(float player_x, float player_y, float monster_x, float monster_y);
+	float GetLadanAngle(float player_x, float player_y, float monster_x, float monster_y);
 
 private:
 	RECT rc;

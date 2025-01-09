@@ -79,13 +79,13 @@ void CMiniMap::Render(HDC hdc)
 	HPEN oldPen = (HPEN)SelectObject(hdc, newPen);
 	HPEN oldBrush = (HPEN)SelectObject(hdc, newBrush);
 
-	int x = CScrollMgr::Get_Instance()->Get_ScrollX();
-	int y = CScrollMgr::Get_Instance()->Get_ScrollY();
+	int x = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int y = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 	Rectangle(hdc, 
-		(0	-	x) * Ratio + 8,
-		(0	-	y) * Ratio + 434,
-		(800 -	x) * Ratio + 8, 
-		(600 -	y) * Ratio + 434);
+		(int)((0	-	x) * Ratio + 8),
+		(int)((0	-	y) * Ratio + 434),
+		(int)((800 -	x) * Ratio + 8),
+		(int)((600 -	y) * Ratio + 434));
 
 	SelectObject(hdc, oldPen);
 	SelectObject(hdc, oldBrush);

@@ -8,6 +8,9 @@
 #include "CBulletEffect.h"
 #include "CAbstractFactory.h"
 #include "CBloodEffect.h"
+#include "CKeyMgr.h"
+#include "CGameMgr.h"
+#include "CMouseMgr.h"
 
 void CBattlecruiser::Initialize()
 {
@@ -164,10 +167,12 @@ void CBattlecruiser::Change_Motion()
 void CBattlecruiser::KeyInput()
 {
 	// ¾ß¸¶Åä
-	/*if (CKeyMgr::Get_Instance()->Key_Down('N'))
+	if (CKeyMgr::Get_Instance()->Key_Down('Y'))
 	{
+		if (!CGameMgr::Get_Instance()->Get_UpGrade_Compelate(UG_Battle_Yamato)) return;
 
-	}*/
+		CMouseMgr::Get_Instance()->Get_Mouse()->SetYamatoMode();
+	}
 }
 
 void CBattlecruiser::AttackToEnemy(CObj* _Enemey)
@@ -187,6 +192,35 @@ void CBattlecruiser::AttackToEnemy(CObj* _Enemey)
 	}
 }
 
+void CBattlecruiser::Update_State()
+{
+	switch (m_eInput)
+	{
+	case IP_MOVE:
+		Move();
+		break;
+	case IP_ATTACK:
+		Attack();
+		break;
+	case IP_HOLD:
+		Hold();
+		break;
+	case IP_STOP:
+		Stop();
+		break;
+	case IP_Chase:
+		ChaseUnit();
+		break;
+	case IP_YAMTO:
+		Yamato();
+		break;
+	case IP_END:
+		break;
+	default:
+		break;
+	}
+}
+
 bool CBattlecruiser::CanGo(Pos pos)
 {
 	if (pos.y >= 128 || pos.x >= 128) return false;
@@ -194,4 +228,32 @@ bool CBattlecruiser::CanGo(Pos pos)
 		return true;
 	else
 		return false;
+}
+
+void CBattlecruiser::Yamato()
+{
+	if (m_iPathIndex < _path.size())
+	{
+		Move_toNext();
+	}
+	else if (m_iPathIndex == _path.size())
+	{
+		m_eCurState = STATE_ATTACK;
+
+
+		YamatoCount++;
+		if (YamatoCount == 1)
+		{
+			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, YamatoEnemy->Get_Info().fX * 32.f, YamatoEnemy->Get_Info().fY * 32.f);
+			CSoundMgr::Get_Instance()->PlaySFX(L"BattleAmato.mp3", 0.5f);
+		}
+		else if (YamatoCount > 100)
+		{
+			m_eDir = GetDirection(m_tInfo.fX, m_tInfo.fY, YamatoEnemy->Get_Info().fX * 32.f, YamatoEnemy->Get_Info().fY * 32.f);
+			CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBattleYamato>::CreateBattleAtk(this, YamatoEnemy));
+			YamatoEnemy = nullptr;
+			YamatoCount = 0;
+			m_eInput = IP_HOLD;
+		}
+	}
 }

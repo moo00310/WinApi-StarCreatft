@@ -196,13 +196,6 @@ bool CUnit::CanMove(Pos _pos, int _dir)
 
 }
 
-float CUnit::GetLadanAngle(float player_x, float player_y, float monster_x, float monster_y)
-{
-	float dx = monster_x - player_x;
-	float dy = monster_y - player_y;
-
-	return atan2(dy, dx);  // 라디안
-}
 
 void CUnit::HomeAttack(float x, float y)
 {
@@ -212,35 +205,6 @@ void CUnit::HomeAttack(float x, float y)
 	m_eInput = IP_ATTACK;
 }
 
-DIRECTION CUnit::GetDirection(float player_x, float player_y, float monster_x, float monster_y)
-{
-	float angle_deg = GetLadanAngle( player_x,  player_y,  monster_x,  monster_y) * (180 / PI);
-
-	if (angle_deg < 0) {
-		angle_deg += 360;  // 음수를 0-360 범위로
-	}
-
-	int sector = static_cast<int>((angle_deg + 11.25) / 22.5) % 16;
-	switch (sector) {
-	case 0: return DIR_RIGHT;
-	case 1: return DIR_RIGHT_DOWN;
-	case 2: return DIR_RD;
-	case 3: return DIR_DOWN_RIGHT;
-	case 4: return DIR_DOWN;
-	case 5: return DIR_DOWN_LEFT;
-	case 6: return DIR_LD;
-	case 7: return DIR_LEFT_DOWN;
-	case 8: return DIR_LEFT;
-	case 9: return DIR_LEFT_UP;
-	case 10: return DIR_LU;
-	case 11: return DIR_UP_LEFT;
-	case 12: return DIR_UP;
-	case 13: return DIR_UP_RIGHT;
-	case 14: return DIR_RIGHT_UP;
-	case 15: return DIR_RU;	
-	default: return DIR_END;  // 예외 처리
-	}
-}
 
 void CUnit::Move()
 {

@@ -21,6 +21,9 @@ public:
 public:
 	// 핵 모드
 	void SetNukeMod() { NukeMode = true; }
+	
+	// 야마토 모드
+	void SetYamatoMode() { YamatoMode = true; }
 
 	void ClearList();
 	void ClearDrag();
@@ -62,6 +65,6 @@ private:
 	COLOR m_tColor;
 
 	bool NukeMode;
-
+	bool YamatoMode;
 };
 

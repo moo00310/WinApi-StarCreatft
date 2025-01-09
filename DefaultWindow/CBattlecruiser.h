@@ -3,7 +3,7 @@
 class CBattlecruiser : public CUnit
 {
 public:
-	CBattlecruiser():AttackCoolTime(0), m_isAttack(false) {}
+	CBattlecruiser():AttackCoolTime(0), m_isAttack(false), YamatoEnemy(nullptr), YamatoCount(0){}
 	~CBattlecruiser() {}
 
 public:
@@ -16,11 +16,16 @@ public:
 	void KeyInput() override;
 	void AttackToEnemy(CObj* _Enemey) override;
 
-
+	void Update_State() override;
 	bool CanGo(Pos pos) override;
+	void SetEnemy(CObj* _enemy) { YamatoEnemy = _enemy; }
+
+	void Yamato();
 
 private:
 	ULONGLONG AttackCoolTime;
 	bool m_isAttack;
+	CObj* YamatoEnemy;
+	int YamatoCount;
 };
 

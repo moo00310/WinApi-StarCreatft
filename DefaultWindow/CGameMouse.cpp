@@ -11,6 +11,7 @@
 #include "CGameMgr.h"
 #include "CSoundMgr.h"
 #include "CGhost.h"
+#include "CBattlecruiser.h"
 
 /*---------------
     GameMouse
@@ -18,7 +19,7 @@
 
 CGameMouse::CGameMouse() : m_eCurState(MS_IDLE), m_ePreState(MS_IDLE), m_indexY(0), m_UnitList(nullptr),
 m_Select_UnitList(nullptr), isDrag(false), m_BuildList(nullptr), isBuildMod(false), m_eBuildType(OT_END),
-m_pImgKey_build(nullptr), m_iBuild_Index(0), m_UnitList_E(nullptr), m_BuildList_E(nullptr), NukeMode(false)
+m_pImgKey_build(nullptr), m_iBuild_Index(0), m_UnitList_E(nullptr), m_BuildList_E(nullptr), NukeMode(false), YamatoMode(false)
 {
     ZeroMemory(&ptMouse, sizeof(POINT));
     ZeroMemory(&m_DragStart, sizeof(POINT));
@@ -163,6 +164,7 @@ void CGameMouse::MouseInput(POINT ptMouse)
 {
     Pos temp = { (int)(ptMouse.y - CScrollMgr::Get_Instance()->Get_ScrollY()) / TILECY , int(ptMouse.x - CScrollMgr::Get_Instance()->Get_ScrollX()) / TILECY };
 
+
     if (isBuildMod)
     {
         if (CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON))
@@ -221,8 +223,39 @@ void CGameMouse::MouseInput(POINT ptMouse)
         }
     }
 
+    if (YamatoMode)
+    {
+        m_eCurState = MS_ATTACK;
+        CObj* Obj(nullptr);
+
+        if (((Obj = CCollisionMgr::Collision_Rect_Mouse(m_tRect, *m_UnitList, *m_BuildList, *m_UnitList_E, *m_BuildList_E)) != nullptr)
+            && CKeyMgr::Get_Instance()->Key_Down(VK_LBUTTON)) // 마우스랑 유닛 충돌
+        {
+            if (auto* pUnit = dynamic_cast<CBattlecruiser*>(m_Select_UnitList->front()))
+            {
+                pUnit->Astar(CCollisionMgr::Collision_RangePos(pUnit, Obj, 320.f));
+                pUnit->SetInput(IP_YAMTO);
+                pUnit->SetEnemy(Obj);
+            }
+        }
+        if (CKeyMgr::Get_Instance()->Key_Up(VK_LBUTTON))
+        {
+            m_eCurState = MS_IDLE;
+            YamatoMode = false;
+        }
+
+        // 우클릭으로 취소
+        if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
+        {
+            YamatoMode = false;
+            ClearList();
+        }
+    }
+
+
     if (isBuildMod) return;
     if (NukeMode) return;
+    if (YamatoMode) return;
 
     ///// 우클릭 : MOVE 
     if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON))
@@ -392,6 +425,8 @@ void CGameMouse::ColObject()
 {
     if (isDrag) return;
     if (isBuildMod) return;
+    if (NukeMode) return;
+    if(YamatoMode) return;
 
     CObj* Obj(nullptr);
     // 마우스랑 충돌했는지 검사
@@ -420,6 +455,7 @@ void CGameMouse::ColObject()
 void CGameMouse::Change_Cursor()
 {
     if (isBuildMod) return;
+
     if (m_ePreState != m_eCurState)
     {
         switch (m_eCurState)

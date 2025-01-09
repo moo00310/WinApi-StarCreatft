@@ -230,7 +230,5 @@ void CGhost::Nuke()
 			CSoundMgr::Get_Instance()->PlaySFX(L"GhostNukeStart.mp3", 0.8f);
 			CGameMgr::Get_Instance()->Set_UpGrade_Compelate(UG_Cmd_Nuke, false);
 		}
-		
-
 	}
 }

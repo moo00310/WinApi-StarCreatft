@@ -128,7 +128,6 @@ public:
 	int m_bIsDamage;
 	list<CObj*>* E_list;
 	list<CObj*>* E_build_list;
-	float m_fTransitionAlpha;
 
 	Gdiplus::Image* m_NukeBoom;
 	Gdiplus::ColorMatrix m_ColorMatrix;
@@ -174,6 +173,27 @@ public:
 	CBattleAttack(CObj* _my, CObj* _Enemy) : m_Enemy(_Enemy), m_my(_my), m_bIsDamage(false), E_build_list(nullptr), E_list(nullptr), Ladian(0)
 	{}
 	~CBattleAttack() {}
+
+public:
+	void Initialize();
+	int Update() override;
+	void Render(HDC hDC) override;
+
+	int m_bIsDamage;
+	CObj* m_Enemy;
+	CObj* m_my;
+	list<CObj*>* E_list;
+	list<CObj*>* E_build_list;
+	float Ladian;
+};
+
+class CBattleYamato : public CBulletEffect
+{
+public:
+	CBattleYamato(CObj* _my, CObj* _Enemy) : m_Enemy(_Enemy), m_my(_my), m_bIsDamage(false),
+		E_build_list(nullptr), E_list(nullptr), Ladian(0)
+	{}
+	~CBattleYamato() {}
 
 public:
 	void Initialize();
