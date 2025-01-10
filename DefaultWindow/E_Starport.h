@@ -3,7 +3,7 @@
 class E_Starport : public CBuild
 {
 public:
-	E_Starport() {}
+	E_Starport() { FireRemove(); }
 	~E_Starport() {}
 
 	// CBuild을(를) 통해 상속됨

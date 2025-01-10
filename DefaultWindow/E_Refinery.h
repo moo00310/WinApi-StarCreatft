@@ -4,7 +4,7 @@ class E_Refinery : public CBuild
 {
 public:
 	E_Refinery() {}
-	~E_Refinery() {}
+	~E_Refinery() { FireRemove(); }
 	// CBuild을(를) 통해 상속됨
 	void Initialize() override;
 	int Update() override;

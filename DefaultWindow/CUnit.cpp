@@ -53,7 +53,8 @@ void CUnit::Update_State()
 void CUnit::Astar(Pos _tTarget_Index)
 {
 	Pos start = { (int)m_tInfo.fY / TILECY , (int)m_tInfo.fX / TILECY };
-	if (start.x > 128 || start.y > 128) return;
+	if (start.x >= 128 || start.y >= 128 ||
+		start.x <= 0 || start.y <= 0) return;
 
 	// OpenList
 	priority_queue<PQNode, vector<PQNode>, greater<PQNode>> pq;

@@ -23,7 +23,7 @@ void CTank::Initialize()
 	m_pBuildList_E = CObjMgr::Get_Instance()->Get_ObjList(OBJ_BUILD_E);
 
 	m_eObjID = OT_Tank;
-	m_tStat = { 1500.f, 1500.f, 30, 1, 224, 1.8f, 1000 , DF_LAGE, AT_EXPLOSIVE };
+	m_tStat = { 150.f, 150.f, 30, 1, 224, 1.8f, 1000 , DF_LAGE, AT_EXPLOSIVE };
 
 	m_iAttackFrame = 1;
 

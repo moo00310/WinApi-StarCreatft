@@ -4,7 +4,7 @@ class E_Suffly : public CBuild
 {
 public:
 	E_Suffly() {}
-	~E_Suffly(){}
+	~E_Suffly(){ FireRemove(); }
 public:
 	void Initialize() override;
 	int Update() override;

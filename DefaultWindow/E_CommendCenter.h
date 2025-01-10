@@ -4,7 +4,7 @@ class E_CommendCenter : public CBuild
 {
 public:
 	E_CommendCenter() {}
-	~E_CommendCenter() {}
+	~E_CommendCenter() { FireRemove(); }
 
 public:
 	void Initialize() override;

@@ -4,7 +4,7 @@ class E_Barrack : public CBuild
 {
 public:
 	E_Barrack() {}
-	~E_Barrack() {}
+	~E_Barrack() { FireRemove(); }
 
 	// CBuild을(를) 통해 상속됨
 	void Initialize() override;

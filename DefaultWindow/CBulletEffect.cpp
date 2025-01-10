@@ -662,25 +662,22 @@ void CNukeMissileBoom::Initialize()
 	m_tInfo.fCX = 252.f;
 	m_tInfo.fCY = 252.f;
 
-	m_eRender = RENDER_GAMEOBJECT;
+	m_eRender = RENDER_HIT_EFFECT;
 
 	using namespace Gdiplus;
 #undef new
 	m_NukeBoom = new Image(L"../StarCraft/Effect/Nuke/Nuke_0_25(252.225).bmp");
 #define new DBG_NEW
 
-	Color StartExceptColor(255, 0, 0, 0);
-	Color EndExceptColor(255, 15, 15, 15);
-	m_imgAttr.SetColorKey(StartExceptColor, EndExceptColor, ColorAdjustTypeBitmap);
-	m_imgAttr.SetColorMatrix(&m_ColorMatrix, ColorMatrixFlagsDefault, ColorAdjustTypeBitmap);
-
 	m_ColorMatrix = {
 	1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // R
 	0.0f, 1.0f, 0.0f, 0.0f, 0.0f, // G
 	0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // B
-	0.0f, 0.0f, 0.0f, 1.0f, 0.0f, // A (알파값 0.5로 설정)
+	0.0f, 0.0f, 0.0f, 0.9f, 0.0f, // A (알파값 0.5로 설정)
 	0.0f, 0.0f, 0.0f, 0.0f, 1.0f // 여기 값 바꾸면 프레임 박살남
 	};
+
+
 }
 
 int CNukeMissileBoom::Update()
@@ -814,6 +811,10 @@ void CNukeMissileBoom::Render(HDC hDC)
 	using namespace Gdiplus;
 	Graphics graphics(hDC);
 
+
+	Color StartExceptColor(255, 0, 0, 0);
+	Color EndExceptColor(255, 20, 20, 20);
+	m_imgAttr.SetColorKey(StartExceptColor, EndExceptColor, ColorAdjustTypeBitmap);
 	m_imgAttr.SetColorMatrix(&m_ColorMatrix, ColorMatrixFlagsDefault, ColorAdjustTypeBitmap);
 
 	graphics.DrawImage(

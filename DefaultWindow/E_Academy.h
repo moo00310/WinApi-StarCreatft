@@ -4,7 +4,7 @@ class E_Academy : public CBuild
 {
 public:
 	E_Academy() {}
-	~E_Academy() {}
+	~E_Academy() { FireRemove(); }
 
 	// CBuild을(를) 통해 상속됨
 	void Initialize() override;

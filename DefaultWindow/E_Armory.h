@@ -4,7 +4,7 @@ class E_Armory : public CBuild
 {
 public:
 	E_Armory() {}
-	~E_Armory() {}
+	~E_Armory() { FireRemove(); }
 
 	void Initialize() override;
 	int Update() override;

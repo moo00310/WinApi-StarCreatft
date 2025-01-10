@@ -32,7 +32,7 @@ int CSuffly::Update()
 {
     if (m_bDead || m_tStat.m_iHp <= 0)
     {
-        CSoundMgr::Get_Instance()->PlaySFX(L"BuildBoom.mp3", 0.1f);
+        CSoundMgr::Get_Instance()->PlaySFX(L"BuildBoom.mp3", 0.08f);
 
         //ÀÌ¹ÌÁö
         CObjMgr::Get_Instance()->Add_Object(OBJ_EFFECT, CAbstractFactory<CBuildDead>::CreateFX(m_tInfo.fX, m_tInfo.fY));

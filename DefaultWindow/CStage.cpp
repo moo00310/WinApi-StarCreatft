@@ -75,6 +75,9 @@ void CStage::Initialize()
 	// 마우스 생산
 	CMouseMgr::Get_Instance()->Add_Mouse(CAbstractFactory<CGameMouse>::Create());
 
+
+	//CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER,CAbstractFactory<CGhost>::Create(400.f, 400.f));
+
 	MyObjSpwan();
 	EnemyObjSpwan();
 }
@@ -136,13 +139,11 @@ void CStage::EnemyObjSpwan()
 	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Refinery>::CreateBuild(3780.f, 100.f));
 	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Refinery>::CreateBuild(2840.f, 300.f));
 
-	for (int j = 0; j < 2; j++)
+	for (int i = 0; i < 4; i++)
 	{
-		for (int i = 0; i < 4; i++)
-		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(3940.f + 100 * j, 500.f + 60 * i));
-		}
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Suffly>::CreateBuild(3940.f, 500.f + 60 * i));
 	}
+
 	for (int j = 0; j < 2; j++)
 	{
 		for (int i = 0; i < 3; i++)
@@ -152,7 +153,7 @@ void CStage::EnemyObjSpwan()
 	}
 
 	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Academy>::CreateBuild(3470.f, 70.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Academy>::CreateBuild(3570.f, 70.f));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BUILD_E, CAbstractFactory<E_Academy>::CreateBuild(3590.f, 70.f));
 
 	for (int j = 0; j < 2; j++)
 	{
@@ -223,7 +224,7 @@ void CStage::EnemyObjSpwan()
 void CStage::KeyInput()
 {
 	// 마린 러쉬
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_F1))
+	if (CKeyMgr::Get_Instance()->Key_Down('1'))
 	{
 		for (int i = 0; i < 10; i++)
 		{
@@ -233,7 +234,7 @@ void CStage::KeyInput()
 
 
 	// 마린 메딕 고스트 탱크 러쉬
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_F2))
+	if (CKeyMgr::Get_Instance()->Key_Down('2'))
 	{
 		for (int i = 0; i < 3; i++)
 		{
@@ -255,7 +256,7 @@ void CStage::KeyInput()
 	}
 
 	// 앞마당 방어 부대 소환
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_F3))
+	if (CKeyMgr::Get_Instance()->Key_Down('3'))
 	{
 		for (int i = 0; i < 4; i++)
 		{
@@ -268,11 +269,11 @@ void CStage::KeyInput()
 
 		for (int i = 0; i < 3; i++)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::CreateAttackEnemy(3600.f, 480.f +10 * i, 2841.f, 917.f));
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::CreateAttackEnemy(3600.f, 375.f +10 * i, 2841.f, 917.f));
 		}
 		for (int i = 0; i < 3; i++)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::CreateAttackEnemy(3600.f +10 * i, 480.f, 2841.f, 917.f));
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<E_Marine>::CreateAttackEnemy(3600.f +10 * i, 380.f, 2841.f, 917.f));
 		}
 		for (int i = 0; i < 3; i++)
 		{

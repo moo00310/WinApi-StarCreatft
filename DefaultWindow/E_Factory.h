@@ -4,7 +4,7 @@ class E_Factory : public CBuild
 {
 public:
 	E_Factory() {}
-	~E_Factory() {}
+	~E_Factory() { FireRemove(); }
 
 	void Initialize() override;
 	int Update() override;
